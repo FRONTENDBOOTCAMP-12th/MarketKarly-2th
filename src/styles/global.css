@@ -1,0 +1,30 @@
+:root {
+  --primary-color: #283198;
+  --secondary-color: #324fff;
+  --content-text-color: #333333;
+  --black-color: #000000;
+  --white-color: #ffffff;
+  --accent-color: #fa622f;
+
+  --gray-color-100: #e1e1e1;
+  --gray-color-400: #898989;
+
+  --text-thin: 100;
+  --text-extra-light: 200;
+  --text-light: 300;
+  --text-regular: 400;
+  --text-medium: 500;
+  --text-semi-bold: 600;
+  --text-bold: 700;
+  --text-extra-bold: 800;
+  --text-black: 900;
+
+  --font-sm: 0.75rem; /* 12px */
+  --font-md: 1rem; /* 16px */
+  --font-lg: 1.25rem; /* 20px */
+  --font-xl: 1.5rem; /* 24px */
+  --font-2xl: 1.75rem; /* 28px */
+  --font-3xl: 2rem; /* 32px */
+  --font-4xl: 2.25rem; /* 36px */
+  --font-5xl: 2.5rem; /* 40px */
+}
