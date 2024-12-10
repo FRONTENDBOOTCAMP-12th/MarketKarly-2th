@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
-import footer from '/src/layout/Footer.css?inline';
-import reset from '/src/base/reset.css?inline';
+import footer from '@/layout/Footer.css?inline';
+import reset from '@/styles/reset.css?inline';
+import '@/styles/global.css';
 
 class Footer extends LitElement {
   static styles = css``;
@@ -93,62 +94,38 @@ class Footer extends LitElement {
               >
               <span>팩스 : 070 - 1111 - 2222</span>
             </p>
-            <div class="sprties-img">
-              <img
-                src="/src/assets/image/sprites-image.png"
-                usemap="#image-map"
-              />
-              <map name="image-map">
-                <area
-                  target="_blank"
-                  alt="naver-blog"
-                  title="naver-blog"
-                  href="#"
-                  coords="25,25,13"
-                  shape="circle"
-                />
-                <area
-                  target="_blank"
-                  alt="facebook"
-                  title="facebook"
-                  href="#"
-                  coords="75,25,14"
-                  shape="circle"
-                />
-                <area
-                  target="_blank"
-                  alt="instagram"
-                  title="instagram"
-                  href="#"
-                  coords="125,25,15"
-                  shape="circle"
-                />
-                <area
-                  target="_blank"
-                  alt="naver-post"
-                  title="naver-post"
-                  href="#"
-                  coords="175,26,15"
-                  shape="circle"
-                />
-                <area
-                  target="_blank"
-                  alt="youtube"
-                  title="youtube"
-                  href="#"
-                  coords="225,25,15"
-                  shape="circle"
-                />
-              </map>
-            </div>
+            <ul class="link-list">
+              <li>
+                <a href="https://section.blog.naver.com/"
+                  ><img src="/image/blog.png" alt="naver blog"
+                /></a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/"
+                  ><img src="/image/facebook.png" alt="facebook"
+                /></a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/"
+                  ><img src="/image/instagram.png" alt="instagram"
+                /></a>
+              </li>
+              <li>
+                <a href="https://post.naver.com/"
+                  ><img src="/image/naverpost.png" alt="naver post"
+                /></a>
+              </li>
+              <li>
+                <a href="https://www.youtube.com/"
+                  ><img src="/image/youtube.png" alt="youtube"
+                /></a>
+              </li>
+            </ul>
           </article>
         </section>
         <section class="footer-middle">
           <div>
-            <img
-              src="/src/assets/image/isms.svg"
-              alt="정보보호 관리체계 인증"
-            />
+            <img src="/image/isms.svg" alt="정보보호 관리체계 인증" />
             <p>
               <span>[인증범위] 마켓칼리 쇼핑몰 서비스 개발 운영</span>
               <span>(심사받지 않은 물리적 인프라 제외)</span>
@@ -156,28 +133,23 @@ class Footer extends LitElement {
             </p>
           </div>
           <div>
-            <img
-              src="/src/assets/image/logo-privacy.svg"
-              alt="개인정보보호 우수 인증"
-            />
+            <img src="/image/logo-privacy.svg" alt="개인정보보호 우수 인증" />
             <p>
               <span>개인정보보호 우수 웹사이트</span>
               <span>개인정보처리시스템 인증 (ePRIVACY PLUS)</span>
             </p>
           </div>
           <div>
-            <img
-              src="/src/assets/image/toss-payments.svg"
-              alt="토스 페이먼츠"
-            />
+            <img src="/image/toss-payments.svg" alt="토스 페이먼츠" />
             <p>
-              토스페이먼츠 구매안전(에스크로) 서비스를 이용하실 수 있습니다.
+              토스페이먼츠 구매안전(에스크로) 서비스를 <br />
+              이용하실 수 있습니다.
             </p>
           </div>
           <div>
-            <img src="/src/assets/image/logo-woori.svg" alt="우리은행 로고" />
+            <img src="/image/logo-woori.svg" alt="우리은행 로고" />
             <p>
-              고객님이 현금으로 결제한 금액에 대해 우리은행과 채무지급보증
+              고객님이 현금으로 결제한 금액에 대해 우리은행과 채무지급보증<br />
               계약을 체결하여 안전거래를 보장하고 있습니다.
             </p>
           </div>
