@@ -1,167 +1,20 @@
 import '@/assets/font/Pretendard.css';
 import '@/styles/global.css';
-import reset from '@/styles/reset';
-import { LitElement, css, html } from 'lit';
+import reset from '@/styles/reset.css?inline';
+import style from '@/layout/Footer/Footer.css?inline';
+import { LitElement, html } from 'lit';
 
 class Footer extends LitElement {
-  static styles = [
-    reset,
-    css`
-      #footer {
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
-        grid-template-rows: repeat(3, auto);
-        color: var(--content-text-color);
-        min-width: 75rem;
-        font-family: 'Pretendard';
-
-        .footer-top {
-          grid-column: 2 / 3;
-          display: flex;
-          flex-flow: row nowrap;
-          margin-top: 1.75rem;
-          margin-bottom: 2rem;
-          justify-content: center;
-          gap: 5.4375rem;
-
-          .service {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-
-            h2 {
-              font-size: var(--font-lg);
-            }
-
-            .tel {
-              display: flex;
-              align-items: center;
-              flex-flow: row nowrap;
-              gap: 0.5rem;
-
-              h3 {
-                font-size: var(--font-4xl);
-                font-weight: var(--text-bold);
-              }
-
-              span {
-                font-size: var(--font-md);
-                font-weight: var(--text-semi-bold);
-              }
-            }
-          }
-        }
-      }
-
-      div:has(> h4) {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-
-        h4 {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid #c4c4c4;
-          font-size: var(--font-md);
-          font-weight: var(--text-regular);
-          text-align: center;
-          width: 8.75rem;
-          height: 2.5rem;
-          padding: 4px;
-          line-height: 1.6;
-        }
-
-        p {
-          line-height: 1.6;
-        }
-      }
-      .non-member {
-        display: flex;
-        flex-direction: column;
-        font-size: var(--font-sm);
-
-        span {
-          line-height: 1.6;
-        }
-      }
-
-      .about {
-        display: flex;
-        flex-direction: column;
-        gap: 1.75rem;
-
-        .nav-list {
-          display: flex;
-          gap: 0.875rem;
-
-          a {
-            font-size: var(--font-md);
-            font-weight: var(--text-regular);
-          }
-        }
-
-        .info {
-          font-size: var(--font-sm);
-
-          p {
-            line-height: 1.6;
-          }
-        }
-
-        .link-list {
-          display: flex;
-          gap: 1.25rem;
-        }
-      }
-
-      .footer-middle {
-        grid-column: 2 / 3;
-        display: flex;
-        justify-content: center;
-        gap: 1.25rem;
-        font-size: 0.625rem;
-        padding-top: 1.5rem;
-        padding-bottom: 2rem;
-        border-top: 1px solid #ddd;
-
-        div {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-
-          img {
-            height: 34px;
-          }
-
-          p {
-            line-height: 1.6;
-          }
-        }
-      }
-
-      .footer-bottom {
-        grid-column: 1 / -1;
-        text-align: center;
-        font-size: 0.625rem;
-        color: var(--gray-color-400);
-        background-color: #f9f9f9;
-        padding-top: 1.25rem;
-        padding-bottom: 2rem;
-
-        .copyright {
-          margin-top: 0.5rem;
-        }
-      }
-    `,
-  ];
-
   constructor() {
     super();
   }
 
   render() {
     return html`
+      <style>
+        ${reset}
+        ${style}
+      </style>
       <footer id="footer">
         <section class="footer-top">
           <article class="service">
@@ -292,7 +145,7 @@ class Footer extends LitElement {
           </article>
         </section>
         <section class="footer-middle">
-          <div>
+          <div class>
             <img src="/image/isms.svg" alt="정보보호 관리체계 인증" />
             <p>
               [인증범위] 마켓칼리 쇼핑몰 서비스 개발 운영<br />
