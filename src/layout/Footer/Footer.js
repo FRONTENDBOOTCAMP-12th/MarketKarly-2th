@@ -182,8 +182,8 @@ class Footer extends LitElement {
               aria-labelledby="woori"
             />
             <p id="woori">
-              고객님이 현금으로 결제한 금액에 대해 우리은행과 채무지급보증<br />
-              계약을 체결하여 안전거래를 보장하고 있습니다.
+              고객님이 현금으로 결제한 금액에 대해 우리은행과 채무지급보<br />
+              증 계약을 체결하여 안전거래를 보장하고 있습니다.
             </p>
           </div>
         </section>
