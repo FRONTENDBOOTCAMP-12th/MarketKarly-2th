@@ -1,17 +1,136 @@
-import { LitElement, html } from 'lit';
-import css from '/src/components/Card/Card.css?inline';
+import { LitElement, html, css } from 'lit';
+import resetCSS from '../../styles/reset';
+import '@/styles/global.css';
+import '@/assets/font/Pretendard.css';
+import '@/base/a11y.css';
 
 class Card extends LitElement {
+  static styles = [
+    resetCSS,
+    css`
+      .card-component {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        font-family: 'Pretendard';
+
+        & a {
+          display: inline-block;
+
+          figure {
+            position: relative;
+            width: 249px;
+
+            img {
+              width: 100%;
+            }
+
+            .add-cart {
+              position: absolute;
+              right: 15px;
+              bottom: 17px;
+            }
+          }
+        }
+
+        & .content {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+
+          .title {
+            .sub-title {
+              margin-bottom: 0.5rem;
+              margin-block-end: 0.5rem;
+
+              line-height: 1.5;
+              color: var(--gray-color-400, #898989);
+              font-weight: var(--text-semi-bold);
+              font-size: var(--font-sm);
+            }
+            .main-title {
+              line-height: 1.6;
+              color: var(--content-text-color, #333333);
+              font-weight: var(--text-regular);
+              font-size: var(--font-md);
+            }
+          }
+
+          .price {
+            & p:first-child {
+              line-height: 1.5;
+              font-weight: var(--text-semi-bold);
+              font-size: var(--font-xl);
+
+              .discount {
+                color: var(--accent-color, #fa622f);
+              }
+
+              .current-price {
+                color: var(--content-text-color, #333333);
+              }
+            }
+
+            .origin-price {
+              margin-top: 0.5rem;
+              margin-block-start: 0.5rem;
+
+              line-height: 1.6;
+              color: var(--gray-color-400, #898989);
+              font-weight: var(--text-regular);
+              font-size: var(--font-sm);
+              text-decoration: line-through;
+            }
+          }
+
+          .discription {
+            line-height: 1.6;
+            color: var(--gray-color-400, #898989);
+            font-weight: var(--text-regular);
+            font-size: var(--font-sm);
+          }
+
+          .tags {
+            display: flex;
+            flex-direction: row;
+            align-items: start;
+            gap: 0.5rem;
+
+            .only {
+              display: inline-block;
+              background-color: var(--gray-color-100);
+              padding: 0.25rem;
+              border-radius: 0.25rem;
+
+              line-height: 1.5;
+              color: var(--primary-color);
+              font-weight: var(--text-semi-bold);
+              font-size: var(--font-sm);
+            }
+            .limited {
+              display: inline-block;
+              background-color: var(--gray-color-100);
+              padding: 0.25rem;
+              border-radius: 0.25rem;
+
+              line-height: 1.5;
+              color: var(--content-text-color);
+              font-weight: var(--text-semi-bold);
+              font-size: var(--font-sm);
+            }
+          }
+        }
+      }
+    `,
+  ];
+
   constructor() {
     super();
   }
 
   render() {
     return html/* html */ `
-      <style>
-        ${css}
-      </style>
-
       <div class="card-component">
         <a href="/">
           <figure>
@@ -110,4 +229,4 @@ class Card extends LitElement {
 
 customElements.define('product-card', Card);
 
-app.append(document.createElement('product-card'));
+// app.append(document.createElement('product-card'));
