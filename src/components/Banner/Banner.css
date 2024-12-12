@@ -1,7 +1,10 @@
+.container {
+  position: relative;
+}
+
 swiper-container {
   width: 100%;
   height: auto;
-  position: relative;
 }
 
 swiper-slide {
@@ -45,12 +48,12 @@ swiper-slide img {
 }
 
 .swiper-button-prev {
-  left: 20%;
+  left: 15%;
   top: 50%;
   transform: translateY(-50%);
 }
 .swiper-button-next {
-  right: 20%;
+  right: 15%;
   top: 50%;
   transform: translateY(-50%) scaleX(-1);
 }

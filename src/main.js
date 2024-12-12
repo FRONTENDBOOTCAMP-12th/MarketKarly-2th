@@ -1,1 +1,1 @@
-import '@/components/Swiper/Swiper.js';
+import '@/components/Banner/Banner.js';
