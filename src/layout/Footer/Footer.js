@@ -1,5 +1,4 @@
 import '@/assets/font/Pretendard.css';
-import '@/styles/global.css';
 import reset from '@/styles/reset.css?inline';
 import style from '@/layout/Footer/Footer.css?inline';
 import { LitElement, html } from 'lit';
@@ -12,8 +11,8 @@ class Footer extends LitElement {
   render() {
     return html`
       <style>
-        ${reset}
         ${style}
+        ${reset}
       </style>
       <footer id="footer">
         <section class="footer-top">
