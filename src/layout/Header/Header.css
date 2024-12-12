@@ -382,6 +382,9 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+  .nav-site-map {
+    margin-right: 10%;
+  }
   .header-name-wrapper {
     display: flex;
 
@@ -432,7 +435,8 @@ body {
     display: flex;
     gap: 1.2rem;
     justify-content: flex-start;
-    margin-left: auto;
+    margin-left: 1rem;
+    margin-right: 10%;
   }
 
   .nav-delivery {
