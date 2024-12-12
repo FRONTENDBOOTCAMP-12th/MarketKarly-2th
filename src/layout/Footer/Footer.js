@@ -21,40 +21,36 @@ class Footer extends LitElement {
             <h2>고객행복센터</h2>
             <div class="tel">
               <h3>1644-1107</h3>
-              <span>월~토요일 오전 7시 - 오후 6시</span>
+              <p>월~토요일 오전 7시 - 오후 6시</p>
             </div>
             <div class="kakao">
-              <h4>카카오톡 문의</h4>
-              <div>
-                <p>
-                  월~토요일 | 오전 7시 ~ 오후 6시<br />
-                  일/공휴일 | 오전 7시 - 오후 1시
-                </p>
-              </div>
+              <h4 aria-labelledby="kakao-service">카카오톡 문의</h4>
+              <p id="kakao-service">
+                월~토요일 | 오전 7시 ~ 오후 6시<br />
+                일/공휴일 | 오전 7시 - 오후 1시
+              </p>
             </div>
             <div class="onebyone">
-              <h4>1:1 문의</h4>
-              <div>
-                <span>365일</span>
-                <span>고객센터 운영시간에 순차적으로 답변드리겠습니다.</span>
-              </div>
+              <h4 aria-labelledby="info-service">1:1 문의</h4>
+              <p id="info-service">
+                365일 <br />
+                고객센터 운영시간에 순차적으로 답변드리겠습니다.
+              </p>
             </div>
             <div class="bulk-order">
-              <h4>대량주문 문의</h4>
-              <div>
-                <span>월~금요일 | 오전9시 - 오후 6시</span>
-                <span>점심시간 | 낮 12시 - 오후 1시</span>
-              </div>
+              <h4 aria-labelledby="bulk-order-service">대량주문 문의</h4>
+              <p id="bulk-order-service">
+                월~금요일 | 오전9시 - 오후 6시 <br />
+                점심시간 | 낮 12시 - 오후 1시
+              </p>
             </div>
             <div class="non-member">
-              <span
-                >비회원 문의:
-                <a href="mailto:help@karlycorp.com">help@karlycorp.com</a></span
-              >
-              <span
-                >비회원 대량주문 문의:
-                <a href="mailto:help@karlycorp.com">help@karlycorp.com</a></span
-              >
+              <p>
+                비회원 문의:
+                <a href="mailto:help@karlycorp.com">help@karlycorp.com</a><br />
+                비회원 대량주문 문의:
+                <a href="mailto:help@karlycorp.com">help@karlycorp.com</a>
+              </p>
             </div>
           </article>
           <article class="about">
@@ -72,22 +68,22 @@ class Footer extends LitElement {
               <p>
                 법인명 (상호) : 주식회사 칼리 | 사업자등록번호 : 111-11-22222 |
                 <a href="#">사업자정보 확인</a>
-              </p>
-              <p>
+
+                <br />
                 통신판매업 : 제 2005-서울강남-00000 호 | 개인정보보호책임자 :
                 홍길동
-              </p>
-              <p>
+                <br />
+
                 주소 : 서울특별시 강남구 테헤란로 5003, 28층(역삼동) | 대표이사
                 : 심선범
-              </p>
-              <p>
+                <br />
+
                 입점문의 : 입정문의하기 | 제휴문의 :
                 <a href="mailto: business@karlycorp.com"
                   >business@karlycorp.com</a
                 >
-              </p>
-              <p>
+
+                <br />
                 채용문의 :
                 <a href="mailto: recruit@karlycorp.com"
                   >recruit@karlycorp.com</a
@@ -145,31 +141,47 @@ class Footer extends LitElement {
           </article>
         </section>
         <section class="footer-middle">
-          <div class>
-            <img src="/image/isms.svg" alt="정보보호 관리체계 인증" />
-            <p>
+          <div>
+            <img
+              src="/image/isms.svg"
+              alt="정보보호 관리체계 인증"
+              aria-labelledby="certification-isms"
+            />
+            <p id="certification-isms">
               [인증범위] 마켓칼리 쇼핑몰 서비스 개발 운영<br />
               (심사받지 않은 물리적 인프라 제외) <br />
               [유효기간] 2022.01.19 ~ 2025.01.18 <br />
             </p>
           </div>
           <div>
-            <img src="/image/logo-privacy.svg" alt="개인정보보호 우수 인증" />
-            <p>
+            <img
+              src="/image/logo-privacy.svg"
+              alt="개인정보보호 우수 인증"
+              aria-labelledby="personal-protect"
+            />
+            <p id="personal-protect">
               개인정보보호 우수 웹사이트<br />
               개인정보처리시스템 인증 (ePRIVACY PLUS) <br />
             </p>
           </div>
           <div>
-            <img src="/image/toss-payments.svg" alt="토스 페이먼츠" />
-            <p>
+            <img
+              src="/image/toss-payments.svg"
+              alt="토스 페이먼츠"
+              aria-labelledby="toss-payments"
+            />
+            <p id="toss-payments">
               토스페이먼츠 구매안전(에스크로) 서비스를 <br />
               이용하실 수 있습니다.
             </p>
           </div>
           <div>
-            <img src="/image/logo-woori.svg" alt="우리은행 로고" />
-            <p>
+            <img
+              src="/image/logo-woori.svg"
+              alt="우리은행 로고"
+              aria-labelledby="woori"
+            />
+            <p id="woori">
               고객님이 현금으로 결제한 금액에 대해 우리은행과 채무지급보증<br />
               계약을 체결하여 안전거래를 보장하고 있습니다.
             </p>

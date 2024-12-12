@@ -10,8 +10,8 @@
     grid-column: 2 / 3;
     display: flex;
     flex-flow: row nowrap;
-    margin-top: 1.75rem;
-    margin-bottom: 2rem;
+    margin-top: var(--space-4xl);
+    margin-bottom: var(--space-5xl);
     justify-content: center;
     gap: 5.4375rem;
 
@@ -28,7 +28,7 @@
         display: flex;
         align-items: center;
         flex-flow: row nowrap;
-        gap: 0.5rem;
+        gap: var(--space-md);
 
         h3 {
           font-size: var(--font-4xl);
@@ -47,7 +47,7 @@
 div:has(> h4) {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-xl);
 
   h4 {
     display: flex;
@@ -59,12 +59,12 @@ div:has(> h4) {
     text-align: center;
     width: 8.75rem;
     height: 2.5rem;
-    padding: 4px;
-    line-height: 1.6;
+    padding: var(--space-sm);
+    line-height: var(--regular-line-height);
   }
 
   p {
-    line-height: 1.6;
+    line-height: var(--regular-line-height);
   }
 }
 .non-member {
@@ -72,8 +72,8 @@ div:has(> h4) {
   flex-direction: column;
   font-size: var(--font-sm);
 
-  span {
-    line-height: 1.6;
+  p {
+    line-height: var(--regular-line-height);
 
     a {
       color: #5f0080;
@@ -84,7 +84,7 @@ div:has(> h4) {
 .about {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: var(--space-4xl);
 
   .nav-list {
     display: flex;
@@ -100,7 +100,7 @@ div:has(> h4) {
     font-size: var(--font-sm);
 
     p {
-      line-height: 1.6;
+      line-height: var(--regular-line-height);
 
       a {
         color: #5f0080;
@@ -110,7 +110,7 @@ div:has(> h4) {
 
   .link-list {
     display: flex;
-    gap: 1.25rem;
+    gap: var(--space-2xl);
   }
 }
 
@@ -118,22 +118,22 @@ div:has(> h4) {
   grid-column: 2 / 3;
   display: flex;
   justify-content: center;
-  gap: 1.25rem;
+  gap: var(--space-2xl);
   font-size: 0.625rem;
-  padding-top: 1.5rem;
-  padding-bottom: 2rem;
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-5xl);
   border-top: 1px solid #ddd;
 
   div {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-md);
 
     img {
       height: 34px;
     }
 
     p {
-      line-height: 1.6;
+      line-height: var(--regular-line-height);
     }
   }
 }
@@ -143,11 +143,11 @@ div:has(> h4) {
   text-align: center;
   font-size: 0.625rem;
   color: var(--gray-color-400);
-  background-color: #f9f9f9;
-  padding-top: 1.25rem;
-  padding-bottom: 2rem;
+  background-color: var(--gray-color-50);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-5xl);
 
   .copyright {
-    margin-top: 0.5rem;
+    margin-top: var(--space-md);
   }
 }
