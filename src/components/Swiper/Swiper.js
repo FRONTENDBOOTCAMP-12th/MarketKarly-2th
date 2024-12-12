@@ -1,103 +1,68 @@
-import { LitElement, html, css } from 'lit';
-import resetCSS from '../../base/reset.css';
-import Swiper from 'swiper';
-import 'swiper/swiper-bundle.css';
+import { html, css, LitElement } from 'lit';
+import reset from '../../styles/reset.css?inline';
+import swiperCSS from './swiper.css?inline';
 
-class MainSwiper extends LitElement {
-  static styles = [
-    resetCSS,
-    css`
-      .swiper {
-        width: 100%;
-        position: relative;
-      }
+import { register } from 'swiper/element/bundle';
+register(); // Swiper Web Component 등록
 
-      .swiper .swiper-slide {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+class MySwiper extends LitElement {
+  render() {
+    return html`
+      <style>
+        ${reset}
+        ${swiperCSS}
+      </style>
+      <swiper-container
+        id="swiper"
+        autoplay
+        delay="5000"
+        loop
+        slides-per-view="1"
+        centered-slides
+      >
+        <swiper-slide
+          ><img src="/images/swiper1.png" alt="슬라이드 1"
+        /></swiper-slide>
+        <swiper-slide
+          ><img src="/images/swiper2.png" alt="슬라이드 2"
+        /></swiper-slide>
+        <swiper-slide
+          ><img src="/images/swiper3.png" alt="슬라이드 3"
+        /></swiper-slide>
+        <swiper-slide
+          ><img src="/images/swiper4.png" alt="슬라이드 4"
+        /></swiper-slide>
 
-      .swiper-button-prev::after,
-      .swiper-button-next::after {
-        content: '';
-        display: none;
-      }
-
-      .swiper-button-prev,
-      .swiper-button-next {
-        width: 50px;
-        height: 50px;
-        position: absolute;
-        z-index: 1;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .swiper-button-prev {
-        left: 150px;
-      }
-      .swiper-button-next {
-        right: 150px;
-        transform: scaleX(-1);
-      }
-    `,
-  ];
-
-  constructor() {
-    super();
+        <button
+          class="swiper-button-prev"
+          @click=${this.prevSlide}
+          aria-label="이전 슬라이드"
+        >
+          <img src="/icon/arrow.svg" alt="이전" />
+        </button>
+        <button
+          class="swiper-button-next"
+          @click=${this.nextSlide}
+          aria-label="다음 슬라이드"
+        >
+          <img src="/icon/arrow.svg" alt="다음" />
+        </button>
+      </swiper-container>
+    `;
   }
 
   firstUpdated() {
-    const swiper = new Swiper(this.shadowRoot.querySelector('.swiper'), {
-      autoplay: {
-        delay: 5000,
-      },
-      loop: true,
-      slidesPerView: 1,
-      spaceBetween: 0,
-      centeredSlides: true,
-      pagination: false,
-      navigation: {
-        prevEl: this.shadowRoot.querySelector('.swiper-button-prev'),
-        nextEl: this.shadowRoot.querySelector('.swiper-button-next'),
-      },
-    });
+    this.swiperEl = this.shadowRoot.getElementById('swiper');
+    this.swiperEl.initialize(); // Swiper 초기화
   }
 
-  render() {
-    return html`
-      <div class="swiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <img src="../../assets/images/swiper1.png" alt="" />
-          </div>
-          <div class="swiper-slide">
-            <img src="../../assets/images/swiper2.png" alt="" />
-          </div>
-          <div class="swiper-slide">
-            <img src="../../assets/images/swiper3.png" alt="" />
-          </div>
-          <div class="swiper-slide">
-            <img src="../../assets/images/swiper4.png" alt="" />
-          </div>
-        </div>
+  prevSlide() {
+    this.swiperEl.swiper.slidePrev();
+  }
 
-        <div class="swiper-button-prev">
-          <div class="material-icons">
-            <img src="../../assets/icon/arrow.svg" alt="" />
-          </div>
-        </div>
-        <div class="swiper-button-next">
-          <div class="material-icons">
-            <img src="../../assets/icon/arrow.svg" alt="" />
-          </div>
-        </div>
-      </div>
-    `;
+  nextSlide() {
+    this.swiperEl.swiper.slideNext();
   }
 }
 
-customElements.define('swiper-element', MainSwiper);
+customElements.define('main-swiper', MySwiper);
