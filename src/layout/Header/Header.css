@@ -1,4 +1,5 @@
 /* ----------------------------------------------------전체 설정 */
+
 * {
   margin: 0;
   padding: 0;
@@ -89,7 +90,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.625rem;
+  margin-bottom: 0.5rem;
 }
 
 .header-name-wrapper {
@@ -97,6 +98,7 @@ body {
   align-items: center;
   width: 100%;
   gap: 3.4375rem;
+  box-sizing: border-box;
 }
 
 .header-site-select {
@@ -138,15 +140,15 @@ body {
   transition: color 0.03s ease, font-weight 0.03s ease;
 }
 
-.header-site-select ul li a.site-main::after {
+.header-site-select ul li a.site-beauty::after {
   content: '';
   width: 0.0625rem;
   height: 1rem;
-  background: var(--gray-color-100, #e1e1e1);
+  background: var(--gray-color-200, #e1e1e1);
   margin-left: 0.75rem;
   position: absolute;
   top: 50%;
-  right: -0.625rem;
+  left: -1.2rem;
   transform: translateY(-50%);
 }
 
@@ -189,10 +191,12 @@ body {
 
 /* Header Bookmarks */
 .header-bookmarks {
+  position: relative;
   display: flex;
   list-style: none;
-  gap: 1.25rem;
+  gap: 15%;
   margin-left: auto;
+  margin-right: auto;
 }
 
 .header-bookmarks li a {
@@ -300,8 +304,9 @@ body {
   display: flex;
   list-style: none;
   gap: 5.9375rem;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  margin-right: 1%;
 }
 
 .nav-site-map li a {
@@ -364,17 +369,94 @@ body {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 10px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  height: 5px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0));
   z-index: 1;
 }
 
 /* ---------------------------------------------------- 반응형 */
 
-@media (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
+  /** 태블릿 가로, 노트북 */
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  /** 모바일 가로, 태블릿 세로 */
+
+  .nav-site-map {
+    display: flex;
+    gap: 4rem;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .nav-delivery {
+    display: none;
+  }
+
+  .nav-category-text {
+    display: none;
+  }
+
+  .site-main {
+    display: none;
+  }
+
+  .site-beauty {
+    display: none;
+  }
+
+  .header-bookmarks {
+    gap: 0.5rem;
+    margin-left: -2rem;
+  }
+
+  .header-search {
+    margin-left: -3rem;
+  }
+
+  .header-member-service {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /** 모바일 세로 */
+
+  .header-name-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  .header-logo {
+    order: 1;
+  }
+
+  .header-bookmarks {
+    order: 2;
+    display: flex;
+    gap: 1.25rem;
+    justify-content: flex-start;
+    margin-right: 0;
+  }
+  .header-search {
+    width: 100%;
+    order: 3;
+    margin-left: 0rem;
+  }
+
+  .nav-site-map {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: flex-start;
+    margin-left: auto;
+    /* margin-right: 2rem; */
+  }
+
   .nav-delivery {
     display: none;
   }
@@ -384,6 +466,14 @@ body {
   }
 
   .nav-category-text {
+    display: none;
+  }
+
+  .site-beauty {
+    display: none;
+  }
+
+  .site-main {
     display: none;
   }
 }

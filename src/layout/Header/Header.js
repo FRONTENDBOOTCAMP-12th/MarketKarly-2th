@@ -1,5 +1,7 @@
+import '@/assets/font/Pretendard.css';
+import reset from '@/styles/reset.css?inline';
+import style from './Header.css?inline';
 import { LitElement, html } from 'lit';
-import css from './Header.css?inline';
 
 class Header extends LitElement {
   constructor() {
@@ -9,7 +11,7 @@ class Header extends LitElement {
   render() {
     return html`
       <style>
-        ${css}
+        ${style}
       </style>
 
     <!-- 상단 바 영역 -->
