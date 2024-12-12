@@ -23,22 +23,22 @@ class BannerSwiper extends LitElement {
         >
           <swiper-slide>
             <a href="/">
-              <img src="/images/banner01.webp" alt="메인배너 이미지1" />
+              <img src="/image/banner01.webp" alt="메인배너 이미지1" />
             </a>
           </swiper-slide>
           <swiper-slide>
             <a href="/">
-              <img src="/images/banner02.webp" alt="메인배너 이미지2" />
+              <img src="/image/banner02.webp" alt="메인배너 이미지2" />
             </a>
           </swiper-slide>
           <swiper-slide>
             <a href="/">
-              <img src="/images/banner03.webp" alt="메인배너 이미지3" />
+              <img src="/image/banner03.webp" alt="메인배너 이미지3" />
             </a>
           </swiper-slide>
           <swiper-slide>
             <a href="/">
-              <img src="/images/banner04.webp" alt="메인배너 이미지4" />
+              <img src="/image/banner04.webp" alt="메인배너 이미지4" />
             </a>
           </swiper-slide>
         </swiper-container>
