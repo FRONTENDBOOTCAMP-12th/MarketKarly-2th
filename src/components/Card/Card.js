@@ -1,12 +1,11 @@
 import { LitElement, html, css } from 'lit';
-import resetCSS from '../../styles/reset';
+import reset from '@/styles/reset.css?inline';
 import '@/styles/global.css';
 import '@/assets/font/Pretendard.css';
-import '@/base/a11y.css';
+import a11y from '@/base/a11y.css?inline';
 
 class Card extends LitElement {
   static styles = [
-    resetCSS,
     css`
       .card-component {
         display: inline-flex;
@@ -131,6 +130,10 @@ class Card extends LitElement {
 
   render() {
     return html/* html */ `
+      <style>
+        ${reset}
+        ${a11y}
+      </style>
       <div class="card-component">
         <a href="/">
           <figure>
@@ -228,5 +231,3 @@ class Card extends LitElement {
 }
 
 customElements.define('product-card', Card);
-
-// app.append(document.createElement('product-card'));
