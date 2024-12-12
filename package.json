@@ -13,6 +13,7 @@
     "swiper": "^11.1.15"
   },
   "devDependencies": {
+    "@crazyfactory/webp-converter-cli": "^1.4.0",
     "@eslint/js": "^9.16.0",
     "eslint": "^9.16.0",
     "globals": "^15.13.0",
