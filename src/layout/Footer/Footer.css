@@ -1,0 +1,153 @@
+#footer {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: repeat(3, auto);
+  color: var(--content-text-color);
+  min-width: 75rem;
+  font-family: 'Pretendard';
+
+  .footer-top {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-flow: row nowrap;
+    margin-top: var(--space-4xl);
+    margin-bottom: var(--space-5xl);
+    justify-content: center;
+    gap: 5.4375rem;
+
+    .service {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      h2 {
+        font-size: var(--font-lg);
+      }
+
+      .tel {
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        gap: var(--space-md);
+
+        h3 {
+          font-size: var(--font-4xl);
+          font-weight: var(--text-bold);
+        }
+
+        span {
+          font-size: var(--font-md);
+          font-weight: var(--text-semi-bold);
+        }
+      }
+    }
+  }
+}
+
+div:has(> h4) {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+
+  h4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c4c4c4;
+    font-size: var(--font-md);
+    font-weight: var(--text-regular);
+    text-align: center;
+    width: 8.75rem;
+    height: 2.5rem;
+    padding: var(--space-sm);
+    line-height: var(--regular-line-height);
+  }
+
+  p {
+    line-height: var(--regular-line-height);
+  }
+}
+.non-member {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-sm);
+
+  p {
+    line-height: var(--regular-line-height);
+
+    a {
+      color: #5f0080;
+    }
+  }
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4xl);
+
+  .nav-list {
+    display: flex;
+    gap: 0.875rem;
+
+    a {
+      font-size: var(--font-md);
+      font-weight: var(--text-regular);
+    }
+  }
+
+  .info {
+    font-size: var(--font-sm);
+
+    p {
+      line-height: var(--regular-line-height);
+
+      a {
+        color: #5f0080;
+      }
+    }
+  }
+
+  .link-list {
+    display: flex;
+    gap: var(--space-2xl);
+  }
+}
+
+.footer-middle {
+  grid-column: 2 / 3;
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2xl);
+  font-size: 0.625rem;
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-5xl);
+  border-top: 1px solid #ddd;
+
+  div {
+    display: flex;
+    gap: var(--space-md);
+
+    img {
+      height: 34px;
+    }
+
+    p {
+      line-height: var(--regular-line-height);
+    }
+  }
+}
+
+.footer-bottom {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 0.625rem;
+  color: var(--gray-color-400);
+  background-color: var(--gray-color-50);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-5xl);
+
+  .copyright {
+    margin-top: var(--space-md);
+  }
+}
