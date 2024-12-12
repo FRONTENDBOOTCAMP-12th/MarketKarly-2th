@@ -54,7 +54,7 @@ class BannerSwiper extends LitElement {
           @click=${this.nextSlide}
           aria-label="다음 슬라이드"
         >
-          <img src="/icon/arrow.svg" alt="다음" role="img" />
+          <img src="/icon/arrow.svg" alt="다음" />
         </button>
       </div>
     `;
