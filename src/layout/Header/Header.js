@@ -159,21 +159,27 @@ class Header extends LitElement {
           </div>
 
           <nav class="nav">
-            <ul class="nav-category">
-              <li>
-                <img
-                  src="../../../public/icon/hamburger.webp"
-                  alt="카테고리"
-                  class="nav-category-icon"
-                  aria-label="카테고리"
-                  role="img"
-                />
-                <span class="nav-category-text">카테고리</span>
-              </li>
-              <li>
-                <ul class="nav-category-list"></ul>
-              </li>
-            </ul>
+            <li class="nav-category">
+              <img
+                src="../../../public/icon/hamburger.webp"
+                alt="카테고리"
+                class="nav-category-icon nav-category-hover"
+                aria-label="카테고리"
+                role="img"
+              />
+              <span class="nav-category-text nav-category-hover">카테고리</span>
+              <ul class="category-dropdown">
+                <li><a href="#">Submenu 1</a></li>
+                <li><a href="#">Submenu 2</a></li>
+                <li><a href="#">Submenu 3</a></li>
+                <li><a href="#">Submenu 1</a></li>
+                <li><a href="#">Submenu 2</a></li>
+                <li><a href="#">Submenu 3</a></li>
+                <li><a href="#">Submenu 1</a></li>
+                <li><a href="#">Submenu 2</a></li>
+                <li><a href="#">Submenu 3</a></li>
+              </ul>
+            </li>
 
             <ul class="nav-site-map">
               <li><a href="/" aria-label="신상품">신상품</a></li>
