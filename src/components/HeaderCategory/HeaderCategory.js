@@ -23,15 +23,6 @@ class HeaderCategory extends LitElement {
               alt="선물하기 아이콘"
               class="w-6 h-6 hover:fill-primary"
             />
-            <ul class="sub-category">
-              <li>친환경 고구마·감자·당근</li>
-              <li>시금치·쌈채소·나물</li>
-              <li>브로콜리·파프리카·양배추</li>
-              <li>양파·대파·마늘·배추</li>
-              <li>오이·호박·고추</li>
-              <li>냉동·이색·간편채소</li>
-              <li>콩나물·버섯</li>
-            </ul>
             선물하기
           </li>
           <li aria-label="채소">
@@ -98,15 +89,6 @@ class HeaderCategory extends LitElement {
               alt="선물하기 아이콘"
               class="w-6 h-6 hover:fill-primary"
             />
-            <ul class="sub-category">
-              <li>친환경 고구마·감자·당근</li>
-              <li>시금치·쌈채소·나물</li>
-              <li>브로콜리·파프리카·양배추</li>
-              <li>양파·대파·마늘·배추</li>
-              <li>오이·호박·고추</li>
-              <li>냉동·이색·간편채소</li>
-              <li>콩나물·버섯</li>
-            </ul>
             선물하기
           </li>
           <li aria-label="생수 · 음료 · 우유 · 커피">
