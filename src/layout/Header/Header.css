@@ -46,7 +46,7 @@ body {
   gap: 0.75rem;
   padding: 0.75rem 0 0;
   height: 1.9375rem;
-  margin-top: -1rem;
+  margin-top: 0;
 }
 
 .header-member-item {
@@ -423,7 +423,7 @@ body {
     align-items: center;
     flex-wrap: wrap;
     gap: 0.625rem;
-    margin-top: -1rem;
+    margin-top: 0;
     justify-content: center;
   }
 
