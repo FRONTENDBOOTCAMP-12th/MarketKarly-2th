@@ -1,5 +1,7 @@
 .modal {
-  position: relative;
+  position: absolute;
+  top: 10%;
+  left: 20%;
   width: 440px;
   height: 586px;
   display: flex;
@@ -49,4 +51,8 @@
       }
     }
   }
+}
+
+.close {
+  display: none;
 }
