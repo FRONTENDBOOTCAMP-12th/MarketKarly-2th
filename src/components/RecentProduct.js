@@ -8,8 +8,8 @@ class RecentElement extends LitElement {
   static styles = [
     css`
       .container {
-        width: 4.75rem;
-        height: 14rem;
+        width: 76px;
+        height: 224px;
         border: 1px solid var(--gray-color-200);
         font-family: 'Pretendard';
         padding: 0.5rem;
@@ -31,36 +31,18 @@ class RecentElement extends LitElement {
       }
 
       swiper-container {
-        width: 100%;
-        height: 100%;
         overflow: hidden;
-      }
-
-      swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
       }
 
       swiper-slide img {
         width: 2.5rem;
-        height: auto;
       }
 
       button {
-        width: auto;
-        height: auto;
         background: transparent;
         padding: 0;
         cursor: pointer;
         border: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .btn-down {
-        transform: scaleY(-1);
       }
     `,
   ];
@@ -75,7 +57,7 @@ class RecentElement extends LitElement {
           @click=${this.prevSlide}
           aria-label="이전 슬라이드"
         >
-          <img src="/icon/small-arrow.svg" alt="이전" />
+          <img src="/icon/small-arrow-up.svg" alt="이전" />
         </button>
 
         <article class="title">최근 본 상품</article>
@@ -114,7 +96,7 @@ class RecentElement extends LitElement {
           @click=${this.nextSlide}
           aria-label="다음 슬라이드"
         >
-          <img src="/icon/small-arrow.svg" alt="다음" />
+          <img src="/icon/small-arrow-down.svg" alt="다음" />
         </button>
       </section>
     `;
