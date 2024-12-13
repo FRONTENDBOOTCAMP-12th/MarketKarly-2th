@@ -1,3 +1,5 @@
+/* ----------------------------------------------------- 카테고리 펼치기기 */
+
 .header-category {
   display: flex;
   flex-direction: column;
@@ -7,10 +9,39 @@
   background-color: #fff;
 }
 
+.header-category {
+  &:hover .category-list {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+/* ----------------------------------------------------- 카테고리 - 주요 항목 */
+
 .category-list {
   list-style-type: none;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  border: 1px solid #ececec;
   padding: 0;
-  margin: 0;
+  background: white;
+  width: 200px;
+  margin-top: 0;
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  li {
+    line-height: 30px;
+    float: none;
+  }
+  a {
+    font-size: 11px;
+    font-weight: normal;
+  }
+
+  max-height: calc(100vh - 50%);
+  overflow-y: auto;
 }
 
 .category-list li {
@@ -34,18 +65,30 @@
   margin-right: 12px;
 }
 
+.category-list {
+  &:hover .sub-category {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+/* ----------------------------------------------------- 카테고리 - 세부 항목 */
+
 .sub-category {
+  position: relative;
+  height: calc(100vh - 200px);
+  margin-top: 5%;
+  visibility: hidden;
+
   display: block;
-  position: absolute;
   left: 100%;
   top: 0;
-  background-color: #fff;
+  background-color: #f5f5f5;
   border: 1px solid #ddd;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 10;
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  margin-left: 200px;
   width: 200px;
   opacity: 0;
   transform: scale(0.95);
@@ -60,13 +103,6 @@
 }
 
 .sub-category li:hover {
-  background-color: #f0f0f0;
   text-decoration: underline;
   color: #000;
-}
-
-.category-list li:hover .sub-category {
-  opacity: 1;
-  transform: scale(1);
-  display: block;
 }
