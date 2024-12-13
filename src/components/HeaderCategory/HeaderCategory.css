@@ -1,4 +1,4 @@
-/* ----------------------------------------------------- 카테고리 펼치기기 */
+/* ----------------------------------------------------- 카테고리 펼치기 */
 
 .header-category {
   display: flex;
@@ -6,10 +6,8 @@
   align-items: flex-start;
   padding: 0;
   width: 20rem;
-  background-color: #fff;
-}
+  background-color: var(--white-color, #fff);
 
-.header-category {
   &:hover .category-list {
     visibility: visible;
     opacity: 1;
@@ -23,86 +21,52 @@
   position: absolute;
   opacity: 0;
   visibility: hidden;
-  border: 1px solid #ececec;
+  border: 0.0625rem solid var(--gray-color-100, #ececec);
   padding: 0;
-  background: white;
-  width: 200px;
+  background: var(--white-color, white);
+  width: 12.5rem;
   margin-top: 0;
   transition: all 0.2s ease-in-out;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
-  li {
-    line-height: 30px;
-    float: none;
-  }
-  a {
-    font-size: 11px;
-    font-weight: normal;
-  }
-
   max-height: calc(100vh - 50%);
   overflow-y: auto;
-}
 
-.category-list li {
-  position: relative;
-  padding: 12px;
-  cursor: pointer;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 600;
-  font-size: var(--font-sm, 0.75rem);
-  line-height: 1.5;
-  color: #333;
-}
-
-.category-list li:hover {
-  background-color: #f5f5f5;
-}
-
-.category-list li img {
-  width: 1rem;
-  height: 1rem;
-  margin-right: 12px;
-}
-
-.category-list {
-  &:hover .sub-category {
-    visibility: visible;
-    opacity: 1;
+  a {
+    font-size: var(--font-sm, 0.75rem);
+    font-weight: var(--text-regular, 400);
   }
-}
 
-/* ----------------------------------------------------- 카테고리 - 세부 항목 */
+  li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: var(--space-lg, 0.75rem);
+    cursor: pointer;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: var(--text-semi-bold, 600);
+    font-size: var(--font-sm, 0.75rem);
+    line-height: var(--regular-line-height, 1.5);
+    color: var(--content-text-color, #333);
+    gap: var(--space-lg, 0.75rem);
+    vertical-align: middle;
 
-.sub-category {
-  position: relative;
-  height: calc(100vh - 200px);
-  margin-top: 5%;
-  visibility: hidden;
+    &:hover {
+      background-color: var(--gray-color-50, #f5f5f5);
+      color: var(--primary-color);
 
-  display: block;
-  left: 100%;
-  top: 0;
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  list-style-type: none;
-  padding: 0;
-  margin-left: 200px;
-  width: 200px;
-  opacity: 0;
-  transform: scale(0.95);
-  transform-origin: top left;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
+      img {
+        filter: invert(24%) sepia(68%) saturate(2054%) hue-rotate(226deg)
+          brightness(92%) contrast(92%);
+        // This filter applies the primary color effect to the SVG
+      }
+    }
 
-.sub-category li {
-  padding: 8px 12px;
-  font-size: 14px;
-  color: #666;
-}
-
-.sub-category li:hover {
-  text-decoration: underline;
-  color: #000;
+    img {
+      width: 1rem;
+      height: 1rem;
+      flex-shrink: 0;
+      transition: filter 0.2s ease-in-out;
+    }
+  }
 }

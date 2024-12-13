@@ -161,11 +161,10 @@ body {
   height: 0.5rem;
 }
 
-/* Header Search */
 .header-search {
   display: flex;
   align-items: center;
-  width: 25rem;
+  width: 40%;
   height: 3.125rem;
   border: 0.0625rem solid var(--primary-color, #283198);
   border-radius: 0.25rem;
@@ -190,7 +189,6 @@ body {
   cursor: pointer;
 }
 
-/* Header Bookmarks */
 .header-bookmarks {
   position: relative;
   display: flex;

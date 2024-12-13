@@ -16,15 +16,6 @@ class HeaderCategory extends LitElement {
       <nav class="header-category" aria-label="카테고리 펼치기">
         <a href="#">카테고리 문자 <i class="header-category-text"></i></a>
         <ul class="category-list" aria-label="카테고리리 목록">
-          <li aria-label="선물하기">
-            <a href="#"></a>
-            <img
-              src="../../../public/icon/header-category-convenient.svg"
-              alt="선물하기 아이콘"
-              class="w-6 h-6 hover:fill-primary"
-            />
-            선물하기
-          </li>
           <li aria-label="채소">
             <img
               src="../../../public/icon/header-category-veggies.svg"
@@ -77,20 +68,12 @@ class HeaderCategory extends LitElement {
           <li aria-label="면 · 양념 · 오일">
             <img
               src="../../../public/icon/header-category-sauce.svg"
-              alt="면/양념념/오일 아이콘"
+              alt="면/양념/오일 아이콘"
               class="w-6 h-6 hover:fill-primary"
             />
             면 · 양념 · 오일
           </li>
-          <li aria-label="선물하기">
-            <a href="#"></a>
-            <img
-              src="../../../public/icon/header-category-convenient.svg"
-              alt="선물하기 아이콘"
-              class="w-6 h-6 hover:fill-primary"
-            />
-            선물하기
-          </li>
+
           <li aria-label="생수 · 음료 · 우유 · 커피">
             <img
               src="../../../public/icon/header-category-snacks.svg"
