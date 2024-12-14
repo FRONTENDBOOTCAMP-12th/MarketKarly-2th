@@ -1,31 +1,15 @@
-/* ----------------------------------------------------- 카테고리 펼치기 */
-
-.header-category {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  width: 20rem;
-  background-color: var(--white-color, #fff);
-
-  &:hover .category-list {
-    visibility: visible;
-    opacity: 1;
-  }
-}
-
 /* ----------------------------------------------------- 카테고리 - 주요 항목 */
 
 .category-list {
   list-style-type: none;
   position: absolute;
-  opacity: 0;
-  visibility: hidden;
+
   border: 0.0625rem solid var(--gray-color-100, #ececec);
   padding: 0;
   background: var(--white-color, white);
   width: 12.5rem;
-  margin-top: 0;
+  margin-top: 1.9rem;
+
   transition: all 0.2s ease-in-out;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
@@ -58,7 +42,6 @@
       img {
         filter: invert(24%) sepia(68%) saturate(2054%) hue-rotate(226deg)
           brightness(92%) contrast(92%);
-        // This filter applies the primary color effect to the SVG
       }
     }
 

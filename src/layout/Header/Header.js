@@ -3,12 +3,25 @@ import reset from '@/styles/reset.css?inline';
 
 import style from './Header.css?inline';
 import { LitElement, html } from 'lit';
+import '../../components/HeaderCategory/HeaderCategory';
 
 class Header extends LitElement {
+  static properties = {
+    isCategoryOpen: { type: Boolean },
+  };
+
   constructor() {
     super();
+    this.isCategoryOpen = false;
   }
 
+  handleMouseEnter() {
+    this.isCategoryOpen = true;
+  }
+
+  handleMouseLeave() {
+    this.isCategoryOpen = false;
+  }
   render() {
     return html`
       <style>
@@ -55,7 +68,6 @@ class Header extends LitElement {
         </nav>
       </div>
 
-      <!-- 메인 헤더 -->
       <header class="header-wrapper">
         <div class="header">
           <div class="header-top">
@@ -160,27 +172,27 @@ class Header extends LitElement {
           </div>
 
           <nav class="nav">
-            <li class="nav-category">
-              <img
-                src="../../../public/icon/hamburger.webp"
-                alt="카테고리"
-                class="nav-category-icon nav-category-hover"
-                aria-label="카테고리"
-                role="img"
-              />
-              <span class="nav-category-text nav-category-hover">카테고리</span>
-              <ul class="category-dropdown">
-                <li><a href="#">Submenu 1</a></li>
-                <li><a href="#">Submenu 2</a></li>
-                <li><a href="#">Submenu 3</a></li>
-                <li><a href="#">Submenu 1</a></li>
-                <li><a href="#">Submenu 2</a></li>
-                <li><a href="#">Submenu 3</a></li>
-                <li><a href="#">Submenu 1</a></li>
-                <li><a href="#">Submenu 2</a></li>
-                <li><a href="#">Submenu 3</a></li>
-              </ul>
-            </li>
+            <div
+              class="nav-category header-category"
+              @mouseenter="${this.handleMouseEnter}"
+              @mouseleave="${this.handleMouseLeave}"
+            >
+              <div class="nav-category-trigger">
+                <img
+                  src="../../../public/icon/hamburger.webp"
+                  alt="카테고리"
+                  class="nav-category-icon nav-category-hover"
+                  aria-label="카테고리"
+                  role="img"
+                />
+                <span class="nav-category-text nav-category-hover"
+                  >카테고리</span
+                >
+              </div>
+              ${this.isCategoryOpen
+                ? html`<header-category></header-category>`
+                : ''}
+            </div>
 
             <ul class="nav-site-map">
               <li><a href="/" aria-label="신상품">신상품</a></li>
