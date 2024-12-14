@@ -68,6 +68,7 @@ class Modal extends LitElement {
 
   constructor() {
     super();
+    // '하루 안 보기" 기본 값은 false
     this.isLongClosed = false;
   }
 
@@ -75,14 +76,13 @@ class Modal extends LitElement {
     super.connectedCallback();
     const expTime = JSON.parse(localStorage.getItem('closeTime'));
 
-    // '오늘 하루 안 보기' 버튼을 눌렀을 경우에만 실행됨
+    // '오늘 하루 안 보기' 버튼을 1번이 이상 눌러서 만료 시간이 등록됐을 경우에만 실행
     if (expTime) {
       const now = new Date().getTime();
 
       // 현재 시간보다 만료 시간이 더 클 경우 -> 시간이 지나지 않았을 경우 -> true
       // 만료 시간보다 현재 시간이 더 클 경우 -> 시간이 지났을 경우 -> false
-      this.isLongClosed = +expTime >= now ? true : false;
-      localStorage.setItem('isLongClosed', this.isLongClosed);
+      this.isLongClosed = expTime >= now ? true : false;
     }
   }
 
@@ -96,7 +96,7 @@ class Modal extends LitElement {
 
   // '오늘 하루 안 보기'를 눌렀을 때 24시간 뒤의 시간을 localStorage에 기록해놓기
   setExpTime() {
-    const expTime = new Date().getTime() + 24 * 60 * 60 * 1000;
+    const expTime = new Date().getTime() + 5 * 1000;
     localStorage.setItem('closeTime', expTime);
   }
 
@@ -117,10 +117,8 @@ class Modal extends LitElement {
   }
 
   render() {
-    const data = JSON.parse(localStorage.getItem('isLongClosed'));
-    // data(isLongClosed) 에 따라 렌더링 여부 결정
     return html`
-      ${!data
+      ${!this.isLongClosed
         ? html`
             <section class="modal">
               <div></div>
