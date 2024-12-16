@@ -4,8 +4,15 @@ import '@/assets/font/Pretendard.css';
 import a11y from '@/base/a11y.css?inline';
 
 class BtnFilled extends LitElement {
+  static properties = {
+    width: { type: String },
+    text: { type: String },
+  };
+
   constructor() {
     super();
+    this.width = '174px';
+    this.text = 'text';
   }
 
   static styles = [
@@ -16,7 +23,6 @@ class BtnFilled extends LitElement {
         border: none;
         background: none;
 
-        width: 174px;
         height: 54px;
 
         background-color: var(--primary-color, #283198);
@@ -34,11 +40,12 @@ class BtnFilled extends LitElement {
   render() {
     return html/* html */ `
       <style>
-        ${reset}
-        ${a11y}
+        ${reset} ${a11y} .btn-filled {
+          width: ${this.width};
+        }
       </style>
 
-      <button class="btn-filled" type="button">text</button>
+      <button class="btn-filled">${this.text}</button>
     `;
   }
 }

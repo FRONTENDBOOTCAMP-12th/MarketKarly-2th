@@ -4,8 +4,19 @@ import '@/assets/font/Pretendard.css';
 import a11y from '@/base/a11y.css?inline';
 
 class BtnEmptied extends LitElement {
+  static properties = {
+    width: { type: String },
+    text: { type: String },
+    borderColor: { type: String },
+    color: { type: String },
+  };
+
   constructor() {
     super();
+    this.width = '174px';
+    this.text = 'text';
+    this.borderColor = '#283198';
+    this.color = '#283198';
   }
 
   static styles = [
@@ -16,30 +27,36 @@ class BtnEmptied extends LitElement {
         border: none;
         background: none;
 
-        width: 174px;
         height: 54px;
 
         background-color: var(--white-color, #ffffff);
-        color: var(--primary-color, #283198);
         font-family: Pretendard;
         font-size: var(--font-md);
         font-weight: var(--text-semi-bold);
         line-height: var(--light-line-height);
 
-        border: 1px solid var(--primary-color, #283198);
+        border: 1px solid var(--border-color, #283198);
         border-radius: 4px;
       }
     `,
   ];
 
+  updated(changedProperties) {
+    if (changedProperties.has('borderColor')) {
+      this.style.setProperty('--border-color', this.borderColor);
+    }
+  }
+
   render() {
     return html/* html */ `
       <style>
-        ${reset}
-        ${a11y}
+        ${reset} ${a11y} .btn-emptied {
+          width: ${this.width};
+          color: ${this.color};
+        }
       </style>
 
-      <button class="btn-emptied" type="button">text</button>
+      <button class="btn-emptied" type="button">${this.text}</button>
     `;
   }
 }
