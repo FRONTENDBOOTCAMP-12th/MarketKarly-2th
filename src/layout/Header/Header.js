@@ -13,14 +13,42 @@ class Header extends LitElement {
   constructor() {
     super();
     this.isCategoryOpen = false;
+    this.closeTimeout = null;
   }
 
   handleMouseEnter() {
+    clearTimeout(this.closeTimeout);
     this.isCategoryOpen = true;
   }
 
-  handleMouseLeave() {
-    this.isCategoryOpen = false;
+  handleMouseLeave(e) {
+    const relatedTarget = e.relatedTarget;
+
+    if (
+      this.isDescendant(
+        this.renderRoot.querySelector('.nav-category'),
+        relatedTarget
+      ) ||
+      this.isDescendant(
+        this.renderRoot.querySelector('header-category'),
+        relatedTarget
+      )
+    ) {
+      return;
+    }
+
+    this.closeTimeout = setTimeout(() => {
+      this.isCategoryOpen = false;
+    }, 100);
+  }
+
+  isDescendant(parent, child) {
+    let node = child;
+    while (node != null) {
+      if (node === parent) return true;
+      node = node.parentNode;
+    }
+    return false;
   }
   render() {
     return html`
@@ -172,11 +200,12 @@ class Header extends LitElement {
           </div>
 
           <nav class="nav">
-            <div
-              class="nav-category header-category"
-              @mouseenter="${this.handleMouseEnter}"
-            >
-              <div class="nav-category-button">
+            <div class="nav-category header-category">
+              <div
+                class="nav-category-button"
+                @mouseenter="${this.handleMouseEnter}"
+                @mouseleave="${this.handleMouseLeave}"
+              >
                 <img
                   src="../../../public/icon/hamburger.webp"
                   alt="카테고리"
@@ -190,6 +219,7 @@ class Header extends LitElement {
               </div>
               ${this.isCategoryOpen
                 ? html`<header-category
+                    @mouseenter="${this.handleMouseEnter}"
                     @mouseleave="${this.handleMouseLeave}"
                   ></header-category>`
                 : ''}

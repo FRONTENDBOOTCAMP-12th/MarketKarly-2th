@@ -47,10 +47,10 @@ class HeaderCategory extends LitElement {
           정육 · 계란
         </li>
 
-        <li aria-label="국 · 반찬 · 메인요리리">
+        <li aria-label="국 · 반찬 · 메인요리">
           <img
             src="../../../public/icon/header-category-side.svg"
-            alt="곡/반찬/메인요리 아이콘"
+            alt="국/반찬/메인요리 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
           국 · 반찬 · 메일요리
@@ -103,14 +103,6 @@ class HeaderCategory extends LitElement {
             class="w-6 h-6 hover:fill-primary"
           />
           건강샘플
-        </li>
-        <li aria-label="와인">
-          <img
-            src="../../../public/icon/header-category-liquor.svg"
-            alt="와인 아이콘"
-            class="w-6 h-6 hover:fill-primary"
-          />
-          와인
         </li>
         <li aria-label="전통주">
           <img

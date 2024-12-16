@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Pretendard';
 }
 
 body {
@@ -19,6 +20,8 @@ body {
 .header-member-service,
 .header-site-select ul {
   white-space: nowrap;
+  position: relative;
+  background: var(--white-color, #ffffff);
 }
 
 /* ----------------------------------------------------첫 번째 줄 : Top Bar */
@@ -98,7 +101,7 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 3.4375rem;
+  gap: 3.5rem;
   box-sizing: border-box;
 }
 
@@ -254,6 +257,8 @@ body {
 
 /* ---------------------------------------------------- 3번째 줄 : Navigation */
 .nav {
+  position: relative;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -266,10 +271,10 @@ body {
 
 .nav-category {
   position: relative;
+  width: 100px;
   display: flex;
-  align-items: center;
-  gap: 1.25rem;
   list-style: none;
+  background: var(--white-color, #ffffff);
 }
 
 .nav-category span {
@@ -279,6 +284,7 @@ body {
   color: var(--content-text-color, #333333);
   letter-spacing: -0.03125rem;
   padding-left: 0.5rem;
+  background: var(--white-color, #ffffff);
 }
 
 .nav-category-icon {
@@ -303,10 +309,12 @@ body {
 .nav-site-map {
   display: flex;
   list-style: none;
-  gap: 5.9375rem;
+  gap: 5.9rem;
   justify-content: center;
   align-items: center;
-  margin-right: 1%;
+  margin-right: 5%;
+  margin-left: 3%;
+  justify-content: center;
 }
 
 .nav-site-map li a {
@@ -339,7 +347,8 @@ body {
   display: none;
   list-style: none;
   position: absolute;
-  top: 1.875rem;
+  top: 2.5rem;
+  right: 0;
   background: var(--white-color, #ffffff);
   border: 0.0625rem solid var(--gray-color-100, #e1e1e1);
   z-index: 10;
@@ -365,15 +374,27 @@ body {
 }
 
 /* ----------------------------------------------------가로선 */
+
 .header-shadow {
   position: absolute;
   left: 0;
   width: 100%;
   height: 5px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0));
-  z-index: 2;
+  z-index: 9;
+  top: calc(100% - 90);
 }
 
+.header-shadow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+  z-index: 9;
+}
 /* ---------------------------------------------------- 반응형 */
 
 @media screen and (max-width: 1024px) {
@@ -383,6 +404,7 @@ body {
 @media screen and (max-width: 768px) {
   .nav-site-map {
     margin-right: 10%;
+    gap: 4.5rem;
   }
   .header-name-wrapper {
     display: flex;
@@ -401,15 +423,18 @@ body {
   .header-bookmarks {
     order: 2;
     display: flex;
-    gap: 1.25rem;
+    gap: 1rem;
     justify-content: flex-start;
     margin-right: 0;
+    /* top: 0;
+    margin-top: 0; */
   }
 
   .header-search {
     width: 100%;
     order: 3;
     margin-left: 0;
+    margin-right: 0;
   }
 
   .site-beauty {
