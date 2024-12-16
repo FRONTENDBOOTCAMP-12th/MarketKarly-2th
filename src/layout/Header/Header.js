@@ -3,7 +3,7 @@ import reset from '@/styles/reset.css?inline';
 
 import style from './Header.css?inline';
 import { LitElement, html } from 'lit';
-import '../../components/HeaderCategory/HeaderCategory';
+import '@/components/HeaderCategory/HeaderCategory';
 
 class Header extends LitElement {
   static properties = {
@@ -83,7 +83,7 @@ class Header extends LitElement {
                   role="presentation"
                 />
               </a>
-              <ul class="header-cs-menu">
+              <ul class="header-help-desk">
                 <li><a href="#" aria-label="공지사항">공지사항</a></li>
                 <li><a href="#" aria-label="자주하는질문">자주하는질문</a></li>
                 <li><a href="#" aria-label="1:1 문의">1:1 문의</a></li>

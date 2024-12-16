@@ -1,12 +1,97 @@
 import '@/assets/font/Pretendard.css';
 import reset from '@/styles/reset.css?inline';
 
-import style from './Header.css?inline';
+import style from './TEST.css?inline';
 import { LitElement, html } from 'lit';
+import '@/components/HeaderCategory/HeaderCategory';
 
 class Header extends LitElement {
+  static properties = {
+    isCategoryOpen: { type: Boolean },
+  };
+
   constructor() {
     super();
+    this.isCategoryOpen = false;
+    this.closeTimeout = null;
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  handleMouseEnter() {
+    clearTimeout(this.closeTimeout);
+    this.isCategoryOpen = true;
+  }
+
+  handleMouseLeave(e) {
+    const relatedTarget = e.relatedTarget;
+
+    if (
+      this.isDescendant(
+        this.renderRoot.querySelector('.nav-category'),
+        relatedTarget
+      ) ||
+      this.isDescendant(
+        this.renderRoot.querySelector('header-category'),
+        relatedTarget
+      )
+    ) {
+      return;
+    }
+
+    this.closeTimeout = setTimeout(() => {
+      this.isCategoryOpen = false;
+    }, 100);
+  }
+
+  isDescendant(parent, child) {
+    let node = child;
+    while (node != null) {
+      if (node === parent) return true;
+      node = node.parentNode;
+    }
+    return false;
+  }
+  firstUpdated() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('scroll', this.handleScroll);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+  handleScroll() {
+    const headerWrapper = this.shadowRoot.querySelector('.header-wrapper');
+    const nav = this.shadowRoot.querySelector('.nav');
+    const navDelivery = this.shadowRoot.querySelector('.nav-delivery');
+    const headerLogo = this.shadowRoot.querySelector('.header-logo');
+    const siteMain = this.shadowRoot.querySelector('.site-main');
+    const siteBeauty = this.shadowRoot.querySelector('.site-beauty');
+    const navHeight = this.shadowRoot.querySelector('.nav').offsetHeight;
+
+    const scrollY = window.scrollY;
+
+    if (scrollY > navHeight) {
+      if (!nav.classList.contains('scrolled')) {
+        nav.classList.add('scrolled');
+        headerWrapper.classList.add('scrolled');
+
+        if (navDelivery) navDelivery.style.display = 'none';
+
+        if (headerLogo) headerLogo.style.display = 'none';
+        if (siteMain) siteMain.style.display = 'none';
+        if (siteBeauty) siteBeauty.style.display = 'none';
+      }
+    } else {
+      nav.classList.remove('scrolled');
+      headerWrapper.classList.remove('scrolled');
+      if (navDelivery) navDelivery.style.display = 'block';
+      if (headerLogo) headerLogo.style.display = 'block';
+      if (siteMain) siteMain.style.display = 'block';
+      if (siteBeauty) siteBeauty.style.display = 'block';
+    }
   }
 
   render() {
@@ -42,7 +127,7 @@ class Header extends LitElement {
                   role="presentation"
                 />
               </a>
-              <ul class="header-cs-menu">
+              <ul class="header-help-desk">
                 <li><a href="#" aria-label="공지사항">공지사항</a></li>
                 <li><a href="#" aria-label="자주하는질문">자주하는질문</a></li>
                 <li><a href="#" aria-label="1:1 문의">1:1 문의</a></li>
@@ -55,7 +140,6 @@ class Header extends LitElement {
         </nav>
       </div>
 
-      <!-- 메인 헤더 -->
       <header class="header-wrapper">
         <div class="header">
           <div class="header-top">
@@ -160,27 +244,30 @@ class Header extends LitElement {
           </div>
 
           <nav class="nav">
-            <li class="nav-category">
-              <img
-                src="../../../public/icon/hamburger.webp"
-                alt="카테고리"
-                class="nav-category-icon nav-category-hover"
-                aria-label="카테고리"
-                role="img"
-              />
-              <span class="nav-category-text nav-category-hover">카테고리</span>
-              <ul class="category-dropdown">
-                <li><a href="#">Submenu 1</a></li>
-                <li><a href="#">Submenu 2</a></li>
-                <li><a href="#">Submenu 3</a></li>
-                <li><a href="#">Submenu 1</a></li>
-                <li><a href="#">Submenu 2</a></li>
-                <li><a href="#">Submenu 3</a></li>
-                <li><a href="#">Submenu 1</a></li>
-                <li><a href="#">Submenu 2</a></li>
-                <li><a href="#">Submenu 3</a></li>
-              </ul>
-            </li>
+            <div class="nav-category header-category">
+              <div
+                class="nav-category-button"
+                @mouseenter="${this.handleMouseEnter}"
+                @mouseleave="${this.handleMouseLeave}"
+              >
+                <img
+                  src="../../../public/icon/hamburger.webp"
+                  alt="카테고리"
+                  class="nav-category-icon nav-category-hover"
+                  aria-label="카테고리"
+                  role="img"
+                />
+                <span class="nav-category-text nav-category-hover"
+                  >카테고리</span
+                >
+              </div>
+              ${this.isCategoryOpen
+                ? html`<header-category
+                    @mouseenter="${this.handleMouseEnter}"
+                    @mouseleave="${this.handleMouseLeave}"
+                  ></header-category>`
+                : ''}
+            </div>
 
             <ul class="nav-site-map">
               <li><a href="/" aria-label="신상품">신상품</a></li>
@@ -203,4 +290,4 @@ class Header extends LitElement {
   }
 }
 
-customElements.define('home-header', Header);
+customElements.define('test-scroll-header', Header);
