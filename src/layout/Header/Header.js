@@ -175,9 +175,8 @@ class Header extends LitElement {
             <div
               class="nav-category header-category"
               @mouseenter="${this.handleMouseEnter}"
-              @mouseleave="${this.handleMouseLeave}"
             >
-              <div class="nav-category-trigger">
+              <div class="nav-category-button">
                 <img
                   src="../../../public/icon/hamburger.webp"
                   alt="카테고리"
@@ -190,7 +189,9 @@ class Header extends LitElement {
                 >
               </div>
               ${this.isCategoryOpen
-                ? html`<header-category></header-category>`
+                ? html`<header-category
+                    @mouseleave="${this.handleMouseLeave}"
+                  ></header-category>`
                 : ''}
             </div>
 

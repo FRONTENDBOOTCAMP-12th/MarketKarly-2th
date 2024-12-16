@@ -3,17 +3,20 @@
 .category-list {
   list-style-type: none;
   position: absolute;
-
+  z-index: 1;
   border: 0.0625rem solid var(--gray-color-100, #ececec);
   padding: 0;
   background: var(--white-color, white);
-  width: 12.5rem;
-  margin-top: 1.9rem;
+  width: 250px;
+  left: 0;
+  top: 25px;
+  height: 60vh;
+  /* max-height: calc(100vh - 30%); */
 
   transition: all 0.2s ease-in-out;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
-  max-height: calc(100vh - 50%);
+
   overflow-y: auto;
 
   a {
