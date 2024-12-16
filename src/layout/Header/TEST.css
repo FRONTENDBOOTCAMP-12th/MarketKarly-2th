@@ -92,6 +92,7 @@ body {
 .header {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .header-top {
@@ -262,7 +263,7 @@ body {
 /* ---------------------------------------------------- 3번째 줄 : Navigation */
 .nav {
   position: relative;
-
+  flex-wrap: nowrap;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -489,59 +490,5 @@ body {
 }
 
 /* ---------------------------------------------------- 반응형 : 세로 (스크롤) */
-
-/* ----------------------- 아래는는 아직 테스트 중  */
-
-nav.scrolled {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-nav.scrolled .nav__product-list {
-  margin-left: 1.875rem;
-}
-
-nav.scrolled .nav__product-list li {
-  width: 7.5rem;
-}
-
-.header__wrapper.scrolled {
-  transform: translateY(-6.25rem);
-  z-index: 999;
-}
-
-.header__search.scrolled {
-  position: absolute;
-  top: 6.875rem;
-  right: 11.25rem;
-  width: 15.125rem;
-  height: 2.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: var(--gray-300);
-  border: 1px solid var(--gray-50);
-  background-color: var(--gray-50);
-  z-index: 999;
-  font-weight: 400;
-  font-size: 0.75rem;
-}
-
-.header__search.scrolled input {
-  border: none;
-  font-size: 0.75rem;
-  background-color: transparent;
-  width: 80%;
-}
-
-.header__search.scrolled:focus-within {
-  background-color: var(--white);
-  border: 0.0625rem solid var(--gray-50);
-}
-
-.header__icon-list.scrolled {
-  position: relative;
-  top: 3.875rem;
-  right: 0;
+@media screen and (max-width: 1024px) {
 }
