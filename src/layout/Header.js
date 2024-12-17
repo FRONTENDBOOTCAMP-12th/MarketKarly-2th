@@ -530,12 +530,7 @@ class Header extends LitElement {
                 aria-expanded="false"
               >
                 고객센터
-                <img
-                  class="icon-down"
-                  src="/icon/down.webp"
-                  alt="펼치기"
-                  role="presentation"
-                />
+                <img class="icon-down" src="/icon/down.webp" alt="펼치기" />
               </a>
               <ul class="header-help-desk">
                 <li><a href="#" aria-label="공지사항">공지사항</a></li>
@@ -556,11 +551,7 @@ class Header extends LitElement {
               <div class="header-site-select">
                 <h1 class="header-logo">
                   <a href="/" aria-label="마켓컬릿 홈으로 이동">
-                    <img
-                      src="/public/logo2.webp"
-                      alt="마켓컬릿 로고"
-                      role="img"
-                    />
+                    <img src="/public/logo2.webp" alt="마켓컬릿 로고" />
                   </a>
                 </h1>
                 <nav class="header-site-select">
@@ -585,11 +576,7 @@ class Header extends LitElement {
                       </a>
                     </li>
                     <span class="new-icon">
-                      <img
-                        src="/icon/new.webp"
-                        alt="새로운 아이콘"
-                        role="img"
-                      />
+                      <img src="/icon/new.webp" alt="새로운 아이콘" />
                     </span>
                   </ul>
                 </nav>
@@ -605,7 +592,6 @@ class Header extends LitElement {
                     src="/icon/header-search.svg"
                     alt="검색 아이콘"
                     class="icon"
-                    role="img"
                   />
                 </button>
               </form>
@@ -616,7 +602,6 @@ class Header extends LitElement {
                       src="/icon/map.svg"
                       alt="매장 찾기 아이콘"
                       class="icon"
-                      role="img"
                     />
                     <div class="map-popup">
                       <p>
@@ -634,7 +619,6 @@ class Header extends LitElement {
                       src="/icon/favorits.svg"
                       alt="찜한 상품 목록 아이콘"
                       class="icon"
-                      role="img"
                     />
                   </a>
                 </li>
@@ -644,7 +628,6 @@ class Header extends LitElement {
                       src="/icon/header-cart.svg"
                       alt="장바구니 아이콘"
                       class="icon"
-                      role="img"
                     />
                   </a>
                 </li>
@@ -664,7 +647,6 @@ class Header extends LitElement {
                   alt="카테고리"
                   class="nav-category-icon nav-category-hover"
                   aria-label="카테고리"
-                  role="img"
                 />
                 <span class="nav-category-text nav-category-hover"
                   >카테고리</span
