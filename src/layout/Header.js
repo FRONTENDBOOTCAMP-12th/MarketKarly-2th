@@ -372,7 +372,7 @@ class Header extends LitElement {
           rgba(0, 0, 0, 0)
         );
         z-index: 9;
-        top: 24%;
+        top: 100%;
       }
 
       @media screen and (max-width: 1024px) {
@@ -691,10 +691,10 @@ class Header extends LitElement {
                 배송안내
               </a>
             </div>
+            <div class="header-shadow"></div>
           </nav>
         </div>
       </header>
-      <div class="header-shadow"></div>
     `;
   }
 }
