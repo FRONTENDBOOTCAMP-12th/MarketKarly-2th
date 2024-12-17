@@ -13,8 +13,9 @@ class Review extends LitElement {
         right: 0;
         bottom: 0;
         left: 0;
-        background-color: rgba(0, 0, 0, 0.6); /* 어두운 반투명 배경 */
+        background-color: rgba(0, 0, 0, 0.6);
         z-index: 1030;
+        transition: opacity 0.4s ease;
       }
 
       .modal-transition {
@@ -22,19 +23,20 @@ class Review extends LitElement {
       }
 
       .review-container {
-        position: fixed; /* 화면에 고정 */
-        top: 50%; /* 화면 세로 중간 */
-        left: 50%; /* 화면 가로 중간 */
-        transform: translate(-50%, -50%); /* 정확히 중앙에 위치 */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         display: flex;
         flex-direction: column;
         width: 793px;
         height: 630px;
-        background-color: white; /* 모달 창의 배경 색 */
-        border-radius: 8px; /* 테두리 둥글게 */
+        background-color: white;
+        border-radius: 8px;
         z-index: 1040;
         padding: 32px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        transition: opacity 0.4s ease;
       }
 
       .review-header {
@@ -44,6 +46,15 @@ class Review extends LitElement {
         align-items: center;
         padding: 0 0 20px;
         border-bottom: 1px solid #e1e1e1;
+      }
+
+      .review-close-btn:hover {
+        cursor: pointer;
+      }
+
+      .review-close-btn:hover {
+        filter: invert(33%) sepia(98%) saturate(1497%) hue-rotate(222deg)
+          brightness(87%) contrast(91%);
       }
 
       .review-title {
@@ -83,7 +94,7 @@ class Review extends LitElement {
         display: flex;
         flex-direction: column;
         padding: 16px 0 0;
-        gap: 12px;
+        gap: 16px;
         height: 328px;
       }
 
@@ -91,11 +102,11 @@ class Review extends LitElement {
       .content-section {
         display: flex;
         flex-direction: row;
-        align-items: flex-start; /* 내용 위로 정렬 */
+        align-items: flex-start;
       }
 
       .section-label {
-        width: 100px;
+        width: 90px;
         padding: 8px 0 0 8px;
         font-weight: 600;
         font-size: 16px;
@@ -122,6 +133,16 @@ class Review extends LitElement {
         justify-content: flex-start;
         resize: none;
         overflow-y: auto;
+      }
+      .character-count {
+        font-size: 12px;
+        color: #888888;
+        text-align: right;
+        margin-top: 4px;
+        position: absolute;
+        right: 32px;
+        bottom: 12px;
+        z-index: 100;
       }
 
       .buttons {
@@ -153,13 +174,29 @@ class Review extends LitElement {
         background: #e1e1e1;
         color: #ffffff;
       }
+
+      .close {
+        display: none;
+        opacity: 0;
+      }
     `,
   ];
+  constructor() {
+    super();
+    this.content = '';
+  }
   // '닫기' 버튼을 눌렀을 때
   handleShortClose() {
-    const shortClose = this.buttons[1];
-    const modal = shortClose.closest('section');
+    const modalBackdrop = this.shadowRoot.querySelector('.modal-backdrop');
+    const modal = this.shadowRoot.querySelector('.review-container');
+
+    modalBackdrop.classList.add('close');
     modal.classList.add('close');
+  }
+
+  handleInput(event) {
+    this.content = event.target.value;
+    this.requestUpdate();
   }
 
   render() {
@@ -169,10 +206,11 @@ class Review extends LitElement {
         <div class="review-header">
           <h2 class="review-title">후기 작성</h2>
           <img
-            src="/icon/hamburger.webp"
-            alt="카테고리"
-            class="nav-category-icon nav-category-hover"
-            aria-label="카테고리"
+            src="/icon/review-close.svg"
+            alt="닫기 버튼"
+            class="review-close-btn"
+            aria-label="닫기기"
+            @click=${this.handleShortClose}
           />
         </div>
 
@@ -203,12 +241,15 @@ class Review extends LitElement {
                 class="content-input"
                 placeholder="상품에 대한 후기를 작성해주세요."
               ></textarea>
+              <div class="character-count">${this.content.length}/5000</div>
             </div>
           </div>
         </div>
 
         <div class="buttons">
-          <button class="btn btn-cancel">취소</button>
+          <button class="btn btn-cancel" @click=${this.handleShortClose}>
+            취소
+          </button>
           <button class="btn btn-submit">등록</button>
         </div>
       </div>
