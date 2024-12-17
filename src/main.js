@@ -4,3 +4,4 @@ import '@/components/Banner';
 import '@/components/RecentProduct';
 import '@/pages/main/main';
 import '@/components/Modal';
+import '@/components/Review';
