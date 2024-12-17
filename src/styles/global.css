@@ -42,6 +42,7 @@
   --font-5xl: 2.5rem; /* 40px */
 
   /* ------------------------------- line-height ------------------------------ */
+  --extra-light-line-height: 1.4;
   --light-line-height: 1.5;
   --regular-line-height: 1.6;
 
