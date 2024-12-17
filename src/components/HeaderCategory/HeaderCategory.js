@@ -16,7 +16,7 @@ class HeaderCategory extends LitElement {
       <ul class="category-list" aria-label="카테고리리 목록">
         <li aria-label="채소">
           <img
-            src="../../../public/icon/header-category-veggies.svg"
+            src="/icon/header-category-veggies.svg"
             alt="채소 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -24,7 +24,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="과일 · 견과 · 쌀">
           <img
-            src="../../../public/icon/header-category-fruit.svg"
+            src="/icon/header-category-fruit.svg"
             alt="과일/견과/쌀 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -32,7 +32,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="수산 · 해산 · 건어물">
           <img
-            src="../../../public/icon/header-category-seafood.svg"
+            src="/icon/header-category-seafood.svg"
             alt="수산/해산/건어물 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -40,7 +40,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="정육 · 계란">
           <img
-            src="../../../public/icon/header-category-meat.svg"
+            src="/icon/header-category-meat.svg"
             alt="정육/계란 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -49,7 +49,7 @@ class HeaderCategory extends LitElement {
 
         <li aria-label="국 · 반찬 · 메인요리">
           <img
-            src="../../../public/icon/header-category-side.svg"
+            src="/icon/header-category-side.svg"
             alt="국/반찬/메인요리 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -57,7 +57,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="샐러드 · 간편식">
           <img
-            src="../../../public/icon/header-category-convenient.svg"
+            src="/icon/header-category-convenient.svg"
             alt="샐러드/간편식 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -65,7 +65,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="면 · 양념 · 오일">
           <img
-            src="../../../public/icon/header-category-sauce.svg"
+            src="/icon/header-category-sauce.svg"
             alt="면/양념/오일 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -74,7 +74,7 @@ class HeaderCategory extends LitElement {
 
         <li aria-label="생수 · 음료 · 우유 · 커피">
           <img
-            src="../../../public/icon/header-category-snacks.svg"
+            src="/icon/header-category-snacks.svg"
             alt="생수/음료/우유/커피 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -82,7 +82,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="간식 · 과자 · 떡">
           <img
-            src="../../../public/icon/header-category-cookie.svg"
+            src="/icon/header-category-cookie.svg"
             alt="간식/과자/떡 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -90,7 +90,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="베이커리 · 치즈 · 델리">
           <img
-            src="../../../public/icon/header-category-deli.svg"
+            src="/icon/header-category-deli.svg"
             alt="베이커리/치즈/델리 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -98,7 +98,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="건강샘플">
           <img
-            src="../../../public/icon/header-category-health.svg"
+            src="/icon/header-category-health.svg"
             alt="건강샘플 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -106,7 +106,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="전통주">
           <img
-            src="../../../public/icon/header-category-liquor.svg"
+            src="/icon/header-category-liquor.svg"
             alt="전통주 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -114,7 +114,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="생활용품 · 리빙 · 캠핑">
           <img
-            src="../../../public/icon/header-category-living.svg"
+            src="/icon/header-category-living.svg"
             alt="생활용품/리빙/캠핑 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -122,7 +122,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="스킨케어 · 메이크업">
           <img
-            src="../../../public/icon/header-category-beauty.svg"
+            src="/icon/header-category-beauty.svg"
             alt="스킨케어/메이크업 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -130,7 +130,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="헤어 · 바디 · 구강">
           <img
-            src="../../../public/icon/header-category-body.svg"
+            src="/icon/header-category-body.svg"
             alt="헤어/바디/구강 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -138,7 +138,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="주방용품">
           <img
-            src="../../../public/icon/header-category-kitchen.svg"
+            src="/icon/header-category-kitchen.svg"
             alt="주방용품 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -146,7 +146,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="가전제품">
           <img
-            src="../../../public/icon/header-category-electronic.svg"
+            src="/icon/header-category-electronic.svg"
             alt="가전제품 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -154,7 +154,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="반려동물">
           <img
-            src="../../../public/icon/header-category-pet.svg"
+            src="/icon/header-category-pet.svg"
             alt="반려동물 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -162,7 +162,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="베이비 · 키즈 · 완구">
           <img
-            src="../../../public/icon/header-category-kids.svg"
+            src="/icon/header-category-kids.svg"
             alt="베이비/키즈/완구 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
@@ -170,7 +170,7 @@ class HeaderCategory extends LitElement {
         </li>
         <li aria-label="여행 · 티켓">
           <img
-            src="../../../public/icon/header-category-recommend.svg"
+            src="/icon/header-category-recommend.svg"
             alt="여행/티켓 아이콘"
             class="w-6 h-6 hover:fill-primary"
           />
