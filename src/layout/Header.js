@@ -6,10 +6,6 @@ class Header extends LitElement {
   static styles = [
     reset,
     css`
-      * {
-        box-sizing: border-box;
-      }
-
       body {
         background: var(--white-color, #ffffff);
         overflow-x: hidden;
@@ -170,6 +166,7 @@ class Header extends LitElement {
         border: 0.0625rem solid var(--primary-color, #283198);
         border-radius: 4px;
         padding: 0.75rem 0.875rem;
+        box-sizing: border-box;
       }
 
       .header-search input::placeholder {
@@ -371,22 +368,11 @@ class Header extends LitElement {
         height: 5px;
         background: linear-gradient(
           to bottom,
-          rgba(0, 0, 0, 0.9),
+          rgba(0, 0, 0, 0.09),
           rgba(0, 0, 0, 0)
         );
         z-index: 9;
-        bottom: 1px;
-      }
-
-      .header-shadow::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: #ffffff;
-        z-index: 9;
+        top: 24%;
       }
 
       @media screen and (max-width: 1024px) {
@@ -418,8 +404,6 @@ class Header extends LitElement {
           gap: 1rem;
           justify-content: flex-start;
           margin-right: 0;
-          /* top: 0;
-    margin-top: 0; */
         }
 
         .header-search {
