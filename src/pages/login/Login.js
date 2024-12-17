@@ -9,11 +9,12 @@ class Login extends LitElement {
     reset,
     css`
       .container {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 80px 0;
 
         & h1 {
           font-size: var(--font-xl);
@@ -22,12 +23,13 @@ class Login extends LitElement {
         }
 
         & form {
+          width: 340px;
           & input {
             box-sizing: border-box;
             border: 1px solid var(--gray-color-300, #a6a6a6);
             border-radius: 4px;
+            width: 100%;
             padding: var(--space-xl);
-            min-width: 340px;
             margin-bottom: var(--space-lg);
             outline: none;
 
@@ -62,12 +64,13 @@ class Login extends LitElement {
             flex-direction: column;
             gap: 12px;
           }
+
+          .error-message {
+            color: red;
+            font-size: var(--font-sm);
+            margin-top: var(--space-lg);
+          }
         }
-      }
-      .error-message {
-        color: red;
-        font-size: var(--font-sm);
-        margin-top: var(--space-lg);
       }
     `,
   ];
@@ -154,15 +157,15 @@ class Login extends LitElement {
           </div>
 
           <div class="button-container">
-            <btn-filled-element
+            <btn-filled-component
               width="100%"
               text="로그인"
               @click="${this.handleSubmit}"
-            ></btn-filled-element>
-            <btn-emptied-element
+            ></btn-filled-component>
+            <btn-emptied-component
               width="100%"
               text="회원가입"
-            ></btn-emptied-element>
+            ></btn-emptied-component>
           </div>
 
           ${this.errorMessage
