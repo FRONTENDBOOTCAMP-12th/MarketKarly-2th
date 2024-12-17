@@ -595,15 +595,15 @@ class Header extends LitElement {
                         aria-label="뷰티컬릿 홈페이지"
                       >
                         뷰티컬릿
-                        <span class="new-icon">
-                          <img
-                            src="/icon/new.webp"
-                            alt="새로운 아이콘"
-                            role="img"
-                          />
-                        </span>
                       </a>
                     </li>
+                    <span class="new-icon">
+                      <img
+                        src="/icon/new.webp"
+                        alt="새로운 아이콘"
+                        role="img"
+                      />
+                    </span>
                   </ul>
                 </nav>
               </div>
