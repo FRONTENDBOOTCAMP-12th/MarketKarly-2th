@@ -270,12 +270,15 @@ class Header extends LitElement {
         background: var(--white-color, #ffffff);
       }
 
-      .nav-category span {
+      .nav-category-button {
+        align-items: center;
         text-decoration: none;
         font-weight: var(--text-semi-bold);
         letter-spacing: -0.03125rem;
         padding-left: 0.5rem;
         background: var(--white-color, #ffffff);
+        display: flex;
+        gap: 1rem;
       }
 
       .nav-category-icon {
