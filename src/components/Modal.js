@@ -1,4 +1,3 @@
-import '@/assets/font/Pretendard.css';
 import { LitElement, css, html } from 'lit';
 
 class Modal extends LitElement {
@@ -13,6 +12,7 @@ class Modal extends LitElement {
       flex-direction: column;
       border-radius: 10px;
       overflow: hidden;
+      z-index: 9999;
 
       .img-wrapper {
         flex: 1;
@@ -30,9 +30,8 @@ class Modal extends LitElement {
           text-align: center;
           align-content: center;
           font-size: var(--font-lg);
-          font-weight: var(--text-regular);
-          color: var(--white-color);
           line-height: var(--regular-line-height);
+          color: var(--white-color, #fff);
           margin: 0;
         }
       }
@@ -51,7 +50,7 @@ class Modal extends LitElement {
           background: var(--white-color);
 
           &:nth-of-type(1) {
-            border-right: 1px solid var(--gray-color-100);
+            border-right: 1px solid var(--gray-color-100, #e1e1e1);
           }
         }
       }

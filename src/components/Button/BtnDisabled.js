@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit';
-import reset from '@/styles/reset.css?inline';
-import '@/assets/font/Pretendard.css';
-import a11y from '@/base/a11y.css?inline';
+import reset from '@/styles/reset';
+import a11y from '@/base/a11y';
 
 class BtnDisabled extends LitElement {
   constructor() {
@@ -9,6 +8,8 @@ class BtnDisabled extends LitElement {
   }
 
   static styles = [
+    reset,
+    a11y,
     css`
       .btn-disabled {
         padding: 0;
@@ -21,7 +22,6 @@ class BtnDisabled extends LitElement {
 
         background-color: var(--gray-color-100, #e1e1e1);
         color: var(--white-color, #ffffff);
-        font-family: Pretendard;
         font-size: var(--font-md);
         font-weight: var(--text-semi-bold);
         line-height: var(--light-line-height);
@@ -33,14 +33,9 @@ class BtnDisabled extends LitElement {
 
   render() {
     return html/* html */ `
-      <style>
-        ${reset}
-        ${a11y}
-      </style>
-
       <button class="btn-disabled" type="button">text</button>
     `;
   }
 }
 
-customElements.define('btn-disabled-element', BtnDisabled);
+customElements.define('btn-disabled-component', BtnDisabled);

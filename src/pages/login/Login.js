@@ -1,11 +1,12 @@
 import { LitElement, html, css } from 'lit';
-import reset from '@/styles/reset.css?inline';
+import reset from '@/styles/reset';
 import '@/assets/font/Pretendard.css';
-import '@/components/Button/BtnFilled.js';
-import '@/components/Button/BtnEmptied.js';
+import '@/components/Button/BtnFilled';
+import '@/components/Button/BtnEmptied';
 
 class Login extends LitElement {
   static styles = [
+    reset,
     css`
       .container {
         position: absolute;
@@ -173,4 +174,4 @@ class Login extends LitElement {
   }
 }
 
-customElements.define('login-element', Login);
+customElements.define('login-page', Login);

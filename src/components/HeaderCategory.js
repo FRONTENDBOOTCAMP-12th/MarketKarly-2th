@@ -1,9 +1,70 @@
-import '@/assets/font/Pretendard.css';
-import reset from '@/styles/reset.css?inline';
-import style from './HeaderCategory.css?inline';
-import { LitElement, html } from 'lit';
+import reset from '@/styles/reset';
+import { LitElement, css, html } from 'lit';
 
 class HeaderCategory extends LitElement {
+  static styles = [
+    reset,
+    css`
+      /* ----------------------------------------------------- 주요 항목 */
+
+      .category-list {
+        list-style-type: none;
+        position: absolute;
+        z-index: 0;
+        border: 0.0625rem solid var(--gray-color-100, #ececec);
+        padding: 0;
+        background: var(--white-color, #fff);
+        width: 250px;
+        left: 0;
+        top: 19.5px;
+        height: 60vh;
+        bottom: 0;
+        transition: all 0.2s ease-in-out;
+        -webkit-transition: all 0.2s ease-in-out;
+        -moz-transition: all 0.2s ease-in-out;
+        clip-path: none;
+        overflow-y: auto;
+
+        a {
+          font-size: var(--font-md);
+          font-weight: var(--text-regular);
+        }
+
+        li {
+          position: relative;
+          display: flex;
+          align-items: center;
+          padding: var(--space-lg);
+          cursor: pointer;
+          font-weight: var(--text-semi-bold);
+          font-size: var(--font-md);
+          line-height: var(--regular-line-height);
+          color: var(--content-text-color, #333);
+          gap: var(--space-lg);
+          vertical-align: middle;
+
+          &:hover {
+            background-color: var(--gray-color-50, #f5f5f5);
+            color: var(--primary-color, #283198);
+
+            img {
+              filter: invert(24%) sepia(68%) saturate(2054%) hue-rotate(226deg)
+                brightness(92%) contrast(92%);
+              stroke-width: 2.5;
+            }
+          }
+
+          img {
+            width: 1.5rem;
+            height: 1.5rem;
+            flex-shrink: 0;
+            transition: filter 0.2s ease-in-out;
+          }
+        }
+      }
+    `,
+  ];
+
   constructor() {
     super();
   }
@@ -181,4 +242,4 @@ class HeaderCategory extends LitElement {
   }
 }
 
-customElements.define('header-category', HeaderCategory);
+customElements.define('header-category-component', HeaderCategory);

@@ -1,47 +1,50 @@
-import '@/components/Card/Card';
+import '@/components/Card';
 import { LitElement, html, css } from 'lit';
-import reset from '@/styles/reset.css?inline';
+import reset from '@/styles/reset';
 import { register } from 'swiper/element';
 register();
 
 class ProductsSwiper extends LitElement {
-  static styles = css`
-    main {
-      font-family: 'Pretendard';
-    }
+  static styles = [
+    reset,
+    css`
+      main {
+        font-family: 'Pretendard';
+      }
 
-    .recommend {
-      position: relative;
-      width: 1050px;
-      margin: 0 auto;
-      padding: var(--space-5xl) 0;
+      .recommend {
+        position: relative;
+        width: 1050px;
+        margin: 0 auto;
+        padding: var(--space-5xl) 0;
 
-      h2 {
-        text-align: center;
+        h2 {
+          text-align: center;
+          margin: var(--space-5xl) 0;
+        }
+      }
+
+      button {
+        position: absolute;
+        top: 260px;
+        right: -14px;
+        border: none;
+        z-index: 1;
+        background-image: url('icon/arrow-black.svg');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        rotate: 180deg;
+      }
+
+      .line-banner {
+        display: flex;
+        justify-content: center;
         margin: var(--space-5xl) 0;
       }
-    }
-
-    button {
-      position: absolute;
-      top: 260px;
-      right: -14px;
-      border: none;
-      z-index: 1;
-      background-image: url('icon/arrow-black.svg');
-      background-size: cover;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      rotate: 180deg;
-    }
-
-    .line-banner {
-      display: flex;
-      justify-content: center;
-      margin: var(--space-5xl) 0;
-    }
-  `;
+    `,
+  ];
 
   static properties = {
     title: { type: String },
@@ -75,19 +78,19 @@ class ProductsSwiper extends LitElement {
           speed="1500"
         >
           <swiper-slide>
-            <product-card></product-card>
+            <card-component></card-component>
           </swiper-slide>
           <swiper-slide>
-            <product-card></product-card>
+            <card-component></card-component>
           </swiper-slide>
           <swiper-slide>
-            <product-card></product-card>
+            <card-component></card-component>
           </swiper-slide>
           <swiper-slide>
-            <product-card></product-card>
+            <card-component></card-component>
           </swiper-slide>
           <swiper-slide>
-            <product-card></product-card>
+            <card-component></card-component>
           </swiper-slide>
         </swiper-container>
         <button @click=${this.nextSlide} aria-label="옆으로 넘기기"></button>
@@ -96,4 +99,4 @@ class ProductsSwiper extends LitElement {
   }
 }
 
-customElements.define('products-swiper', ProductsSwiper);
+customElements.define('main-page', ProductsSwiper);

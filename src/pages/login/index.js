@@ -1,2 +1,2 @@
-import '@/layout/Header/Header';
+import '@/layout/Header/';
 import '@/pages/login/Login';

@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit';
-import reset from '@/styles/reset.css?inline';
-import '@/assets/font/Pretendard.css';
-import a11y from '@/base/a11y.css?inline';
+import reset from '@/styles/reset';
+import a11y from '@/base/a11y';
 
 class BtnEmptied extends LitElement {
   static properties = {
@@ -20,6 +19,8 @@ class BtnEmptied extends LitElement {
   }
 
   static styles = [
+    reset,
+    a11y,
     css`
       .btn-emptied {
         padding: 0;
@@ -30,7 +31,6 @@ class BtnEmptied extends LitElement {
         height: 54px;
 
         background-color: var(--white-color, #ffffff);
-        font-family: Pretendard;
         font-size: var(--font-md);
         font-weight: var(--text-semi-bold);
         line-height: var(--light-line-height);
@@ -50,7 +50,7 @@ class BtnEmptied extends LitElement {
   render() {
     return html/* html */ `
       <style>
-        ${reset} ${a11y} .btn-emptied {
+        .btn-emptied {
           width: ${this.width};
           color: ${this.color};
         }
@@ -61,4 +61,4 @@ class BtnEmptied extends LitElement {
   }
 }
 
-customElements.define('btn-emptied-element', BtnEmptied);
+customElements.define('btn-emptied-component', BtnEmptied);

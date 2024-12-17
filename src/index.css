@@ -1,3 +1,13 @@
+@import url(/src/assets/font/Pretendard.css);
+
+*,
+body {
+  font-family: 'Pretendard';
+  font-size: var(--font-md);
+  font-weight: var(--text-regular);
+  color: var(--content-text-color, #333);
+}
+
 .line-banner {
   display: flex;
   justify-content: center;

@@ -1,19 +1,170 @@
-import '@/assets/font/Pretendard.css';
-import reset from '@/styles/reset.css?inline';
-import style from '@/layout/Footer/Footer.css?inline';
-import { LitElement, html } from 'lit';
+import reset from '@/styles/reset';
+import { LitElement, html, css } from 'lit';
 
 class Footer extends LitElement {
+  static styles = [
+    reset,
+    css`
+      #footer {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        grid-template-rows: repeat(3, auto);
+        min-width: 1200px;
+
+        .footer-top {
+          grid-column: 2 / 3;
+          display: flex;
+          flex-flow: row nowrap;
+          margin-top: var(--space-4xl);
+          margin-bottom: var(--space-5xl);
+          justify-content: center;
+          gap: 5.4375rem;
+
+          .service {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            h2 {
+              font-size: var(--font-lg);
+            }
+
+            .tel {
+              display: flex;
+              align-items: center;
+              flex-flow: row nowrap;
+              gap: var(--space-md);
+
+              h3 {
+                font-size: var(--font-4xl);
+                font-weight: var(--text-bold);
+              }
+
+              span {
+                font-size: var(--font-md);
+                font-weight: var(--text-semi-bold);
+              }
+            }
+          }
+        }
+      }
+
+      div:has(> h4) {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xl);
+
+        h4 {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--gray-color-200, #c4c4c4);
+          font-size: var(--font-md);
+          font-weight: var(--text-regular);
+          text-align: center;
+          width: 140px;
+          height: 40px;
+          padding: var(--space-sm);
+          line-height: var(--regular-line-height);
+        }
+
+        p {
+          line-height: var(--regular-line-height);
+        }
+      }
+      .non-member {
+        display: flex;
+        flex-direction: column;
+        font-size: var(--font-sm);
+
+        p {
+          line-height: var(--regular-line-height);
+
+          a {
+            color: var(--primary-color, #283198);
+          }
+        }
+      }
+
+      .about {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4xl);
+
+        .nav-list {
+          display: flex;
+          gap: 0.875rem;
+
+          a {
+            font-size: var(--font-md);
+            font-weight: var(--text-regular);
+          }
+        }
+
+        .info {
+          font-size: var(--font-sm);
+
+          p {
+            line-height: var(--regular-line-height);
+
+            a {
+              color: var(--primary-color, #283198);
+            }
+          }
+        }
+
+        .link-list {
+          display: flex;
+          gap: var(--space-2xl);
+        }
+      }
+
+      .footer-middle {
+        grid-column: 2 / 3;
+        display: flex;
+        justify-content: center;
+        gap: var(--space-2xl);
+        font-size: 0.625rem;
+        padding-top: var(--space-3xl);
+        padding-bottom: var(--space-5xl);
+        border-top: 1px solid #ddd;
+
+        div {
+          display: flex;
+          gap: var(--space-md);
+
+          img {
+            height: 34px;
+          }
+
+          p {
+            line-height: var(--regular-line-height);
+          }
+        }
+      }
+
+      .footer-bottom {
+        grid-column: 1 / -1;
+        text-align: center;
+        font-size: 0.625rem;
+        color: var(--gray-color-400, #898989);
+        background-color: var(--gray-color-50, #f9f9f9);
+        padding-top: var(--space-2xl);
+        padding-bottom: var(--space-5xl);
+
+        .copyright {
+          margin-top: var(--space-md);
+        }
+      }
+    `,
+  ];
+
   constructor() {
     super();
   }
 
   render() {
     return html`
-      <style>
-        ${style}
-        ${reset}
-      </style>
       <footer id="footer">
         <section class="footer-top">
           <article class="service">
@@ -203,4 +354,4 @@ class Footer extends LitElement {
   }
 }
 
-customElements.define('footer-element', Footer);
+customElements.define('footer-layout', Footer);

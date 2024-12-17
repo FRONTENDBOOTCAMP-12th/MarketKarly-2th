@@ -1,16 +1,17 @@
 import { LitElement, html, css } from 'lit';
-import reset from '@/styles/reset.css?inline';
+import reset from '@/styles/reset';
 import '@/assets/font/Pretendard.css';
 import { register } from 'swiper/element';
 register();
 
 class RecentElement extends LitElement {
   static styles = [
+    reset,
     css`
       .container {
         width: 76px;
         height: 224px;
-        border: 1px solid var(--gray-color-200);
+        border: 1px solid var(--gray-color-200, #c4c4c4);
         font-family: 'Pretendard';
         padding: 0.5rem;
         box-sizing: border-box;
@@ -23,6 +24,8 @@ class RecentElement extends LitElement {
         top: 50%;
         right: 0;
         transform: translate(-50%, -50%);
+        z-index: 999;
+        background-color: var(--white-color, #fff);
       }
 
       .title {
@@ -35,7 +38,7 @@ class RecentElement extends LitElement {
       }
 
       swiper-slide img {
-        width: 2.5rem;
+        width: 40px;
       }
 
       button {

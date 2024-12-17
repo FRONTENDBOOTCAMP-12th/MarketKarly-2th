@@ -1,5 +1,6 @@
-import '@/layout/Header/Header';
-import '@/layout/Footer/Footer';
-import '@/components/Banner/Banner';
+import '@/layout/Header';
+import '@/layout/Footer';
+import '@/components/Banner';
+import '@/components/RecentProduct';
 import '@/pages/main/main';
-
+import '@/components/Modal';
