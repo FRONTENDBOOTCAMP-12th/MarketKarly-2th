@@ -155,6 +155,12 @@ class Review extends LitElement {
       }
     `,
   ];
+  // '닫기' 버튼을 눌렀을 때
+  handleShortClose() {
+    const shortClose = this.buttons[1];
+    const modal = shortClose.closest('section');
+    modal.classList.add('close');
+  }
 
   render() {
     return html`
@@ -162,7 +168,12 @@ class Review extends LitElement {
       <div class="review-container">
         <div class="review-header">
           <h2 class="review-title">후기 작성</h2>
-          <div class="cancel-icon"></div>
+          <img
+            src="/icon/hamburger.webp"
+            alt="카테고리"
+            class="nav-category-icon nav-category-hover"
+            aria-label="카테고리"
+          />
         </div>
 
         <div class="product-section">
