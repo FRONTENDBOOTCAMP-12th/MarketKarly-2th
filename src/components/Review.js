@@ -31,36 +31,32 @@ class Review extends LitElement {
         flex-direction: column;
         width: 793px;
         height: 630px;
-        background-color: white;
+        background-color: var(--white-color, #ffffff);
         border-radius: 8px;
         z-index: 1040;
-        padding: 32px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
         transition: opacity 0.4s ease;
       }
 
       .review-header {
+        height: 60px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 0 0 20px;
-        border-bottom: 1px solid #e1e1e1;
+        padding: 0 0 1.25rem;
+        border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
       }
 
       .review-close-btn:hover {
         cursor: pointer;
-      }
-
-      .review-close-btn:hover {
         filter: invert(33%) sepia(98%) saturate(1497%) hue-rotate(222deg)
           brightness(87%) contrast(91%);
       }
 
       .review-title {
-        font-weight: 700;
-        font-size: 28.43px;
-        color: #000000;
+        font-weight: var(--text-bold);
+        font-size: var(--font-3xl);
       }
 
       .cancel-icon {
@@ -70,32 +66,31 @@ class Review extends LitElement {
       }
 
       .product-section {
+        height: 104px;
         display: flex;
         align-items: center;
-        padding: 16px 0;
-        border-bottom: 1px solid #e1e1e1;
-        gap: 24px;
+        padding: 0;
+        border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
+        gap: 1.5rem;
       }
 
       .product-image {
         width: 72px;
         height: 72px;
-        background: url('gv10000257547_1.png');
         background-size: cover;
       }
 
       .product-name {
-        font-weight: 600;
-        font-size: 16px;
-        color: #000000;
+        font-weight: var(--text-bold);
+        font-size: 1.125rem;
       }
 
       .review-detail {
         display: flex;
         flex-direction: column;
-        padding: 16px 0 0;
-        gap: 16px;
-        height: 328px;
+        padding: 1rem 0 0;
+        gap: 1rem;
+        height: 360px;
       }
 
       .title-section,
@@ -107,50 +102,52 @@ class Review extends LitElement {
 
       .section-label {
         width: 90px;
-        padding: 8px 0 0 8px;
-        font-weight: 600;
-        font-size: 16px;
-        color: #333333;
+        padding: 0.5rem 0 0 0.5rem;
+        font-weight: var(--text-bold);
+        color: var(--gray-color-700, #404040);
+        font-size: 1.125rem;
       }
 
       .title-input {
         width: 629px;
         height: 44px;
-        border: 1px solid #a6a6a6;
+        line-height: var(--regular-line-height);
+        border: 1px solid var(--gray-color-300, #a6a6a6);
         border-radius: 4px;
-        padding: 0 20px;
+        padding: 0 1.25rem;
       }
 
       .content-input {
         width: 629px;
         height: 198px;
-        border: 1px solid #a6a6a6;
+        border: 1px solid var(--gray-color-300, #a6a6a6);
         border-radius: 4px;
-        padding: 8px 20px;
-        line-height: 1.2;
+        padding: 0.5rem 1.25rem;
+        line-height: var(--regular-line-height);
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         resize: none;
         overflow-y: auto;
+        position: relative;
       }
+
       .character-count {
-        font-size: 12px;
-        color: #888888;
-        text-align: right;
-        margin-top: 4px;
+        font-size: var(--font-sm);
+        color: var(--gray-color-500, #6b6b6b);
         position: absolute;
-        right: 32px;
-        bottom: 12px;
-        z-index: 100;
+        right: 3.8rem;
+        bottom: 11.6rem;
+        background: var(--white-color, #ffffff);
       }
 
       .buttons {
         display: flex;
         justify-content: center;
-        gap: 12px;
-        padding: 20px 0 0;
-        border-top: 1px solid #e1e1e1;
+        gap: 0.75rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--gray-color-100, #e1e1e1);
+        margin-top: auto;
       }
 
       .btn {
@@ -160,32 +157,31 @@ class Review extends LitElement {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-weight: 600;
-        font-size: 16px;
+        font-weight: var(--text-semi-bold);
         border-color: var(--gray-color-100, #e1e1e1);
       }
 
       .btn-cancel {
-        background-color: #fff;
-        color: #333333;
+        background-color: var(--white-color, #ffffff);
+        color: var(--gray-color-700, #404040);
       }
 
       .btn-submit {
-        background: #e1e1e1;
-        color: #ffffff;
+        background: var(--gray-color-100, #e1e1e1);
+        color: var(--white-color, #ffffff);
       }
 
       .close {
         display: none;
-        opacity: 0;
       }
     `,
   ];
+
   constructor() {
     super();
     this.content = '';
   }
-  // '닫기' 버튼을 눌렀을 때
+
   handleShortClose() {
     const modalBackdrop = this.shadowRoot.querySelector('.modal-backdrop');
     const modal = this.shadowRoot.querySelector('.review-container');
@@ -209,7 +205,7 @@ class Review extends LitElement {
             src="/icon/review-close.svg"
             alt="닫기 버튼"
             class="review-close-btn"
-            aria-label="닫기기"
+            aria-label="닫기"
             @click=${this.handleShortClose}
           />
         </div>
@@ -240,6 +236,7 @@ class Review extends LitElement {
               <textarea
                 class="content-input"
                 placeholder="상품에 대한 후기를 작성해주세요."
+                @input=${this.handleInput}
               ></textarea>
               <div class="character-count">${this.content.length}/5000</div>
             </div>
