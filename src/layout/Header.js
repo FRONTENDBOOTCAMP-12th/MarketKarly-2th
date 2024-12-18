@@ -461,50 +461,23 @@ class Header extends LitElement {
       }
     `,
   ];
-
   static properties = {
-    isCategoryOpen: { type: Boolean },
+    isCategoryOpen: { type: Boolean }, // 상태 관리
   };
 
   constructor() {
     super();
-    this.isCategoryOpen = false;
-    this.closeTimeout = null;
+    this.isCategoryOpen = false; // 초기 상태: 닫힘
   }
 
-  handleMouseEnter() {
-    clearTimeout(this.closeTimeout);
+  // 카테고리 열기
+  openCategory() {
     this.isCategoryOpen = true;
   }
 
-  handleMouseLeave(e) {
-    const relatedTarget = e.relatedTarget;
-
-    if (
-      this.isDescendant(
-        this.renderRoot.querySelector('.nav-category'),
-        relatedTarget
-      ) ||
-      this.isDescendant(
-        this.renderRoot.querySelector('header-category'),
-        relatedTarget
-      )
-    ) {
-      return;
-    }
-
-    this.closeTimeout = setTimeout(() => {
-      this.isCategoryOpen = false;
-    }, 100);
-  }
-
-  isDescendant(parent, child) {
-    let node = child;
-    while (node != null) {
-      if (node === parent) return true;
-      node = node.parentNode;
-    }
-    return false;
+  // 카테고리 닫기
+  closeCategory() {
+    this.isCategoryOpen = false;
   }
 
   render() {
@@ -636,12 +609,12 @@ class Header extends LitElement {
           </div>
 
           <nav class="nav">
-            <div class="nav-category header-category">
-              <div
-                class="nav-category-button"
-                @mouseenter="${this.handleMouseEnter}"
-                @mouseleave="${this.handleMouseLeave}"
-              >
+            <div
+              class="nav-category header-category"
+              @mouseenter=${this.openCategory}
+              @mouseleave=${this.closeCategory}
+            >
+              <div class="nav-category-button">
                 <img
                   src="/icon/hamburger.webp"
                   alt="카테고리"
@@ -652,12 +625,6 @@ class Header extends LitElement {
                   >카테고리</span
                 >
               </div>
-              ${this.isCategoryOpen
-                ? html`<header-category
-                    @mouseenter="${this.handleMouseEnter}"
-                    @mouseleave="${this.handleMouseLeave}"
-                  ></header-category>`
-                : ''}
             </div>
 
             <ul class="nav-site-map">
@@ -673,8 +640,12 @@ class Header extends LitElement {
                 배송안내
               </a>
             </div>
+
             <div class="header-shadow"></div>
           </nav>
+          ${this.isCategoryOpen
+            ? html`<header-category-component></header-category-component>`
+            : ''}
         </div>
       </header>
     `;
