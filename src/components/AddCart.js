@@ -23,13 +23,24 @@ class AddCart extends LitElement {
     reset,
     a11y,
     css`
-      .popup-bg {
-        position: absolute;
+      :host {
+        position: fixed;
+        top: 0;
+        left: 0;
+
         width: 100vw;
         height: 100vh;
+        transition: all 0.5s;
+
+        z-index: 10000;
+      }
+
+      .popup-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
         opacity: 1;
-        z-index: 10000;
       }
 
       .add-cart {
@@ -46,7 +57,6 @@ class AddCart extends LitElement {
         flex-direction: column;
         justify-content: space-between;
         gap: 1.75rem;
-        box-sizing: border-box;
 
         box-shadow: var(--below-medium);
 
@@ -197,6 +207,12 @@ class AddCart extends LitElement {
     this.changeBackground();
   }
 
+  handleBtnCancel() {
+    this.remove();
+
+    document.body.style.overflow = 'auto';
+  }
+
   render() {
     return html/* html */ `
       <div class="popup-bg">
@@ -235,7 +251,10 @@ class AddCart extends LitElement {
           <!-- total -->
 
           <div class="button-wrapper">
-            <btn-emptied-component text="취소"></btn-emptied-component>
+            <btn-emptied-component
+              @click="${this.handleBtnCancel}"
+              text="취소"
+            ></btn-emptied-component>
             <btn-filled-component text="장바구니 담기"></btn-filled-component>
           </div>
           <!-- button-wrapper -->
