@@ -5,7 +5,7 @@ class HeaderCategory extends LitElement {
     :host {
       display: block;
       position: absolute;
-      top: 7.2rem;
+      top: 115.2px;
       left: 0;
       width: 247px;
       height: 660px;
@@ -53,6 +53,12 @@ class HeaderCategory extends LitElement {
     .category-list li:hover img {
       filter: invert(24%) sepia(68%) saturate(2054%) hue-rotate(226deg)
         brightness(92%) contrast(92%);
+    }
+
+    @media screen and (max-width: 768px) {
+      :host {
+        top: 168px;
+      }
     }
   `;
 

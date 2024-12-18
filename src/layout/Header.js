@@ -46,6 +46,7 @@ class Header extends LitElement {
         padding: 0.75rem 0 0;
         height: 30px;
         margin-top: 0;
+        margin-right: 1%;
       }
 
       .header-member-item {
@@ -154,8 +155,8 @@ class Header extends LitElement {
 
       .new-icon img {
         position: static;
-        width: 8px;
-        height: 8px;
+        min-width: 8px;
+        min-height: 8px;
       }
 
       .header-search {
@@ -191,7 +192,7 @@ class Header extends LitElement {
         display: flex;
         gap: 15%;
         margin-left: auto;
-        margin-right: auto;
+        margin-right: 2rem;
       }
 
       .header-bookmarks li a {
@@ -224,7 +225,7 @@ class Header extends LitElement {
         border: 0.0625rem solid #ccc;
         padding: 1.25rem;
         z-index: 10;
-        width: 200px;
+        width: 145px;
         opacity: 2;
       }
 
@@ -334,9 +335,9 @@ class Header extends LitElement {
 
       .header-help-desk {
         display: none;
-        list-style: none;
         position: absolute;
-        top: 2rem;
+        list-style: none;
+        top: 2.1rem;
         right: 0;
         background: var(--white-color, #ffffff);
         border: 0.0625rem solid var(--gray-color-100, #e1e1e1);
@@ -407,25 +408,16 @@ class Header extends LitElement {
         }
 
         .header-search {
-          width: 100%;
+          width: 98%;
           order: 3;
-          margin-left: 0;
-          margin-right: 0;
         }
 
-        .site-beauty {
-          display: none;
-        }
-
-        .site-main {
-          display: none;
-        }
-
-        .nav-category-text {
-          display: none;
-        }
-
-        .nav-delivery {
+        .site-beauty,
+        .site-main,
+        .nav-category-text,
+        .nav-delivery,
+        .new-icon,
+        .divider-site::after {
           display: none;
         }
       }
@@ -538,7 +530,7 @@ class Header extends LitElement {
                         마켓컬릿
                       </a>
                     </li>
-                    <li class="divider"></li>
+                    <li class="divider divider-site"></li>
                     <li>
                       <a
                         href="/"
