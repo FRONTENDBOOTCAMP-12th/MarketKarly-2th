@@ -8,7 +8,7 @@ class HeaderCategory extends LitElement {
       :host {
         display: block;
         position: absolute;
-        top: 165px;
+        top: 3.1rem;
         left: 0;
         width: 247px;
         height: 660px;
@@ -43,7 +43,7 @@ class HeaderCategory extends LitElement {
       }
 
       .category-list li:hover {
-        background-color: var(--white-color, #ffffff);
+        background-color: var(--gray-color-100, #e1e1e1);
         color: var(--primary-color, #283198);
       }
 

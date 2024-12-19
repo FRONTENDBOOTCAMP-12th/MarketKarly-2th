@@ -221,7 +221,7 @@ class Header extends LitElement {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: var(--space-xl) 0;
+
         width: 100%;
       }
 
@@ -229,6 +229,7 @@ class Header extends LitElement {
         position: relative;
         width: 150px;
         display: flex;
+        padding: var(--space-xl) 0;
       }
 
       .nav-category-button {
@@ -260,6 +261,7 @@ class Header extends LitElement {
       }
 
       .nav-site-map {
+        padding: var(--space-xl) 0;
         display: flex;
         list-style: none;
         gap: 5.9rem;
@@ -476,6 +478,11 @@ class Header extends LitElement {
                 @mouseenter=${this.openCategory}
                 @mouseleave=${this.closeCategory}
               >
+              ${
+                this.isCategoryOpen
+                  ? html`<header-category-component></header-category-component>`
+                  : ''
+              }
                 <div class="nav-category-button">
                   <img
                     src="/icon/hamburger.webp"
@@ -503,11 +510,7 @@ class Header extends LitElement {
                 </a>
               </div>
             </nav>
-            ${
-              this.isCategoryOpen
-                ? html`<header-category-component></header-category-component>`
-                : ''
-            }
+
           </div>
         </div>
         </div>
