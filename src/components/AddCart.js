@@ -159,8 +159,12 @@ class AddCart extends LitElement {
     `,
   ];
 
-  firstUpdated() {
-    this.handleTotalPrice();
+  connectedCallback() {
+    super.connectedCallback();
+
+    setTimeout(() => {
+      this.handleTotalPrice();
+    }, 0);
   }
 
   get productPrice() {
@@ -266,4 +270,4 @@ class AddCart extends LitElement {
   }
 }
 
-customElements.define('add-cart', AddCart);
+customElements.define('add-cart-component', AddCart);
