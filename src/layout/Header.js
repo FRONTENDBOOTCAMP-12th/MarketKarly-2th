@@ -579,7 +579,10 @@ class Header extends LitElement {
         <nav class="top-bar-nav">
           <ul class="header-member-service">
             <li class="header-member-item divider">
-              <a href="/" class="header-member-link join" aria-label="회원가입"
+              <a
+                href="/src/pages/register/"
+                class="header-member-link join"
+                aria-label="회원가입"
                 >회원가입</a
               >
             </li>
