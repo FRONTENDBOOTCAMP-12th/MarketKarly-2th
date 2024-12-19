@@ -66,9 +66,6 @@ class ProductsSwiper extends LitElement {
 
   render() {
     return html`
-      <style>
-        ${reset}
-      </style>
       <section class="recommend">
         <h2>${this.title}</h2>
         <swiper-container
@@ -99,4 +96,4 @@ class ProductsSwiper extends LitElement {
   }
 }
 
-customElements.define('main-page', ProductsSwiper);
+customElements.define('products-swiper-component', ProductsSwiper);

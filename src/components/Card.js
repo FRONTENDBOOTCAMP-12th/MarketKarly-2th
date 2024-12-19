@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
+import '@/components/AddCart';
 
 class Card extends LitElement {
   constructor() {
@@ -16,27 +17,27 @@ class Card extends LitElement {
         flex-direction: column;
         gap: 1rem;
 
-        & a {
-          display: inline-block;
+        figure {
+          position: relative;
+          width: 249px;
 
-          figure {
-            position: relative;
-            width: 249px;
+          a {
+            display: inline-block;
 
             img {
               width: 100%;
             }
+          }
 
-            .add-cart {
-              padding: 0;
-              margin: 0;
-              border: none;
-              background: none;
+          .add-cart {
+            padding: 0;
+            margin: 0;
+            border: none;
+            background: none;
 
-              position: absolute;
-              right: 15px;
-              bottom: 17px;
-            }
+            position: absolute;
+            right: 15px;
+            bottom: 17px;
           }
         }
 
@@ -131,20 +132,31 @@ class Card extends LitElement {
     `,
   ];
 
+  handleAddCart = (e) => {
+    const popup = document.createElement('add-cart-component');
+
+    document.body.appendChild(popup);
+    document.body.style.overflow = 'hidden';
+  };
+
   render() {
     return html/* html */ `
       <div class="card-component">
-        <a href="/">
-          <figure>
+        <figure>
+          <a href="/">
             <img src="/image/product02.webp" alt="" />
-            <figcaption class="sr-only">죠르디 시카 자석 선쿠션</figcaption>
+          </a>
+          <figcaption class="sr-only">죠르디 시카 자석 선쿠션</figcaption>
 
-            <button class="add-cart" aria-label="장바구니 담기">
-              <img src="/icon/cart.svg" alt="카트 이미지" />
-            </button>
-          </figure>
-        </a>
-        <!-- a > figure -->
+          <button
+            @click="${this.handleAddCart}"
+            class="add-cart"
+            aria-label="장바구니 담기"
+          >
+            <img src="/icon/cart.svg" alt="카트 이미지" />
+          </button>
+        </figure>
+        <!-- figure -->
 
         <div class="content">
           <div class="title">
