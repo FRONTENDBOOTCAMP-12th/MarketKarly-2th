@@ -451,8 +451,8 @@ class Inquiry extends LitElement {
           <btn-emptied-component
             width="174px"
             text="취소"
-            borderColor="#898989"
-            color="#404040"
+            borderColor="var(--gray-color-400, #898989)"
+            color="var(--gray-color-700, 404040;)"
             @click=${this.handleShortClose}
           ></btn-emptied-component>
           ${this.isSubmitEnabled
@@ -461,7 +461,7 @@ class Inquiry extends LitElement {
                   width="174px"
                   text="등록"
                   backgroundColor="var(--primary-color, #283198)"
-                  color="white"
+                  color="var(--white-color, #ffffff)"
                   @click=${this.handleSubmit}
                 ></btn-filled-component>
               `
