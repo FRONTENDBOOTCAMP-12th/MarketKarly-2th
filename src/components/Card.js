@@ -133,7 +133,7 @@ class Card extends LitElement {
   ];
 
   handleAddCart = (e) => {
-    const popup = document.createElement('add-cart');
+    const popup = document.createElement('add-cart-component');
 
     document.body.appendChild(popup);
     document.body.style.overflow = 'hidden';
