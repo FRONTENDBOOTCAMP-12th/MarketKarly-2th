@@ -5,7 +5,7 @@ import '@/components/Button/BtnDisabled';
 import '@/components/Button/BtnEmptied';
 import '@/components/Button/BtnFilled';
 
-class Review extends LitElement {
+class Inquiry extends LitElement {
   static styles = [
     reset,
     a11y,
@@ -37,7 +37,7 @@ class Review extends LitElement {
         background-color: var(--white-color, #ffffff);
         border-radius: 8px;
         z-index: 1040;
-        padding: 2rem;
+        padding: var(--space-5xl);
         transition: opacity 0.4s ease;
       }
 
@@ -47,7 +47,7 @@ class Review extends LitElement {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 0 0 1.25rem;
+        padding: 0 0 var(--space-2xl);
         border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
       }
 
@@ -74,7 +74,7 @@ class Review extends LitElement {
         align-items: center;
         padding: 0;
         border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
-        gap: 1.5rem;
+        gap: var(--space-3xl);
       }
 
       .product-image {
@@ -91,8 +91,8 @@ class Review extends LitElement {
       .review-detail {
         display: flex;
         flex-direction: column;
-        padding: 1rem 0 0;
-        gap: 1rem;
+        padding: var(--space-xl) 0 0;
+        gap: var(--space-lg);
         height: 360px;
       }
 
@@ -105,7 +105,7 @@ class Review extends LitElement {
 
       .section-label {
         width: 90px;
-        padding: 0.5rem 0 0 0.5rem;
+        padding: var(--space-md) 0 0 var(--space-md);
         font-weight: var(--text-bold);
         color: var(--gray-color-700, #404040);
         font-size: 1.125rem;
@@ -117,7 +117,7 @@ class Review extends LitElement {
         line-height: var(--regular-line-height);
         border: 1px solid var(--gray-color-300, #a6a6a6);
         border-radius: 4px;
-        padding: 0 1.25rem;
+        padding: 0 var(--space-lg);
       }
 
       .content-input {
@@ -126,7 +126,7 @@ class Review extends LitElement {
         height: 198px;
         border: 1px solid var(--gray-color-300, #a6a6a6);
         border-radius: 4px;
-        padding: 0.5rem 1.25rem;
+        padding: var(--space-md) var(--space-2xl);
         line-height: var(--regular-line-height);
         display: flex;
         flex-direction: column;
@@ -139,18 +139,16 @@ class Review extends LitElement {
           var(--white-color, #ffffff);
       }
 
+      .guideline-title {
+        font-weight: var(--text-semi-bold);
+        color: var(--gray-color-400, #a6a6a6);
+        margin-top: var(--space-md);
+        margin-bottom: var(--space-sm);
+      }
       .alert-message {
         font-size: var(--font-sm);
         color: var(--gray-color-300, #a6a6a6);
       }
-
-      .guideline-title {
-        font-weight: var(--text-bold);
-        color: var(--gray-color-300, #a6a6a6);
-        margin-top: 0.4rem;
-        margin-bottom: 0.2rem;
-      }
-
       .guideline-list ul {
         list-style: disc inside;
       }
@@ -163,23 +161,38 @@ class Review extends LitElement {
       .warning-message {
         font-size: var(--font-sm);
         color: var(--accent-color);
-        margin-top: 0.4rem;
+        margin-top: var(--space-md);
       }
 
       .character-count {
         font-size: var(--font-sm);
         color: var(--gray-color-500, #6b6b6b);
         position: absolute;
-        right: 4.8rem;
-        bottom: 12.2rem;
+        right: 3.8rem;
+        bottom: 11.2rem;
         background: var(--white-color, #ffffff);
+      }
+
+      .secret-check {
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        gap: var(--space-md);
+        margin-left: 6rem;
+        font-weight: var(--text-semi-bold);
+        align-items: center;
+      }
+
+      .secret-check img {
+        width: 24px;
+        height: 24px;
       }
 
       .buttons {
         display: flex;
         justify-content: center;
-        gap: 0.75rem;
-        padding-top: 1.25rem;
+        gap: var(--space-lg);
+        padding-top: var(--space-2xl);
         border-top: 1px solid var(--gray-color-100, #e1e1e1);
         margin-top: auto;
       }
@@ -231,7 +244,6 @@ class Review extends LitElement {
     this.title = '';
     this.isSubmitEnabled = false;
   }
-  // 큰일났다.. js 기능을 또 만들어야 하는 거잖............... js 말고 css랑 html만 하고 싶습니다.........그것도 잘하는 건 아니지만.....
   handleShortClose() {
     const modalBackdrop = this.shadowRoot.querySelector('.modal-backdrop');
     const modal = this.shadowRoot.querySelector('.review-container');
@@ -290,6 +302,24 @@ class Review extends LitElement {
     }
   }
 
+  handleSecretCheckClick() {
+    const secretCheckIcon = this.shadowRoot.querySelector('.secret-check img');
+    const isChecked = secretCheckIcon.dataset.checked === 'true';
+
+    if (isChecked) {
+      secretCheckIcon.src = '/icon/inquiry-checked-false.svg';
+      secretCheckIcon.dataset.checked = 'false';
+    } else {
+      secretCheckIcon.src = '/icon/inquiry-checked-true.svg';
+      secretCheckIcon.dataset.checked = 'true';
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    document.body.style.overflow = 'hidden';
+  }
+
   render() {
     return html`
       <div class="modal-backdrop"></div>
@@ -318,7 +348,7 @@ class Review extends LitElement {
             <div class="section-label">제목</div>
             <div class="title-input-container">
               <input
-                aria-describedby="리뷰 제목을 입력하는 공간"
+                aria-describedby="reviewTitleText"
                 type="text"
                 class="title-input"
                 placeholder="제목을 입력해주세요."
@@ -331,7 +361,7 @@ class Review extends LitElement {
             <div class="section-label">내용</div>
             <textarea
               class="content-input real-input"
-              aria-describedby="리뷰 내용을 입력하는 공간간"
+              aria-describedby="reviewContentText"
               @input=${this.handleContentInput}
               @blur=${this.handleRealInputClose}
             ></textarea>
@@ -405,8 +435,8 @@ class Review extends LitElement {
           <btn-emptied-component
             width="174px"
             text="취소"
-            borderColor="#898989"
-            color="#404040"
+            borderColor="var(--gray-color-400, #898989)"
+            color="var(--gray-color-700, 404040;)"
             @click=${this.handleShortClose}
           ></btn-emptied-component>
           ${this.isSubmitEnabled
@@ -415,7 +445,7 @@ class Review extends LitElement {
                   width="174px"
                   text="등록"
                   backgroundColor="var(--primary-color, #283198)"
-                  color="white"
+                  color="var(--white-color, #ffffff)"
                   @click=${this.handleSubmit}
                 ></btn-filled-component>
               `
@@ -431,4 +461,4 @@ class Review extends LitElement {
   }
 }
 
-customElements.define('review-component', Review);
+customElements.define('review-modal-component', Inquiry);
