@@ -6,14 +6,6 @@ class Header extends LitElement {
   static styles = [
     reset,
     css`
-      /* ----------------------------------------------------전체 설정 */
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
       body {
         background: var(--white-color, #ffffff);
         overflow-x: hidden;
@@ -30,14 +22,13 @@ class Header extends LitElement {
         background: var(--white-color, #ffffff);
       }
 
-      /* ----------------------------------------------------첫 번째 줄 : Top Bar */
       .top-bar {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
         padding: 0 0 1.25rem;
         width: 100%;
-        max-width: 65.625rem;
+        max-width: 1050px;
         margin: 0 auto;
         background: var(--white-color, #ffffff);
       }
@@ -50,11 +41,10 @@ class Header extends LitElement {
         display: flex;
         flex-direction: row;
         align-items: center;
-        list-style: none;
         justify-content: flex-end;
         gap: 0.75rem;
         padding: 0.75rem 0 0;
-        height: 1.9375rem;
+        height: 30px;
         margin-top: 0;
       }
 
@@ -65,10 +55,12 @@ class Header extends LitElement {
       }
 
       .header-member-item a {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
         text-decoration: none;
-        font-size: var(--font-sm, 0.75rem);
+        font-size: var(--font-sm);
         line-height: 160%;
-        color: var(--content-text-color, #333333);
       }
 
       .header-member-item.divider a.join {
@@ -82,16 +74,10 @@ class Header extends LitElement {
         background: var(--gray-color-100, #e1e1e1);
         margin-left: 0 0.75rem;
       }
-
-      /* ----------------------------------------------------2번째 줄 : Header Wrapper */
-
-      .header-sticky {
-        top: 1rem;
-        z-index: 5;
-        transition: transform 0.3 ease;
-        /* **************************************** 세로 반응형  */
+      .header-member-item .icon-down {
+        width: 6px;
+        height: 6px;
       }
-
       .header-wrapper {
         position: relative;
         top: 0;
@@ -99,7 +85,7 @@ class Header extends LitElement {
         transition: transform 0.3 ease;
 
         width: 100%;
-        max-width: 65.625rem;
+        max-width: 1050px;
         margin: 0 auto;
         background: var(--white-color, #ffffff);
       }
@@ -132,66 +118,55 @@ class Header extends LitElement {
       }
 
       .header-logo a img {
-        width: 5.125rem;
-        height: 3.1875rem;
+        width: 82px;
+        height: 50px;
       }
 
       .header-site-select ul {
         display: flex;
-        list-style: none;
         gap: 0.5rem;
       }
 
       .header-site-select ul li {
         position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
       }
 
       .header-site-select ul li a {
         text-decoration: none;
-        font-size: var(--font-lg, 1.25rem);
+        font-size: var(--font-lg);
         color: var(--gray-color-400, #898989);
         letter-spacing: -0.0625rem;
       }
 
       .header-site-select ul li a.site-main {
         color: var(--primary-color, #283198);
-        font-weight: var(--text-semi-bold, 600);
+        font-weight: var(--text-semi-bold);
       }
 
       .header-site-select ul li a.site-beauty:hover {
         color: var(--primary-color, #283198);
-        font-weight: var(--text-semi-bold, 600);
+        font-weight: var(--text-semi-bold);
         transition: color 0.03s ease, font-weight 0.03s ease;
       }
 
-      .header-site-select ul li a.site-beauty::after {
-        content: '';
-        width: 0.0625rem;
-        height: 1rem;
-        background: var(--gray-color-200, #e1e1e1);
-        margin-left: 0.75rem;
-        position: absolute;
-        top: 50%;
-        left: -1.2rem;
-        transform: translateY(-50%);
-      }
-
       .new-icon img {
-        position: relative;
-        top: -0.875rem;
-        margin-left: 0.0625rem;
-        width: 0.5rem;
-        height: 0.5rem;
+        position: static;
+        width: 8px;
+        height: 8px;
       }
 
       .header-search {
         display: flex;
         align-items: center;
         width: 40%;
-        height: 3.125rem;
+        height: 50px;
         border: 0.0625rem solid var(--primary-color, #283198);
-        border-radius: 0.25rem;
+        border-radius: 4px;
         padding: 0.75rem 0.875rem;
+        box-sizing: border-box;
       }
 
       .header-search input::placeholder {
@@ -201,9 +176,8 @@ class Header extends LitElement {
       .header-search input {
         flex-grow: 1;
         border: none;
-        font-size: var(--font-md, 1rem);
         color: var(--gray-color-400, #898989);
-        font-weight: var(--text-bold, 700);
+        font-weight: var(--text-bold);
       }
 
       .header-search button {
@@ -215,7 +189,6 @@ class Header extends LitElement {
       .header-bookmarks {
         position: relative;
         display: flex;
-        list-style: none;
         gap: 15%;
         margin-left: auto;
         margin-right: auto;
@@ -233,8 +206,8 @@ class Header extends LitElement {
       }
 
       .header-bookmarks .icon {
-        width: 2.25rem;
-        height: 2.25rem;
+        width: 36px;
+        height: 36px;
       }
 
       .header-bookmarks li a:hover .map-popup {
@@ -256,13 +229,12 @@ class Header extends LitElement {
       }
 
       .map-popup h3 {
-        font-size: var(--font-md, 1rem);
-        font-weight: var(--text-bold, 700);
+        font-weight: var(--text-bold);
         margin-bottom: 0.625rem;
       }
 
       .map-popup p {
-        font-size: var(--font-sm, 0.75rem);
+        font-size: var(--font-sm);
         margin-bottom: 0.9375rem;
       }
 
@@ -271,11 +243,10 @@ class Header extends LitElement {
         color: var(--white-color, #ffffff);
         border: none;
         padding: 0.5rem 1rem;
-        font-size: var(--font-sm, 0.75rem);
+        font-size: var(--font-sm);
         cursor: pointer;
       }
 
-      /* ---------------------------------------------------- 3번째 줄 : Navigation */
       .nav {
         position: relative;
 
@@ -284,32 +255,32 @@ class Header extends LitElement {
         align-items: center;
         padding: 1rem 0;
         width: 100%;
-        max-width: 65.625rem;
+        max-width: 1050px;
         margin: 0 auto;
         background: var(--white-color, #ffffff);
       }
 
       .nav-category {
         position: relative;
-        width: 100px;
+        width: 150px;
         display: flex;
-        list-style: none;
         background: var(--white-color, #ffffff);
       }
 
-      .nav-category span {
+      .nav-category-button {
+        align-items: center;
         text-decoration: none;
-        font-weight: var(--text-semi-bold, 600);
-        font-size: var(--font-md, 1rem);
-        color: var(--content-text-color, #333333);
+        font-weight: var(--text-semi-bold);
         letter-spacing: -0.03125rem;
         padding-left: 0.5rem;
         background: var(--white-color, #ffffff);
+        display: flex;
+        gap: 1rem;
       }
 
       .nav-category-icon {
-        width: 1rem;
-        height: 0.875rem;
+        width: 16px;
+        height: 14px;
       }
 
       .nav-category:hover {
@@ -323,7 +294,7 @@ class Header extends LitElement {
 
       .nav-category:hover span {
         color: var(--primary-color, #283198);
-        font-weight: var(--text-bold, 700);
+        font-weight: var(--text-bold);
       }
 
       .nav-site-map {
@@ -339,9 +310,7 @@ class Header extends LitElement {
 
       .nav-site-map li a {
         text-decoration: none;
-        font-weight: var(--text-semi-bold, 600);
-        font-size: var(--font-md, 1rem);
-        color: var(--content-text-color, #333333);
+        font-weight: var(--text-semi-bold);
       }
 
       .nav-site-map li a:hover {
@@ -354,12 +323,12 @@ class Header extends LitElement {
         align-items: center;
         padding: 0.3125rem 0.5rem;
         border: 0.0625rem solid var(--gray-color-400, #898989);
-        border-radius: 1rem;
+        border-radius: 16px;
       }
 
       .nav-delivery a {
         text-decoration: none;
-        font-size: var(--font-sm, 0.75rem);
+        font-size: var(--font-sm);
         color: var(--primary-color, #283198);
       }
 
@@ -382,7 +351,6 @@ class Header extends LitElement {
         display: block;
         padding: 0.625rem;
         text-decoration: none;
-        color: var(--content-text-color, #333333);
       }
 
       .header-help-desk li a:hover {
@@ -390,10 +358,8 @@ class Header extends LitElement {
       }
 
       .delivery-bold {
-        font-weight: var(--text-bold, 700);
+        font-weight: var(--text-bold);
       }
-
-      /* ----------------------------------------------------가로선 */
 
       .header-shadow {
         position: absolute;
@@ -402,24 +368,12 @@ class Header extends LitElement {
         height: 5px;
         background: linear-gradient(
           to bottom,
-          rgba(0, 0, 0, 0.08),
+          rgba(0, 0, 0, 0.09),
           rgba(0, 0, 0, 0)
         );
         z-index: 9;
-        bottom: 1px;
+        top: 100%;
       }
-
-      .header-shadow::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: #ffffff;
-        z-index: 9;
-      }
-      /* ---------------------------------------------------- 반응형 : 가로 */
 
       @media screen and (max-width: 1024px) {
         /** 태블릿 가로, 노트북 */
@@ -450,8 +404,6 @@ class Header extends LitElement {
           gap: 1rem;
           justify-content: flex-start;
           margin-right: 0;
-          /* top: 0;
-    margin-top: 0; */
         }
 
         .header-search {
@@ -506,24 +458,6 @@ class Header extends LitElement {
         .site-main {
           display: none;
         }
-      }
-
-      /* ---------------------------------------------------- 반응형 : 세로 (스크롤) */
-
-      .nav-delivery.sticky {
-        display: none;
-      }
-
-      .header-member-service.sticky {
-        display: none;
-      }
-
-      .site-beauty.sticky {
-        display: none;
-      }
-
-      .site-main.sticky {
-        display: none;
       }
     `,
   ];
@@ -599,12 +533,7 @@ class Header extends LitElement {
                 aria-expanded="false"
               >
                 고객센터
-                <img
-                  class="icon-down"
-                  src="/icon/down.webp"
-                  alt="펼치기"
-                  role="presentation"
-                />
+                <img class="icon-down" src="/icon/down.webp" alt="펼치기" />
               </a>
               <ul class="header-help-desk">
                 <li><a href="#" aria-label="공지사항">공지사항</a></li>
@@ -618,154 +547,139 @@ class Header extends LitElement {
           </ul>
         </nav>
       </div>
-      <div class="header-sticky">
-        <header class="header-wrapper">
-          <div class="header">
-            <div class="header-top">
-              <div class="header-name-wrapper">
-                <div class="header-site-select">
-                  <h1 class="header-logo">
-                    <a href="/" aria-label="마켓컬릿 홈으로 이동">
-                      <img
-                        src="/public/logo2.webp"
-                        alt="마켓컬릿 로고"
-                        role="img"
-                      />
-                    </a>
-                  </h1>
-                  <nav class="header-site-select">
-                    <ul>
-                      <li>
-                        <a
-                          href="/"
-                          class="site-main"
-                          aria-label="마켓컬릿 홈페이지"
-                        >
-                          마켓컬릿
-                        </a>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a
-                          href="/"
-                          class="site-beauty"
-                          aria-label="뷰티컬릿 홈페이지"
-                        >
-                          뷰티컬릿
-                          <span class="new-icon">
-                            <img
-                              src="/icon/new.webp"
-                              alt="새로운 아이콘"
-                              role="img"
-                            />
-                          </span>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-                <form class="header-search" role="search" aria-label="검색">
-                  <input
-                    type="text"
-                    placeholder="검색어를 입력해주세요."
-                    aria-label="검색어 입력"
-                  />
-                  <button type="submit" aria-label="검색 버튼">
-                    <img
-                      src="/icon/header-search.svg"
-                      alt="검색 아이콘"
-                      class="icon"
-                      role="img"
-                    />
-                  </button>
-                </form>
-                <ul class="header-bookmarks">
-                  <li>
-                    <a href="#" aria-label="매장 찾기">
-                      <img
-                        src="/icon/map.svg"
-                        alt="매장 찾기 아이콘"
-                        class="icon"
-                        role="img"
-                      />
-                      <div class="map-popup">
-                        <p>
-                          배송지를 등록하고 <br />
-                          구매 가능한 상품을 확인하세요.
-                        </p>
-                        <button>로그인</button>
-                        <button>주소 검색</button>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" aria-label="찜한 상품 목록">
-                      <img
-                        src="/icon/favorits.svg"
-                        alt="찜한 상품 목록 아이콘"
-                        class="icon"
-                        role="img"
-                      />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" aria-label="장바구니">
-                      <img
-                        src="/icon/header-cart.svg"
-                        alt="장바구니 아이콘"
-                        class="icon"
-                        role="img"
-                      />
-                    </a>
-                  </li>
-                </ul>
+      <header class="header-wrapper">
+        <div class="header">
+          <div class="header-top">
+            <div class="header-name-wrapper">
+              <div class="header-site-select">
+                <h1 class="header-logo">
+                  <a href="/" aria-label="마켓컬릿 홈으로 이동">
+                    <img src="/public/logo2.webp" alt="마켓컬릿 로고" />
+                  </a>
+                </h1>
+                <nav class="header-site-select">
+                  <ul>
+                    <li>
+                      <a
+                        href="/"
+                        class="site-main"
+                        aria-label="마켓컬릿 홈페이지"
+                      >
+                        마켓컬릿
+                      </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <a
+                        href="/"
+                        class="site-beauty"
+                        aria-label="뷰티컬릿 홈페이지"
+                      >
+                        뷰티컬릿
+                      </a>
+                    </li>
+                    <span class="new-icon">
+                      <img src="/icon/new.webp" alt="새로운 아이콘" />
+                    </span>
+                  </ul>
+                </nav>
               </div>
+              <form class="header-search" role="search" aria-label="검색">
+                <input
+                  type="text"
+                  placeholder="검색어를 입력해주세요."
+                  aria-label="검색어 입력"
+                />
+                <button type="submit" aria-label="검색 버튼">
+                  <img
+                    src="/icon/header-search.svg"
+                    alt="검색 아이콘"
+                    class="icon"
+                  />
+                </button>
+              </form>
+              <ul class="header-bookmarks">
+                <li>
+                  <a href="#" aria-label="매장 찾기">
+                    <img
+                      src="/icon/map.svg"
+                      alt="매장 찾기 아이콘"
+                      class="icon"
+                    />
+                    <div class="map-popup">
+                      <p>
+                        배송지를 등록하고 <br />
+                        구매 가능한 상품을 확인하세요.
+                      </p>
+                      <button>로그인</button>
+                      <button>주소 검색</button>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" aria-label="찜한 상품 목록">
+                    <img
+                      src="/icon/favorits.svg"
+                      alt="찜한 상품 목록 아이콘"
+                      class="icon"
+                    />
+                  </a>
+                </li>
+                <li>
+                  <a href="#" aria-label="장바구니">
+                    <img
+                      src="/icon/header-cart.svg"
+                      alt="장바구니 아이콘"
+                      class="icon"
+                    />
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <div class="nav-category header-category">
+              <div
+                class="nav-category-button"
+                @mouseenter="${this.handleMouseEnter}"
+                @mouseleave="${this.handleMouseLeave}"
+              >
+                <img
+                  src="/icon/hamburger.webp"
+                  alt="카테고리"
+                  class="nav-category-icon nav-category-hover"
+                  aria-label="카테고리"
+                />
+                <span class="nav-category-text nav-category-hover"
+                  >카테고리</span
+                >
+              </div>
+              ${this.isCategoryOpen
+                ? html`<header-category
+                    @mouseenter="${this.handleMouseEnter}"
+                    @mouseleave="${this.handleMouseLeave}"
+                  ></header-category>`
+                : ''}
             </div>
 
-            <nav class="nav">
-              <div class="nav-category header-category">
-                <div
-                  class="nav-category-button"
-                  @mouseenter="${this.handleMouseEnter}"
-                  @mouseleave="${this.handleMouseLeave}"
-                >
-                  <img
-                    src="/icon/hamburger.webp"
-                    alt="카테고리"
-                    class="nav-category-icon nav-category-hover"
-                    aria-label="카테고리"
-                    role="img"
-                  />
-                  <span class="nav-category-text nav-category-hover"
-                    >카테고리</span
-                  >
-                </div>
-                ${this.isCategoryOpen
-                  ? html`<header-category
-                      @mouseenter="${this.handleMouseEnter}"
-                      @mouseleave="${this.handleMouseLeave}"
-                    ></header-category>`
-                  : ''}
-              </div>
+            <ul class="nav-site-map">
+              <li><a href="/" aria-label="신상품">신상품</a></li>
+              <li><a href="/" aria-label="베스트 상품">베스트</a></li>
+              <li><a href="/" aria-label="알뜰쇼핑">알뜰쇼핑</a></li>
+              <li><a href="/" aria-label="특가/혜택">특가/혜택</a></li>
+            </ul>
 
-              <ul class="nav-site-map">
-                <li><a href="/" aria-label="신상품">신상품</a></li>
-                <li><a href="/" aria-label="베스트 상품">베스트</a></li>
-                <li><a href="/" aria-label="알뜰쇼핑">알뜰쇼핑</a></li>
-                <li><a href="/" aria-label="특가/혜택">특가/혜택</a></li>
-              </ul>
-
-              <div class="nav-delivery">
-                <a href="#" aria-label="샛별·낮 배송 안내">
-                  <span class="delivery-bold">샛별·하루</span>
-                  배송안내
-                </a>
-              </div>
-            </nav>
-          </div>
-        </header>
-        <div class="header-shadow"></div>
-      </div>
+            <div class="nav-delivery">
+              <a href="#" aria-label="샛별·낮 배송 안내">
+                <span class="delivery-bold">샛별·하루</span>
+                배송안내
+              </a>
+            </div>
+            <div class="header-shadow"></div>
+          </nav>
+        </div>
+      </header>
     `;
   }
 }
