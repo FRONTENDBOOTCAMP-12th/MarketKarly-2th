@@ -1,66 +1,70 @@
 import { LitElement, css, html } from 'lit';
+import reset from '@/styles/reset';
 
 class HeaderCategory extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      position: absolute;
-      top: 115.2px;
-      left: 0;
-      width: 247px;
-      height: 660px;
-      z-index: 1000;
-      background-color: #ffffff;
-      border-right: 1px solid #ececec;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--gray-color-200, #c4c4c4)
-        var(--white-color, #ffffff);
-    }
-
-    .category-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .category-list li {
-      display: flex;
-      align-items: center;
-      padding: 16px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #333333;
-      gap: 0.625rem;
-      background: #ffffff;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .category-list li:hover {
-      background-color: #f5f5f5;
-      color: #283198;
-    }
-
-    .category-list li img {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-    }
-
-    .category-list li:hover img {
-      filter: invert(24%) sepia(68%) saturate(2054%) hue-rotate(226deg)
-        brightness(92%) contrast(92%);
-    }
-
-    @media screen and (max-width: 768px) {
+  static styles = [
+    reset,
+    css`
       :host {
-        top: 168px;
+        display: block;
+        position: absolute;
+        top: 7.2rem;
+        left: 0;
+        width: 247px;
+        height: 660px;
+        z-index: 1000;
+        background-color: var(--white-color, #ffffff);
+        border-right: 1px solid #ececec;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--gray-color-200, #c4c4c4)
+          var(--white-color, #ffffff);
       }
-    }
-  `;
+
+      .category-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .category-list li {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #333333;
+        gap: 0.625rem;
+        background: #ffffff;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .category-list li:hover {
+        background-color: var(--white-color, #ffffff);
+        color: var(--primary-color, #283198);
+      }
+
+      .category-list li img {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+      }
+
+      .category-list li:hover img {
+        filter: invert(24%) sepia(68%) saturate(2054%) hue-rotate(226deg)
+          brightness(92%) contrast(92%);
+      }
+
+      @media screen and (max-width: 768px) {
+        :host {
+          top: 168px;
+        }
+      }
+    `,
+  ];
 
   constructor() {
     super();

@@ -94,14 +94,10 @@ class Header extends LitElement {
         max-width: 1050px;
       }
 
-      .header {
+      .header-top {
         display: flex;
         flex-direction: column;
         position: relative;
-      }
-
-      .header-top {
-        display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 0.5rem;
@@ -455,8 +451,6 @@ class Header extends LitElement {
   render() {
     return html`
       <header class="header-wrapper">
-        <div class="max-width-box">
-          <div class="top-bar">
             <nav class="top-bar-nav">
               <ul class="header-member-service">
                 <li class="header-member-item divider">
@@ -495,9 +489,9 @@ class Header extends LitElement {
                 </li>
               </ul>
             </nav>
-          </div>
 
-          <div class="header">
+
+
             <div class="header-top">
               <div class="header-name-wrapper">
                 <div class="header-site-select">
@@ -585,7 +579,7 @@ class Header extends LitElement {
                   </li>
                 </ul>
               </div>
-            </div>
+              </div>
 
             <nav class="nav">
               <div
@@ -620,9 +614,11 @@ class Header extends LitElement {
                 </a>
               </div>
             </nav>
-            ${this.isCategoryOpen
-              ? html`<header-category-component></header-category-component>`
-              : ''}
+            ${
+              this.isCategoryOpen
+                ? html`<header-category-component></header-category-component>`
+                : ''
+            }
           </div>
         </div>
       </header>
