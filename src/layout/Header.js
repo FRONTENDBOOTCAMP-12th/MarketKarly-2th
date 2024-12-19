@@ -354,7 +354,7 @@ class Header extends LitElement {
                   >
                 </li>
                 <li class="header-member-item divider">
-                  <a href="/" class="header-member-link" aria-label="로그인"
+                  <a href="/src/pages/login/" class="header-member-link" aria-label="로그인"
                     >로그인</a
                   >
                 </li>
