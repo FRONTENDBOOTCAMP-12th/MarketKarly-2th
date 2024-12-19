@@ -341,6 +341,47 @@ class Header extends LitElement {
 
   render() {
     return html`
+
+
+      <div class="top-bar">
+        <nav class="top-bar-nav">
+          <ul class="header-member-service">
+            <li class="header-member-item divider">
+              <a
+                href="/src/pages/register/"
+                class="header-member-link join"
+                aria-label="회원가입"
+                >회원가입</a
+              >
+            </li>
+            <li class="header-member-item divider">
+              <a href="/" class="header-member-link" aria-label="로그인"
+                >로그인</a
+              >
+            </li>
+            <li class="header-member-item">
+              <a
+                href="#"
+                class="header-member-link"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                고객센터
+                <img class="icon-down" src="/icon/down.webp" alt="펼치기" />
+              </a>
+              <ul class="header-help-desk">
+                <li><a href="#" aria-label="공지사항">공지사항</a></li>
+                <li><a href="#" aria-label="자주하는질문">자주하는질문</a></li>
+                <li><a href="#" aria-label="1:1 문의">1:1 문의</a></li>
+                <li>
+                  <a href="#" aria-label="대량주문 문의">대량주문 문의</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
       <header class="header-wrapper">
       <div class="max-width-box">
             <nav class="top-bar-nav">
