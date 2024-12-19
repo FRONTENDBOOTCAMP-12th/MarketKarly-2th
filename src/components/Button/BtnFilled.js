@@ -12,7 +12,7 @@ class BtnFilled extends LitElement {
   constructor() {
     super();
     this.width = '174px';
-    this.width = '54px';
+    this.height = '54px';
     this.text = 'text';
   }
 
