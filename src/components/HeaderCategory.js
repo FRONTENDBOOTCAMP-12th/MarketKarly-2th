@@ -8,11 +8,11 @@ class HeaderCategory extends LitElement {
       :host {
         display: block;
         position: absolute;
-        top: 7.2rem;
+        top: 165px;
         left: 0;
         width: 247px;
         height: 660px;
-        z-index: 1000;
+        z-index: 9999999;
         background-color: var(--white-color, #ffffff);
         border-right: 1px solid #ececec;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -56,12 +56,6 @@ class HeaderCategory extends LitElement {
       .category-list li:hover img {
         filter: invert(24%) sepia(68%) saturate(2054%) hue-rotate(226deg)
           brightness(92%) contrast(92%);
-      }
-
-      @media screen and (max-width: 768px) {
-        :host {
-          top: 168px;
-        }
       }
     `,
   ];

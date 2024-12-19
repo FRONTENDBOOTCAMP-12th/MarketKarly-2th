@@ -19,7 +19,11 @@ class Header extends LitElement {
       .header-site-select ul {
         white-space: nowrap;
         position: relative;
-        background: var(--white-color, #ffffff);
+      }
+
+      .header-wrapper {
+        position: relative;
+        box-shadow: 0 0 0.4rem var(--gray-color-200, #c4c4c4);
       }
 
       .top-bar {
@@ -28,9 +32,6 @@ class Header extends LitElement {
         align-items: flex-end;
         padding: 0 0 1.25rem;
         width: 100%;
-        max-width: 1050px;
-        margin: 0 auto;
-        background: var(--white-color, #ffffff);
       }
 
       .top-bar-nav {
@@ -45,8 +46,7 @@ class Header extends LitElement {
         gap: 0.75rem;
         padding: 0.75rem 0 0;
         height: 30px;
-        margin-top: 0;
-        margin-right: 1%;
+        font-weight: var(--text-semi-bold);
       }
 
       .header-member-item {
@@ -80,27 +80,10 @@ class Header extends LitElement {
         height: 6px;
       }
 
-      .header-wrapper {
-        position: relative;
-        top: 0;
-        z-index: 5;
-        box-shadow: 0 0 0.4rem var(--gray-color-200, #c4c4c4);
-      }
-
       .max-width-box {
-        width: 100%;
         margin: 0 auto;
-        // background: var(--white-color, #ffffff);
-        max-width: 1050px;
-      }
-
-      .header-top {
-        display: flex;
-        flex-direction: column;
+        width: 1050px;
         position: relative;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.5rem;
       }
 
       .header-name-wrapper {
@@ -109,6 +92,8 @@ class Header extends LitElement {
         width: 100%;
         gap: 3.5rem;
         box-sizing: border-box;
+        justify-content: space-between;
+        margin-bottom: 1rem;
       }
 
       .header-site-select {
@@ -160,9 +145,12 @@ class Header extends LitElement {
 
       .header-search {
         display: flex;
+        left: 51%;
+        transform: translateX(-50%);
+        position: absolute;
         align-items: center;
-        width: 40%;
-        height: 50px;
+        width: 400px;
+        height: 60px;
         border: 0.0625rem solid var(--primary-color, #283198);
         border-radius: 4px;
         padding: 0.75rem 0.875rem;
@@ -177,21 +165,21 @@ class Header extends LitElement {
         flex-grow: 1;
         border: none;
         color: var(--gray-color-400, #898989);
-        font-weight: var(--text-bold);
+        font-size: var(--font-lg);
       }
 
       .header-search button {
         background: none;
         border: none;
         cursor: pointer;
+        width: 36px;
+        height: 36px;
       }
 
       .header-bookmarks {
         position: relative;
         display: flex;
         gap: 15%;
-        margin-left: auto;
-        margin-right: 2rem;
       }
 
       .header-bookmarks li a {
@@ -255,16 +243,12 @@ class Header extends LitElement {
         align-items: center;
         padding: 1rem 0;
         width: 100%;
-        max-width: 1050px;
-        margin: 0 auto;
-        background: var(--white-color, #ffffff);
       }
 
       .nav-category {
         position: relative;
         width: 150px;
         display: flex;
-        background: var(--white-color, #ffffff);
       }
 
       .nav-category-button {
@@ -273,7 +257,6 @@ class Header extends LitElement {
         font-weight: var(--text-semi-bold);
         letter-spacing: -0.03125rem;
         padding-left: 0.5rem;
-        background: var(--white-color, #ffffff);
         display: flex;
         gap: 1rem;
       }
@@ -306,6 +289,7 @@ class Header extends LitElement {
         margin-right: 5%;
         margin-left: 3%;
         justify-content: center;
+        weight
       }
 
       .nav-site-map li a {
@@ -324,7 +308,6 @@ class Header extends LitElement {
         padding: 0.3125rem 0.5rem;
         border: 0.0625rem solid var(--gray-color-400, #898989);
         border-radius: 16px;
-        margin-right: 1rem;
       }
 
       .nav-delivery a {
@@ -361,74 +344,6 @@ class Header extends LitElement {
       .delivery-bold {
         font-weight: var(--text-bold);
       }
-
-      @media screen and (max-width: 1024px) {
-        /** 태블릿 가로, 노트북 */
-      }
-
-      @media screen and (max-width: 768px) {
-        .nav-site-map {
-          margin-right: 10%;
-          gap: 4.5rem;
-        }
-        .header-name-wrapper {
-          display: flex;
-
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 0.625rem;
-          margin-top: 0;
-          justify-content: center;
-        }
-
-        .header-logo {
-          order: 1;
-        }
-
-        .header-bookmarks {
-          order: 2;
-          display: flex;
-          gap: 1rem;
-          justify-content: flex-start;
-          margin-right: 1rem;
-        }
-
-        .header-search {
-          width: 98%;
-          order: 3;
-        }
-
-        .site-beauty,
-        .site-main,
-        .nav-category-text,
-        .nav-delivery,
-        .new-icon,
-        .divider-site::after {
-          display: none;
-        }
-      }
-
-      @media screen and (max-width: 480px) {
-        .nav-site-map {
-          display: flex;
-          gap: 1.2rem;
-          justify-content: flex-start;
-          margin-left: 1rem;
-          margin-right: 10%;
-        }
-        .header-search {
-          width: 98%;
-          order: 3;
-        }
-
-        .nav-delivery,
-        .header-member-service,
-        .nav-category-text,
-        .site-beauty,
-        .site-main {
-          display: none;
-        }
-      }
     `,
   ];
   static properties = {
@@ -451,6 +366,7 @@ class Header extends LitElement {
   render() {
     return html`
       <header class="header-wrapper">
+      <div class="max-width-box">
             <nav class="top-bar-nav">
               <ul class="header-member-service">
                 <li class="header-member-item divider">
@@ -492,7 +408,7 @@ class Header extends LitElement {
 
 
 
-            <div class="header-top">
+
               <div class="header-name-wrapper">
                 <div class="header-site-select">
                   <h1 class="header-logo">
@@ -579,7 +495,6 @@ class Header extends LitElement {
                   </li>
                 </ul>
               </div>
-              </div>
 
             <nav class="nav">
               <div
@@ -620,6 +535,7 @@ class Header extends LitElement {
                 : ''
             }
           </div>
+        </div>
         </div>
       </header>
     `;
