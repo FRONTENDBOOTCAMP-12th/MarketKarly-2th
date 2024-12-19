@@ -8,29 +8,18 @@ class Header extends LitElement {
     css`
       body {
         background: var(--white-color, #ffffff);
-        overflow-x: hidden;
-        white-space: nowrap;
-      }
-
-      .header,
-      .nav,
-      .top-bar,
-      .header-member-service,
-      .header-site-select ul {
-        white-space: nowrap;
-        position: relative;
       }
 
       .header-wrapper {
         position: relative;
-        box-shadow: 0 0 0.4rem var(--gray-color-200, #c4c4c4);
+        box-shadow: 0 0 var(--space-md) var(--gray-color-200, #c4c4c4);
       }
 
       .top-bar {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        padding: 0 0 1.25rem;
+        padding: 0 0 var(--space-2xl);
         width: 100%;
       }
 
@@ -43,8 +32,8 @@ class Header extends LitElement {
         flex-direction: row;
         align-items: center;
         justify-content: flex-end;
-        gap: 0.75rem;
-        padding: 0.75rem 0 0;
+        gap: var(--space-lg);
+        padding: var(--space-lg) 0 0;
         height: 30px;
         font-weight: var(--text-semi-bold);
       }
@@ -52,16 +41,15 @@ class Header extends LitElement {
       .header-member-item {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: var(--space-lg);
       }
 
       .header-member-item a {
         display: flex;
         align-items: center;
-        gap: 0.25rem;
+        gap: var(--space-sm);
         text-decoration: none;
         font-size: var(--font-sm);
-        line-height: 160%;
       }
 
       .header-member-item.divider a.join {
@@ -73,7 +61,7 @@ class Header extends LitElement {
         width: 1px;
         height: 13px;
         background: var(--gray-color-100, #e1e1e1);
-        margin-left: 0 0.75rem;
+        margin-left: 0 var(--space-lg);
       }
       .header-member-item .icon-down {
         width: 6px;
@@ -93,13 +81,14 @@ class Header extends LitElement {
         gap: 3.5rem;
         box-sizing: border-box;
         justify-content: space-between;
-        margin-bottom: 1rem;
+        margin-top: var(--space-md);
+        margin-bottom: var(--space-lg);
       }
 
       .header-site-select {
         display: flex;
         align-items: center;
-        gap: 0.6875rem;
+        gap: var(--space-lg);
       }
 
       .header-logo a img {
@@ -109,32 +98,30 @@ class Header extends LitElement {
 
       .header-site-select ul {
         display: flex;
-        gap: 0.5rem;
+        gap: var(--space-md);
       }
 
       .header-site-select ul li {
         position: relative;
         display: flex;
         align-items: center;
-        gap: 0.25rem;
+        gap: var(--space-sm);
       }
 
       .header-site-select ul li a {
         text-decoration: none;
         font-size: var(--font-lg);
-        color: var(--gray-color-400, #898989);
-        letter-spacing: -0.0625rem;
-      }
-
-      .header-site-select ul li a.site-main {
         color: var(--primary-color, #283198);
         font-weight: var(--text-semi-bold);
+      }
+
+      .header-site-select ul li a.site-beauty {
+        color: var(--gray-color-200, #c4c4c4);
       }
 
       .header-site-select ul li a.site-beauty:hover {
         color: var(--primary-color, #283198);
         font-weight: var(--text-semi-bold);
-        transition: color 0.03s ease, font-weight 0.03s ease;
       }
 
       .new-icon img {
@@ -150,10 +137,10 @@ class Header extends LitElement {
         position: absolute;
         align-items: center;
         width: 400px;
-        height: 60px;
+        height: 50px;
         border: 0.0625rem solid var(--primary-color, #283198);
         border-radius: 4px;
-        padding: 0.75rem 0.875rem;
+        padding: var(--space-lg) var(--space-lg);
         box-sizing: border-box;
       }
 
@@ -179,7 +166,7 @@ class Header extends LitElement {
       .header-bookmarks {
         position: relative;
         display: flex;
-        gap: 15%;
+        gap: var(--space-xl);
       }
 
       .header-bookmarks li a {
@@ -210,38 +197,31 @@ class Header extends LitElement {
         transform: translate(-50%, -50%);
         background-color: var(--white-color, #ffffff);
         border: 0.0625rem solid #ccc;
-        padding: 1.25rem;
+        padding: var(--space-2xl);
         z-index: 10;
         width: 145px;
         opacity: 2;
       }
 
-      .map-popup h3 {
-        font-weight: var(--text-bold);
-        margin-bottom: 0.625rem;
-      }
-
       .map-popup p {
         font-size: var(--font-sm);
-        margin-bottom: 0.9375rem;
+        margin-bottom: var(--space-md);
       }
 
       .map-popup button {
         background-color: var(--primary-color, #283198);
-        color: var(--white-color, #ffffff);
         border: none;
-        padding: 0.5rem 1rem;
+        padding: var(--space-md) var(--space-xl);
         font-size: var(--font-sm);
         cursor: pointer;
       }
 
       .nav {
         position: relative;
-
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem 0;
+        padding: var(--space-xl) 0;
         width: 100%;
       }
 
@@ -255,10 +235,9 @@ class Header extends LitElement {
         align-items: center;
         text-decoration: none;
         font-weight: var(--text-semi-bold);
-        letter-spacing: -0.03125rem;
-        padding-left: 0.5rem;
+        padding-left: var(--space-md);
         display: flex;
-        gap: 1rem;
+        gap: var(--space-xl);
       }
 
       .nav-category-icon {
@@ -289,7 +268,6 @@ class Header extends LitElement {
         margin-right: 5%;
         margin-left: 3%;
         justify-content: center;
-        weight
       }
 
       .nav-site-map li a {
@@ -305,7 +283,7 @@ class Header extends LitElement {
       .nav-delivery {
         display: flex;
         align-items: center;
-        padding: 0.3125rem 0.5rem;
+        padding: var(--space-sm) var(--space-md);
         border: 0.0625rem solid var(--gray-color-400, #898989);
         border-radius: 16px;
       }
@@ -320,7 +298,7 @@ class Header extends LitElement {
         display: none;
         position: absolute;
         list-style: none;
-        top: 2.1rem;
+        top: 2.2rem;
         right: 0;
         background: var(--white-color, #ffffff);
         border: 0.0625rem solid var(--gray-color-100, #e1e1e1);
@@ -333,12 +311,8 @@ class Header extends LitElement {
 
       .header-help-desk li a {
         display: block;
-        padding: 0.625rem;
+        padding: var(--space-md);
         text-decoration: none;
-      }
-
-      .header-help-desk li a:hover {
-        background-color: var(--gray-color-100, #e1e1e1);
       }
 
       .delivery-bold {

@@ -12,7 +12,7 @@ class HeaderCategory extends LitElement {
         left: 0;
         width: 247px;
         height: 660px;
-        z-index: 9999999;
+        z-index: 99;
         background-color: var(--white-color, #ffffff);
         border-right: 1px solid #ececec;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -29,16 +29,16 @@ class HeaderCategory extends LitElement {
       }
 
       .category-list li {
+        margin-left: var(--space-sm);
         display: flex;
         align-items: center;
-        padding: 1rem;
+        padding: var(--space-md);
         cursor: pointer;
-        font-weight: 600;
         font-size: 14px;
-        line-height: 1.5;
-        color: #333333;
-        gap: 0.625rem;
-        background: #ffffff;
+        line-height: var(--light-line-height);
+        color: var(--gray-color-700, #404040);
+        gap: var(--space-lg);
+        background: var(white-color, #ffffff);
         transition: background-color 0.3s, color 0.3s;
       }
 
@@ -51,6 +51,7 @@ class HeaderCategory extends LitElement {
         width: 24px;
         height: 24px;
         flex-shrink: 0;
+        color: var(--gray-color-700, #404040);
       }
 
       .category-list li:hover img {
