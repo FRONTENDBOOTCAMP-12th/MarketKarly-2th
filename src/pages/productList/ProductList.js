@@ -2,9 +2,12 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Card';
-// import '@/components/';
 
 class ProductList extends LitElement {
+  static properties = {
+    activeStandard: { type: String },
+  };
+
   static styles = [
     reset,
     a11y,
@@ -48,10 +51,23 @@ class ProductList extends LitElement {
         font-size: 14px;
         color: #333;
         font-weight: var(--text-semi-bold);
+        font-weight: 700;
       }
 
-      .total-count strong {
-        font-weight: 700;
+      button {
+        border: none;
+        margin: 0;
+        padding: 0;
+        width: auto;
+        overflow: visible;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        line-height: normal;
+        -webkit-font-smoothing: inherit;
+        -moz-osx-font-smoothing: inherit;
+        appearance: none;
+        cursor: pointer;
       }
 
       .sorting-standard {
@@ -63,23 +79,32 @@ class ProductList extends LitElement {
       .sorting-standard a {
         font-size: 14px;
       }
-      .recommended {
+
+      .choose-standard {
+        color: var(--gray-color-300, #a6a6a6);
+        transition: color 0.2s ease;
+      }
+
+      .choose-standard.active {
+        color: var(--gray-color-700, #404040);
         font-weight: var(--text-medium);
+      }
+
+      .standard-recommended {
         display: flex;
         align-items: center;
         gap: 6px;
-        color: var(--gray-color-700, #404040);
         padding-right: 8px;
         padding-left: 0;
+        font-size: 14px;
       }
 
-      .recommended img {
+      .standard-recommended img {
         vertical-align: middle;
       }
 
       .divider {
         position: relative;
-        color: var(--gray-color-300, #a6a6a6);
         text-decoration: none;
         font-size: 14px;
         display: flex;
@@ -114,6 +139,11 @@ class ProductList extends LitElement {
 
   constructor() {
     super();
+    this.activeStandard = 'recommended';
+  }
+
+  handleStandardClick(standard) {
+    this.activeStandard = standard;
   }
 
   render() {
@@ -125,21 +155,68 @@ class ProductList extends LitElement {
           <div class="product-category"></div>
           <div class="product-list-container">
             <div class="list-header">
-              <div class="total-count">총 <span>284</span>건</div>
-              <div class="sorting-standard">
-                <a href="#" class="recommended"
-                  >추천순
+              <div class="total-count">총 284건</div>
+              <section class="sorting-standard">
+                <button
+                  class="choose-standard standard-recommended ${this
+                    .activeStandard === 'recommended'
+                    ? 'active'
+                    : ''}"
+                  @click=${() => this.handleStandardClick('recommended')}
+                >
+                  추천순
                   <img
                     src="/icon/product-list-question.svg"
                     alt="설명 아이콘"
                     class="icon"
-                /></a>
-                <a href="#" class="divider">신상품순</a>
-                <a href="#" class="divider">판매량순</a>
-                <a href="#" class="divider">혜택순</a>
-                <a href="#" class="divider">낮은 가격순</a>
-                <a href="#" class="divider">높은 가격순</a>
-              </div>
+                  />
+                </button>
+                <button
+                  class="choose-standard divider standard-new ${this
+                    .activeStandard === 'new'
+                    ? 'active'
+                    : ''}"
+                  @click=${() => this.handleStandardClick('new')}
+                >
+                  신상품순
+                </button>
+                <button
+                  class="choose-standard divider standard-sale ${this
+                    .activeStandard === 'sale'
+                    ? 'active'
+                    : ''}"
+                  @click=${() => this.handleStandardClick('sale')}
+                >
+                  판매량순
+                </button>
+                <button
+                  class="choose-standard divider standard-discount ${this
+                    .activeStandard === 'discount'
+                    ? 'active'
+                    : ''}"
+                  @click=${() => this.handleStandardClick('discount')}
+                >
+                  혜택순
+                </button>
+                <button
+                  class="choose-standard divider standard-low-price ${this
+                    .activeStandard === 'low-price'
+                    ? 'active'
+                    : ''}"
+                  @click=${() => this.handleStandardClick('low-price')}
+                >
+                  낮은 가격순
+                </button>
+                <button
+                  class="choose-standard divider standard-high-price ${this
+                    .activeStandard === 'high-price'
+                    ? 'active'
+                    : ''}"
+                  @click=${() => this.handleStandardClick('high-price')}
+                >
+                  높은 가격순
+                </button>
+              </section>
             </div>
             <div class="product-grid">${this.createProductItems()}</div>
             <div class="btn-navigator"></div>
