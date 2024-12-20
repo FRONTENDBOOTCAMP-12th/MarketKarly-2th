@@ -58,6 +58,7 @@ class AddCart extends LitElement {
         justify-content: space-between;
         gap: 1.75rem;
 
+        border: none;
         box-shadow: var(--below-medium);
 
         padding: var(--space-3xl) var(--space-2xl);
@@ -220,7 +221,7 @@ class AddCart extends LitElement {
   render() {
     return html/* html */ `
       <div class="popup-bg">
-        <div class="add-cart">
+        <dialog class="add-cart">
           <div class="product">
             <p class="product-name">[풀무원] 탱탱쫄면 (4개입)</p>
 
@@ -262,7 +263,7 @@ class AddCart extends LitElement {
             <btn-filled-component text="장바구니 담기"></btn-filled-component>
           </div>
           <!-- button-wrapper -->
-        </div>
+        </dialog>
         <!-- add-cart -->
       </div>
       <!-- popup-bg -->
