@@ -121,7 +121,7 @@ class ProductList extends LitElement {
         transform: translateY(-50%);
         width: 1.4px;
         height: 12px;
-        background-color: var(--gray-color-400, #898989);
+        background-color: var(--gray-color-300, #a6a6a6);
         opacity: 0.4;
       }
 
@@ -133,24 +133,38 @@ class ProductList extends LitElement {
       }
 
       .pagination {
-        margin-top: 16px;
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
+
+        margin-top: 5rem;
       }
 
-      .btn-paging {
-        width: 30px;
-        height: 30px;
+      .pagination button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--gray-color-100, #e1e1e1);
+        background: none;
+        padding: 4px;
+        cursor: pointer;
       }
 
-      button.btn-product-reduce {
-        background-image: url(/icon/minus_disabled_true.png);
+      .pagination button:hover {
+        background-color: #f0f0f0;
+      }
+      .pagination img {
+        height: 8px;
       }
 
-      button.btn-product-add {
-        background-image: url(/icon/plus_disabled_false.png);
+      .pagination-number {
+        font-size: var(--font-sm);
+        color: #333333;
+        line-height: 15px;
+        font-weight: var(--text-semi-bold);
+        color: var(--gray-color-400, #e1e1e1);
       }
     `,
   ];
@@ -284,37 +298,27 @@ class ProductList extends LitElement {
             <div class="product-grid">${this.createProductItems()}</div>
             <div class="pagination">
               <button
-                class="btn-product-reduce btn-paging"
-                aria-label="페이지 처음으로"
-                ?disabled=${this.disabled}
-                @click="${this.reduceProduct}"
+                class="btn-first"
+                @click=${this.reduceProduct}
+                ?disabled=${this.count === 1}
               >
-                <img src="/icon/btn-first.svg" alt="페이지 처음으로" />
+                <img src="/icon/btn-first.svg" alt="처음으로" />
               </button>
               <button
-                class="btn-product-reduce btn-paging"
-                aria-label="페이지 이전으로"
-                ?disabled=${this.disabled}
-                @click="${this.reduceProduct}"
+                class="btn-prev"
+                @click=${this.reduceProduct}
+                ?disabled=${this.count === 1}
               >
-                <img src="/icon/btn-prev.svg" alt="페이지 마지막으로" />
+                <img src="/icon/btn-prev.svg" alt="이전으로" />
               </button>
-              <button class="pagination-number">${this.count - 1}</button>
               <button class="pagination-number">${this.count}</button>
               <button class="pagination-number">${this.count + 1}</button>
-              <button
-                class="btn-product-add btn-paging"
-                aria-label="페이지 마지막으로"
-                @click="${this.addProduct}"
-              >
-                <img src="/icon/btn-next.svg" alt="페이지 마지막으로" />
+              <button class="pagination-number">${this.count + 2}</button>
+              <button class="btn-next" @click=${this.addProduct}>
+                <img src="/icon/btn-next.svg" alt="마지막으로" />
               </button>
-              <button
-                class="btn-product-add btn-paging"
-                aria-label="페이지 마지막으로"
-                @click="${this.addProduct}"
-              >
-                <img src="/icon/btn-last.svg" alt="페이지 마지막으로" />
+              <button class="btn-last" @click=${this.addProduct}>
+                <img src="/icon/btn-last.svg" alt="마지막으로" />
               </button>
             </div>
           </div>
