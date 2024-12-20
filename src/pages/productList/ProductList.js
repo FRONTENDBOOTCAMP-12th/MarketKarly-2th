@@ -188,21 +188,12 @@ class ProductList extends LitElement {
 
   addProduct() {
     this.count++;
-
-    if (this.count > 1) {
-      this.totalPrice = (this.count * this.productPrice).toLocaleString();
-    }
   }
 
   reduceProduct() {
     if (this.count > 1) {
       this.count--;
     }
-  }
-
-  handleBtnCancel() {
-    this.remove();
-    document.body.style.overflow = 'auto';
   }
 
   render() {
