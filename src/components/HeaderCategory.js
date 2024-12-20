@@ -29,7 +29,7 @@ class HeaderCategory extends LitElement {
       }
 
       .category-list li {
-        margin-left: var(--space-sm);
+        margin-left: 0;
         display: flex;
         align-items: center;
         padding: var(--space-md);
@@ -38,12 +38,12 @@ class HeaderCategory extends LitElement {
         line-height: var(--light-line-height);
         color: var(--gray-color-700, #404040);
         gap: var(--space-lg);
-        background: var(white-color, #ffffff);
+        background-color: var(white-color, #ffffff);
         transition: background-color 0.3s, color 0.3s;
       }
 
       .category-list li:hover {
-        background-color: var(--gray-color-100, #e1e1e1);
+        background-color: var(--gray-color-50, #f9f9f9);
         color: var(--primary-color, #283198);
       }
 

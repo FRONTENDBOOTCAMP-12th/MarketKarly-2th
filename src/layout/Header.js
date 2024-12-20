@@ -42,6 +42,7 @@ class Header extends LitElement {
         display: flex;
         align-items: center;
         gap: var(--space-lg);
+        padding: var(--space-lg) 0 var(--space-lg);
       }
 
       .header-member-item a {
@@ -82,7 +83,6 @@ class Header extends LitElement {
         box-sizing: border-box;
         justify-content: space-between;
         margin-top: var(--space-md);
-        margin-bottom: var(--space-lg);
       }
 
       .header-site-select {
@@ -354,7 +354,7 @@ class Header extends LitElement {
                   >
                 </li>
                 <li class="header-member-item divider">
-                  <a href="/src/pages/login/" class="header-member-link" aria-label="로그인"
+                  <a href="/" class="header-member-link" aria-label="로그인"
                     >로그인</a
                   >
                 </li>
@@ -441,14 +441,6 @@ class Header extends LitElement {
                         alt="매장 찾기 아이콘"
                         class="icon"
                       />
-                      <div class="map-popup">
-                        <p>
-                          배송지를 등록하고 <br />
-                          구매 가능한 상품을 확인하세요.
-                        </p>
-                        <button>로그인</button>
-                        <button>주소 검색</button>
-                      </div>
                     </a>
                   </li>
                   <li>
@@ -497,8 +489,8 @@ class Header extends LitElement {
               </div>
 
               <ul class="nav-site-map">
-                <li><a href="/" aria-label="신상품">신상품</a></li>
-                <li><a href="/src/pages/productList/">베스트</a></li>
+                <li><a href="/src/pages/productList/" aria-label="신상품">신상품</a></li>
+                <li><a href="/" aria-label="베스트 상품">베스트</a></li>
                 <li><a href="/" aria-label="알뜰쇼핑">알뜰쇼핑</a></li>
                 <li><a href="/" aria-label="특가/혜택">특가/혜택</a></li>
               </ul>
