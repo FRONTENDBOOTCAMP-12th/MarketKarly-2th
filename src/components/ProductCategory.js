@@ -145,10 +145,59 @@ class ProductCategory extends LitElement {
               >
             </li>
             <li class="filter-item">
+              <input id="checkbox2" type="checkbox" class="filter-checkbox" />
+              <label class="checkbox-label" for="checkbox2">
+                <span class="checkbox-img" tabindex="0"></span>
+                정육·계란</label
+              >
+            </li>
+            <li class="filter-item">
               <input id="checkbox" type="checkbox" class="filter-checkbox" />
               <label class="checkbox-label" for="checkbox">
                 <span class="checkbox-img" tabindex="0"></span>
-                정육·계란</label
+                과일·견과·쌀</label
+              >
+            </li>
+            <li class="filter-item">
+              <input id="checkbox" type="checkbox" class="filter-checkbox" />
+              <label class="checkbox-label" for="checkbox">
+                <span class="checkbox-img" tabindex="0"></span>
+                간식·과자·떡</label
+              >
+            </li>
+            <li class="filter-item">
+              <input id="checkbox" type="checkbox" class="filter-checkbox" />
+              <label class="checkbox-label" for="checkbox">
+                <span class="checkbox-img" tabindex="0"></span>
+                생수·음료·우유·커피</label
+              >
+            </li>
+            <li class="filter-item">
+              <input id="checkbox" type="checkbox" class="filter-checkbox" />
+              <label class="checkbox-label" for="checkbox">
+                <span class="checkbox-img" tabindex="0"></span>
+                수산·해산·건어물</label
+              >
+            </li>
+            <li class="filter-item">
+              <input id="checkbox" type="checkbox" class="filter-checkbox" />
+              <label class="checkbox-label" for="checkbox">
+                <span class="checkbox-img" tabindex="0"></span>
+                베이커리·치즈·델리</label
+              >
+            </li>
+            <li class="filter-item">
+              <input id="checkbox" type="checkbox" class="filter-checkbox" />
+              <label class="checkbox-label" for="checkbox">
+                <span class="checkbox-img" tabindex="0"></span>
+                건강식품</label
+              >
+            </li>
+            <li class="filter-item">
+              <input id="checkbox" type="checkbox" class="filter-checkbox" />
+              <label class="checkbox-label" for="checkbox">
+                <span class="checkbox-img" tabindex="0"></span>
+                생활용품·리빙·캠핑</label
               >
             </li>
           </ul>
@@ -233,21 +282,21 @@ class ProductCategory extends LitElement {
               <input id="checkbox" type="checkbox" class="filter-checkbox" />
               <label class="checkbox-label" for="checkbox">
                 <span class="checkbox-img" tabindex="0"></span>
-                6,800원 ~ 9,980원</label
+                6,800원 ~ 9,900원</label
               >
             </li>
             <li class="filter-item">
               <input id="checkbox" type="checkbox" class="filter-checkbox" />
               <label class="checkbox-label" for="checkbox">
                 <span class="checkbox-img" tabindex="0"></span>
-                9,980원 ~ 13,900원</label
+                9,900원 ~ 14,900원</label
               >
             </li>
             <li class="filter-item">
               <input id="checkbox" type="checkbox" class="filter-checkbox" />
               <label class="checkbox-label" for="checkbox">
                 <span class="checkbox-img" tabindex="0"></span>
-                13,900원 이상</label
+                14,900원 이상</label
               >
             </li>
           </ul>
