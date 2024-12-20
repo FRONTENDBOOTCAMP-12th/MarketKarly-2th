@@ -340,6 +340,13 @@ class Header extends LitElement {
     this.isCategoryOpen = false;
   }
 
+  handleKeyDown(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      this.isCategoryOpen = !this.isCategoryOpen;
+      e.preventDefault();
+    }
+  }
+
   render() {
     return html`
       <header class="header-wrapper">
@@ -462,10 +469,13 @@ class Header extends LitElement {
               </div>
 
             <nav class="nav">
-              <div
+              <section
                 class="nav-category header-category"
                 @mouseenter=${this.openCategory}
                 @mouseleave=${this.closeCategory}
+                @focus=${this.openCategory}
+                @blur=${this.closeCategory}
+                tabindex="0"
               >
               ${
                 this.isCategoryOpen
@@ -473,17 +483,13 @@ class Header extends LitElement {
                   : ''
               }
                 <div class="nav-category-button">
-                  <img
-                    src="/icon/hamburger.webp"
-                    alt="카테고리"
-                    class="nav-category-icon nav-category-hover"
-                    aria-label="카테고리"
-                  />
+                <img src="/icon/hamburger.webp" alt="카테고리" class="nav-category-icon nav-category-hover" aria-label="카테고리" />
+
                   <span class="nav-category-text nav-category-hover"
                     >카테고리</span
                   >
                 </div>
-              </div>
+              </section>
 
               <ul class="nav-site-map">
                 <li><a href="/src/pages/productList/" aria-label="신상품 페이지">신상품</a></li>
