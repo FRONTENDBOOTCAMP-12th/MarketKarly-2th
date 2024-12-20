@@ -37,7 +37,7 @@ class Inquiry extends LitElement {
         background-color: var(--white-color, #ffffff);
         border-radius: 8px;
         z-index: 1040;
-        padding: 2rem;
+        padding: var(--space-5xl);
         transition: opacity 0.4s ease;
       }
 
@@ -47,7 +47,7 @@ class Inquiry extends LitElement {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 0 0 1.25rem;
+        padding: 0 0 var(--space-2xl);
         border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
       }
 
@@ -74,7 +74,7 @@ class Inquiry extends LitElement {
         align-items: center;
         padding: 0;
         border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
-        gap: 1.5rem;
+        gap: var(--space-3xl);
       }
 
       .product-image {
@@ -91,8 +91,8 @@ class Inquiry extends LitElement {
       .review-detail {
         display: flex;
         flex-direction: column;
-        padding: 1rem 0 0;
-        gap: 1rem;
+        padding: var(--space-xl) 0 0;
+        gap: var(--space-lg);
         height: 360px;
       }
 
@@ -105,7 +105,7 @@ class Inquiry extends LitElement {
 
       .section-label {
         width: 90px;
-        padding: 0.5rem 0 0 0.5rem;
+        padding: var(--space-md) 0 0 var(--space-md);
         font-weight: var(--text-bold);
         color: var(--gray-color-700, #404040);
         font-size: 1.125rem;
@@ -117,7 +117,7 @@ class Inquiry extends LitElement {
         line-height: var(--regular-line-height);
         border: 1px solid var(--gray-color-300, #a6a6a6);
         border-radius: 4px;
-        padding: 0 1.25rem;
+        padding: 0 var(--space-lg);
       }
 
       .content-input {
@@ -126,7 +126,7 @@ class Inquiry extends LitElement {
         height: 198px;
         border: 1px solid var(--gray-color-300, #a6a6a6);
         border-radius: 4px;
-        padding: 0.5rem 1.25rem;
+        padding: var(--space-md) var(--space-2xl);
         line-height: var(--regular-line-height);
         display: flex;
         flex-direction: column;
@@ -140,10 +140,10 @@ class Inquiry extends LitElement {
       }
 
       .guideline-title {
-        font-weight: var(--text-bold);
-        color: var(--gray-color-300, #a6a6a6);
-        margin-top: 0.4rem;
-        margin-bottom: 0.2rem;
+        font-weight: var(--text-semi-bold);
+        color: var(--gray-color-400, #a6a6a6);
+        margin-top: var(--space-md);
+        margin-bottom: var(--space-sm);
       }
 
       .guideline-list ul {
@@ -158,15 +158,15 @@ class Inquiry extends LitElement {
       .warning-message {
         font-size: var(--font-sm);
         color: var(--accent-color);
-        margin-top: 0.4rem;
+        margin-top: var(--space-md);
       }
 
       .character-count {
         font-size: var(--font-sm);
         color: var(--gray-color-500, #6b6b6b);
         position: absolute;
-        right: 4.8rem;
-        bottom: 12.2rem;
+        right: 3.8rem;
+        bottom: 11.2rem;
         background: var(--white-color, #ffffff);
       }
 
@@ -174,7 +174,7 @@ class Inquiry extends LitElement {
         padding: 0;
         display: flex;
         flex-direction: row;
-        gap: 0.625rem;
+        gap: var(--space-md);
         margin-left: 6rem;
         font-weight: var(--text-semi-bold);
         align-items: center;
@@ -188,8 +188,8 @@ class Inquiry extends LitElement {
       .buttons {
         display: flex;
         justify-content: center;
-        gap: 0.75rem;
-        padding-top: 1.25rem;
+        gap: var(--space-lg);
+        padding-top: var(--space-2xl);
         border-top: 1px solid var(--gray-color-100, #e1e1e1);
         margin-top: auto;
       }
@@ -310,6 +310,11 @@ class Inquiry extends LitElement {
       secretCheckIcon.src = '/icon/inquiry-checked-true.svg';
       secretCheckIcon.dataset.checked = 'true';
     }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    document.body.style.overflow = 'hidden';
   }
 
   render() {
@@ -446,8 +451,8 @@ class Inquiry extends LitElement {
           <btn-emptied-component
             width="174px"
             text="취소"
-            borderColor="#898989"
-            color="#404040"
+            borderColor="var(--gray-color-400, #898989)"
+            color="var(--gray-color-700, 404040;)"
             @click=${this.handleShortClose}
           ></btn-emptied-component>
           ${this.isSubmitEnabled
@@ -456,7 +461,7 @@ class Inquiry extends LitElement {
                   width="174px"
                   text="등록"
                   backgroundColor="var(--primary-color, #283198)"
-                  color="white"
+                  color="var(--white-color, #ffffff)"
                   @click=${this.handleSubmit}
                 ></btn-filled-component>
               `
@@ -472,4 +477,4 @@ class Inquiry extends LitElement {
   }
 }
 
-customElements.define('inquiry-component', Inquiry);
+customElements.define('inquiry-modal-component', Inquiry);
