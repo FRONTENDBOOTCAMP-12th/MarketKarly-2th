@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Card';
+//https://velog.io/@kodskm/JS-%EB%A7%88%EC%BC%93-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-8-%EC%83%81%ED%92%88%EB%A6%AC%EC%8A%A4%ED%8A%B8
 
 class ProductList extends LitElement {
   static properties = {
@@ -131,19 +132,81 @@ class ProductList extends LitElement {
         width: 100%;
       }
 
-      .btn-navigator {
+      .pagination {
         margin-top: 16px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .btn-paging {
+        width: 30px;
+        height: 30px;
+      }
+
+      button.btn-product-reduce {
+        background-image: url(/icon/minus_disabled_true.png);
+      }
+
+      button.btn-product-add {
+        background-image: url(/icon/plus_disabled_false.png);
       }
     `,
   ];
+  static properties = {
+    disabled: { type: Boolean },
+    count: { type: Number },
+  };
 
   constructor() {
     super();
+    this.disabled = true;
+    this.count = 1;
     this.activeStandard = 'recommended';
   }
 
   handleStandardClick(standard) {
     this.activeStandard = standard;
+  }
+
+  changeBackground() {
+    const btnReduce = this.renderRoot.querySelector('.btn-product-reduce');
+
+    if (this.count > 1) {
+      btnReduce.style.backgroundImage = 'url(/icon/minus_disabled_false.png)';
+    } else {
+      btnReduce.style.backgroundImage = 'url(/icon/minus_disabled_true.png)';
+    }
+  }
+
+  addProduct() {
+    this.disabled = false;
+    this.count++;
+
+    if (this.count > 1) {
+      this.totalPrice = (this.count * this.productPrice).toLocaleString();
+    }
+
+    this.changeBackground();
+  }
+
+  reduceProduct() {
+    if (this.count > 1) {
+      this.disabled = false;
+      this.count--;
+    }
+
+    if (this.count >= 1) {
+      this.totalPrice = (this.count * this.productPrice).toLocaleString();
+    }
+
+    this.changeBackground();
+  }
+
+  handleBtnCancel() {
+    this.remove();
+    document.body.style.overflow = 'auto';
   }
 
   render() {
@@ -219,7 +282,41 @@ class ProductList extends LitElement {
               </section>
             </div>
             <div class="product-grid">${this.createProductItems()}</div>
-            <div class="btn-navigator"></div>
+            <div class="pagination">
+              <button
+                class="btn-product-reduce btn-paging"
+                aria-label="페이지 처음으로"
+                ?disabled=${this.disabled}
+                @click="${this.reduceProduct}"
+              >
+                <img src="/icon/btn-first.svg" alt="페이지 처음으로" />
+              </button>
+              <button
+                class="btn-product-reduce btn-paging"
+                aria-label="페이지 이전으로"
+                ?disabled=${this.disabled}
+                @click="${this.reduceProduct}"
+              >
+                <img src="/icon/btn-prev.svg" alt="페이지 마지막으로" />
+              </button>
+              <button class="pagination-number">${this.count - 1}</button>
+              <button class="pagination-number">${this.count}</button>
+              <button class="pagination-number">${this.count + 1}</button>
+              <button
+                class="btn-product-add btn-paging"
+                aria-label="페이지 마지막으로"
+                @click="${this.addProduct}"
+              >
+                <img src="/icon/btn-next.svg" alt="페이지 마지막으로" />
+              </button>
+              <button
+                class="btn-product-add btn-paging"
+                aria-label="페이지 마지막으로"
+                @click="${this.addProduct}"
+              >
+                <img src="/icon/btn-last.svg" alt="페이지 마지막으로" />
+              </button>
+            </div>
           </div>
         </div>
       </section>
