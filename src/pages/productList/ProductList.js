@@ -2,7 +2,6 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Card';
-//https://velog.io/@kodskm/JS-%EB%A7%88%EC%BC%93-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A7%8C%EB%93%A4%EA%B8%B0-8-%EC%83%81%ED%92%88%EB%A6%AC%EC%8A%A4%ED%8A%B8
 
 class ProductList extends LitElement {
   static properties = {
@@ -22,12 +21,12 @@ class ProductList extends LitElement {
         text-align: center;
         font-size: var(--font-lg);
         color: var(--black-color, #000);
-        margin-bottom: 2rem;
+        margin-bottom: var(--space-5xl);
       }
 
       .flex-content {
         display: flex;
-        gap: 16px;
+        gap: var(--space-xl);
       }
 
       .product-category {
@@ -44,15 +43,15 @@ class ProductList extends LitElement {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 12px 0;
+        padding: var(--space-xl) 0;
         margin-bottom: var(--space-lg);
       }
 
       .total-count {
         font-size: 14px;
-        color: #333;
+        color: var(--black-color);
         font-weight: var(--text-semi-bold);
-        font-weight: 700;
+        font-weight: var(--text-bold);
       }
 
       button {
@@ -84,6 +83,9 @@ class ProductList extends LitElement {
       .choose-standard {
         color: var(--gray-color-300, #a6a6a6);
         transition: color 0.2s ease;
+        position: relative;
+        padding: 0 8px;
+        cursor: pointer;
       }
 
       .choose-standard.active {
@@ -136,7 +138,6 @@ class ProductList extends LitElement {
         display: flex;
         justify-content: center;
         align-items: center;
-
         margin-top: 5rem;
       }
 
@@ -161,8 +162,8 @@ class ProductList extends LitElement {
 
       .pagination-number {
         font-size: var(--font-sm);
-        color: #333333;
-        line-height: 15px;
+        color: var(--black-color, #000);
+        line-height: var(--light-line-height);
         font-weight: var(--text-semi-bold);
         color: var(--gray-color-400, #e1e1e1);
       }
@@ -175,47 +176,28 @@ class ProductList extends LitElement {
 
   constructor() {
     super();
-    this.disabled = true;
     this.count = 1;
     this.activeStandard = 'recommended';
   }
 
-  handleStandardClick(standard) {
+  handleStandardClick(standard, event) {
+    event.preventDefault();
     this.activeStandard = standard;
-  }
-
-  changeBackground() {
-    const btnReduce = this.renderRoot.querySelector('.btn-product-reduce');
-
-    if (this.count > 1) {
-      btnReduce.style.backgroundImage = 'url(/icon/minus_disabled_false.png)';
-    } else {
-      btnReduce.style.backgroundImage = 'url(/icon/minus_disabled_true.png)';
-    }
+    this.requestUpdate();
   }
 
   addProduct() {
-    this.disabled = false;
     this.count++;
 
     if (this.count > 1) {
       this.totalPrice = (this.count * this.productPrice).toLocaleString();
     }
-
-    this.changeBackground();
   }
 
   reduceProduct() {
     if (this.count > 1) {
-      this.disabled = false;
       this.count--;
     }
-
-    if (this.count >= 1) {
-      this.totalPrice = (this.count * this.productPrice).toLocaleString();
-    }
-
-    this.changeBackground();
   }
 
   handleBtnCancel() {
@@ -239,7 +221,7 @@ class ProductList extends LitElement {
                     .activeStandard === 'recommended'
                     ? 'active'
                     : ''}"
-                  @click=${() => this.handleStandardClick('recommended')}
+                  @click=${(e) => this.handleStandardClick('recommended', e)}
                 >
                   추천순
                   <img
@@ -253,7 +235,7 @@ class ProductList extends LitElement {
                     .activeStandard === 'new'
                     ? 'active'
                     : ''}"
-                  @click=${() => this.handleStandardClick('new')}
+                  @click=${(e) => this.handleStandardClick('new', e)}
                 >
                   신상품순
                 </button>
@@ -262,7 +244,7 @@ class ProductList extends LitElement {
                     .activeStandard === 'sale'
                     ? 'active'
                     : ''}"
-                  @click=${() => this.handleStandardClick('sale')}
+                  @click=${(e) => this.handleStandardClick('sale', e)}
                 >
                   판매량순
                 </button>
@@ -271,7 +253,7 @@ class ProductList extends LitElement {
                     .activeStandard === 'discount'
                     ? 'active'
                     : ''}"
-                  @click=${() => this.handleStandardClick('discount')}
+                  @click=${(e) => this.handleStandardClick('discount', e)}
                 >
                   혜택순
                 </button>
@@ -280,7 +262,7 @@ class ProductList extends LitElement {
                     .activeStandard === 'low-price'
                     ? 'active'
                     : ''}"
-                  @click=${() => this.handleStandardClick('low-price')}
+                  @click=${(e) => this.handleStandardClick('low-price', e)}
                 >
                   낮은 가격순
                 </button>
@@ -289,7 +271,7 @@ class ProductList extends LitElement {
                     .activeStandard === 'high-price'
                     ? 'active'
                     : ''}"
-                  @click=${() => this.handleStandardClick('high-price')}
+                  @click=${(e) => this.handleStandardClick('high-price', e)}
                 >
                   높은 가격순
                 </button>
