@@ -2,16 +2,13 @@ import '@/components/Card';
 import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import { register } from 'swiper/element';
+
 register();
 
 class ProductsSwiper extends LitElement {
   static styles = [
     reset,
     css`
-      main {
-        font-family: 'Pretendard';
-      }
-
       .recommend {
         position: relative;
         width: 1050px;
