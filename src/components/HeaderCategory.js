@@ -8,7 +8,7 @@ class HeaderCategory extends LitElement {
       :host {
         display: block;
         position: absolute;
-        top: 3.1rem;
+        top: 3.7rem;
         left: 0;
         width: 247px;
         height: 660px;

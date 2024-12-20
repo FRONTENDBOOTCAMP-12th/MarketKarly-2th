@@ -33,7 +33,7 @@ class Header extends LitElement {
         align-items: center;
         justify-content: flex-end;
         gap: var(--space-lg);
-        padding: var(--space-lg) 0 0;
+        padding: var(--space-md) 0 0;
         height: 30px;
         font-weight: var(--text-semi-bold);
       }
@@ -229,7 +229,8 @@ class Header extends LitElement {
         position: relative;
         width: 150px;
         display: flex;
-        padding: var(--space-xl) 0;
+        padding-top: var(--space-3xl);
+        padding-bottom: var(--space-xl);
       }
 
       .nav-category-button {
@@ -419,16 +420,15 @@ class Header extends LitElement {
                     </ul>
                   </nav>
                 </div>
-                <form class="header-search" role="search" aria-label="검색">
+                <form class="header-search" role="search" aria-label="검색 창">
                   <input
                     type="text"
                     placeholder="검색어를 입력해주세요."
                     aria-label="검색어 입력"
                   />
-                  <button type="submit" aria-label="검색 버튼">
+                  <button type="submit" aria-label="검색 입력 버튼">
                     <img
                       src="/icon/header-search.svg"
-                      alt="검색 아이콘"
                       class="icon"
                     />
                   </button>
@@ -438,7 +438,6 @@ class Header extends LitElement {
                     <a href="#" aria-label="매장 찾기">
                       <img
                         src="/icon/map.svg"
-                        alt="매장 찾기 아이콘"
                         class="icon"
                       />
                     </a>
@@ -447,7 +446,6 @@ class Header extends LitElement {
                     <a href="#" aria-label="찜한 상품 목록">
                       <img
                         src="/icon/favorits.svg"
-                        alt="찜한 상품 목록 아이콘"
                         class="icon"
                       />
                     </a>
@@ -456,7 +454,6 @@ class Header extends LitElement {
                     <a href="#" aria-label="장바구니">
                       <img
                         src="/icon/header-cart.svg"
-                        alt="장바구니 아이콘"
                         class="icon"
                       />
                     </a>
@@ -489,10 +486,10 @@ class Header extends LitElement {
               </div>
 
               <ul class="nav-site-map">
-                <li><a href="/src/pages/productList/" aria-label="신상품">신상품</a></li>
-                <li><a href="/" aria-label="베스트 상품">베스트</a></li>
-                <li><a href="/" aria-label="알뜰쇼핑">알뜰쇼핑</a></li>
-                <li><a href="/" aria-label="특가/혜택">특가/혜택</a></li>
+                <li><a href="/src/pages/productList/" aria-label="신상품 페이지">신상품</a></li>
+                <li><a href="/src/pages/productList/" aria-label="베스트 상품 페이지">베스트</a></li>
+                <li><a href="/src/pages/productList/" aria-label="알뜰쇼핑 페이지">알뜰쇼핑</a></li>
+                <li><a href="/src/pages/productList/" aria-label="특가/혜택 페이지지">특가/혜택</a></li>
               </ul>
 
               <div class="nav-delivery">
