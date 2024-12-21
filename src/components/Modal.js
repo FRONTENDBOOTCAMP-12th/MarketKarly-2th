@@ -95,7 +95,7 @@ class Modal extends LitElement {
 
   // '오늘 하루 안 보기'를 눌렀을 때 24시간 뒤의 시간을 localStorage에 기록해놓기
   setExpTime() {
-    const expTime = new Date().getTime() + 5 * 1000;
+    const expTime = new Date().getTime() + 1000 * 60 * 60 * 24;
     localStorage.setItem('closeTime', expTime);
   }
 

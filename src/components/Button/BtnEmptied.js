@@ -5,6 +5,7 @@ import a11y from '@/base/a11y';
 class BtnEmptied extends LitElement {
   static properties = {
     width: { type: String },
+    height: { type: String },
     text: { type: String },
     borderColor: { type: String },
     color: { type: String },
@@ -13,6 +14,7 @@ class BtnEmptied extends LitElement {
   constructor() {
     super();
     this.width = '174px';
+    this.height = '54px';
     this.text = 'text';
     this.borderColor = '#283198';
     this.color = '#283198';
@@ -27,8 +29,6 @@ class BtnEmptied extends LitElement {
         margin: 0;
         border: none;
         background: none;
-
-        height: 54px;
 
         background-color: var(--white-color, #ffffff);
         font-size: var(--font-md);
@@ -52,6 +52,7 @@ class BtnEmptied extends LitElement {
       <style>
         .btn-emptied {
           width: ${this.width};
+          height: ${this.height};
           color: ${this.color};
         }
       </style>

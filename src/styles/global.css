@@ -42,6 +42,8 @@
   --font-5xl: 2.5rem; /* 40px */
 
   /* ------------------------------- line-height ------------------------------ */
+  --extra-light-line-height: 1.4;
+  --light-line-height: 1.5;
   --regular-line-height: 1.6;
 
   /* ---------------------------------- space --------------------------------- */
@@ -53,6 +55,8 @@
   --space-3xl: 1.5rem; /* 24px */
   --space-4xl: 1.75rem; /* 28px */
   --space-5xl: 2rem; /* 32px */
+  --space-6xl: 2.25rem; /* 36px */
+  --space-7xl: 2.5rem; /* 40px */
 
   /* ------------------------------ Effect styles ----------------------------- */
   --text: inset 1px 1px 0px rgba(0, 0, 0, 1);

@@ -3,17 +3,19 @@ import reset from '@/styles/reset';
 import '@/assets/font/Pretendard.css';
 import '@/components/Button/BtnFilled';
 import '@/components/Button/BtnEmptied';
+import Swal from 'sweetalert2';
 
 class Login extends LitElement {
   static styles = [
     reset,
     css`
       .container {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 80px 0;
 
         & h1 {
           font-size: var(--font-xl);
@@ -22,12 +24,14 @@ class Login extends LitElement {
         }
 
         & form {
+          width: 340px;
           & input {
             box-sizing: border-box;
             border: 1px solid var(--gray-color-300, #a6a6a6);
             border-radius: 4px;
-            padding: var(--space-xl);
-            min-width: 340px;
+            height: 50px;
+            width: 100%;
+            padding: var(--space-lg) var(--space-2xl);
             margin-bottom: var(--space-lg);
             outline: none;
 
@@ -45,7 +49,7 @@ class Login extends LitElement {
             width: 100%;
             display: flex;
             flex-direction: row;
-            justify-content: end;
+            justify-content: flex-end;
             gap: 4px;
             margin-bottom: var(--space-4xl);
 
@@ -64,11 +68,6 @@ class Login extends LitElement {
           }
         }
       }
-      .error-message {
-        color: red;
-        font-size: var(--font-sm);
-        margin-top: var(--space-lg);
-      }
     `,
   ];
 
@@ -76,48 +75,42 @@ class Login extends LitElement {
     super();
     this.email = '';
     this.password = '';
-    this.errorMessage = '';
-  }
-
-  // 임의로 validation 지정
-  // api 연결하면 정규표현식 validation 필요없을듯
-  // 입력값이 없거나 아이디 비밀번호가 일치하지 않을 때 errorMessage 띄움
-
-  validateEmail(email) {
-    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return re.test(email);
-  }
-
-  validatePassword(password) {
-    const re = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,16}$/;
-    return re.test(password);
   }
 
   handleInputChange(e) {
     const { id, value } = e.target;
-    this[id] = value;
-    this.errorMessage = '';
+    if (id === 'idField') {
+      this.email = value;
+    } else if (id === 'pwField') {
+      this.password = value;
+    }
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleLogin(e) {
+    e.preventDefault();
+    console.log('click');
+
+    const validEmail = 'admin@naver.com';
+    const validPassword = 'qwer1234@';
 
     if (!this.email || !this.password) {
-      this.errorMessage = '아이디와 비밀번호를 모두 입력해주세요.';
-      this.requestUpdate();
+      Swal.fire({
+        title: '로그인 실패',
+        text: '아이디와 비밀번호를 모두 입력해주세요.',
+        icon: 'warning',
+      });
       return;
     }
 
-    if (
-      this.validateEmail(this.email) &&
-      this.validatePassword(this.password)
-    ) {
+    if (this.email === validEmail && this.password === validPassword) {
       window.location.href = '/';
     } else {
-      this.errorMessage = '아이디 또는 비밀번호가 올바르지 않습니다.';
+      Swal.fire({
+        title: '로그인 실패',
+        text: '아이디 또는 비밀번호가 올바르지 않습니다.',
+        icon: 'error',
+      });
     }
-
-    this.requestUpdate();
   }
 
   render() {
@@ -154,20 +147,16 @@ class Login extends LitElement {
           </div>
 
           <div class="button-container">
-            <btn-filled-element
+            <btn-filled-component
               width="100%"
               text="로그인"
-              @click="${this.handleSubmit}"
-            ></btn-filled-element>
-            <btn-emptied-element
+              @click="${this.handleLogin}"
+            ></btn-filled-component>
+            <btn-emptied-component
               width="100%"
               text="회원가입"
-            ></btn-emptied-element>
+            ></btn-emptied-component>
           </div>
-
-          ${this.errorMessage
-            ? html`<div class="error-message">${this.errorMessage}</div>`
-            : ''}
         </form>
       </div>
     `;

@@ -4,9 +4,7 @@ export default css`
   /* https://piccalil.li/blog/a-modern-css-reset */
 
   /* Box sizing rules */
-  body *,
-  body *::before,
-  body *::after {
+  * {
     box-sizing: border-box;
   }
 
