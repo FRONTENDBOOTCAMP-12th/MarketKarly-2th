@@ -34,7 +34,7 @@ class ProductFilter extends LitElement {
           cursor: pointer;
           color: var(--gray-color-300, #a6a6a6);
           padding: 0;
-          font-size: 10px;
+          font-size: 0.625rem;
         }
       }
 
@@ -57,10 +57,10 @@ class ProductFilter extends LitElement {
         }
 
         & ul {
-          padding-top: 20px;
+          padding-top: var(--space-2xl);
           display: flex;
           flex-direction: column;
-          gap: 20px;
+          gap: var(--space-2xl);
 
           & input {
             display: none;
@@ -76,11 +76,11 @@ class ProductFilter extends LitElement {
           }
 
           .checkbox-img {
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 24px;
+            height: 24px;
             background-image: url('/icon/unchecked.svg');
             background-repeat: no-repeat;
-            margin-right: 8px;
+            margin-right: var(--space-md);
           }
           .filter-checkbox:checked + .checkbox-label .checkbox-img {
             background-image: url('/icon/checked.svg');
