@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import '@/assets/font/Pretendard.css';
 
-class ProductCategory extends LitElement {
+class ProductFilter extends LitElement {
   static styles = [
     reset,
     css`
@@ -229,4 +229,4 @@ class ProductCategory extends LitElement {
   }
 }
 
-customElements.define('product-category-component', ProductCategory);
+customElements.define('product-filter-component', ProductFilter);
