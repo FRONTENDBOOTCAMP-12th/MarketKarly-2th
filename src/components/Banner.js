@@ -58,14 +58,15 @@ class BannerSwiper extends LitElement {
       }
 
       .swiper-button-prev {
-        left: 15%;
+        left: 20%;
         top: 50%;
         transform: translateY(-50%);
       }
       .swiper-button-next {
-        right: 15%;
+        right: 20%;
         top: 50%;
-        transform: translateY(-50%) scaleX(-1);
+        transform: translateY(50%);
+        rotate: 180deg;
       }
     `,
   ];
@@ -76,29 +77,40 @@ class BannerSwiper extends LitElement {
         <swiper-container
           id="swiper"
           autoplay
-          delay="10000"
           loop
+          speed="4000"
           slides-per-view="1"
-          centered-slides
         >
           <swiper-slide>
             <a href="/">
-              <img src="/image/banner01.webp" alt="컬리 과일 가게" />
+              <img
+                src="/image/banner01.webp"
+                alt="부드러운 달콤함 컬리 과일 가게 앵콜 특가:멜론 9,900원 10월20일부터 10월27일까지"
+              />
             </a>
           </swiper-slide>
           <swiper-slide>
             <a href="/">
-              <img src="/image/banner02.webp" alt="이 달의 카드 혜택" />
+              <img
+                src="/image/banner02.webp"
+                alt="한눈에 보는 이달의 카드 혜택 최대 10% 카드 쿠폰 받기 10월1일부터 10월31일까지"
+              />
             </a>
           </swiper-slide>
           <swiper-slide>
             <a href="/">
-              <img src="/image/banner03.webp" alt="컬리 퍼플 위크" />
+              <img
+                src="/image/banner03.webp"
+                alt="컬리 퍼플 위크 적립률 UP+3종 쿠폰팩, 더 풍성해진 혜택 10월24일부터 10월28일까지"
+              />
             </a>
           </swiper-slide>
           <swiper-slide>
             <a href="/">
-              <img src="/image/banner04.webp" alt="특가 한 눈에 보기" />
+              <img
+                src="/image/banner04.webp"
+                alt="컬리 장보기의 특권 이 주의 특가 한 눈에 보기 우측 상단 [특가/혜택]에서 확인하세요!"
+              />
             </a>
           </swiper-slide>
         </swiper-container>
