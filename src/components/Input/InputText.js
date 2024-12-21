@@ -8,26 +8,21 @@ class InputText extends LitElement {
     a11y,
     reset,
     css`
-      .wrapper {
-        display: flex;
-        gap: var(--space-md);
-        align-items: center;
+      input {
+        border: 1px solid var(--gray-color-300, #a6a6a6);
+        border-radius: 4px;
+        padding: var(--space-md) var(--space-2xl);
+        color: var(--content-text-color, #333);
 
-        input {
-          border: 1px solid var(--gray-color-300, #a6a6a6);
-          border-radius: 4px;
-          padding: var(--space-md) var(--space-2xl);
-          color: var(--content-text-color, #333);
-
-          &::placeholder {
-            color: var(--gray-color-400, #898989);
-          }
+        &::placeholder {
+          color: var(--gray-color-400, #898989);
         }
+      }
 
-        label {
-          font-weight: var(--text-semi-bold);
-          line-height: var(--light-line-height);
-        }
+      .error-message {
+        color: var(--info-error-color, #f03f40);
+        font-size: var(--font-sm);
+        margin-top: var(--space-sm);
       }
     `,
   ];
@@ -36,11 +31,10 @@ class InputText extends LitElement {
     name: { type: String },
     width: { type: String },
     height: { type: String },
-    label: { type: String },
-    btnText: { type: String },
-    labelSrOnly: { type: Boolean },
     placeholder: { type: String },
-    hasBtn: { type: Boolean },
+    hasError: { type: Boolean },
+    errorMessage: { type: String },
+    validation: { type: String },
   };
 
   constructor() {
@@ -48,15 +42,18 @@ class InputText extends LitElement {
     this.name = 'name';
     this.width = 'auto';
     this.height = '44px';
-    this.label = 'label';
-    this.btnText = 'text';
-    this.labelSrOnly = false;
-    this.placeholder = 'placeholer';
-    this.hasBtn = false;
+    this.placeholder = 'placeholder';
+    this.hasError = false;
+    this.errorMessage = 'error';
+    this.validation = '';
+  }
+
+  handleError(e) {
+    const value = e.target.value;
+    this.hasError = this.validation.test(value) ? false : true;
   }
 
   render() {
-    console.log(this.hasBtn);
     return html`
       <style>
         input {
@@ -64,27 +61,19 @@ class InputText extends LitElement {
           height: ${this.height};
         }
       </style>
-
-      <div class="wrapper">
+      <div class="input-wrapper">
         <input
-          id="${this.name}"
+          @change=${this.handleError}
           type="text"
           name=${this.name}
           placeholder=${this.placeholder}
         />
-        <label class=${this.labelSrOnly ? 'sr-only' : null} for=${this.name}
-          >${this.label}</label
-        >
-        ${this.hasBtn
-          ? html`<btn-emptied-component
-              height=${this.height}
-              width="143px"
-              text=${this.btnText}
-            ></btn-emptied-component>`
+        ${this.hasError
+          ? html`<p class="error-message"><slot></slot></p>`
           : null}
       </div>
     `;
   }
 }
 
-customElements.define('input-text-component', InputText);
+customElements.define('text-component', InputText);
