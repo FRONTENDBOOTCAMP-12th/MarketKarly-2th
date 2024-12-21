@@ -57,10 +57,10 @@ class ProductCategory extends LitElement {
         }
 
         & ul {
-          padding: 14px 0;
+          padding-top: 20px;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 20px;
 
           & input {
             display: none;
@@ -85,8 +85,15 @@ class ProductCategory extends LitElement {
           .filter-checkbox:checked + .checkbox-label .checkbox-img {
             background-image: url('/icon/checked.svg');
           }
-        }
 
+          .more-filter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gray-color-300, #a6a6a6);
+            font-size: var(--font-sm);
+          }
+        }
         .none {
           display: none;
         }
@@ -104,13 +111,74 @@ class ProductCategory extends LitElement {
       benefit: false,
       type: false,
     };
+
+    this.filterTitles = {
+      categories: '카테고리',
+      brand: '브랜드',
+      delivery: '배송',
+      price: '가격',
+      benefit: '혜택',
+      type: '유형',
+      exclude: '특정상품 제외',
+    };
+
+    this.filters = {
+      categories: [
+        '샐러드 · 간편식',
+        '국·반찬·메인요리',
+        '정육·계란',
+        '과일·견과·쌀',
+        '간식·과자·떡',
+        '생수·음료·우유·커피',
+        '수산·해산·건어물',
+        '베이커리·치즈·델리',
+        '건강식품',
+        '생활용품·리빙·캠핑',
+      ],
+      brand: ['풀무원', '온더바디', '프로쉬'],
+      delivery: ['샛별배송', '판매자배송'],
+      price: [
+        '6,800원 미만',
+        '6,800원 ~ 9,900원',
+        '9,900원 ~ 14,900원',
+        '14,900원 이상',
+      ],
+      benefit: ['할인상품', '한정수량'],
+      type: ['Kurly Only'],
+      exclude: ['반려동물 상품'],
+    };
+  }
+
+  resetFilter() {
+    const checkboxes = this.shadowRoot.querySelectorAll('.filter-checkbox');
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+    this.requestUpdate();
   }
 
   toggleFilter(e) {
-    console.log('first');
     const buttonType = e.currentTarget.dataset.toggle;
     this.showStates[buttonType] = !this.showStates[buttonType];
     this.requestUpdate();
+  }
+
+  renderList(filterType) {
+    return this.filters[filterType].map(
+      (item, index) => html`
+        <li class="filter-item">
+          <input
+            id="checkbox-${filterType}-${index}"
+            type="checkbox"
+            class="filter-checkbox"
+          />
+          <label class="checkbox-label" for="checkbox-${filterType}-${index}">
+            <span class="checkbox-img" tabindex="0"></span>
+            ${item}
+          </label>
+        </li>
+      `
+    );
   }
 
   render() {
@@ -118,254 +186,44 @@ class ProductCategory extends LitElement {
       <section class="filter-container">
         <div class="filter-header">
           <p class="filter-title">필터</p>
-          <button class="filter-reset" type="button">초기화</button>
-        </div>
-        <div class="filter-toggle">
           <button
-            class="filter-category"
-            data-toggle="categories"
-            @click="${this.toggleFilter}"
+            class="filter-reset"
+            type="button"
+            @click="${this.resetFilter}"
           >
-            카테고리
-            <img src="/icon/small-arrow-down.svg" alt="" />
+            초기화
           </button>
-          <ul class="${this.showStates.categories ? '' : 'none'} category-list">
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                샐러드 · 간편식
-              </label>
-            </li>
-            <li class="filter-item">
-              <input id="checkbox1" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox1">
-                <span class="checkbox-img" tabindex="0"></span>
-                국·반찬·메인요리</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox2" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox2">
-                <span class="checkbox-img" tabindex="0"></span>
-                정육·계란</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                과일·견과·쌀</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                간식·과자·떡</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                생수·음료·우유·커피</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                수산·해산·건어물</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                베이커리·치즈·델리</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                건강식품</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                생활용품·리빙·캠핑</label
-              >
-            </li>
-          </ul>
         </div>
-        <div class="filter-toggle">
-          <button
-            class="filter-brand"
-            data-toggle="brand"
-            @click="${this.toggleFilter}"
-          >
-            브랜드
-            <img src="/icon/small-arrow-down.svg" alt="" />
-          </button>
-          <ul class="${this.showStates.brand ? '' : 'none'} brand-list">
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                풀무원</label
+        ${Object.keys(this.filters).map(
+          (filterType) => html`
+            <div class="filter-toggle">
+              <button
+                class="filter-${filterType}"
+                data-toggle="${filterType}"
+                @click="${this.toggleFilter}"
               >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                온더바디</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                프로쉬</label
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="filter-toggle">
-          <button
-            class="filter-delivery"
-            data-toggle="delivery"
-            @click="${this.toggleFilter}"
-          >
-            배송
-            <img src="/icon/small-arrow-down.svg" alt="" />
-          </button>
-          <ul class="${this.showStates.delivery ? '' : 'none'} price-list">
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                샛별배송</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                판매자배송</label
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="filter-toggle">
-          <button
-            class="filter-price"
-            data-toggle="price"
-            @click="${this.toggleFilter}"
-          >
-            가격
-            <img src="/icon/small-arrow-down.svg" alt="" />
-          </button>
-          <ul class="${this.showStates.price ? '' : 'none'} delivery-list">
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                6,800원 미만</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                6,800원 ~ 9,900원</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                9,900원 ~ 14,900원</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                14,900원 이상</label
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="filter-toggle">
-          <button
-            class="filter-benefit"
-            data-toggle="benefit"
-            @click="${this.toggleFilter}"
-          >
-            혜택
-            <img src="/icon/small-arrow-down.svg" alt="" />
-          </button>
-          <ul class="${this.showStates.benefit ? '' : 'none'} benefit-list">
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                할인상품</label
-              >
-            </li>
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                한정수량</label
-              >
-            </li>
-          </ul>
-        </div>
-
-        <div class="filter-toggle">
-          <button
-            class="filter-type"
-            data-toggle="type"
-            @click="${this.toggleFilter}"
-          >
-            유형
-            <img src="/icon/small-arrow-down.svg" alt="" />
-          </button>
-          <ul class="${this.showStates.type ? '' : 'none'} type-list">
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                Kurly Only</label
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="filter-toggle">
-          <button
-            class="filter-exclude"
-            data-toggle="exclude"
-            @click="${this.toggleFilter}"
-          >
-            특정상품 제외
-            <img src="/icon/small-arrow-down.svg" alt="" />
-          </button>
-          <ul class="${this.showStates.exclude ? '' : 'none'} exclude-list">
-            <li class="filter-item">
-              <input id="checkbox" type="checkbox" class="filter-checkbox" />
-              <label class="checkbox-label" for="checkbox">
-                <span class="checkbox-img" tabindex="0"></span>
-                반려동물 상품</label
-              >
-            </li>
-          </ul>
-        </div>
+                ${this.filterTitles[filterType]}
+                <img
+                  src="/icon/${this.showStates[filterType]
+                    ? 'small-arrow-up'
+                    : 'small-arrow-down'}.svg"
+                  alt=""
+                />
+              </button>
+              <ul class="${this.showStates[filterType] ? '' : 'none'}">
+                ${this.renderList(filterType)}
+                ${filterType === 'categories' || filterType === 'brand'
+                  ? html`<button class="more-filter">
+                      ${filterType === 'categories'
+                        ? '카테고리 더보기'
+                        : '브랜드 더보기'}
+                      <img src="/icon/small-arrow-right.svg" alt="" />
+                    </button>`
+                  : ''}
+              </ul>
+            </div>
+          `
+        )}
       </section>
     `;
   }
