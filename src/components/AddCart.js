@@ -28,8 +28,8 @@ class AddCart extends LitElement {
         top: 0;
         left: 0;
 
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         transition: all 0.5s;
 
         z-index: 10000;
@@ -44,6 +44,7 @@ class AddCart extends LitElement {
       }
 
       .add-cart {
+        margin: 0;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -58,6 +59,7 @@ class AddCart extends LitElement {
         justify-content: space-between;
         gap: 1.75rem;
 
+        border: none;
         box-shadow: var(--below-medium);
 
         padding: var(--space-3xl) var(--space-2xl);
@@ -220,7 +222,7 @@ class AddCart extends LitElement {
   render() {
     return html/* html */ `
       <div class="popup-bg">
-        <div class="add-cart">
+        <dialog class="add-cart">
           <div class="product">
             <p class="product-name">[풀무원] 탱탱쫄면 (4개입)</p>
 
@@ -262,7 +264,7 @@ class AddCart extends LitElement {
             <btn-filled-component text="장바구니 담기"></btn-filled-component>
           </div>
           <!-- button-wrapper -->
-        </div>
+        </dialog>
         <!-- add-cart -->
       </div>
       <!-- popup-bg -->

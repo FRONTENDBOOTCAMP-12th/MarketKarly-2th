@@ -2,33 +2,34 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/AddCart';
-import pb from '../api/pocketbase';
 
 class Card extends LitElement {
   static properties = {
+    id: { type: String },
+    photoURL: { type: String },
     deliveryType: { type: String },
-    brand: { type: String },
     productName: { type: String },
     discount: { type: Number },
     realPrice: { type: Number },
     price: { type: Number },
     description: { type: String },
-    tagOnly: { type: String },
-    tagLimited: { type: String },
+    tagOnly: { type: Boolean },
+    tagLimited: { type: Boolean },
   };
 
   constructor() {
     super();
 
-    this.deliveryType = '샛별배송';
-    this.brand = '온더바디';
-    this.productName = '죠르디 시카 자석 선쿠션';
-    this.discount = 50;
-    this.currentPrice = 32500;
-    this.price = 24900;
-    this.description = 'CJ즉석밥 고소한 맛의 발아 현미밥';
-    this.tagOnly = '';
-    this.tagLimited = '';
+    this.id = '';
+    this.photoURL = '';
+    this.deliveryType = '';
+    this.productName = '';
+    this.discount = 0;
+    this.realPrice = 32500;
+    this.price = 0;
+    this.description = '';
+    this.tagOnly = false;
+    this.tagLimited = false;
   }
 
   static styles = [
@@ -68,6 +69,8 @@ class Card extends LitElement {
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
+
+          cursor: pointer;
 
           .title {
             .delivery-type {
@@ -114,7 +117,7 @@ class Card extends LitElement {
             }
           }
 
-          .discription {
+          .description {
             line-height: 1.6;
             color: var(--gray-color-400, #898989);
             font-weight: var(--text-regular);
@@ -155,19 +158,27 @@ class Card extends LitElement {
     `,
   ];
 
-  handleAddCart = () => {
+  handleAddCart = (e) => {
+    e.stopPropagation();
+
     const popup = document.createElement('add-cart-component');
 
     document.body.appendChild(popup);
     document.body.style.overflow = 'hidden';
   };
 
+  handleCardClick = () => {
+    window.location.href = '/';
+  };
+
   render() {
+    console.log(this.productName);
+
     return html/* html */ `
-      <div class="card-component">
+      <div @click="${this.handleCardClick}" class="card-component">
         <figure>
           <a href="/">
-            <img src="/image/product02.webp" alt="" />
+            <img src="${this.photoURL}" alt="" />
           </a>
           <figcaption class="sr-only">${this.productName} 사진</figcaption>
 
@@ -185,7 +196,7 @@ class Card extends LitElement {
           <div class="title">
             <p class="delivery-type">${this.deliveryType}</p>
 
-            <p class="main-title">[${this.brand}] ${this.productName}</p>
+            <p class="main-title">${this.productName}</p>
           </div>
           <!-- title -->
 
@@ -194,19 +205,25 @@ class Card extends LitElement {
               <span class="discount"
                 >${this.discount}%<span class="sr-only">할인</span></span
               >
-              <span class="current-price">${this.currentPrice}원</span>
+              <span class="current-price"
+                >${this.realPrice.toLocaleString()}원</span
+              >
             </p>
 
-            <p class="origin-price">${this.price}원</p>
+            <p class="origin-price">${this.price.toLocaleString()}원</p>
           </div>
           <!-- price -->
 
-          <p class="discription">${this.description}</p>
-          <!-- discription  -->
+          <p class="description">${this.description}</p>
+          <!-- description  -->
 
           <div class="tags">
-            <span class="tag-only">Kurlit Only</span>
-            <span class="tag-limited">한정수량</span>
+            ${this.tagOnly === true
+              ? html`<span class="tag-only">Kurlit Only</span>`
+              : null}
+            ${this.tagLimited
+              ? html`<span class="tag-limited">한정수량</span>`
+              : null}
           </div>
           <!-- tags -->
         </div>
