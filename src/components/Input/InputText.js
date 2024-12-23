@@ -20,37 +20,50 @@ class InputText extends LitElement {
       }
 
       .error-message {
+        position: absolute;
+        visibility: hidden;
         color: var(--info-error-color, #f03f40);
         font-size: var(--font-sm);
+        font-weight: var(--text-semi-bold);
         margin-top: var(--space-sm);
+      }
+
+      .is-active {
+        visibility: visible;
       }
     `,
   ];
 
   static properties = {
     name: { type: String },
+    type: { type: String },
     width: { type: String },
     height: { type: String },
     placeholder: { type: String },
-    hasError: { type: Boolean },
-    errorMessage: { type: String },
     validation: { type: String },
   };
 
   constructor() {
     super();
     this.name = 'name';
+    this.type = 'text';
     this.width = 'auto';
     this.height = '44px';
     this.placeholder = 'placeholder';
-    this.hasError = false;
-    this.errorMessage = 'error';
     this.validation = '';
   }
 
-  handleError(e) {
-    const value = e.target.value;
-    this.hasError = this.validation.test(value) ? false : true;
+  _handleChange(e) {
+    this.dispatchEvent(
+      new CustomEvent('input-change', {
+        detail: {
+          name: e.target.name,
+          value: e.target.value,
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   render() {
@@ -61,17 +74,13 @@ class InputText extends LitElement {
           height: ${this.height};
         }
       </style>
-      <div class="input-wrapper">
-        <input
-          @change=${this.handleError}
-          type="text"
-          name=${this.name}
-          placeholder=${this.placeholder}
-        />
-        ${this.hasError
-          ? html`<p class="error-message"><slot></slot></p>`
-          : null}
-      </div>
+      <input
+        @input=${this._handleChange}
+        @blur=${this.handleError}
+        type=${this.type}
+        name=${this.name}
+        placeholder=${this.placeholder}
+      />
     `;
   }
 }

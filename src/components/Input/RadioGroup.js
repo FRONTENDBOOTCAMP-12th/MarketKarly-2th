@@ -35,7 +35,10 @@ class RadioGroup extends LitElement {
 
   render() {
     return html`
-      <slo class="radio-group" @radio-checked=${this._handleCheckChange}></slo>
+      <slot
+        class="radio-group"
+        @radio-checked=${this._handleCheckChange}
+      ></slot>
     `;
   }
 }
