@@ -248,19 +248,17 @@ class ProductList extends LitElement {
         nextNumber: 3,
       };
     }
-
     if (this.currentPage === this.totalPages) {
       return {
-        prevNumber: this.totalPages - 2,
-        currentNumber: this.totalPages - 1,
+        prevNumber: Math.max(1, this.totalPages - 2),
+        currentNumber: Math.max(2, this.totalPages - 1),
         nextNumber: this.totalPages,
       };
     }
-
     return {
-      prevNumber: this.currentPage - 1,
+      prevNumber: Math.max(1, this.currentPage - 1),
       currentNumber: this.currentPage,
-      nextNumber: this.currentPage + 1,
+      nextNumber: Math.min(this.totalPages, this.currentPage + 1),
     };
   }
 
