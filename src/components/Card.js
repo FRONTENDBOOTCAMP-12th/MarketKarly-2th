@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/AddCart';
+import pb from '../api/pocketbase';
 
 class Card extends LitElement {
   static properties = {
@@ -174,6 +175,10 @@ class Card extends LitElement {
     window.location.href = '/';
   };
 
+  handleCardClick = () => {
+    window.location.href = '/';
+  };
+
   render() {
     return html/* html */ `
       <div @click="${this.handleCardClick}" class="card-component">
@@ -196,7 +201,6 @@ class Card extends LitElement {
         <div class="content">
           <div class="title">
             <p class="delivery-type">${this.deliveryType}</p>
-
             <p class="main-title">${this.productName}</p>
           </div>
           <!-- title -->
@@ -207,8 +211,7 @@ class Card extends LitElement {
                 >${this.discount}%<span class="sr-only">할인</span></span
               >
               <span class="real-price"
-                >${this.realPrice.toLocaleString()}원</span
-              >
+                >${this.realPrice.toLocaleString()}원</span>
             </p>
 
             <p class="origin-price">${this.price.toLocaleString()}원</p>

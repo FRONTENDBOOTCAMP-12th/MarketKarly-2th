@@ -354,7 +354,7 @@ class Header extends LitElement {
                   >
                 </li>
                 <li class="header-member-item divider">
-                  <a href="/" class="header-member-link" aria-label="로그인"
+                  <a href="/src/pages/login/" class="header-member-link" aria-label="로그인"
                     >로그인</a
                   >
                 </li>
@@ -498,7 +498,7 @@ class Header extends LitElement {
 
               <ul class="nav-site-map">
                 <li><a href="/" aria-label="신상품">신상품</a></li>
-                <li><a href="/" aria-label="베스트 상품">베스트</a></li>
+                <li><a href="/src/pages/productList/">베스트</a></li>
                 <li><a href="/" aria-label="알뜰쇼핑">알뜰쇼핑</a></li>
                 <li><a href="/" aria-label="특가/혜택">특가/혜택</a></li>
               </ul>
