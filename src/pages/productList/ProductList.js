@@ -57,7 +57,6 @@ class ProductList extends LitElement {
         font-size: 14px;
         color: var(--black-color);
         font-weight: var(--text-semi-bold);
-        font-weight: var(--text-bold);
       }
 
       button {
@@ -157,14 +156,6 @@ class ProductList extends LitElement {
       }
       .pagination img {
         height: 8px;
-      }
-
-      .pagination-number {
-        font-size: var(--font-sm);
-        color: var(--black-color, #000);
-        line-height: var(--light-line-height);
-        font-weight: var(--text-semi-bold);
-        color: var(--gray-color-400, #e1e1e1);
       }
     `,
   ];
@@ -285,6 +276,14 @@ class ProductList extends LitElement {
     return Math.floor(product.price - product.price * (product.discount / 100));
   }
 
+  async _fetch() {
+    const response = await pb.collection('products').getFullList({
+      perPage: 50,
+    });
+
+    console.log(response);
+  }
+
   render() {
     const { prevNumber, currentNumber, nextNumber } =
       this.getPaginationNumbers();
@@ -396,32 +395,39 @@ class ProductList extends LitElement {
               <button
                 @click="${() => this.goToPage(prevNumber)}"
                 class="${this.currentPage === prevNumber ? 'active' : ''}"
+                aria-label="현재 페이지의 이전 페이지지"
               >
                 ${prevNumber}
               </button>
+
               <button
                 @click="${() => this.goToPage(currentNumber)}"
                 class="${this.currentPage === currentNumber ? 'active' : ''}"
+                aria-label="현재 페이지"
               >
                 ${currentNumber}
               </button>
+
               <button
                 @click="${() => this.goToPage(nextNumber)}"
                 class="${this.currentPage === nextNumber ? 'active' : ''}"
+                aria-label="현재 페이지의 다음 페이지"
               >
                 ${nextNumber}
               </button>
               <button
                 @click="${() => this.goToPage(this.currentPage + 1)}"
                 ?disabled="${this.currentPage === this.totalPages}"
+                aria-label="다음 페이지로 이동"
               >
-                <img src="/icon/btn-next.svg" alt="다음으로" />
+                <img src="/icon/btn-next.svg" alt="" />
               </button>
               <button
                 @click="${this.goToLast}"
                 ?disabled="${this.currentPage === this.totalPages}"
+                aria-label="마지막 페이지로 이동"
               >
-                <img src="/icon/btn-last.svg" alt="마지막으로" />
+                <img src="/icon/btn-last.svg" alt="" />
               </button>
             </div>
           </div>
