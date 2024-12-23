@@ -72,13 +72,17 @@ class ProductsSwiper extends LitElement {
   }
 
   async renderCardProducts() {
-    const response = await fetch(
-      `${import.meta.env.VITE_PB_API}/collections/products/records`
-    );
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_PB_API}/collections/products/records`
+      );
 
-    const data = await response.json();
+      const data = await response.json();
 
-    this.data = data.items;
+      this.data = data.items;
+    } catch {
+      console.error('에러 발생!');
+    }
   }
 
   render() {

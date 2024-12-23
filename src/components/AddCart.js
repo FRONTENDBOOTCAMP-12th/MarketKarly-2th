@@ -6,6 +6,7 @@ import '@/components/Button/BtnFilled';
 
 class AddCart extends LitElement {
   static properties = {
+    price: { type: Number },
     disabled: { type: Boolean },
     count: { type: Number },
     totalPrice: { type: String },
@@ -14,6 +15,7 @@ class AddCart extends LitElement {
   constructor() {
     super();
 
+    this.price = '4,980';
     this.disabled = true;
     this.count = 1;
     this.totalPrice = '';
@@ -170,9 +172,10 @@ class AddCart extends LitElement {
   }
 
   get productPrice() {
-    const price = this.renderRoot.querySelector('.product-price').textContent;
+    const productPrice =
+      this.renderRoot.querySelector('.product-price').textContent;
 
-    return +price.replace(/[^\d]/g, '');
+    return +productPrice.replace(/[^\d]/g, '');
   }
 
   handleTotalPrice() {
@@ -215,8 +218,6 @@ class AddCart extends LitElement {
 
   handleBtnCancel() {
     this.remove();
-
-    document.body.style.overflow = 'auto';
   }
 
   render() {
@@ -227,7 +228,7 @@ class AddCart extends LitElement {
             <p class="product-name">[풀무원] 탱탱쫄면 (4개입)</p>
 
             <div>
-              <p class="product-price">4,980원</p>
+              <p class="product-price">${this.price}원</p>
 
               <div class="product-counter">
                 <button

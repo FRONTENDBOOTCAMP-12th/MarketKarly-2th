@@ -25,7 +25,7 @@ class Card extends LitElement {
     this.deliveryType = '';
     this.productName = '';
     this.discount = 0;
-    this.realPrice = 32500;
+    this.realPrice = 0;
     this.price = 0;
     this.description = '';
     this.tagOnly = false;
@@ -100,7 +100,7 @@ class Card extends LitElement {
                 color: var(--accent-color, #fa622f);
               }
 
-              .current-price {
+              .real-price {
                 color: var(--content-text-color, #333333);
               }
             }
@@ -162,9 +162,11 @@ class Card extends LitElement {
     e.stopPropagation();
 
     const popup = document.createElement('add-cart-component');
+    const rPrice = this.shadowRoot.querySelector('.real-price');
 
     document.body.appendChild(popup);
-    document.body.style.overflow = 'hidden';
+
+    console.log(rPrice);
   };
 
   handleCardClick = () => {
@@ -172,8 +174,6 @@ class Card extends LitElement {
   };
 
   render() {
-    console.log(this.productName);
-
     return html/* html */ `
       <div @click="${this.handleCardClick}" class="card-component">
         <figure>
@@ -205,7 +205,7 @@ class Card extends LitElement {
               <span class="discount"
                 >${this.discount}%<span class="sr-only">할인</span></span
               >
-              <span class="current-price"
+              <span class="real-price"
                 >${this.realPrice.toLocaleString()}원</span
               >
             </p>
