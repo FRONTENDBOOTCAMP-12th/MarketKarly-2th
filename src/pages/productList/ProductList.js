@@ -275,15 +275,6 @@ class ProductList extends LitElement {
   getRealPrice(product) {
     return Math.floor(product.price - product.price * (product.discount / 100));
   }
-
-  async _fetch() {
-    const response = await pb.collection('products').getFullList({
-      perPage: 50,
-    });
-
-    console.log(response);
-  }
-
   render() {
     const { prevNumber, currentNumber, nextNumber } =
       this.getPaginationNumbers();
