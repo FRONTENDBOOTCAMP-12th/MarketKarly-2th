@@ -6,24 +6,17 @@ class Header extends LitElement {
   static styles = [
     reset,
     css`
-      body {
-        background: var(--white-color, #ffffff);
-      }
-
       .header-wrapper {
         position: relative;
         box-shadow: 0 0 var(--space-md) var(--gray-color-200, #c4c4c4);
       }
 
-      .top-bar {
+      .top-bar-nav {
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
         padding: 0 0 var(--space-2xl);
-        width: 100%;
-      }
-
-      .top-bar-nav {
         width: 100%;
       }
 
@@ -49,7 +42,6 @@ class Header extends LitElement {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
-        text-decoration: none;
         font-size: var(--font-sm);
       }
 
@@ -125,7 +117,6 @@ class Header extends LitElement {
       }
 
       .new-icon img {
-        position: static;
         min-width: 8px;
         min-height: 8px;
       }
@@ -370,8 +361,6 @@ class Header extends LitElement {
                   <a
                     href="#"
                     class="header-member-link"
-                    aria-haspopup="true"
-                    aria-expanded="false"
                   >
                     고객센터
                     <img class="icon-down" src="/icon/down.webp" alt="펼치기" />
@@ -396,7 +385,7 @@ class Header extends LitElement {
               <div class="header-name-wrapper">
                 <div class="header-site-select">
                   <h1 class="header-logo">
-                    <a href="/" aria-label="마켓컬릿 홈으로 이동">
+                    <a href="/">
                       <img src="/logo2.webp" alt="마켓컬릿 로고" />
                     </a>
                   </h1>
