@@ -171,17 +171,26 @@ class ProductList extends LitElement {
   static properties = {
     activeStandard: { type: String },
     products: { type: Array },
-    disabled: { type: Boolean },
-    count: { type: Number },
+    currentPage: { type: Number },
+    itemsPerPage: { type: Number },
+    totalItems: { type: Number },
+    totalPages: { type: Number },
   };
 
   constructor() {
     super();
-    this.count = 1;
     this.activeStandard = 'recommended';
     this.products = [];
+    this.currentPage = 1;
+    this.itemsPerPage = 15;
+    this.totalItems = 0;
+    this.totalPages = 1;
   }
-
+  handleStandardClick(standard, event) {
+    event.preventDefault();
+    this.activeStandard = standard;
+    this.requestUpdate();
+  }
   connectedCallback() {
     super.connectedCallback();
     this.fetchProducts();
@@ -192,35 +201,73 @@ class ProductList extends LitElement {
       const response = await fetch(
         `${import.meta.env.VITE_PB_API}/collections/products/records`
       );
-
       const data = await response.json();
       this.products = data.items;
-    } catch (error) {
-      console.error('Error fetching products:', error);
+      this.totalItems = data.items.length;
+    } catch (err) {
+      console.error('에러발생: ', err);
     }
   }
 
-  handleStandardClick(standard, event) {
-    event.preventDefault();
-    this.activeStandard = standard;
-    this.requestUpdate();
+  get paginatedProducts() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.products.slice(startIndex, endIndex);
   }
-
-  addProduct() {
-    this.count++;
-
-    if (this.count > 1) {
-      this.totalPrice = (this.count * this.productPrice).toLocaleString();
+  goToPage(page) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
     }
   }
 
-  reduceProduct() {
-    if (this.count > 1) {
-      this.count--;
+  goToFirst() {
+    this.currentPage = 1;
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
     }
+  }
+
+  nextPage() {
+    if (this.currentPage < Math.ceil(this.totalItems / this.itemsPerPage)) {
+      this.currentPage++;
+    }
+  }
+
+  goToLast() {
+    this.currentPage = this.totalPages;
+  }
+
+  getPaginationNumbers() {
+    if (this.currentPage === 1) {
+      return {
+        prevNumber: 1,
+        currentNumber: 2,
+        nextNumber: 3,
+      };
+    }
+
+    if (this.currentPage === this.totalPages) {
+      return {
+        prevNumber: this.totalPages - 2,
+        currentNumber: this.totalPages - 1,
+        nextNumber: this.totalPages,
+      };
+    }
+
+    return {
+      prevNumber: this.currentPage - 1,
+      currentNumber: this.currentPage,
+      nextNumber: this.currentPage + 1,
+    };
   }
 
   render() {
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    const { prevNumber, currentNumber, nextNumber } =
+      this.getPaginationNumbers();
     return html`
       <section class="product-list">
         <h2 class="product-list-header">베스트</h2>
@@ -230,7 +277,7 @@ class ProductList extends LitElement {
 
           <div class="product-list-container">
             <div class="list-header">
-              <div class="total-count">총 284건</div>
+              <div class="total-count">총 ${this.totalItems}건</div>
               <section class="sorting-standard">
                 <button
                   class="choose-standard standard-recommended ${this
@@ -293,8 +340,9 @@ class ProductList extends LitElement {
                 </button>
               </section>
             </div>
+
             <div class="product-grid">
-              ${this.products.map(
+              ${this.paginatedProducts.map(
                 (item) => html`
                   <card-component
                     photoURL="${getPbImage(item)}"
@@ -312,28 +360,48 @@ class ProductList extends LitElement {
                 `
               )}
             </div>
+
             <div class="pagination">
               <button
-                class="btn-first"
-                @click=${this.reduceProduct}
-                ?disabled=${this.count === 1}
+                @click="${this.goToFirst}"
+                ?disabled="${this.currentPage === 1}"
               >
                 <img src="/icon/btn-first.svg" alt="처음으로" />
               </button>
               <button
-                class="btn-prev"
-                @click=${this.reduceProduct}
-                ?disabled=${this.count === 1}
+                @click="${() => this.goToPage(this.currentPage - 1)}"
+                ?disabled="${this.currentPage === 1}"
               >
                 <img src="/icon/btn-prev.svg" alt="이전으로" />
               </button>
-              <button class="pagination-number">${this.count}</button>
-              <button class="pagination-number">${this.count + 1}</button>
-              <button class="pagination-number">${this.count + 2}</button>
-              <button class="btn-next" @click=${this.addProduct}>
-                <img src="/icon/btn-next.svg" alt="마지막으로" />
+              <button
+                @click="${() => this.goToPage(prevNumber)}"
+                class="${this.currentPage === prevNumber ? 'active' : ''}"
+              >
+                ${prevNumber}
               </button>
-              <button class="btn-last" @click=${this.addProduct}>
+              <button
+                @click="${() => this.goToPage(currentNumber)}"
+                class="${this.currentPage === currentNumber ? 'active' : ''}"
+              >
+                ${currentNumber}
+              </button>
+              <button
+                @click="${() => this.goToPage(nextNumber)}"
+                class="${this.currentPage === nextNumber ? 'active' : ''}"
+              >
+                ${nextNumber}
+              </button>
+              <button
+                @click="${() => this.goToPage(this.currentPage + 1)}"
+                ?disabled="${this.currentPage === this.totalPages}"
+              >
+                <img src="/icon/btn-next.svg" alt="다음으로" />
+              </button>
+              <button
+                @click="${this.goToLast}"
+                ?disabled="${this.currentPage === this.totalPages}"
+              >
                 <img src="/icon/btn-last.svg" alt="마지막으로" />
               </button>
             </div>
