@@ -2,12 +2,12 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Card';
+import { register } from 'swiper/element';
+import { getPbImage } from '../../api/getPbImage';
+
+register();
 
 class ProductList extends LitElement {
-  static properties = {
-    activeStandard: { type: String },
-  };
-
   static styles = [
     reset,
     a11y,
@@ -33,10 +33,16 @@ class ProductList extends LitElement {
         width: 267px;
         flex-shrink: 0;
       }
-
       .product-list-container {
         width: 783px;
         flex-shrink: 0;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5.5rem 0;
+        width: 100%;
       }
 
       .list-header {
@@ -127,13 +133,6 @@ class ProductList extends LitElement {
         opacity: 0.4;
       }
 
-      .product-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 5.5rem 0;
-        width: 100%;
-      }
-
       .pagination {
         display: flex;
         justify-content: center;
@@ -170,6 +169,8 @@ class ProductList extends LitElement {
     `,
   ];
   static properties = {
+    activeStandard: { type: String },
+    products: { type: Array },
     disabled: { type: Boolean },
     count: { type: Number },
   };
@@ -178,6 +179,25 @@ class ProductList extends LitElement {
     super();
     this.count = 1;
     this.activeStandard = 'recommended';
+    this.products = [];
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.fetchProducts();
+  }
+
+  async fetchProducts() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_PB_API}/collections/products/records`
+      );
+
+      const data = await response.json();
+      this.products = data.items;
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
   }
 
   handleStandardClick(standard, event) {
@@ -200,11 +220,6 @@ class ProductList extends LitElement {
     }
   }
 
-  handleBtnCancel() {
-    this.remove();
-    document.body.style.overflow = 'auto';
-  }
-
   render() {
     return html`
       <section class="product-list">
@@ -212,6 +227,7 @@ class ProductList extends LitElement {
 
         <div class="flex-content">
           <div class="product-category"></div>
+
           <div class="product-list-container">
             <div class="list-header">
               <div class="total-count">총 284건</div>
@@ -277,7 +293,25 @@ class ProductList extends LitElement {
                 </button>
               </section>
             </div>
-            <div class="product-grid">${this.createProductItems()}</div>
+            <div class="product-grid">
+              ${this.products.map(
+                (item) => html`
+                  <card-component
+                    photoURL="${getPbImage(item)}"
+                    deliveryType="${item.deliveryType}"
+                    productName="${item.productName}"
+                    discount="${item.discount}"
+                    realPrice="${Math.floor(
+                      item.price - item.price * (item.discount / 100)
+                    ).toFixed()}"
+                    price="${item.price}"
+                    description="${item.description}"
+                    .tagOnly="${item.kalitOnly}"
+                    .tagLimited="${item.limited}"
+                  ></card-component>
+                `
+              )}
+            </div>
             <div class="pagination">
               <button
                 class="btn-first"
@@ -307,14 +341,6 @@ class ProductList extends LitElement {
         </div>
       </section>
     `;
-  }
-
-  createProductItems() {
-    const productItems = [];
-    for (let i = 0; i < 15; i++) {
-      productItems.push(html`<card-component></card-component>`);
-    }
-    return productItems;
   }
 }
 
