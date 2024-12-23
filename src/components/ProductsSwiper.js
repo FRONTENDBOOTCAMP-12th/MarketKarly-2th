@@ -2,16 +2,14 @@ import '@/components/Card';
 import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import { register } from 'swiper/element';
+import { getPbImage } from '../api/getPbImage';
+
 register();
 
 class ProductsSwiper extends LitElement {
   static styles = [
     reset,
     css`
-      main {
-        font-family: 'Pretendard';
-      }
-
       .recommend {
         position: relative;
         width: 1050px;
@@ -48,11 +46,14 @@ class ProductsSwiper extends LitElement {
 
   static properties = {
     title: { type: String },
+    data: { type: Object },
   };
 
   constructor(title) {
     super();
+
     this.title = title;
+    this.data = [];
   }
 
   firstUpdated() {
@@ -62,6 +63,26 @@ class ProductsSwiper extends LitElement {
 
   nextSlide() {
     this.swiperEl.swiper.slideNext();
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    this.renderCardProducts();
+  }
+
+  async renderCardProducts() {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_PB_API}/collections/products/records`
+      );
+
+      const data = await response.json();
+
+      this.data = data.items;
+    } catch (err) {
+      console.error('에러발생: ', err);
+    }
   }
 
   render() {
@@ -74,21 +95,25 @@ class ProductsSwiper extends LitElement {
           loop="true"
           speed="1500"
         >
-          <swiper-slide>
-            <card-component></card-component>
-          </swiper-slide>
-          <swiper-slide>
-            <card-component></card-component>
-          </swiper-slide>
-          <swiper-slide>
-            <card-component></card-component>
-          </swiper-slide>
-          <swiper-slide>
-            <card-component></card-component>
-          </swiper-slide>
-          <swiper-slide>
-            <card-component></card-component>
-          </swiper-slide>
+          ${this.data.map(
+            (item) => html`
+              <swiper-slide>
+                <card-component
+                  photoURL="${getPbImage(item)}"
+                  deliveryType="${item.deliveryType}"
+                  productName="${item.productName}"
+                  discount="${item.discount}"
+                  realPrice="${Math.floor(
+                    item.price - item.price * (item.discount / 100)
+                  ).toFixed()}"
+                  price="${item.price}"
+                  description="${item.description}"
+                  .tagOnly="${item.kalitOnly}"
+                  .tagLimited="${item.limited}"
+                ></card-component>
+              </swiper-slide>
+            `
+          )}
         </swiper-container>
         <button @click=${this.nextSlide} aria-label="옆으로 넘기기"></button>
       </section>

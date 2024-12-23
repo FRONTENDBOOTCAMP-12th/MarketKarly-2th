@@ -6,6 +6,7 @@ import '@/components/Button/BtnFilled';
 
 class AddCart extends LitElement {
   static properties = {
+    price: { type: String },
     disabled: { type: Boolean },
     count: { type: Number },
     totalPrice: { type: String },
@@ -14,6 +15,7 @@ class AddCart extends LitElement {
   constructor() {
     super();
 
+    this.price = '';
     this.disabled = true;
     this.count = 1;
     this.totalPrice = '';
@@ -28,8 +30,8 @@ class AddCart extends LitElement {
         top: 0;
         left: 0;
 
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         transition: all 0.5s;
 
         z-index: 10000;
@@ -44,6 +46,7 @@ class AddCart extends LitElement {
       }
 
       .add-cart {
+        margin: 0;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -169,9 +172,10 @@ class AddCart extends LitElement {
   }
 
   get productPrice() {
-    const price = this.renderRoot.querySelector('.product-price').textContent;
+    const productPrice =
+      this.renderRoot.querySelector('.product-price').textContent;
 
-    return +price.replace(/[^\d]/g, '');
+    return +productPrice.replace(/[^\d]/g, '');
   }
 
   handleTotalPrice() {
@@ -214,8 +218,6 @@ class AddCart extends LitElement {
 
   handleBtnCancel() {
     this.remove();
-
-    document.body.style.overflow = 'auto';
   }
 
   render() {
@@ -226,7 +228,7 @@ class AddCart extends LitElement {
             <p class="product-name">[풀무원] 탱탱쫄면 (4개입)</p>
 
             <div>
-              <p class="product-price">4,980원</p>
+              <p class="product-price">${this.price}원</p>
 
               <div class="product-counter">
                 <button

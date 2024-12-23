@@ -6,29 +6,31 @@ import pb from '../api/pocketbase';
 
 class Card extends LitElement {
   static properties = {
+    id: { type: String },
+    photoURL: { type: String },
     deliveryType: { type: String },
-    brand: { type: String },
     productName: { type: String },
     discount: { type: Number },
     realPrice: { type: Number },
     price: { type: Number },
     description: { type: String },
-    tagOnly: { type: String },
-    tagLimited: { type: String },
+    tagOnly: { type: Boolean },
+    tagLimited: { type: Boolean },
   };
 
   constructor() {
     super();
 
-    this.deliveryType = '샛별배송';
-    this.brand = '온더바디';
-    this.productName = '죠르디 시카 자석 선쿠션';
-    this.discount = 50;
-    this.currentPrice = 32500;
-    this.price = 24900;
-    this.description = 'CJ즉석밥 고소한 맛의 발아 현미밥';
-    this.tagOnly = 'Kurlit Only';
-    this.tagLimited = '한정수량';
+    this.id = '';
+    this.photoURL = '';
+    this.deliveryType = '';
+    this.productName = '';
+    this.discount = 0;
+    this.realPrice = 0;
+    this.price = 0;
+    this.description = '';
+    this.tagOnly = false;
+    this.tagLimited = false;
   }
 
   static styles = [
@@ -99,7 +101,7 @@ class Card extends LitElement {
                 color: var(--accent-color, #fa622f);
               }
 
-              .current-price {
+              .real-price {
                 color: var(--content-text-color, #333333);
               }
             }
@@ -160,10 +162,17 @@ class Card extends LitElement {
   handleAddCart = (e) => {
     e.stopPropagation();
 
-    const popup = document.createElement('add-cart-component');
+    const popupAddCart = document.createElement('add-cart-component');
 
-    document.body.appendChild(popup);
-    document.body.style.overflow = 'hidden';
+    document.body.appendChild(popupAddCart);
+
+    const realPrice = this.realPrice.toLocaleString();
+
+    popupAddCart.setAttribute('price', realPrice);
+  };
+
+  handleCardClick = () => {
+    window.location.href = '/';
   };
 
   handleCardClick = () => {
@@ -175,7 +184,7 @@ class Card extends LitElement {
       <div @click="${this.handleCardClick}" class="card-component">
         <figure>
           <a href="/">
-            <img src="/image/product02.webp" alt="" />
+            <img src="${this.photoURL}" alt="" />
           </a>
           <figcaption class="sr-only">${this.productName} 사진</figcaption>
 
@@ -192,8 +201,7 @@ class Card extends LitElement {
         <div class="content">
           <div class="title">
             <p class="delivery-type">${this.deliveryType}</p>
-
-            <p class="main-title">[${this.brand}] ${this.productName}</p>
+            <p class="main-title">${this.productName}</p>
           </div>
           <!-- title -->
 
@@ -202,9 +210,8 @@ class Card extends LitElement {
               <span class="discount"
                 >${this.discount}%<span class="sr-only">할인</span></span
               >
-              <span class="current-price"
-                >${this.currentPrice.toLocaleString()}원</span
-              >
+              <span class="real-price"
+                >${this.realPrice.toLocaleString()}원</span>
             </p>
 
             <p class="origin-price">${this.price.toLocaleString()}원</p>
@@ -215,8 +222,12 @@ class Card extends LitElement {
           <!-- description  -->
 
           <div class="tags">
-            <span class="tag-only">${this.tagOnly}</span>
-            <span class="tag-limited">${this.tagLimited}</span>
+            ${this.tagOnly === true
+              ? html`<span class="tag-only">Kurlit Only</span>`
+              : null}
+            ${this.tagLimited
+              ? html`<span class="tag-limited">한정수량</span>`
+              : null}
           </div>
           <!-- tags -->
         </div>
