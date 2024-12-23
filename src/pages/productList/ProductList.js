@@ -193,10 +193,10 @@ class ProductList extends LitElement {
   }
   connectedCallback() {
     super.connectedCallback();
-    this.fetchProducts();
+    this.renderCardProducts();
   }
 
-  async fetchProducts() {
+  async renderCardProducts() {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_PB_API}/collections/products/records`
@@ -204,6 +204,8 @@ class ProductList extends LitElement {
       const data = await response.json();
       this.products = data.items;
       this.totalItems = data.items.length;
+      this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+      this.products.sort((a, b) => this.getRealPrice(a) - this.getRealPrice(b));
     } catch (err) {
       console.error('에러발생: ', err);
     }
@@ -262,8 +264,28 @@ class ProductList extends LitElement {
     };
   }
 
+  handleStandardClick(standard, event) {
+    event.preventDefault();
+    this.activeStandard = standard;
+
+    if (standard === 'low-price' || standard === 'recommended') {
+      this.products.sort((a, b) => this.getRealPrice(a) - this.getRealPrice(b));
+    } else if (standard === 'high-price') {
+      this.products.sort((a, b) => this.getRealPrice(b) - this.getRealPrice(a));
+    } else if (standard === 'product-discount' || standard === 'new') {
+      this.products.sort((a, b) => b.discount - a.discount);
+    } else if (standard === 'sale') {
+      this.products.sort((a, b) => a.productName.localeCompare(b.productName));
+    }
+
+    this.requestUpdate();
+  }
+
+  getRealPrice(product) {
+    return Math.floor(product.price - product.price * (product.discount / 100));
+  }
+
   render() {
-    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
     const { prevNumber, currentNumber, nextNumber } =
       this.getPaginationNumbers();
     return html`
@@ -310,13 +332,14 @@ class ProductList extends LitElement {
                   판매량순
                 </button>
                 <button
-                  class="choose-standard divider standard-discount ${this
-                    .activeStandard === 'discount'
+                  class="choose-standard divider standard-product-discount ${this
+                    .activeStandard === 'product-discount'
                     ? 'active'
                     : ''}"
-                  @click=${(e) => this.handleStandardClick('discount', e)}
+                  @click=${(e) =>
+                    this.handleStandardClick('product-discount', e)}
                 >
-                  혜택순
+                  할인율순
                 </button>
                 <button
                   class="choose-standard divider standard-low-price ${this
@@ -347,9 +370,7 @@ class ProductList extends LitElement {
                     deliveryType="${item.deliveryType}"
                     productName="${item.productName}"
                     discount="${item.discount}"
-                    realPrice="${Math.floor(
-                      item.price - item.price * (item.discount / 100)
-                    ).toFixed()}"
+                    realPrice="${this.getRealPrice(item)}"
                     price="${item.price}"
                     description="${item.description}"
                     .tagOnly="${item.kalitOnly}"
