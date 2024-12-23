@@ -6,7 +6,7 @@ import '@/components/Button/BtnFilled';
 
 class AddCart extends LitElement {
   static properties = {
-    price: { type: Number },
+    price: { type: String },
     disabled: { type: Boolean },
     count: { type: Number },
     totalPrice: { type: String },
@@ -15,7 +15,7 @@ class AddCart extends LitElement {
   constructor() {
     super();
 
-    this.price = '4,980';
+    this.price = '';
     this.disabled = true;
     this.count = 1;
     this.totalPrice = '';

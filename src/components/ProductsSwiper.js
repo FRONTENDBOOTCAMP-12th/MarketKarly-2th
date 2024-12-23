@@ -80,8 +80,8 @@ class ProductsSwiper extends LitElement {
       const data = await response.json();
 
       this.data = data.items;
-    } catch {
-      console.error('에러 발생!');
+    } catch (err) {
+      console.error('에러발생: ', err);
     }
   }
 

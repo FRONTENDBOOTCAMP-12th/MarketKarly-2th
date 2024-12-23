@@ -161,12 +161,13 @@ class Card extends LitElement {
   handleAddCart = (e) => {
     e.stopPropagation();
 
-    const popup = document.createElement('add-cart-component');
-    const rPrice = this.shadowRoot.querySelector('.real-price');
+    const popupAddCart = document.createElement('add-cart-component');
 
-    document.body.appendChild(popup);
+    document.body.appendChild(popupAddCart);
 
-    console.log(rPrice);
+    const realPrice = this.realPrice.toLocaleString();
+
+    popupAddCart.setAttribute('price', realPrice);
   };
 
   handleCardClick = () => {
