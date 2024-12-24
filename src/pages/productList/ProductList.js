@@ -227,7 +227,6 @@ class ProductList extends LitElement {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
     }
-    window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
   goToFirst() {
@@ -396,22 +395,19 @@ class ProductList extends LitElement {
             </div>
 
             <div class="pagination">
-              <button
-                @click="${this.goToFirst}"
-                ?disabled="${this.currentPage === 1}"
-              >
-                <img src="/icon/btn-first.svg" alt="처음으로" />
+              <button @click="${this.goToFirst}" aria-label="첫 페이지로 이동">
+                <img src="/icon/btn-first.svg" alt="" />
               </button>
               <button
                 @click="${() => this.goToPage(this.currentPage - 1)}"
-                ?disabled="${this.currentPage === 1}"
+                aria-label="이전 페이지로 이동"
               >
-                <img src="/icon/btn-prev.svg" alt="이전으로" />
+                <img src="/icon/btn-prev.svg" alt="" />
               </button>
               <button
                 @click="${() => this.goToPage(prevNumber)}"
                 class="${this.currentPage === prevNumber ? 'active' : ''}"
-                aria-label="현재 페이지의 이전 페이지지"
+                aria-label="현재 페이지의 이전 페이지"
               >
                 ${prevNumber}
               </button>
@@ -433,14 +429,12 @@ class ProductList extends LitElement {
               </button>
               <button
                 @click="${() => this.goToPage(this.currentPage + 1)}"
-                ?disabled="${this.currentPage === this.totalPages}"
                 aria-label="다음 페이지로 이동"
               >
                 <img src="/icon/btn-next.svg" alt="" />
               </button>
               <button
                 @click="${this.goToLast}"
-                ?disabled="${this.currentPage === this.totalPages}"
                 aria-label="마지막 페이지로 이동"
               >
                 <img src="/icon/btn-last.svg" alt="" />
