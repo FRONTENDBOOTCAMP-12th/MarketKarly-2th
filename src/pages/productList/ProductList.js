@@ -79,7 +79,7 @@ class ProductList extends LitElement {
       .choose-standard {
         color: var(--gray-color-300, #a6a6a6);
         position: relative;
-        padding: 0 8px;
+        padding: 0 var(--space-md);
       }
 
       .choose-standard.active {
@@ -157,13 +157,13 @@ class ProductList extends LitElement {
         background-color: #fff;
         border: 1px solid var(--gray-color-300, #a6a6a6);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        padding: 10px;
+        padding: var(--space-lg);
         font-size: var(--font-sm);
         color: var(--gray-color-700, #404040);
         line-height: 1.4;
         z-index: 10;
         width: 250px;
-        top: 24px;
+        top: var(--space-3xl);
         transform: translateX(-30%);
         display: none;
         text-align: justify;
