@@ -40,7 +40,6 @@ class Inquiry extends LitElement {
       }
 
       .review-close-btn:hover {
-        cursor: pointer;
         filter: invert(33%) sepia(98%) saturate(1497%) hue-rotate(222deg)
           brightness(87%) contrast(91%);
       }
@@ -48,12 +47,6 @@ class Inquiry extends LitElement {
       .review-title {
         font-weight: var(--text-bold);
         font-size: var(--font-3xl);
-      }
-
-      .cancel-icon {
-        width: 30px;
-        height: 30px;
-        position: relative;
       }
 
       .product-section {
@@ -105,7 +98,7 @@ class Inquiry extends LitElement {
         line-height: var(--regular-line-height);
         border: 1px solid var(--gray-color-300, #a6a6a6);
         border-radius: 4px;
-        padding: 0 var(--space-lg);
+        padding: 0 var(--space-xl);
       }
 
       .content-input {
@@ -114,7 +107,7 @@ class Inquiry extends LitElement {
         height: 198px;
         border: 1px solid var(--gray-color-300, #a6a6a6);
         border-radius: 4px;
-        padding: var(--space-md) var(--space-2xl);
+        padding: var(--space-md) var(--space-xl);
         line-height: var(--regular-line-height);
         display: flex;
         flex-direction: column;
@@ -154,7 +147,7 @@ class Inquiry extends LitElement {
         color: var(--gray-color-500, #6b6b6b);
         position: absolute;
         right: 3.8rem;
-        bottom: 11.2rem;
+        bottom: 11.5rem;
         background: var(--white-color, #ffffff);
       }
       .buttons {
@@ -164,11 +157,6 @@ class Inquiry extends LitElement {
         padding-top: var(--space-2xl);
         border-top: 1px solid var(--gray-color-100, #e1e1e1);
         margin-top: auto;
-      }
-
-      .btn {
-        width: 186px;
-        height: 54px;
       }
 
       .btn-emptied-component {
@@ -292,13 +280,14 @@ class Inquiry extends LitElement {
       <div class="popup-bg">
         <dialog class="review-container">
           <div class="review-header">
-            <h2 class="review-title">상품 문의하기</h2>
+            <h2 class="review-title" tabindex="0">상품 문의하기</h2>
             <img
               src="/icon/review-close.svg"
               alt="닫기 버튼"
               class="review-close-btn"
               aria-label="닫기"
               @click=${this.handleShortClose}
+              tabindex="0"
             />
           </div>
 
@@ -307,12 +296,14 @@ class Inquiry extends LitElement {
             <figcaption class="sr-only">
               풀무원 회사의 탱탱쫄면 4개입 제품
             </figcaption>
-            <div class="product-name">[풀무원] 탱탱쫄면 (4개입)</div>
+            <div class="product-name" tabindex="0">
+              [풀무원] 탱탱쫄면 (4개입)
+            </div>
           </div>
 
           <div class="review-detail">
             <div class="title-section">
-              <div class="section-label">제목</div>
+              <label for="review-title-input" class="section-label">제목</label>
               <div class="title-input-container">
                 <input
                   aria-describedby="reviewTitleText"
@@ -320,12 +311,15 @@ class Inquiry extends LitElement {
                   class="title-input"
                   placeholder="제목을 입력해주세요."
                   @input=${this.handleTitleInput}
+                  tabindex="0"
                 />
               </div>
             </div>
 
             <div class="content-section">
-              <div class="section-label">내용</div>
+              <label for="review-content-input" class="section-label"
+                >내용</label
+              >
               <textarea
                 class="content-input real-input"
                 aria-describedby="reviewContentText"
@@ -416,14 +410,14 @@ class Inquiry extends LitElement {
               ?checked=${this.isSecret}
               @checked=${this.handleSecretCheckClick}
               style="
-            padding: 0;
-            display: flex;
-            flex-direction: row;
-            gap: var(--space-md);
-            margin-left: 6rem;
-            font-weight: var(--text-semi-bold);
-            align-items: center;
-          "
+              padding: 0;
+              display: flex;
+              flex-direction: row;
+              gap: var(--space-md);
+              margin-left: 5.8rem;
+              font-weight: var(--text-semi-bold);
+              align-items: center;
+            "
             >
               비밀글로 문의하기
             </checkbox-component>
