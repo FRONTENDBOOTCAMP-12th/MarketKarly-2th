@@ -14,7 +14,7 @@ class ProductList extends LitElement {
     css`
       .product-list {
         max-width: 1050px;
-        margin: var(--space-7xl);
+        margin: var(--space-7xl) auto;
       }
 
       .product-list-header {
