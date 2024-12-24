@@ -14,14 +14,14 @@ class ProductList extends LitElement {
     css`
       .product-list {
         max-width: 1050px;
-        margin: var(--space-7xl) auto;
+        margin: var(--space-7xl);
       }
 
       .product-list-header {
         text-align: center;
         font-size: var(--font-lg);
         color: var(--black-color, #000);
-        margin-bottom: var(--space-5xl);
+        padding-bottom: var(--space-5xl);
       }
 
       .flex-content {
@@ -63,16 +63,7 @@ class ProductList extends LitElement {
         border: none;
         margin: 0;
         padding: 0;
-        width: auto;
-        overflow: visible;
         background: transparent;
-        color: inherit;
-        font: inherit;
-        line-height: normal;
-        -webkit-font-smoothing: inherit;
-        -moz-osx-font-smoothing: inherit;
-        appearance: none;
-        cursor: pointer;
       }
 
       .sorting-standard {
@@ -87,10 +78,8 @@ class ProductList extends LitElement {
 
       .choose-standard {
         color: var(--gray-color-300, #a6a6a6);
-        transition: color 0.2s ease;
         position: relative;
         padding: 0 8px;
-        cursor: pointer;
       }
 
       .choose-standard.active {
@@ -101,8 +90,8 @@ class ProductList extends LitElement {
       .standard-recommended {
         display: flex;
         align-items: center;
-        gap: 6px;
-        padding-right: 8px;
+        gap: var(--space-sm);
+        padding-right: var(--space-md);
         padding-left: 0;
         font-size: 14px;
       }
@@ -117,7 +106,7 @@ class ProductList extends LitElement {
         font-size: 14px;
         display: flex;
         align-items: center;
-        padding: 0 8px;
+        padding: 0 var(--space-md);
       }
 
       .divider::before {
@@ -147,15 +136,41 @@ class ProductList extends LitElement {
         height: 34px;
         border: 1px solid var(--gray-color-100, #e1e1e1);
         background: none;
-        padding: 4px;
+        padding: var(--space-sm);
         cursor: pointer;
       }
 
       .pagination button:hover {
-        background-color: #f0f0f0;
+        background-color: var(--gray-color-50, #f9f9f9);
       }
       .pagination img {
         height: 8px;
+      }
+
+      .recommend-meaning-wrapper {
+        position: relative;
+        padding: 0;
+      }
+
+      .recommend-meaning {
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid var(--gray-color-300, #a6a6a6);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        font-size: var(--font-sm);
+        color: var(--gray-color-700, #404040);
+        line-height: 1.4;
+        z-index: 10;
+        width: 250px;
+        top: 24px;
+        transform: translateX(-30%);
+        display: none;
+        text-align: justify;
+      }
+
+      .recommend-meaning-wrapper:hover .recommend-meaning {
+        display: block;
       }
     `,
   ];
@@ -212,6 +227,7 @@ class ProductList extends LitElement {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
     }
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
   goToFirst() {
@@ -291,20 +307,27 @@ class ProductList extends LitElement {
             <div class="list-header">
               <div class="total-count">총 ${this.totalItems}건</div>
               <section class="sorting-standard">
-                <button
-                  class="choose-standard standard-recommended ${this
-                    .activeStandard === 'recommended'
-                    ? 'active'
-                    : ''}"
-                  @click=${(e) => this.handleStandardClick('recommended', e)}
-                >
-                  추천순
-                  <img
-                    src="/icon/product-list-question.svg"
-                    alt="설명 아이콘"
-                    class="icon"
-                  />
-                </button>
+                <div class="recommend-meaning-wrapper">
+                  <button
+                    class="choose-standard standard-recommended ${this
+                      .activeStandard === 'recommended'
+                      ? 'active'
+                      : ''}"
+                    @click=${(e) => this.handleStandardClick('recommended', e)}
+                  >
+                    추천순
+                    <img
+                      src="/icon/product-list-question.svg"
+                      alt="설명 아이콘"
+                      class="icon"
+                    />
+                  </button>
+                  <div class="recommend-meaning">
+                    소비자 인기도(판매량, 판매금액, 조회수 등), 상품 출시일,
+                    수요 적합성, 상품 운영상 필요 등을 종합적으로 고려한
+                    순서입니다.
+                  </div>
+                </div>
                 <button
                   class="choose-standard divider standard-new ${this
                     .activeStandard === 'new'
