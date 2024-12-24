@@ -207,6 +207,7 @@ class ProductList extends LitElement {
     const endIndex = startIndex + this.itemsPerPage;
     return this.products.slice(startIndex, endIndex);
   }
+
   goToPage(page) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
@@ -234,7 +235,7 @@ class ProductList extends LitElement {
   }
 
   getPaginationNumbers() {
-    if (this.currentPage === 1) {
+    if (this.currentPage === 1 || 2) {
       return {
         prevNumber: 1,
         currentNumber: 2,
@@ -275,6 +276,7 @@ class ProductList extends LitElement {
   getRealPrice(product) {
     return Math.floor(product.price - product.price * (product.discount / 100));
   }
+
   render() {
     const { prevNumber, currentNumber, nextNumber } =
       this.getPaginationNumbers();
