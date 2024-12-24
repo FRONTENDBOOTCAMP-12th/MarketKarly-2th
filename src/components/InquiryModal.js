@@ -4,6 +4,7 @@ import a11y from '@/base/a11y';
 import '@/components/Button/BtnDisabled';
 import '@/components/Button/BtnEmptied';
 import '@/components/Button/BtnFilled';
+import '@/components/Input/InputCheckbox';
 
 class Inquiry extends LitElement {
   static styles = [
@@ -169,22 +170,6 @@ class Inquiry extends LitElement {
         bottom: 11.2rem;
         background: var(--white-color, #ffffff);
       }
-
-      .secret-check {
-        padding: 0;
-        display: flex;
-        flex-direction: row;
-        gap: var(--space-md);
-        margin-left: 6rem;
-        font-weight: var(--text-semi-bold);
-        align-items: center;
-      }
-
-      .secret-check img {
-        width: 24px;
-        height: 24px;
-      }
-
       .buttons {
         display: flex;
         justify-content: center;
@@ -296,19 +281,6 @@ class Inquiry extends LitElement {
     if (!this.content) {
       fakeInput.classList.remove('hidden');
       realInput.classList.remove('visible');
-    }
-  }
-
-  handleSecretCheckClick() {
-    const secretCheckIcon = this.shadowRoot.querySelector('.secret-check img');
-    const isChecked = secretCheckIcon.dataset.checked === 'true';
-
-    if (isChecked) {
-      secretCheckIcon.src = '/icon/inquiry-checked-false.svg';
-      secretCheckIcon.dataset.checked = 'false';
-    } else {
-      secretCheckIcon.src = '/icon/inquiry-checked-true.svg';
-      secretCheckIcon.dataset.checked = 'true';
     }
   }
 
@@ -436,15 +408,23 @@ class Inquiry extends LitElement {
             </div>
             <div class="character-count">${this.content.length}/5000</div>
           </div>
-          <div class="secret-check" @click=${this.handleSecretCheckClick}>
-            <img
-              src="/icon/inquiry-checked-false.svg"
-              alt="비밀글 유무 토글 아이콘콘"
-              class="icon"
-              role="img"
-            />
-            <span class="secret-check-messeage">비밀글로 문의하기</span>
-          </div>
+          <checkbox-component
+            name="secret-checkbox"
+            value="secret"
+            ?checked=${this.isSecret}
+            @checked=${this.handleSecretCheckClick}
+            style="
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            gap: var(--space-md);
+            margin-left: 6rem;
+            font-weight: var(--text-semi-bold);
+            align-items: center;
+          "
+          >
+            비밀글로 문의하기
+          </checkbox-component>
         </div>
 
         <div class="buttons">
