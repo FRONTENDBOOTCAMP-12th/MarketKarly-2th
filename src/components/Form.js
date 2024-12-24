@@ -7,6 +7,7 @@ import '@/components/Input/RadioGroup';
 import '@/components/Button/BtnEmptied';
 import reset from '@/styles/reset';
 import Swal from 'sweetalert2';
+import pb from '../api/pocketbase';
 
 class Form extends LitElement {
   static styles = [
@@ -83,6 +84,25 @@ class Form extends LitElement {
         display: flex;
         justify-content: space-between;
       }
+
+      .birth-wrapper {
+        width: 100%;
+        height: 44px;
+        border: 1px solid var(--gray-color-300, #a6a6a6);
+        border-radius: 4px;
+        color: var(--gray-color-300, #a6a6a6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+
+        input {
+          height: 90%;
+          width: 30%;
+          text-align: center;
+          border: none;
+        }
+      }
     `,
   ];
 
@@ -108,6 +128,19 @@ class Form extends LitElement {
       phone: /[0-9]/g,
     };
     this.data = {};
+  }
+
+  async _fetch() {
+    const response = await pb.collection('products').getFullList({
+      perPage: 50,
+    });
+
+    console.log(response);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this._fetch();
   }
 
   _handleChangeInput(e) {
@@ -333,6 +366,17 @@ class Form extends LitElement {
             <radio-component value="female">여자</radio-component>
             <radio-component value="none">선택안함</radio-component>
           </radio-group-component>
+        </div>
+
+        <div class="birth">
+          <div>
+            <h3 class="title">생년월일</h3>
+          </div>
+          <div class="birth-wrapper">
+            <input type="text" name="year" placeholder="YYYY" /> /
+            <input type="text" name="month" placeholder="MM" /> /
+            <input type="text" name="day" placeholder="DD" />
+          </div>
         </div>
       </form>
     `;
