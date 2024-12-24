@@ -6,7 +6,7 @@ import '@/components/Button/BtnEmptied';
 import '@/components/Button/BtnFilled';
 import '@/components/Input/InputCheckbox';
 
-class Inquiry extends LitElement {
+class InquiryModal extends LitElement {
   static styles = [
     reset,
     a11y,
@@ -454,4 +454,4 @@ class Inquiry extends LitElement {
   }
 }
 
-customElements.define('inquiry-modal-component', Inquiry);
+customElements.define('inquiry-modal-component', InquiryModal);
