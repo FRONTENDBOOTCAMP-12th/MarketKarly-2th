@@ -235,6 +235,10 @@ class Inquiry extends LitElement {
   }
 
   handleContentInput(event) {
+    const maxLength = 5000;
+    if (event.target.value.length > maxLength) {
+      event.target.value = event.target.value.substring(0, maxLength);
+    }
     this.content = event.target.value;
     this.checkSubmitValidity();
     this.requestUpdate();
