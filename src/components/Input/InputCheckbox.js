@@ -6,6 +6,7 @@ class InputCheckbox extends LitElement {
     reset,
     css`
       :host {
+        --font-weight: 600;
         display: flex;
         gap: var(--space-md);
       }
@@ -23,7 +24,7 @@ class InputCheckbox extends LitElement {
         }
       }
       label {
-        font-weight: var(--text-semi-bold);
+        font-weight: var(--font-weight);
         line-height: var(--light-line-height);
       }
     `,
@@ -64,10 +65,10 @@ class InputCheckbox extends LitElement {
         class="checkbox"
         name=${this.name}
         value=${this.value}
-        id=${this.name}
+        id=${this.value}
         @change=${this._handleChecked}
       />
-      <label for=${this.name}><slot></slot></label>
+      <label for=${this.value}><slot></slot></label>
     `;
   }
 }
