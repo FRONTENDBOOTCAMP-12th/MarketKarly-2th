@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Card';
+import '@/components/InquiryModal';
 import { register } from 'swiper/element';
 
 register();
@@ -35,10 +36,6 @@ class InquiryBoard extends LitElement {
         margin: 0 auto var(--space-5xl);
       }
 
-      .review-content {
-        width: 700px;
-      }
-
       .review-title {
         font-weight: var(--text-bold);
         font-size: var(--font-2xl);
@@ -53,66 +50,6 @@ class InquiryBoard extends LitElement {
         color: var(--gray-color-500, #6b6b6b);
       }
 
-      .review-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 155px;
-        height: 44px;
-        background: var(--primary-color, #283198);
-        border-radius: 4px;
-        border: none;
-        font-weight: var(--text-semi-bold);
-        color: var(--white-color, #ffffff);
-        cursor: pointer;
-      }
-
-      .product-list-container {
-        width: 1050px;
-        margin: 0 auto;
-      }
-
-      .list-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .total-count {
-        font-size: var(--font-sm);
-        font-weight: var(--text-semi-bold);
-      }
-
-      .sorting-standard {
-        display: flex;
-        align-items: center;
-      }
-
-      .choose-standard {
-        position: relative;
-        padding: 0 var(--space-md);
-        font-size: var(--font-sm);
-        color: var(--gray-color-300, #a6a6a6);
-        cursor: pointer;
-      }
-
-      .choose-standard.active {
-        color: var(--gray-color-700, #404040);
-        font-weight: var(--text-medium);
-      }
-
-      .divider::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 1.4px;
-        height: 12px;
-        background-color: var(--gray-color-300, #a6a6a6);
-        opacity: 0.4;
-      }
-
       .pagination {
         display: flex;
         justify-content: center;
@@ -125,66 +62,41 @@ class InquiryBoard extends LitElement {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 34px;
-        height: 34px;
+        width: 56px;
+        height: 56px;
         border: 1px solid var(--gray-color-100, #e1e1e1);
         background: none;
         padding: var(--space-sm);
         cursor: pointer;
       }
 
+      .pagination img {
+        width: 10px;
+        height: 10px;
+      }
+
       .pagination button:hover {
         background-color: var(--gray-color-50, #f9f9f9);
       }
 
-      .review-list {
-        list-style: none;
-        padding: 0;
-        margin: var(--space-xl) 0;
-        border-top: 1px solid var(--gray-color-200, #c4c4c4);
-      }
-
-      .review-item {
-        border-bottom: 1px solid var(--gray-color-200, #c4c4c4);
-        padding: var(--space-md) 0;
-      }
-
-      .review-item a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        font-size: var(--font-sm);
-      }
-
-      .review-item a:hover {
-        color: var(--primary-color, #283198);
-      }
-
-      .notice-icon {
-        display: inline-block;
-        background-color: var(--gray-color-100, #e1e1e1);
-        padding: var(--space-sm);
-        border-radius: 4px;
-        font-weight: var(--text-semi-bold);
-        font-size: var(--font-sm);
-        margin-right: var(--space-md);
+      .btn-prev {
+        opacity: 0.4;
       }
     `,
   ];
 
-  static properties = {
-    activeStandard: { type: String },
-  };
-
   constructor() {
     super();
-    this.activeStandard = 'recommended';
-    this.totalItems = 5;
+    this.showModal = false;
   }
 
-  handleStandardClick(standard, event) {
-    event.preventDefault();
-    this.activeStandard = standard;
+  handleSubmit() {
+    this.showModal = !this.showModal;
+    this.requestUpdate();
+  }
+
+  handleModalClose() {
+    this.showModal = false;
     this.requestUpdate();
   }
 
@@ -208,36 +120,16 @@ class InquiryBoard extends LitElement {
           <btn-filled-component
             width="155px"
             height="44px"
-            class="review-button"
+            class="btn-ask"
             @click=${this.handleSubmit}
             text="문의하기"
           ></btn-filled-component>
         </header>
+        <div class="review-table"></div>
 
         <div class="product-list-container">
-          <ul class="review-list">
-            <li class="review-item">
-              <a>
-                <span class="notice-icon h">공지</span>
-                <span>금주의 베스트 후기 안내</span>
-              </a>
-            </li>
-            <li class="review-item">
-              <a>
-                <span class="notice-icon">공지</span>
-                <span>상품 후기 적립금 정책 안내</span>
-              </a>
-            </li>
-            <li class="review-item">
-              <a>
-                <span class="notice-icon">공지</span>
-                <span>상품 후기 적립금 정책 안내</span>
-              </a>
-            </li>
-          </ul>
-
           <div class="pagination" aria-label="페이지 이동">
-            <button aria-label="이전 페이지">
+            <button class="btn-prev" aria-label="이전 페이지">
               <img src="/icon/btn-prev.svg" alt="" />
             </button>
             <button aria-label="다음 페이지">
@@ -245,6 +137,11 @@ class InquiryBoard extends LitElement {
             </button>
           </div>
         </div>
+        ${this.showModal
+          ? html`<inquiry-modal-component
+              @close=${this.handleModalClose}
+            ></inquiry-modal-component>`
+          : ''}
       </section>
     `;
   }
