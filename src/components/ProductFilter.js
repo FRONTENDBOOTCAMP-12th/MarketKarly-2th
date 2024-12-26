@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import '@/assets/font/Pretendard.css';
+import '@/components/Input/InputCheckbox';
 
 class ProductFilter extends LitElement {
   static styles = [
@@ -61,30 +62,6 @@ class ProductFilter extends LitElement {
           display: flex;
           flex-direction: column;
           gap: var(--space-2xl);
-
-          & input {
-            display: none;
-          }
-
-          .checkbox-label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            font-size: var(--font-md);
-            font-weight: var(--text-regular);
-            color: var(--content-text-color, #333333);
-          }
-
-          .checkbox-img {
-            width: 24px;
-            height: 24px;
-            background-image: url('/icon/unchecked.svg');
-            background-repeat: no-repeat;
-            margin-right: var(--space-md);
-          }
-          .filter-checkbox:checked + .checkbox-label .checkbox-img {
-            background-image: url('/icon/checked.svg');
-          }
 
           .more-filter {
             display: flex;
@@ -150,11 +127,11 @@ class ProductFilter extends LitElement {
   }
 
   resetFilter() {
-    const checkboxes = this.shadowRoot.querySelectorAll('.filter-checkbox');
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
+    const checkboxes = this.shadowRoot.querySelectorAll('checkbox-component');
+    checkboxes.forEach((checked) => {
+      const input = checked.shadowRoot.querySelector('input[type="checkbox"]');
+      input.checked = false;
     });
-    this.requestUpdate();
   }
 
   toggleFilter(e) {
@@ -167,15 +144,9 @@ class ProductFilter extends LitElement {
     return this.filters[filterType].map(
       (item, index) => html`
         <li class="filter-item">
-          <input
-            id="checkbox-${filterType}-${index}"
-            type="checkbox"
-            class="filter-checkbox"
-          />
-          <label class="checkbox-label" for="checkbox-${filterType}-${index}">
-            <span class="checkbox-img" tabindex="0"></span>
+          <checkbox-component name="${filterType}-${index}" value="${item}">
             ${item}
-          </label>
+          </checkbox-component>
         </li>
       `
     );

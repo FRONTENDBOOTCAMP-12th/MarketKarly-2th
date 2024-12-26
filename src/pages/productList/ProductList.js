@@ -2,8 +2,10 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Card';
+import '@/components/ProductFilter';
 import { register } from 'swiper/element';
 import { getPbImage } from '@/api/getPbImage';
+
 
 register();
 
@@ -323,8 +325,10 @@ class ProductList extends LitElement {
         <h2 class="product-list-header">베스트</h2>
 
         <div class="flex-content">
-          <div class="product-category" aria-label="제품 카테고리"></div>
 
+          <div class="product-category">
+            <product-filter-component></product-filter-component>
+          </div>
           <div class="product-list-container">
             <div class="list-header">
               <div class="total-count">총 ${this.totalItems}건</div>
