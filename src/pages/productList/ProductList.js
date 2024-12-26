@@ -234,7 +234,6 @@ class ProductList extends LitElement {
   }
 
   get paginatedProducts() {
-    
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return this.products.slice(startIndex, endIndex);
@@ -317,7 +316,8 @@ class ProductList extends LitElement {
   }
 
   render() {
-    
+    const { prevNumber, currentNumber, nextNumber } =
+      this.getPaginationNumbers();
     return html`
       <section class="product-list">
         <h2 class="product-list-header">베스트</h2>
