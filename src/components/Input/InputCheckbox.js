@@ -6,6 +6,7 @@ class InputCheckbox extends LitElement {
     reset,
     css`
       :host {
+        --font-weight: 600;
         display: flex;
         gap: var(--space-md);
       }
@@ -23,7 +24,7 @@ class InputCheckbox extends LitElement {
         }
       }
       label {
-        font-weight: var(--text-semi-bold);
+        font-weight: var(--font-weight);
         line-height: var(--light-line-height);
       }
     `,

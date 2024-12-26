@@ -3,12 +3,13 @@ import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Card';
 import '@/components/ProductFilter';
+import { register } from 'swiper/element';
+import { getPbImage } from '@/api/getPbImage';
+
+
+register();
 
 class ProductList extends LitElement {
-  static properties = {
-    activeStandard: { type: String },
-  };
-
   static styles = [
     reset,
     a11y,
@@ -22,7 +23,7 @@ class ProductList extends LitElement {
         text-align: center;
         font-size: var(--font-lg);
         color: var(--black-color, #000);
-        margin-bottom: var(--space-5xl);
+        padding-bottom: var(--space-5xl);
       }
 
       .flex-content {
@@ -34,10 +35,16 @@ class ProductList extends LitElement {
         width: 267px;
         flex-shrink: 0;
       }
-
       .product-list-container {
         width: 783px;
         flex-shrink: 0;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5.5rem 0;
+        width: 100%;
       }
 
       .list-header {
@@ -52,23 +59,13 @@ class ProductList extends LitElement {
         font-size: 14px;
         color: var(--black-color);
         font-weight: var(--text-semi-bold);
-        font-weight: var(--text-bold);
       }
 
       button {
         border: none;
         margin: 0;
         padding: 0;
-        width: auto;
-        overflow: visible;
         background: transparent;
-        color: inherit;
-        font: inherit;
-        line-height: normal;
-        -webkit-font-smoothing: inherit;
-        -moz-osx-font-smoothing: inherit;
-        appearance: none;
-        cursor: pointer;
       }
 
       .sorting-standard {
@@ -83,10 +80,8 @@ class ProductList extends LitElement {
 
       .choose-standard {
         color: var(--gray-color-300, #a6a6a6);
-        transition: color 0.2s ease;
         position: relative;
-        padding: 0 8px;
-        cursor: pointer;
+        padding: 0 var(--space-md);
       }
 
       .choose-standard.active {
@@ -97,8 +92,8 @@ class ProductList extends LitElement {
       .standard-recommended {
         display: flex;
         align-items: center;
-        gap: 6px;
-        padding-right: 8px;
+        gap: var(--space-sm);
+        padding-right: var(--space-md);
         padding-left: 0;
         font-size: 14px;
       }
@@ -113,7 +108,7 @@ class ProductList extends LitElement {
         font-size: 14px;
         display: flex;
         align-items: center;
-        padding: 0 8px;
+        padding: 0 var(--space-md);
       }
 
       .divider::before {
@@ -126,13 +121,6 @@ class ProductList extends LitElement {
         height: 12px;
         background-color: var(--gray-color-300, #a6a6a6);
         opacity: 0.4;
-      }
-
-      .product-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 5.5rem 0;
-        width: 100%;
       }
 
       .pagination {
@@ -150,89 +138,222 @@ class ProductList extends LitElement {
         height: 34px;
         border: 1px solid var(--gray-color-100, #e1e1e1);
         background: none;
-        padding: 4px;
+        padding: var(--space-sm);
         cursor: pointer;
       }
 
       .pagination button:hover {
-        background-color: #f0f0f0;
+        background-color: var(--gray-color-50, #f9f9f9);
       }
+
+      .pagination button.active {
+        background-color: var(--gray-color-50, #f9f9f9);
+      }
+
       .pagination img {
         height: 8px;
       }
 
-      .pagination-number {
+      .recommend-meaning-wrapper {
+        position: relative;
+        padding: 0;
+      }
+
+      .recommend-meaning {
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid var(--gray-color-300, #a6a6a6);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: var(--space-lg);
         font-size: var(--font-sm);
-        color: var(--black-color, #000);
-        line-height: var(--light-line-height);
-        font-weight: var(--text-semi-bold);
-        color: var(--gray-color-400, #e1e1e1);
+        color: var(--gray-color-700, #404040);
+        line-height: 1.4;
+        z-index: 10;
+        width: 250px;
+        top: var(--space-3xl);
+        transform: translateX(-30%);
+        display: none;
+        text-align: justify;
+      }
+
+      .recommend-meaning-wrapper:hover .recommend-meaning {
+        display: block;
       }
     `,
   ];
   static properties = {
-    disabled: { type: Boolean },
-    count: { type: Number },
+    activeStandard: { type: String },
+    products: { type: Array },
+    currentPage: { type: Number },
+    itemsPerPage: { type: Number },
+    totalItems: { type: Number },
+    totalPages: { type: Number },
   };
 
   constructor() {
     super();
-    this.count = 1;
     this.activeStandard = 'recommended';
+    this.products = [];
+    this.currentPage = 1;
+    this.itemsPerPage = 15;
+    this.totalItems = 0;
+    this.totalPages = 1;
   }
-
   handleStandardClick(standard, event) {
     event.preventDefault();
     this.activeStandard = standard;
     this.requestUpdate();
   }
+  connectedCallback() {
+    super.connectedCallback();
+    this.renderCardProducts();
+  }
 
-  addProduct() {
-    this.count++;
+  async renderCardProducts() {
+    if (this.isFetching) return;
+    this.isFetching = true;
 
-    if (this.count > 1) {
-      this.totalPrice = (this.count * this.productPrice).toLocaleString();
+    try {
+      const url = new URL(
+        `${import.meta.env.VITE_PB_API}/collections/products/records`
+      );
+      url.searchParams.set('page', '1');
+      url.searchParams.set('perPage', '1000');
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      this.products = data.items;
+      this.totalItems = data.totalItems;
+      this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+
+      this.products.sort((a, b) => this.getRealPrice(a) - this.getRealPrice(b));
+
+      this.requestUpdate();
+    } catch (err) {
+      console.error('에러발생: ', err);
     }
   }
 
-  reduceProduct() {
-    if (this.count > 1) {
-      this.count--;
+  get paginatedProducts() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.products.slice(startIndex, endIndex);
+  }
+
+  goToPage(page) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+
+      this.updateComplete.then(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      });
     }
   }
 
-  handleBtnCancel() {
-    this.remove();
-    document.body.style.overflow = 'auto';
+  goToFirst() {
+    this.currentPage = 1;
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < Math.ceil(this.totalItems / this.itemsPerPage)) {
+      this.currentPage++;
+    }
+  }
+
+  goToLast() {
+    this.currentPage = this.totalPages;
+  }
+
+  getPaginationNumbers() {
+    if (this.currentPage === 1) {
+      return {
+        prevNumber: 1,
+        currentNumber: 2,
+        nextNumber: 3,
+      };
+    }
+    if (this.currentPage === this.totalPages) {
+      return {
+        prevNumber: Math.max(1, this.totalPages - 2),
+        currentNumber: Math.max(2, this.totalPages - 1),
+        nextNumber: this.totalPages,
+      };
+    }
+    return {
+      prevNumber: Math.max(1, this.currentPage - 1),
+      currentNumber: this.currentPage,
+      nextNumber: Math.min(this.totalPages, this.currentPage + 1),
+    };
+  }
+
+  handleStandardClick(standard, event) {
+    event.preventDefault();
+    this.activeStandard = standard;
+
+    if (standard === 'low-price' || standard === 'recommended') {
+      this.products.sort((a, b) => this.getRealPrice(a) - this.getRealPrice(b));
+    } else if (standard === 'high-price') {
+      this.products.sort((a, b) => this.getRealPrice(b) - this.getRealPrice(a));
+    } else if (standard === 'product-discount' || standard === 'new') {
+      this.products.sort((a, b) => b.discount - a.discount);
+    } else if (standard === 'sale') {
+      this.products.sort((a, b) => a.productName.localeCompare(b.productName));
+    }
+
+    this.requestUpdate();
+  }
+
+  getRealPrice(product) {
+    return Math.floor(product.price - product.price * (product.discount / 100));
   }
 
   render() {
+    const { prevNumber, currentNumber, nextNumber } =
+      this.getPaginationNumbers();
     return html`
       <section class="product-list">
         <h2 class="product-list-header">베스트</h2>
 
         <div class="flex-content">
-          <div class="product-category">
+
+          <div class="product-category" aria-label="제품 카테고리">
             <product-filter-component></product-filter-component>
           </div>
           <div class="product-list-container">
             <div class="list-header">
-              <div class="total-count">총 284건</div>
+              <div class="total-count">총 ${this.totalItems}건</div>
               <section class="sorting-standard">
-                <button
-                  class="choose-standard standard-recommended ${this
-                    .activeStandard === 'recommended'
-                    ? 'active'
-                    : ''}"
-                  @click=${(e) => this.handleStandardClick('recommended', e)}
-                >
-                  추천순
-                  <img
-                    src="/icon/product-list-question.svg"
-                    alt="설명 아이콘"
-                    class="icon"
-                  />
-                </button>
+                <div class="recommend-meaning-wrapper">
+                  <button
+                    class="choose-standard standard-recommended ${this
+                      .activeStandard === 'recommended'
+                      ? 'active'
+                      : ''}"
+                    @click=${(e) => this.handleStandardClick('recommended', e)}
+                  >
+                    추천순
+                    <img
+                      src="/icon/product-list-question.svg"
+                      alt="설명 아이콘"
+                      class="icon"
+                    />
+                  </button>
+                  <div class="recommend-meaning">
+                    소비자 인기도(판매량, 판매금액, 조회수 등), 상품 출시일,
+                    수요 적합성, 상품 운영상 필요 등을 종합적으로 고려한
+                    순서입니다.
+                  </div>
+                </div>
                 <button
                   class="choose-standard divider standard-new ${this
                     .activeStandard === 'new'
@@ -252,13 +373,14 @@ class ProductList extends LitElement {
                   판매량순
                 </button>
                 <button
-                  class="choose-standard divider standard-discount ${this
-                    .activeStandard === 'discount'
+                  class="choose-standard divider standard-product-discount ${this
+                    .activeStandard === 'product-discount'
                     ? 'active'
                     : ''}"
-                  @click=${(e) => this.handleStandardClick('discount', e)}
+                  @click=${(e) =>
+                    this.handleStandardClick('product-discount', e)}
                 >
-                  혜택순
+                  할인율순
                 </button>
                 <button
                   class="choose-standard divider standard-low-price ${this
@@ -280,44 +402,75 @@ class ProductList extends LitElement {
                 </button>
               </section>
             </div>
-            <div class="product-grid">${this.createProductItems()}</div>
-            <div class="pagination">
-              <button
-                class="btn-first"
-                @click=${this.reduceProduct}
-                ?disabled=${this.count === 1}
-              >
-                <img src="/icon/btn-first.svg" alt="처음으로" />
+
+            <div class="product-grid">
+              ${this.paginatedProducts.map(
+                (item) => html`
+                  <card-component
+                    photoURL="${getPbImage(item)}"
+                    deliveryType="${item.deliveryType}"
+                    productName="${item.productName}"
+                    discount="${item.discount}"
+                    realPrice="${this.getRealPrice(item)}"
+                    price="${item.price}"
+                    description="${item.description}"
+                    .tagOnly="${item.kalitOnly}"
+                    .tagLimited="${item.limited}"
+                  ></card-component>
+                `
+              )}
+            </div>
+
+            <div class="pagination" aria-label="페이지 이동">
+              <button @click="${this.goToFirst}" aria-label="첫 페이지로 이동">
+                <img src="/icon/btn-first.svg" alt="" />
               </button>
               <button
-                class="btn-prev"
-                @click=${this.reduceProduct}
-                ?disabled=${this.count === 1}
+                @click="${() => this.goToPage(this.currentPage - 1)}"
+                aria-label="이전 페이지로 이동"
               >
-                <img src="/icon/btn-prev.svg" alt="이전으로" />
+                <img src="/icon/btn-prev.svg" alt="" />
               </button>
-              <button class="pagination-number">${this.count}</button>
-              <button class="pagination-number">${this.count + 1}</button>
-              <button class="pagination-number">${this.count + 2}</button>
-              <button class="btn-next" @click=${this.addProduct}>
-                <img src="/icon/btn-next.svg" alt="마지막으로" />
+              <button
+                @click="${() => this.goToPage(prevNumber)}"
+                class="${this.currentPage === prevNumber ? 'active' : ''}"
+                aria-label="현재 페이지의 이전 페이지"
+              >
+                ${prevNumber}
               </button>
-              <button class="btn-last" @click=${this.addProduct}>
-                <img src="/icon/btn-last.svg" alt="마지막으로" />
+
+              <button
+                @click="${() => this.goToPage(currentNumber)}"
+                class="${this.currentPage === currentNumber ? 'active' : ''}"
+                aria-label="현재 페이지"
+              >
+                ${currentNumber}
+              </button>
+
+              <button
+                @click="${() => this.goToPage(nextNumber)}"
+                class="${this.currentPage === nextNumber ? 'active' : ''}"
+                aria-label="현재 페이지의 다음 페이지"
+              >
+                ${nextNumber}
+              </button>
+              <button
+                @click="${() => this.goToPage(this.currentPage + 1)}"
+                aria-label="다음 페이지로 이동"
+              >
+                <img src="/icon/btn-next.svg" alt="" />
+              </button>
+              <button
+                @click="${this.goToLast}"
+                aria-label="마지막 페이지로 이동"
+              >
+                <img src="/icon/btn-last.svg" alt="" />
               </button>
             </div>
           </div>
         </div>
       </section>
     `;
-  }
-
-  createProductItems() {
-    const productItems = [];
-    for (let i = 0; i < 15; i++) {
-      productItems.push(html`<card-component></card-component>`);
-    }
-    return productItems;
   }
 }
 

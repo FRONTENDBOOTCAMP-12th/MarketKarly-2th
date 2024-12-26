@@ -167,8 +167,10 @@ class Card extends LitElement {
     document.body.appendChild(popupAddCart);
 
     const realPrice = this.realPrice.toLocaleString();
+    const productName = this.productName;
 
     popupAddCart.setAttribute('price', realPrice);
+    popupAddCart.setAttribute('productName', productName);
   };
 
   handleCardClick = () => {
@@ -211,7 +213,8 @@ class Card extends LitElement {
                 >${this.discount}%<span class="sr-only">할인</span></span
               >
               <span class="real-price"
-                >${this.realPrice.toLocaleString()}원</span>
+                >${this.realPrice.toLocaleString()}원</span
+              >
             </p>
 
             <p class="origin-price">${this.price.toLocaleString()}원</p>

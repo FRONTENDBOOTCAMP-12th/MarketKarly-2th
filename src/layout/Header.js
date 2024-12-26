@@ -6,24 +6,17 @@ class Header extends LitElement {
   static styles = [
     reset,
     css`
-      body {
-        background: var(--white-color, #ffffff);
-      }
-
       .header-wrapper {
         position: relative;
         box-shadow: 0 0 var(--space-md) var(--gray-color-200, #c4c4c4);
       }
 
-      .top-bar {
+      .top-bar-nav {
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
         padding: 0 0 var(--space-2xl);
-        width: 100%;
-      }
-
-      .top-bar-nav {
         width: 100%;
       }
 
@@ -33,7 +26,7 @@ class Header extends LitElement {
         align-items: center;
         justify-content: flex-end;
         gap: var(--space-lg);
-        padding: var(--space-lg) 0 0;
+        padding: var(--space-md) 0 0;
         height: 30px;
         font-weight: var(--text-semi-bold);
       }
@@ -42,13 +35,13 @@ class Header extends LitElement {
         display: flex;
         align-items: center;
         gap: var(--space-lg);
+        padding: var(--space-lg) 0 var(--space-lg);
       }
 
       .header-member-item a {
         display: flex;
         align-items: center;
         gap: var(--space-sm);
-        text-decoration: none;
         font-size: var(--font-sm);
       }
 
@@ -82,7 +75,6 @@ class Header extends LitElement {
         box-sizing: border-box;
         justify-content: space-between;
         margin-top: var(--space-md);
-        margin-bottom: var(--space-lg);
       }
 
       .header-site-select {
@@ -125,7 +117,6 @@ class Header extends LitElement {
       }
 
       .new-icon img {
-        position: static;
         min-width: 8px;
         min-height: 8px;
       }
@@ -229,7 +220,8 @@ class Header extends LitElement {
         position: relative;
         width: 150px;
         display: flex;
-        padding: var(--space-xl) 0;
+        padding-top: var(--space-3xl);
+        padding-bottom: var(--space-xl);
       }
 
       .nav-category-button {
@@ -339,6 +331,13 @@ class Header extends LitElement {
     this.isCategoryOpen = false;
   }
 
+  handleKeyDown(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      this.isCategoryOpen = !this.isCategoryOpen;
+      e.preventDefault();
+    }
+  }
+
   render() {
     return html`
       <header class="header-wrapper">
@@ -362,8 +361,6 @@ class Header extends LitElement {
                   <a
                     href="#"
                     class="header-member-link"
-                    aria-haspopup="true"
-                    aria-expanded="false"
                   >
                     고객센터
                     <img class="icon-down" src="/icon/down.webp" alt="펼치기" />
@@ -388,7 +385,7 @@ class Header extends LitElement {
               <div class="header-name-wrapper">
                 <div class="header-site-select">
                   <h1 class="header-logo">
-                    <a href="/" aria-label="마켓컬릿 홈으로 이동">
+                    <a href="/">
                       <img src="/logo2.webp" alt="마켓컬릿 로고" />
                     </a>
                   </h1>
@@ -419,16 +416,15 @@ class Header extends LitElement {
                     </ul>
                   </nav>
                 </div>
-                <form class="header-search" role="search" aria-label="검색">
+                <form class="header-search" role="search" aria-label="검색 창">
                   <input
                     type="text"
                     placeholder="검색어를 입력해주세요."
                     aria-label="검색어 입력"
                   />
-                  <button type="submit" aria-label="검색 버튼">
+                  <button type="submit" aria-label="검색 입력 버튼">
                     <img
                       src="/icon/header-search.svg"
-                      alt="검색 아이콘"
                       class="icon"
                     />
                   </button>
@@ -438,24 +434,14 @@ class Header extends LitElement {
                     <a href="#" aria-label="매장 찾기">
                       <img
                         src="/icon/map.svg"
-                        alt="매장 찾기 아이콘"
                         class="icon"
                       />
-                      <div class="map-popup">
-                        <p>
-                          배송지를 등록하고 <br />
-                          구매 가능한 상품을 확인하세요.
-                        </p>
-                        <button>로그인</button>
-                        <button>주소 검색</button>
-                      </div>
                     </a>
                   </li>
                   <li>
                     <a href="#" aria-label="찜한 상품 목록">
                       <img
                         src="/icon/favorits.svg"
-                        alt="찜한 상품 목록 아이콘"
                         class="icon"
                       />
                     </a>
@@ -464,7 +450,6 @@ class Header extends LitElement {
                     <a href="#" aria-label="장바구니">
                       <img
                         src="/icon/header-cart.svg"
-                        alt="장바구니 아이콘"
                         class="icon"
                       />
                     </a>
@@ -473,10 +458,13 @@ class Header extends LitElement {
               </div>
 
             <nav class="nav">
-              <div
+              <section
                 class="nav-category header-category"
                 @mouseenter=${this.openCategory}
                 @mouseleave=${this.closeCategory}
+                @focus=${this.openCategory}
+                @blur=${this.closeCategory}
+                tabindex="0"
               >
               ${
                 this.isCategoryOpen
@@ -484,23 +472,19 @@ class Header extends LitElement {
                   : ''
               }
                 <div class="nav-category-button">
-                  <img
-                    src="/icon/hamburger.webp"
-                    alt="카테고리"
-                    class="nav-category-icon nav-category-hover"
-                    aria-label="카테고리"
-                  />
+                <img src="/icon/hamburger.webp" alt="카테고리" class="nav-category-icon nav-category-hover" aria-label="카테고리" />
+
                   <span class="nav-category-text nav-category-hover"
                     >카테고리</span
                   >
                 </div>
-              </div>
+              </section>
 
               <ul class="nav-site-map">
-                <li><a href="/" aria-label="신상품">신상품</a></li>
-                <li><a href="/src/pages/productList/">베스트</a></li>
-                <li><a href="/" aria-label="알뜰쇼핑">알뜰쇼핑</a></li>
-                <li><a href="/" aria-label="특가/혜택">특가/혜택</a></li>
+                <li><a href="/src/pages/productList/" aria-label="신상품 페이지">신상품</a></li>
+                <li><a href="/src/pages/productList/" aria-label="베스트 상품 페이지">베스트</a></li>
+                <li><a href="/src/pages/productList/" aria-label="알뜰쇼핑 페이지">알뜰쇼핑</a></li>
+                <li><a href="/src/pages/productList/" aria-label="특가/혜택 페이지지">특가/혜택</a></li>
               </ul>
 
               <div class="nav-delivery">

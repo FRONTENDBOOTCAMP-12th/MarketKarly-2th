@@ -7,6 +7,7 @@ class InputRadio extends LitElement {
 
     css`
       :host {
+        --font-weight: 600;
         display: flex;
         gap: var(--space-md);
       }
@@ -24,7 +25,7 @@ class InputRadio extends LitElement {
         }
       }
       label {
-        font-weight: var(--text-semi-bold);
+        font-weight: var(--font-weight);
         line-height: var(--light-line-height);
       }
     `,
@@ -58,7 +59,7 @@ class InputRadio extends LitElement {
   render() {
     return html`
       <input
-        id=${this.name}
+        id=${this.value}
         name=${this.name}
         value=${this.value}
         type="radio"
