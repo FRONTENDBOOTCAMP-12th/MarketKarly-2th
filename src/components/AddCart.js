@@ -6,6 +6,7 @@ import '@/components/Button/BtnFilled';
 
 class AddCart extends LitElement {
   static properties = {
+    productName: { type: String },
     price: { type: String },
     disabled: { type: Boolean },
     count: { type: Number },
@@ -15,6 +16,7 @@ class AddCart extends LitElement {
   constructor() {
     super();
 
+    this.productName = '';
     this.price = '';
     this.disabled = true;
     this.count = 1;
@@ -53,7 +55,7 @@ class AddCart extends LitElement {
         transform: translate(-50%, -50%);
 
         width: 396px;
-        height: 292px;
+        height: 316px;
         background-color: var(--white-color, #ffffff);
 
         display: inline-flex;
@@ -74,6 +76,10 @@ class AddCart extends LitElement {
           gap: 0.75rem;
 
           font-weight: var(--text-semi-bold);
+
+          .product-name {
+            height: 48px;
+          }
 
           > div {
             display: flex;
@@ -225,7 +231,7 @@ class AddCart extends LitElement {
       <div class="popup-bg">
         <dialog class="add-cart">
           <div class="product">
-            <p class="product-name">[풀무원] 탱탱쫄면 (4개입)</p>
+            <p class="product-name">${this.productName}</p>
 
             <div>
               <p class="product-price">${this.price}원</p>

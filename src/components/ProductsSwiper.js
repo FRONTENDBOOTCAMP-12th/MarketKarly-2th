@@ -3,6 +3,7 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import { register } from 'swiper/element';
 import { getPbImage } from '../api/getPbImage';
+import pb from '../api/pocketbase';
 
 register();
 
@@ -35,24 +36,18 @@ class ProductsSwiper extends LitElement {
         border-radius: 50%;
         rotate: 180deg;
       }
-
-      .line-banner {
-        display: flex;
-        justify-content: center;
-        margin: var(--space-5xl) 0;
-      }
     `,
   ];
 
   static properties = {
     title: { type: String },
-    data: { type: Object },
+    data: { type: Array },
   };
 
-  constructor(title) {
+  constructor() {
     super();
 
-    this.title = title;
+    this.title = '';
     this.data = [];
   }
 
@@ -62,26 +57,9 @@ class ProductsSwiper extends LitElement {
   }
 
   nextSlide() {
-    this.swiperEl.swiper.slideNext();
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    this.renderCardProducts();
-  }
-
-  async renderCardProducts() {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_PB_API}/collections/products/records`
-      );
-
-      const data = await response.json();
-
-      this.data = data.items;
-    } catch (err) {
-      console.error('에러발생: ', err);
+    // swiper 초기화 여부 확인
+    if (this.swiperEl?.swiper) {
+      this.swiperEl.swiper.slideNext();
     }
   }
 
