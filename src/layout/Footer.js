@@ -6,6 +6,7 @@ class Footer extends LitElement {
     reset,
     css`
       #footer {
+        border-top: 1px solid var(--gray-color-100, #e1e1e1);
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         grid-template-rows: repeat(3, auto);

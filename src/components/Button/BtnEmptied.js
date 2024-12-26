@@ -9,6 +9,7 @@ class BtnEmptied extends LitElement {
     text: { type: String },
     borderColor: { type: String },
     color: { type: String },
+    type: { type: String },
   };
 
   constructor() {
@@ -18,6 +19,7 @@ class BtnEmptied extends LitElement {
     this.text = 'text';
     this.borderColor = '#283198';
     this.color = '#283198';
+    this.type = 'button';
   }
 
   static styles = [
@@ -57,7 +59,7 @@ class BtnEmptied extends LitElement {
         }
       </style>
 
-      <button class="btn-emptied" type="button">${this.text}</button>
+      <button class="btn-emptied" type=${this.type}>${this.text}</button>
     `;
   }
 }

@@ -6,15 +6,17 @@ import '@/components/Input/InputRadio';
 import '@/components/Input/RadioGroup';
 import '@/components/Button/BtnEmptied';
 import '@/components/Button/BtnDisabled';
+import '@/components/Button/BtnFilled';
 import reset from '@/styles/reset';
 import Swal from 'sweetalert2';
+import pb from '../api/pocketbase';
 
 class Form extends LitElement {
   static styles = [
     reset,
     css`
       #form {
-        width: 640px;
+        width: 100%;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
@@ -93,7 +95,6 @@ class Form extends LitElement {
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 1px solid black;
 
         input {
           height: 90%;
@@ -249,6 +250,38 @@ class Form extends LitElement {
       this.isPass.phone = false;
     }
     this.requestUpdate();
+  }
+
+  _fetchUserData(e) {
+    e.preventDefault();
+    try {
+      const { email, password, confirm: passwordConfirm, id: name } = this.data;
+      const data = { email, password, passwordConfirm, name };
+      console.log(data);
+
+      if (email && name && password === passwordConfirm) {
+        pb.collection('users').create(data);
+
+        Swal.fire({
+          title: '회원가입 완료',
+          text: '로그인 화면으로 이동합니다.',
+          icon: 'success',
+        }).then(() => {
+          location.href = '/src/pages/login/';
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: '올바른 회원가입 정보를 입력해주세요',
+          icon: 'error',
+        }).then(() => {
+          location.reload();
+          throw new Error('데이터가 올바르게 입력되지 않았습니다.');
+        });
+      }
+    } catch (err) {
+      console.error('에러가 발생하였습니다 ->', err);
+    }
   }
 
   render() {
@@ -502,14 +535,17 @@ class Form extends LitElement {
         this.data.password &&
         this.isPass.email &&
         this.isPass.password
-          ? html`<div>
+          ? html`
+              <div>
                 <btn-filled-component
                   class="submit"
                   text="가입하기"
                   width="100%"
+                  @click=${this._fetchUserData}
+                  type="submit"
                 ></btn-filled-component>
               </div>
-              ;`
+            `
           : html`<div>
               <btn-disabled-component
                 class="submit"
