@@ -3,6 +3,7 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import { register } from 'swiper/element';
 import { getPbImage } from '../api/getPbImage';
+import pb from '../api/pocketbase';
 
 register();
 
@@ -35,51 +36,60 @@ class ProductsSwiper extends LitElement {
         border-radius: 50%;
         rotate: 180deg;
       }
-
-      .line-banner {
-        display: flex;
-        justify-content: center;
-        margin: var(--space-5xl) 0;
-      }
     `,
   ];
 
   static properties = {
     title: { type: String },
-    data: { type: Object },
+    data: { type: Array },
   };
 
-  constructor(title) {
+  constructor() {
     super();
 
-    this.title = title;
+    this.title = '';
     this.data = [];
+    this.isFetching = false; // 요청 중인지 여부를 확인하는 플래그
   }
 
-  firstUpdated() {
+  async firstUpdated() {
+    await this.renderCardProducts();
+
     this.swiperEl = this.renderRoot.querySelector('.swiper');
     this.swiperEl.initialize();
   }
 
-  nextSlide() {
-    this.swiperEl.swiper.slideNext();
+  connectedCallback() {
+    super.connectedCallback(); // 추가 호출 없이 기본 기능만 유지
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-
-    this.renderCardProducts();
+  nextSlide() {
+    // swiper 초기화 여부 확인
+    if (this.swiperEl?.swiper) {
+      this.swiperEl.swiper.slideNext();
+    }
   }
 
   async renderCardProducts() {
+    if (this.isFetching) return; // 이미 요청 중이면 새 요청을 중단
+    this.isFetching = true;
+
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_PB_API}/collections/products/records`
+      const response = await pb.collection('products').getFullList(
+        { perPage: 50 },
+        { cancelPrevious: false } // 자동 취소 비활성화
       );
 
-      const data = await response.json();
+      console.log(response);
 
-      this.data = data.items;
+      this.data = response;
+
+      // Swiper 업데이트
+      this.requestUpdate().then(() => {
+        if (this.swiperEl?.swiper) {
+          this.swiperEl.swiper.update();
+        }
+      });
     } catch (err) {
       console.error('에러발생: ', err);
     }
