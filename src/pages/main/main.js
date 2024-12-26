@@ -3,6 +3,7 @@ import '@/components/Button/BtnFilled';
 import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
+import pb from '../../api/pocketbase';
 
 class Main extends LitElement {
   static styles = [
@@ -18,8 +19,37 @@ class Main extends LitElement {
     `,
   ];
 
+  static properties = {
+    data1: { type: Array },
+    data2: { type: Array },
+  };
+
   constructor() {
     super();
+
+    this.data1 = [];
+    this.data2 = [];
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    this.renderCardProducts();
+  }
+
+  async renderCardProducts() {
+    try {
+      const response = await pb
+        .collection('products')
+        .getFullList({ perPage: 50 });
+
+      this.data1 = response.slice(0, 15);
+
+      this.data2 = response.slice(15, 30);
+      console.log(this.data2);
+    } catch (err) {
+      console.error('에러발생: ', err);
+    }
   }
 
   render() {
@@ -27,6 +57,7 @@ class Main extends LitElement {
       <banner-component></banner-component>
       <products-swiper-component
         title="이 상품 어때요 ?"
+        .data=${this.data1}
       ></products-swiper-component>
       <a class="line-banner" href="#" aria-label="퍼플위크 배너">
         <img src="/image/line-banner.webp" alt="10월 퍼플위크" />
@@ -34,6 +65,7 @@ class Main extends LitElement {
       <recent-component></recent-component>
       <products-swiper-component
         title="놓치면 후회할 가격"
+        .data=${this.data2}
       ></products-swiper-component>
     `;
   }
