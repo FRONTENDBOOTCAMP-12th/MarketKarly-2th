@@ -326,7 +326,7 @@ class ProductList extends LitElement {
 
         <div class="flex-content">
 
-          <div class="product-category" aria-label="제품 카테고리">
+          <div class="product-category">
             <product-filter-component></product-filter-component>
           </div>
           <div class="product-list-container">
