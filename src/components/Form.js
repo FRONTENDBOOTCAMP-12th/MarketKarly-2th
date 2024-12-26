@@ -257,7 +257,6 @@ class Form extends LitElement {
     try {
       const { email, password, confirm: passwordConfirm, id: name } = this.data;
       const data = { email, password, passwordConfirm, name };
-      console.log(data);
 
       if (email && name && password === passwordConfirm) {
         pb.collection('users').create(data);
