@@ -3,6 +3,7 @@ import reset from '@/styles/reset';
 import '@/assets/font/Pretendard.css';
 import '@/components/Button/BtnFilled';
 import '@/components/Button/BtnEmptied';
+import '@/components/Input/InputText';
 import Swal from 'sweetalert2';
 
 class Login extends LitElement {
@@ -25,24 +26,12 @@ class Login extends LitElement {
 
         & form {
           width: 340px;
-          & input {
-            box-sizing: border-box;
-            border: 1px solid var(--gray-color-300, #a6a6a6);
-            border-radius: 4px;
-            height: 50px;
-            width: 100%;
-            padding: var(--space-lg) var(--space-2xl);
+
+          & .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
             margin-bottom: var(--space-lg);
-            outline: none;
-
-            &:focus {
-              border: 1px solid var(--primary-color, #283198);
-            }
-
-            &::placeholder {
-              font-size: var(--font-md);
-              color: var(--gray-color-400, #898989);
-            }
           }
 
           & .find-container {
@@ -78,17 +67,16 @@ class Login extends LitElement {
   }
 
   handleInputChange(e) {
-    const { id, value } = e.target;
-    if (id === 'idField') {
+    const { name, value } = e.detail;
+    if (name === 'idField') {
       this.email = value;
-    } else if (id === 'pwField') {
+    } else if (name === 'pwField') {
       this.password = value;
     }
   }
 
   handleLogin(e) {
     e.preventDefault();
-    console.log('click');
 
     const validEmail = 'admin@naver.com';
     const validPassword = 'qwer1234@';
@@ -113,31 +101,33 @@ class Login extends LitElement {
     }
   }
 
+  handleSignup() {
+    window.location.href = '/src/pages/register/';
+  }
+
   render() {
     return html`
-      <style>
-        ${reset}
-      </style>
       <div class="container">
         <h1>로그인</h1>
         <form>
-          <div>
-            <label for="idField"></label>
-            <input
+          <div class="input-container">
+            <text-component
+              name="idField"
               type="email"
-              id="idField"
               placeholder="아이디를 입력해주세요"
-              @input="${this.handleInputChange}"
-            />
-          </div>
-          <div>
-            <label for="pwField"></label>
-            <input
+              width="100%"
+              height="50px"
+              @input-change=${this.handleInputChange}
+            ></text-component>
+
+            <text-component
+              name="pwField"
               type="password"
-              id="pwField"
               placeholder="비밀번호를 입력해주세요"
-              @input="${this.handleInputChange}"
-            />
+              width="100%"
+              height="50px"
+              @input-change=${this.handleInputChange}
+            ></text-component>
           </div>
 
           <div class="find-container">
@@ -155,6 +145,7 @@ class Login extends LitElement {
             <btn-emptied-component
               width="100%"
               text="회원가입"
+              @click="${this.handleSignup}"
             ></btn-emptied-component>
           </div>
         </form>

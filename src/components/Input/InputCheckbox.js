@@ -64,10 +64,10 @@ class InputCheckbox extends LitElement {
         class="checkbox"
         name=${this.name}
         value=${this.value}
-        id=${this.name}
+        id=${this.value}
         @change=${this._handleChecked}
       />
-      <label for=${this.name}><slot></slot></label>
+      <label for=${this.value}><slot></slot></label>
     `;
   }
 }
