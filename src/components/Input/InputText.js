@@ -40,7 +40,6 @@ class InputText extends LitElement {
     width: { type: String },
     height: { type: String },
     placeholder: { type: String },
-    validation: { type: String },
   };
 
   constructor() {
@@ -50,7 +49,6 @@ class InputText extends LitElement {
     this.width = 'auto';
     this.height = '44px';
     this.placeholder = 'placeholder';
-    this.validation = '';
   }
 
   _handleChange(e) {
@@ -72,6 +70,7 @@ class InputText extends LitElement {
         input {
           width: ${this.width};
           height: ${this.height};
+          border: ${this.border};
         }
       </style>
       <input

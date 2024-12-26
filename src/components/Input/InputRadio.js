@@ -58,7 +58,7 @@ class InputRadio extends LitElement {
   render() {
     return html`
       <input
-        id=${this.name}
+        id=${this.value}
         name=${this.name}
         value=${this.value}
         type="radio"
