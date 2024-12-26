@@ -43,7 +43,6 @@ class InquiryBoard extends LitElement {
         font-weight: var(--text-bold);
         font-size: var(--font-2xl);
         line-height: var(--extra-light-line-height);
-        color: var(--black-color);
       }
 
       .caution {
@@ -51,7 +50,7 @@ class InquiryBoard extends LitElement {
         font-size: var(--font-sm);
         font-weight: var(--text-semi-bold);
         line-height: var(--light-line-height);
-        color: var(--gray-color-500);
+        color: var(--gray-color-500, #6b6b6b);
       }
 
       .review-button {
@@ -60,11 +59,11 @@ class InquiryBoard extends LitElement {
         align-items: center;
         width: 155px;
         height: 44px;
-        background: var(--primary-color);
+        background: var(--primary-color, #283198);
         border-radius: 4px;
         border: none;
         font-weight: var(--text-semi-bold);
-        color: var(--white-color);
+        color: var(--white-color, #ffffff);
         cursor: pointer;
       }
 
@@ -77,12 +76,10 @@ class InquiryBoard extends LitElement {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: var(--space-lg);
       }
 
       .total-count {
         font-size: var(--font-sm);
-        color: var(--black-color);
         font-weight: var(--text-semi-bold);
       }
 
@@ -95,12 +92,12 @@ class InquiryBoard extends LitElement {
         position: relative;
         padding: 0 var(--space-md);
         font-size: var(--font-sm);
-        color: var(--gray-color-300);
+        color: var(--gray-color-300, #a6a6a6);
         cursor: pointer;
       }
 
       .choose-standard.active {
-        color: var(--gray-color-700);
+        color: var(--gray-color-700, #404040);
         font-weight: var(--text-medium);
       }
 
@@ -112,7 +109,7 @@ class InquiryBoard extends LitElement {
         transform: translateY(-50%);
         width: 1.4px;
         height: 12px;
-        background-color: var(--gray-color-300);
+        background-color: var(--gray-color-300, #a6a6a6);
         opacity: 0.4;
       }
 
@@ -130,25 +127,25 @@ class InquiryBoard extends LitElement {
         align-items: center;
         width: 34px;
         height: 34px;
-        border: 1px solid var(--gray-color-100);
+        border: 1px solid var(--gray-color-100, #e1e1e1);
         background: none;
         padding: var(--space-sm);
         cursor: pointer;
       }
 
       .pagination button:hover {
-        background-color: var(--gray-color-50);
+        background-color: var(--gray-color-50, #f9f9f9);
       }
 
       .review-list {
         list-style: none;
         padding: 0;
-        margin: var(--space-5xl) 0;
-        border-top: 1px solid var(--gray-color-200);
+        margin: var(--space-xl) 0;
+        border-top: 1px solid var(--gray-color-200, #c4c4c4);
       }
 
       .review-item {
-        border-bottom: 1px solid var(--gray-color-200);
+        border-bottom: 1px solid var(--gray-color-200, #c4c4c4);
         padding: var(--space-md) 0;
       }
 
@@ -157,16 +154,15 @@ class InquiryBoard extends LitElement {
         align-items: center;
         text-decoration: none;
         font-size: var(--font-sm);
-        color: var(--black-color);
       }
 
       .review-item a:hover {
-        color: var(--primary-color);
+        color: var(--primary-color, #283198);
       }
 
       .notice-icon {
         display: inline-block;
-        background-color: var(--gray-color-100);
+        background-color: var(--gray-color-100, #e1e1e1);
         padding: var(--space-sm);
         border-radius: 4px;
         font-weight: var(--text-semi-bold);
@@ -219,46 +215,11 @@ class InquiryBoard extends LitElement {
         </header>
 
         <div class="product-list-container">
-          <div class="list-header">
-            <div class="total-count">총 ${this.totalItems}건</div>
-            <section class="sorting-standard" aria-label="정렬 기준">
-              <button
-                class="choose-standard ${this.activeStandard === 'recommended'
-                  ? 'active'
-                  : ''}"
-                @click=${(e) => this.handleStandardClick('recommended', e)}
-              >
-                추천순
-              </button>
-              <button
-                class="choose-standard divider ${this.activeStandard ===
-                'newest'
-                  ? 'active'
-                  : ''}"
-                @click=${(e) => this.handleStandardClick('newest', e)}
-              >
-                신상품순
-              </button>
-            </section>
-          </div>
-
           <ul class="review-list">
             <li class="review-item">
               <a>
                 <span class="notice-icon h">공지</span>
                 <span>금주의 베스트 후기 안내</span>
-              </a>
-            </li>
-            <li class="review-item">
-              <a>
-                <span class="notice-icon">공지</span>
-                <span>상품 후기 적립금 정책 안내</span>
-              </a>
-            </li>
-            <li class="review-item">
-              <a>
-                <span class="notice-icon">공지</span>
-                <span>상품 후기 적립금 정책 안내</span>
               </a>
             </li>
             <li class="review-item">
