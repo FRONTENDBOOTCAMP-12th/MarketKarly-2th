@@ -143,6 +143,11 @@ class ProductList extends LitElement {
       .pagination button:hover {
         background-color: var(--gray-color-50, #f9f9f9);
       }
+
+      .pagination button.active {
+        background-color: var(--gray-color-50, #f9f9f9);
+      }
+
       .pagination img {
         height: 8px;
       }
@@ -237,6 +242,13 @@ class ProductList extends LitElement {
   goToPage(page) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
+
+      this.updateComplete.then(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      });
     }
   }
 
@@ -261,7 +273,7 @@ class ProductList extends LitElement {
   }
 
   getPaginationNumbers() {
-    if (this.currentPage === 1 || 2) {
+    if (this.currentPage === 1) {
       return {
         prevNumber: 1,
         currentNumber: 2,
