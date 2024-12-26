@@ -3,7 +3,7 @@ import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Card';
 import { register } from 'swiper/element';
-import { getPbImage } from '../../api/getPbImage';
+import { getPbImage } from '@/api/getPbImage';
 
 register();
 
@@ -203,15 +203,26 @@ class ProductList extends LitElement {
   }
 
   async renderCardProducts() {
+    if (this.isFetching) return;
+    this.isFetching = true;
+
     try {
-      const response = await fetch(
+      const url = new URL(
         `${import.meta.env.VITE_PB_API}/collections/products/records`
       );
+      url.searchParams.set('page', '1');
+      url.searchParams.set('perPage', '1000');
+
+      const response = await fetch(url);
       const data = await response.json();
+
       this.products = data.items;
-      this.totalItems = data.items.length;
+      this.totalItems = data.totalItems;
       this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+
       this.products.sort((a, b) => this.getRealPrice(a) - this.getRealPrice(b));
+
+      this.requestUpdate();
     } catch (err) {
       console.error('에러발생: ', err);
     }
@@ -300,7 +311,7 @@ class ProductList extends LitElement {
         <h2 class="product-list-header">베스트</h2>
 
         <div class="flex-content">
-          <div class="product-category"></div>
+          <div class="product-category" aria-label="제품 카테고리"></div>
 
           <div class="product-list-container">
             <div class="list-header">
@@ -394,7 +405,7 @@ class ProductList extends LitElement {
               )}
             </div>
 
-            <div class="pagination">
+            <div class="pagination" aria-label="페이지 이동">
               <button @click="${this.goToFirst}" aria-label="첫 페이지로 이동">
                 <img src="/icon/btn-first.svg" alt="" />
               </button>
