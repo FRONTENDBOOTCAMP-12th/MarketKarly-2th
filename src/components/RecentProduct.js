@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import '@/assets/font/Pretendard.css';
 import { register } from 'swiper/element';
+import { getPbImage } from '@/api/getPbImage';
 register();
 
 class RecentElement extends LitElement {
@@ -18,7 +19,7 @@ class RecentElement extends LitElement {
         position: fixed;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         gap: 0.375rem;
         top: 50%;
@@ -34,6 +35,7 @@ class RecentElement extends LitElement {
       }
 
       swiper-container {
+        flex: 1;
         overflow: hidden;
       }
 
@@ -49,67 +51,42 @@ class RecentElement extends LitElement {
       }
     `,
   ];
+
   render() {
     return html`
-      <div class="d">
-        <section class="container" id="side-swiper">
-          <button
-            class="btn-up"
-            @click=${this.prevSlide}
-            aria-label="이전 슬라이드"
-          >
-            <img src="/icon/small-arrow-up.svg" alt="이전" />
-          </button>
+      <section class="container" id="side-swiper">
+        <button
+          class="btn-up"
+          @click=${this.prevSlide}
+          aria-label="이전 슬라이드"
+        >
+          <img src="/icon/small-arrow-up.svg" alt="이전" />
+        </button>
 
-          <article class="title">최근 본 상품</article>
+        <article class="title">최근 본 상품</article>
 
-          <swiper-container
-            id="swiper"
-            slides-per-view="2.5"
-            direction="vertical"
-            loop="false"
-            space-between="4"
-          >
-            <swiper-slide>
-              <a href="/" aria-label="product01 상품상세 페이지">
-                <img
-                  src="/image/product01.webp"
-                  alt="[풀무원] 탱탱쫄면 (4개입)"
-                />
-              </a>
-            </swiper-slide>
-            <swiper-slide>
-              <a href="/" aria-label="product02 상품상세 페이지">
-                <img
-                  src="/image/product02.webp"
-                  alt="[온더바디] 죠르디 시카 자석 선쿠션"
-                />
-              </a>
-            </swiper-slide>
-            <swiper-slide>
-              <a href="/" aria-label="product03 상품상세 페이지">
-                <img src="/image/product03.webp" alt="유기농 밀키퀸 현미 4kg" />
-              </a>
-            </swiper-slide>
-            <swiper-slide>
-              <a href="/" aria-label="product04 상품상세 페이지">
-                <img
-                  src="/image/product04.webp"
-                  alt="[프로쉬] 베이비 세탁세제"
-                />
-              </a>
-            </swiper-slide>
-          </swiper-container>
+        <swiper-container
+          id="swiper"
+          slides-per-view="2.5"
+          direction="vertical"
+          loop="false"
+          space-between="4"
+        >
+          ${this.viewedData?.map((item) => {
+            return html`<swiper-slide>
+              <img src="${item.photo}" alt="${item.productName}" />
+            </swiper-slide>`;
+          })}
+        </swiper-container>
 
-          <button
-            class="btn-down"
-            @click=${this.nextSlide}
-            aria-label="다음 슬라이드"
-          >
-            <img src="/icon/small-arrow-down.svg" alt="다음" />
-          </button>
-        </section>
-      </div>
+        <button
+          class="btn-down"
+          @click=${this.nextSlide}
+          aria-label="다음 슬라이드"
+        >
+          <img src="/icon/small-arrow-down.svg" alt="다음" />
+        </button>
+      </section>
     `;
   }
   firstUpdated() {
@@ -127,6 +104,19 @@ class RecentElement extends LitElement {
 
   nextSlide() {
     this.swiperEl.swiper.slideNext();
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this._fetchStorageData();
+  }
+
+  _fetchStorageData() {
+    const data = JSON.parse(localStorage.getItem('viewedItem'));
+
+    if (data?.length > 0) {
+      this.viewedData = data;
+    }
   }
 }
 

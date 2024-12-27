@@ -14,6 +14,10 @@ class InputText extends LitElement {
         padding: var(--space-md) var(--space-2xl);
         color: var(--content-text-color, #333);
 
+        &:focus {
+          outline: 1px solid var(--primary-color, #283198);
+        }
+
         &::placeholder {
           color: var(--gray-color-400, #898989);
         }

@@ -6,7 +6,6 @@ import '@/components/ProductFilter';
 import { register } from 'swiper/element';
 import { getPbImage } from '@/api/getPbImage';
 
-
 register();
 
 class ProductList extends LitElement {
@@ -199,11 +198,13 @@ class ProductList extends LitElement {
     this.totalItems = 0;
     this.totalPages = 1;
   }
+
   handleStandardClick(standard, event) {
     event.preventDefault();
     this.activeStandard = standard;
     this.requestUpdate();
   }
+
   connectedCallback() {
     super.connectedCallback();
     this.renderCardProducts();
@@ -325,7 +326,6 @@ class ProductList extends LitElement {
         <h2 class="product-list-header">베스트</h2>
 
         <div class="flex-content">
-
           <div class="product-category">
             <product-filter-component></product-filter-component>
           </div>
@@ -407,6 +407,8 @@ class ProductList extends LitElement {
               ${this.paginatedProducts.map(
                 (item) => html`
                   <card-component
+                    id=${item.id}
+                    collectionId=${item.collectionId}
                     photoURL="${getPbImage(item)}"
                     deliveryType="${item.deliveryType}"
                     productName="${item.productName}"
@@ -469,6 +471,7 @@ class ProductList extends LitElement {
             </div>
           </div>
         </div>
+        <recent-component></recent-component>
       </section>
     `;
   }
