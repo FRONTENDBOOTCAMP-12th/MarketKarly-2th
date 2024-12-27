@@ -320,8 +320,6 @@ class ProductDetail extends LitElement {
   }
 
   toggleBtnFavorits() {
-    const btnFavorits = this.renderRoot.querySelector('.btn-favorits');
-
     this.isToggled = !this.isToggled;
   }
 
@@ -457,6 +455,7 @@ class ProductDetail extends LitElement {
               class="btn-favorits"
               type="button"
               aria-label="찜하기 버튼"
+              aria-pressed="${this.isToggled ? 'true' : 'false'}"
               @click="${this.toggleBtnFavorits}"
             >
               <img
