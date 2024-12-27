@@ -177,10 +177,6 @@ class Card extends LitElement {
     window.location.href = '/';
   };
 
-  handleCardClick = () => {
-    window.location.href = '/';
-  };
-
   render() {
     return html/* html */ `
       <div @click="${this.handleCardClick}" class="card-component">

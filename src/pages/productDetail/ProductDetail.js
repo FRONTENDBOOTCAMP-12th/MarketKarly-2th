@@ -17,7 +17,7 @@ class ProductDetail extends LitElement {
     reset,
     a11y,
     css`
-      .product-detail {
+      .product-detail-main {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -27,7 +27,8 @@ class ProductDetail extends LitElement {
         margin: var(--space-7xl) auto;
         line-height: var(--light-line-height);
 
-        figure {
+        .product-image {
+          width: 400px;
           min-width: 400px;
 
           img {
@@ -55,13 +56,13 @@ class ProductDetail extends LitElement {
               line-height: var(--extra-light-line-height);
             }
 
-            .product-name {
+            h2 {
               font-size: var(--font-2xl);
               font-weight: var(--text-semi-bold);
               margin-bottom: var(--space-sm);
               margin-block-end: var(--space-sm);
             }
-            .product-description {
+            .product-headline {
               color: var(--gray-color-400, #898989);
               font-size: var(--font-md);
               font-weight: var(--text-regular);
@@ -132,17 +133,16 @@ class ProductDetail extends LitElement {
               border: 1px solid var(--gray-color-100, #e1e1e1);
             }
 
+            .product-option .product-name {
+              color: var(--gray-color-500, #6b6b6b);
+              font-size: var(--font-sm);
+              font-weight: var(--text-semi-bold);
+            }
             .product-option > div {
               display: flex;
               flex-direction: row;
               justify-content: space-between;
               align-items: center;
-            }
-
-            .product-option p {
-              color: var(--gray-color-500, #6b6b6b);
-              font-size: var(--font-sm);
-              font-weight: var(--text-semi-bold);
             }
 
             .product-option .product-counter {
@@ -178,8 +178,7 @@ class ProductDetail extends LitElement {
                 background-image: url(/icon/plus_disabled_false.png);
               }
             }
-
-            .product-option > div > p {
+            .product-option > div p {
               color: var(--content-text-color, #333333);
             }
           }
@@ -237,10 +236,6 @@ class ProductDetail extends LitElement {
               border: 1px solid var(--gray-color-100, #e1e1e1);
               border-radius: 4px;
             }
-            button.btn-favorits {
-            }
-            button.btn-bell {
-            }
 
             .icon {
               position: absolute;
@@ -259,8 +254,8 @@ class ProductDetail extends LitElement {
   constructor() {
     super();
 
-    this.productName = '';
-    this.price = '5700';
+    this.productName = '[풀무원] 탱탱쫄면 (4개입)';
+    this.price = '4,980';
     this.disabled = true;
     this.count = 1;
     this.totalPrice = '';
@@ -325,10 +320,10 @@ class ProductDetail extends LitElement {
 
   render() {
     return html`
-      <div class="product-detail">
-        <figure>
-          <img src="/image/product05.webp" alt="" />
-          <figcaption class="sr-only">하겐다즈 사진</figcaption>
+      <div class="product-detail-main">
+        <figure class="product-image">
+          <img src="/image/product01.webp" alt="" />
+          <figcaption class="sr-only">${this.productName} 사진</figcaption>
         </figure>
         <!-- figure -->
 
@@ -337,10 +332,8 @@ class ProductDetail extends LitElement {
             <p class="delivery-type">샛별배송</p>
 
             <div class="product-title">
-              <p class="product-name">
-                [하겐다즈] 파인즈 클래식 아이스크림 7종 (택1)
-              </p>
-              <span class="product-description">고르는 재미, 나누는 기쁨</span>
+              <h2>${this.productName}</h2>
+              <p class="product-headline">튀기지 않아 부담 없는 매콤함</p>
             </div>
 
             <p class="product-price">${this.price}<span>원</span></p>
@@ -412,7 +405,7 @@ class ProductDetail extends LitElement {
                 <th>상품 선택</th>
                 <td>
                   <div class="product-option">
-                    <p>[하겐다즈] 파인즈 클래식 아이스크림 7종 (택1)</p>
+                    <p class="product-name">${this.productName}</p>
 
                     <div>
                       <div class="product-counter">

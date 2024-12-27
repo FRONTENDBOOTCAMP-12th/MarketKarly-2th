@@ -13,6 +13,188 @@
   <body>
     <header-layout></header-layout>
     <product-detail-page></product-detail-page>
+
+    <nav class="tab-menu">
+      <ul class="tablist" role="tablist">
+        <li
+          class="tab"
+          role="tab"
+          id="tab-1"
+          aria-selected="true"
+          aria-controls="tabpanel-1"
+        >
+          <a href="/"><span class="focus">상품설명</span></a>
+        </li>
+
+        <li
+          class="tab"
+          role="tab"
+          id="tab-2"
+          aria-selected="false"
+          aria-controls="tabpanel-2"
+        >
+          <a href="/"><span class="focus">상세정보</span></a>
+        </li>
+
+        <li
+          class="tab"
+          role="tab"
+          id="tab-3"
+          aria-selected="false"
+          aria-controls="tabpanel-3"
+        >
+          <a href="/"
+            ><span class="focus"
+              >후기 <span class="review-count">(1,207)</span></span
+            ></a
+          >
+        </li>
+
+        <li
+          class="tab"
+          role="tab"
+          id="tab-4"
+          aria-selected="false"
+          aria-controls="tabpanel-4"
+        >
+          <a href="/"><span class="focus">문의</span></a>
+        </li>
+      </ul>
+    </nav>
+    <!-- tab-menu -->
+
+    <div class="tabpanel-wrapper">
+      <div
+        class="tabpanel product-description"
+        role="tabpanel"
+        aria-labelledby="tab-1"
+        id="tabpanel-1"
+      >
+        <figure>
+          <img src="/image/product01.webp" alt="" />
+          <figcaption class="sr-only">${this.productName} 사진</figcaption>
+        </figure>
+
+        <h3>
+          <span>튀기지 않아 부담 없는 매콤함</span>
+          [풀무원] 탱탱쫄면
+        </h3>
+
+        <p>
+          쫄면의 진가는 매콤새콤한 양념과 탱탱한 면발에서 찾을 수 있지요.
+          풀무원은 이 맛을 더 부담 없이 즐길 수 있도록 튀기지 않고 만든
+          탱탱쫄면을 선보입니다. 밀가루와 감자 전분을 적절히 배합해 탄력이 좋고,
+          입에 넣었을 때는 찰지게 씹히죠. 고추장을 넣어 숙성한 비빔장은
+          자연스럽고 깊은 맛을 냅니다. 간단하게 조리해 마지막 한 가닥까지 탱탱한
+          식감을 즐겨보세요. 취향에 따라 다양한 고명을 올려 드셔도 좋아요.
+        </p>
+
+        <div>
+          <p>Karly's Check Point</p>
+
+          <img
+            src="/public/image/karly_check_point.svg"
+            alt="컬리 체크 포인트 3가지 이미지"
+          />
+        </div>
+      </div>
+      <!-- product-description -->
+
+      <div
+        class="tabpanel product-detail"
+        role="tabpanel"
+        aria-labelledby="tab-2"
+        id="tabpanel-2"
+      >
+        <img
+          src="/public/image/product_detail_jjolmeon.svg"
+          alt="탱탱쫄면 상세정보 이미지"
+        />
+
+        <div>
+          <p>WHY KARLY</p>
+          <ul>
+            <li>
+              <div>
+                <p>깐깐한 상품위원회</p>
+              </div>
+              <p>
+                나와 내 가족이 먹고 쓸 상품을 고르는 마음으로 매주 상품을 직접
+                먹어보고, 경험해보고 성분, 맛 안정성 등 다각도의 기준을 통과한
+                상품만을 판매합니다.
+              </p>
+            </li>
+
+            <li>
+              <div>
+                <p>차별화된 Karly Only 상품</p>
+              </div>
+              <p>
+                전국 각지와 해외의 훌륭한 생산자가 믿고 선택하는 파트너,
+                마켓칼리. 3천여 개가 넘는 칼리 단독 브랜드, 스펙의 Karly Only
+                상품을 믿고 만나보세요.
+              </p>
+            </li>
+
+            <li>
+              <div>
+                <p>신선한 풀콜드체인 배송</p>
+              </div>
+              <p>
+                온라인 업계 최초로 산지에서 문 앞까지 상온, 냉장, 냉동 상품을
+                분리 포장 후최적의 온도를 유지하는 냉장 배송 시스템,
+                풀콜드체인으로 상품을 신선하게 전해드립니다.
+              </p>
+            </li>
+
+            <li>
+              <div>
+                <p>고객, 생산자를 위한 최선의 가격</p>
+              </div>
+              <p>
+                매주 대형 마트와 주요 온라인 마트의 가격변동 상황을 확인해
+                신선식품은 품질을타협하지 않는 선에서 최선의 가격으로,
+                가공식품은 언제나 합리적인 가격으로 정기 조정합니다.
+              </p>
+            </li>
+
+            <li>
+              <div>
+                <p>환경을 생각하는 지속 가능한 유통</p>
+              </div>
+              <p>
+                친환경 포장재부터 생산자가 상품에만집중할 수 있는 직매입
+                유통구조까지,지속 가능한 유통을 고민하며 컬리를 있게하는 모든
+                환경(생산자,커뮤니티,직원)이더 나아질 수 있도록 노력합니다.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- product-detail -->
+
+      <div
+        class="tabpanel product-review"
+        role="tabpanel"
+        aria-labelledby="tab-3"
+        id="tabpanel-3"
+      >
+        <p>상품후기</p>
+      </div>
+      <!-- product-review -->
+
+      <div
+        class="tabpanel product-inquiry"
+        role="tabpanel"
+        aria-labelledby="tab-4"
+        id="tabpanel-4"
+      >
+        <p>상품문의</p>
+      </div>
+      <!-- product-inquiry -->
+    </div>
+    <!-- tabpanel-wrapper -->
+
     <footer-layout></footer-layout>
   </body>
 </html>
