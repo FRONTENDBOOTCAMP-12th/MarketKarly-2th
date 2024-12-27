@@ -185,7 +185,7 @@ class Card extends LitElement {
     return html/* html */ `
       <div @click="${this.handleCardClick}" class="card-component">
         <figure>
-          <a href="/">
+          <a href="/src/pages/productDetail/index.html">
             <img src="${this.photoURL}" alt="" />
           </a>
           <figcaption class="sr-only">${this.productName} 사진</figcaption>

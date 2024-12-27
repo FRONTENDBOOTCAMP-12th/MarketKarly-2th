@@ -46,7 +46,6 @@ class Main extends LitElement {
       this.data1 = response.slice(0, 15);
 
       this.data2 = response.slice(15, 30);
-      console.log(this.data2);
     } catch (err) {
       console.error('에러발생: ', err);
     }
