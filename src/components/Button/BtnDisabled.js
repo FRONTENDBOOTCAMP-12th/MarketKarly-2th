@@ -25,6 +25,7 @@ class BtnDisabled extends LitElement {
         margin: 0;
         border: none;
         background: none;
+        pointer-events: none;
 
         background-color: var(--gray-color-100, #e1e1e1);
         color: var(--white-color, #ffffff);

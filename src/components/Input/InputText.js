@@ -36,19 +36,23 @@ class InputText extends LitElement {
 
   static properties = {
     name: { type: String },
+    value: { type: String },
     type: { type: String },
     width: { type: String },
     height: { type: String },
     placeholder: { type: String },
+    disabled: { type: Boolean },
   };
 
   constructor() {
     super();
     this.name = 'name';
+    this.value = '';
     this.type = 'text';
     this.width = 'auto';
     this.height = '44px';
     this.placeholder = 'placeholder';
+    this.disabled = false;
   }
 
   _handleChange(e) {
@@ -78,6 +82,8 @@ class InputText extends LitElement {
         @blur=${this.handleError}
         type=${this.type}
         name=${this.name}
+        value=${this.value}
+        ?disabled=${this.disabled}
         placeholder=${this.placeholder}
       />
     `;
