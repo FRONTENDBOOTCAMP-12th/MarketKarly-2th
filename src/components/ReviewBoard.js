@@ -62,6 +62,51 @@ class ReviewBoard extends LitElement {
         margin-left: var(--space-2xl);
       }
 
+      .product-list-container {
+        width: 1050px;
+        margin: 0 auto;
+      }
+
+      .list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .total-count {
+        font-size: var(--font-md);
+        font-weight: var(--text-semi-bold);
+      }
+
+      .sorting-standard {
+        display: flex;
+        align-items: center;
+      }
+
+      .choose-standard {
+        position: relative;
+        padding: 0 var(--space-md) 0 var(--space-md);
+        font-size: var(--font-md);
+        color: var(--gray-color-300, #a6a6a6);
+      }
+
+      .choose-standard.active {
+        color: var(--gray-color-700, #404040);
+        font-weight: var(--text-medium);
+      }
+
+      .divider::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.4px;
+        height: 12px;
+        background-color: var(--gray-color-300, #a6a6a6);
+        opacity: 0.4;
+      }
+
       .review-list {
         border-top: 2px solid var(--gray-color-900, #151515);
         padding: 0;
@@ -76,7 +121,7 @@ class ReviewBoard extends LitElement {
         padding: 0;
         width: 1050px;
         height: 58px;
-        border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
+        border-bottom: 1px solid var(--gray-color-100);
       }
 
       .notice-item a {
@@ -94,9 +139,9 @@ class ReviewBoard extends LitElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: var(--gray-color-100, #e1e1e1);
+        background-color: var(--gray-color-50);
         border-radius: 1px;
-        width: 37px;
+        width: 48px;
         height: 18px;
         padding: 0 8px;
         font-family: 'Pretendard';
@@ -123,11 +168,11 @@ class ReviewBoard extends LitElement {
         padding: 20px;
         gap: 10px;
         width: 1050px;
-        height: 154px;
         border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
       }
 
       .badge-group {
+        width: 200px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -137,7 +182,7 @@ class ReviewBoard extends LitElement {
       .badge.primary {
         display: flex;
         align-items: center;
-        padding: 0px 8px;
+        justify-content: center;
         width: 48px;
         height: 18px;
         background: var(--secondary-color, #bd76ff);
@@ -151,8 +196,8 @@ class ReviewBoard extends LitElement {
       .badge.secondary {
         display: flex;
         align-items: center;
-        padding: 0px 8px;
-        width: 40px;
+        justify-content: center;
+        width: 48px;
         height: 18px;
         background: #ffffff;
         border-radius: 1px;
@@ -168,7 +213,6 @@ class ReviewBoard extends LitElement {
         font-weight: 700;
         line-height: 150%;
         text-align: left;
-        margin-right: 72px;
       }
 
       .review-body {
@@ -176,13 +220,9 @@ class ReviewBoard extends LitElement {
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
-        width: 151px;
-        height: 114px;
       }
 
       .product-title {
-        width: 125px;
-        height: 18px;
         font-size: 12px;
         font-weight: 600;
         line-height: 150%;
@@ -190,10 +230,9 @@ class ReviewBoard extends LitElement {
       }
 
       .review-text {
-        width: 151px;
-        height: 38px;
+        width: 700px;
+
         font-size: 12px;
-        font-weight: 500;
         line-height: 160%;
         color: #000000;
       }
@@ -237,9 +276,15 @@ class ReviewBoard extends LitElement {
     `,
   ];
 
+  static properties = {
+    activeStandard: { type: String },
+  };
+
   constructor() {
     super();
     this.showModal = false;
+    this.activeStandard = 'recommended';
+    this.totalItems = 3;
   }
 
   handleSubmit() {
@@ -250,6 +295,15 @@ class ReviewBoard extends LitElement {
   handleModalClose() {
     this.showModal = false;
     this.requestUpdate();
+  }
+  handleStandardClick(standard, event) {
+    event.preventDefault();
+    this.activeStandard = standard;
+    this.requestUpdate();
+  }
+
+  firstUpdated() {
+    this.initAccordion();
   }
 
   render() {
@@ -280,6 +334,30 @@ class ReviewBoard extends LitElement {
           ></btn-filled-component>
         </header>
 
+        <div class="product-list-container">
+        <div class="list-header">
+          <div class="total-count">총 ${this.totalItems}건</div>
+          <section class="sorting-standard" aria-label="정렬 기준">
+            <button
+              class="choose-standard ${
+                this.activeStandard === 'recommended' ? 'active' : ''
+              }"
+              @click=${(e) => this.handleStandardClick('recommended', e)}
+            >
+              추천순
+            </button>
+            <button
+              class="choose-standard divider ${
+                this.activeStandard === 'newest' ? 'active' : ''
+              }"
+              @click=${(e) => this.handleStandardClick('newest', e)}
+            >
+              신상품순
+            </button>
+          </section>
+        </div>
+
+
         <ul class="review-list">
           <li class="notice-item">
             <a href="#">
@@ -296,23 +374,39 @@ class ReviewBoard extends LitElement {
           <li class="review-item">
             <div class="badge-group">
               <div class="badge primary">베스트</div>
-              <div class="badge secondary">블루</div>
+              <div class="badge secondary">멤버스</div>
+              <p class="reviewer-name">최*윤</p>
             </div>
-            <p class="reviewer-name">최*윤</p>
+
             <div class="review-body">
               <p class="product-title">[풀무원] 탱탱쫄면 (4개입)</p>
               <p class="review-text">
-                너무 맛있어여~ 면이 쫄깃하고 양념도 짱맛나요!!
-              </p>
+              쌀쌀한 날씨에는 뜨끈한 국물 요리가 정말 필요하지요. 그래서 아이들이 좋아하는 [풀무원] 탱탱쫄면 (4개입)을 주문해 보았습니다. 예상보다 많은 양념이 들어 있어 상당히 놀랐습니다. 특히 쫄깃한 면발이 정말 맛있어서 더 만족스러웠습니다. 캠핑 등 외출 시 간편하게 즐기기에도 아주 좋은 메뉴로 보입니다. 또한, 반찬이 없을 때 간단하게 꺼내서 먹을 수 있어 매우 유용합니다. 냉동실에 꼭 쟁여두어야 할 아이템으로 추천할 만합니다.
+              <br><br>
+              파송송 썰어 넣거나, 당면 사리를 추가해도 매우 좋습니다.
+              <br><br>
+              <strong>맛 ★★★★★</strong>
+              <br>
+              [풀무원] 탱탱쫄면은 언제나 맛있죠. 면발이 쫄깃하고 양념도 짱맛이라 정말 맛있습니다.
+              <br><br>
+              <strong>양 ★★★★★</strong>
+              <br>
+              어른 2명, 아이 2명이 함께 먹기에 양이 충분했습니다.
+              <br><br>
+              <strong>포장 ★★★★☆</strong>
+              <br>
+              종이 포장과 플라스틱 포장의 이중 포장이어서 별 하나를 뺐지만, 사각 플라스틱 케이스에 담겨 있어 개봉 후 보관하기에 매우 편리했습니다.
+            </p>
+            
               <p class="review-date">2022.11.10</p>
             </div>
           </li>
           <li class="review-item">
             <div class="badge-group">
               <div class="badge primary">베스트</div>
-              <div class="badge secondary">블루</div>
+              <p class="reviewer-name">이*현</p>
             </div>
-            <p class="reviewer-name">이*현</p>
+
             <div class="review-body">
               <p class="product-title">[풀무원] 탱탱쫄면 (4개입)</p>
               <p class="review-text">
@@ -323,10 +417,10 @@ class ReviewBoard extends LitElement {
           </li>
           <li class="review-item">
             <div class="badge-group">
-              <div class="badge primary">베스트</div>
-              <div class="badge secondary">블루</div>
+              <div class="badge secondary">멤버스</div>
+              <p class="reviewer-name">도*연</p>
             </div>
-            <p class="reviewer-name">도*연</p>
+
             <div class="review-body">
               <p class="product-title">[풀무원] 탱탱쫄면 (4개입)</p>
               <p class="review-text">너무 맛있어여~ 쫄깃쫄깃 탱탱쫄면!!</p>
@@ -344,11 +438,13 @@ class ReviewBoard extends LitElement {
           </button>
         </nav>
 
-        ${this.showModal
-          ? html`<review-modal-component
-              @close=${this.handleModalClose}
-            ></review-modal-component>`
-          : ''}
+        ${
+          this.showModal
+            ? html`<review-modal-component
+                @close=${this.handleModalClose}
+              ></review-modal-component>`
+            : ''
+        }
       </section>
     `;
   }
