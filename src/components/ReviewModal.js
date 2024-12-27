@@ -209,6 +209,7 @@ class ReviewModal extends LitElement {
   handleShortClose() {
     const modal = this.shadowRoot.querySelector('.popup-bg');
     modal.classList.add('close');
+    document.body.style.overflow = '';
   }
 
   handleTitleInput(event) {
@@ -267,7 +268,7 @@ class ReviewModal extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = '';
   }
 
   render() {
