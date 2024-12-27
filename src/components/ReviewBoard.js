@@ -31,6 +31,11 @@ class ReviewBoard extends LitElement {
         margin: 0 auto var(--space-5xl);
       }
 
+      .review-info {
+        display: flex;
+        flex-direction: column;
+      }
+
       .review-title {
         font-weight: var(--text-bold);
         font-size: var(--font-2xl);
@@ -44,7 +49,7 @@ class ReviewBoard extends LitElement {
         margin-top: var(--space-lg);
       }
 
-      .caution {
+      .review-caution {
         margin-top: var(--space-sm);
         font-size: var(--font-sm);
         font-weight: var(--text-semi-bold);
@@ -52,7 +57,7 @@ class ReviewBoard extends LitElement {
         color: var(--gray-color-500, #6b6b6b);
       }
 
-      .caution li {
+      .review-caution li {
         list-style: disc;
         margin-left: var(--space-2xl);
       }
@@ -65,7 +70,7 @@ class ReviewBoard extends LitElement {
         list-style: none;
       }
 
-      .review-item {
+      .notice-item {
         display: flex;
         align-items: center;
         padding: 0;
@@ -74,7 +79,7 @@ class ReviewBoard extends LitElement {
         border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
       }
 
-      .review-item a {
+      .notice-item a {
         display: flex;
         align-items: center;
         text-decoration: none;
@@ -101,7 +106,7 @@ class ReviewBoard extends LitElement {
         color: var(--gray-color-900, #333333);
       }
 
-      .review-item span:last-child {
+      .notice-item span:last-child {
         font-family: 'Pretendard';
         font-weight: 600;
         font-size: 16px;
@@ -110,6 +115,98 @@ class ReviewBoard extends LitElement {
         height: 24px;
         flex-grow: 1;
       }
+
+      .review-item {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 10px;
+        width: 1050px;
+        height: 154px;
+        border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
+      }
+
+      .badge-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .badge.primary {
+        display: flex;
+        align-items: center;
+        padding: 0px 8px;
+        width: 48px;
+        height: 18px;
+        background: var(--secondary-color, #bd76ff);
+        border-radius: 1px;
+        font-size: var(--font-sm);
+        font-weight: 600;
+        line-height: 150%;
+        color: #ffffff;
+      }
+
+      .badge.secondary {
+        display: flex;
+        align-items: center;
+        padding: 0px 8px;
+        width: 40px;
+        height: 18px;
+        background: #ffffff;
+        border-radius: 1px;
+        font-size: var(--font-sm);
+        font-weight: 600;
+        line-height: 150%;
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+      }
+
+      .reviewer-name {
+        font-size: var(--font-sm);
+        font-weight: 700;
+        line-height: 150%;
+        text-align: left;
+        margin-right: 72px;
+      }
+
+      .review-body {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        width: 151px;
+        height: 114px;
+      }
+
+      .product-title {
+        width: 125px;
+        height: 18px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 150%;
+        color: var(--gray-color-400, #898989);
+      }
+
+      .review-text {
+        width: 151px;
+        height: 38px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 160%;
+        color: #000000;
+      }
+
+      .review-date {
+        width: 58px;
+        height: 18px;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 150%;
+        color: var(--gray-color-300, #898989);
+      }
+
       .pagination {
         display: flex;
         justify-content: center;
@@ -159,10 +256,10 @@ class ReviewBoard extends LitElement {
     return html`
       <section class="container">
         <header class="review-header">
-          <div class="review-content">
+          <section class="review-info">
             <h2 class="review-title">상품후기</h2>
             <p class="review-benefit">글후기 50원 적립금 혜택이 있어요.</p>
-            <ul class="caution">
+            <ul class="review-caution">
               <li>
                 퍼플, 더퍼플은 2배 적립 (100원) / 주간 베스트 후기로 선정 시
                 5,000원 추가 적립
@@ -173,40 +270,80 @@ class ReviewBoard extends LitElement {
                 1~2일 소요)
               </li>
             </ul>
-          </div>
+          </section>
           <btn-filled-component
+            class="btn-ask"
             width="155px"
             height="44px"
-            class="btn-ask"
-            @click=${this.handleSubmit}
             text="후기 작성"
+            @click=${this.handleSubmit}
           ></btn-filled-component>
         </header>
+
         <ul class="review-list">
-          <li class="review-item">
-            <a>
+          <li class="notice-item">
+            <a href="#">
               <span class="notice-icon">공지</span>
               <span>금주의 베스트 후기 안내</span>
             </a>
           </li>
-          <li class="review-item">
-            <a>
+          <li class="notice-item">
+            <a href="#">
               <span class="notice-icon">공지</span>
               <span>상품 후기 적립금 정책 안내</span>
             </a>
           </li>
+          <li class="review-item">
+            <div class="badge-group">
+              <div class="badge primary">베스트</div>
+              <div class="badge secondary">블루</div>
+            </div>
+            <p class="reviewer-name">최*윤</p>
+            <div class="review-body">
+              <p class="product-title">[풀무원] 탱탱쫄면 (4개입)</p>
+              <p class="review-text">
+                너무 맛있어여~ 면이 쫄깃하고 양념도 짱맛나요!!
+              </p>
+              <p class="review-date">2022.11.10</p>
+            </div>
+          </li>
+          <li class="review-item">
+            <div class="badge-group">
+              <div class="badge primary">베스트</div>
+              <div class="badge secondary">블루</div>
+            </div>
+            <p class="reviewer-name">이*현</p>
+            <div class="review-body">
+              <p class="product-title">[풀무원] 탱탱쫄면 (4개입)</p>
+              <p class="review-text">
+                또 주문할것 같습니다. 너무 맛있어요 내스타일이야~!
+              </p>
+              <p class="review-date">2022.11.10</p>
+            </div>
+          </li>
+          <li class="review-item">
+            <div class="badge-group">
+              <div class="badge primary">베스트</div>
+              <div class="badge secondary">블루</div>
+            </div>
+            <p class="reviewer-name">도*연</p>
+            <div class="review-body">
+              <p class="product-title">[풀무원] 탱탱쫄면 (4개입)</p>
+              <p class="review-text">너무 맛있어여~ 쫄깃쫄깃 탱탱쫄면!!</p>
+              <p class="review-date">2022.11.10</p>
+            </div>
+          </li>
         </ul>
 
-        <div class="product-list-container">
-          <div class="pagination" aria-label="페이지 이동">
-            <button class="btn-prev" aria-label="이전 페이지">
-              <img src="/icon/review-left-arrow.svg" alt="" />
-            </button>
-            <button aria-label="다음 페이지">
-              <img src="/icon/review-right-arrow.svg" alt="" />
-            </button>
-          </div>
-        </div>
+        <nav class="pagination" aria-label="페이지 이동">
+          <button class="btn-prev" aria-label="이전 페이지">
+            <img src="/icon/review-left-arrow.svg" alt="이전 페이지로 이동" />
+          </button>
+          <button class="btn-next" aria-label="다음 페이지">
+            <img src="/icon/review-right-arrow.svg" alt="다음 페이지로 이동" />
+          </button>
+        </nav>
+
         ${this.showModal
           ? html`<review-modal-component
               @close=${this.handleModalClose}
