@@ -5,6 +5,7 @@ import '@/components/Button/BtnDisabled';
 import '@/components/Button/BtnEmptied';
 import '@/components/Button/BtnFilled';
 import '@/components/Input/InputCheckbox';
+import '@/components/Input/InputText';
 
 class InquiryModal extends LitElement {
   static styles = [
@@ -92,22 +93,13 @@ class InquiryModal extends LitElement {
         font-size: 1.125rem;
       }
 
-      .title-input {
-        width: 629px;
-        height: 44px;
-        line-height: var(--regular-line-height);
-        border: 1px solid var(--gray-color-300, #a6a6a6);
-        border-radius: 4px;
-        padding: 0 var(--space-xl);
-      }
-
       .content-input {
         background-color: var(--white-color, #ffffff);
         width: 629px;
         height: 198px;
         border: 1px solid var(--gray-color-300, #a6a6a6);
         border-radius: 4px;
-        padding: var(--space-md) var(--space-xl);
+        padding: var(--space-md) var(--space-2xl);
         line-height: var(--regular-line-height);
         display: flex;
         flex-direction: column;
@@ -305,14 +297,14 @@ class InquiryModal extends LitElement {
             <div class="title-section">
               <label for="review-title-input" class="section-label">제목</label>
               <div class="title-input-container">
-                <input
-                  aria-describedby="reviewTitleText"
-                  type="text"
+                <text-component
+                  width="629px"
+                  height="44px"
                   class="title-input"
                   placeholder="제목을 입력해주세요."
                   @input=${this.handleTitleInput}
                   tabindex="0"
-                />
+                ></text-component>
               </div>
             </div>
 
@@ -430,6 +422,8 @@ class InquiryModal extends LitElement {
               borderColor="var(--gray-color-400, #898989)"
               color="var(--gray-color-700, 404040;)"
               @click=${this.handleShortClose}
+              id="cancel"
+              type="reset"
             ></btn-emptied-component>
             ${this.isSubmitEnabled
               ? html`
@@ -439,6 +433,7 @@ class InquiryModal extends LitElement {
                     backgroundColor="var(--primary-color, #283198)"
                     color="var(--white-color, #ffffff)"
                     @click=${this.handleSubmit}
+                    type="submit"
                   ></btn-filled-component>
                 `
               : html`
