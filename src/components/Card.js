@@ -168,9 +168,12 @@ class Card extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     // 로컬스토리지에 저장된 item 가져오기
+    const now = new Date().getTime();
     const viewedItem = localStorage.getItem(this.viewedItemKey);
     if (viewedItem) {
       this.viewedItem = JSON.parse(viewedItem);
+      // 24시간 이후에 로컬 스토리지에서 제거
+      this.viewedItem = this.viewedItem.filter((item) => item.expTime > now);
     }
   }
 
@@ -203,6 +206,7 @@ class Card extends LitElement {
       collectionId: this.collectionId,
       photo: this.photoURL,
       productName: this.productName,
+      expTime: new Date().getTime() + 1000 * 60 * 60 * 24,
     };
 
     // 같은 id 값을 갖는 아이템 제거
