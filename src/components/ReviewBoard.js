@@ -28,7 +28,7 @@ class ReviewBoard extends LitElement {
         justify-content: space-between;
         align-items: flex-start;
         width: 1050px;
-        margin: 0 auto var(--space-5xl);
+        margin: 0 0 var(--space-5xl);
       }
 
       .review-info {
@@ -64,7 +64,6 @@ class ReviewBoard extends LitElement {
 
       .product-list-container {
         width: 1050px;
-        margin: 0 auto;
       }
 
       .list-header {
@@ -85,9 +84,14 @@ class ReviewBoard extends LitElement {
 
       .choose-standard {
         position: relative;
-        padding: 0 var(--space-md) 0 var(--space-md);
+        padding-left: var(--space-md);
         font-size: var(--font-md);
         color: var(--gray-color-300, #a6a6a6);
+        padding-right: var(--space-lg);
+      }
+
+      .newest-standard {
+        padding-right: 0;
       }
 
       .choose-standard.active {
@@ -95,10 +99,10 @@ class ReviewBoard extends LitElement {
         font-weight: var(--text-medium);
       }
 
-      .divider::before {
+      .divider::after {
         content: '';
         position: absolute;
-        left: 0;
+        right: 0;
         top: 50%;
         transform: translateY(-50%);
         width: 1.4px;
@@ -121,7 +125,7 @@ class ReviewBoard extends LitElement {
         padding: 0;
         width: 1050px;
         height: 58px;
-        border-bottom: 1px solid var(--gray-color-100);
+        border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
       }
 
       .notice-item a {
@@ -131,42 +135,39 @@ class ReviewBoard extends LitElement {
         color: var(--gray-color-900, #333333);
         width: 100%;
         height: 100%;
-        padding: 4px 20px;
-        gap: 20px;
+        padding: var(--space-sm) var(--space-xl);
+        gap: var(--space-2xl);
       }
 
       .notice-icon {
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: var(--gray-color-50);
+        background-color: var(--gray-color-50, #f9f9f9);
         border-radius: 1px;
         width: 48px;
         height: 18px;
-        padding: 0 8px;
-        font-family: 'Pretendard';
-        font-weight: 600;
-        font-size: 12px;
-        line-height: 150%;
+        padding: 0 var(--space-sm);
+        font-weight: var(--text-semi-bold);
+        font-size: var(--font-sm);
+        line-height: var(--regular-line-height);
         color: var(--gray-color-900, #333333);
       }
 
       .notice-item span:last-child {
-        font-family: 'Pretendard';
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 150%;
+        font-weight: var(--text-semi-bold);
+        font-size: var(--font-md);
+        line-height: var(--regular-line-height);
         color: var(--gray-color-900, #333333);
         height: 24px;
-        flex-grow: 1;
       }
 
       .review-item {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        padding: 20px;
-        gap: 10px;
+        padding: var(--space-3xl);
+        gap: var(--space-xl);
         width: 1050px;
         border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
       }
@@ -176,7 +177,7 @@ class ReviewBoard extends LitElement {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 10px;
+        gap: var(--space-md);
       }
 
       .badge.primary {
@@ -185,12 +186,11 @@ class ReviewBoard extends LitElement {
         justify-content: center;
         width: 48px;
         height: 18px;
-        background: var(--secondary-color, #bd76ff);
+        background: var(--secondary-color, #324fff);
         border-radius: 1px;
         font-size: var(--font-sm);
-        font-weight: 600;
-        line-height: 150%;
-        color: #ffffff;
+        font-weight: var(--text-semi-bold);
+        color: var(--white-color, #ffffff);
       }
 
       .badge.secondary {
@@ -199,19 +199,17 @@ class ReviewBoard extends LitElement {
         justify-content: center;
         width: 48px;
         height: 18px;
-        background: #ffffff;
+        background: var(--white-color, #ffffff);
         border-radius: 1px;
         font-size: var(--font-sm);
-        font-weight: 600;
-        line-height: 150%;
-        color: var(--primary-color);
-        border: 1px solid var(--primary-color);
+        font-weight: var(--text-semi-bold);
+        color: var(--primary-color, #283198);
+        border: 1px solid var(--primary-color, #283198);
       }
 
       .reviewer-name {
         font-size: var(--font-sm);
-        font-weight: 700;
-        line-height: 150%;
+        font-weight: var(--text-bold);
         text-align: left;
       }
 
@@ -219,30 +217,28 @@ class ReviewBoard extends LitElement {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 20px;
+        gap: var(--space-3xl);
       }
 
       .product-title {
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 150%;
+        font-size: var(--font-sm);
+        font-weight: var(--text-semi-bold);
+        line-height: var(--regular-line-height);
         color: var(--gray-color-400, #898989);
       }
 
       .review-text {
         width: 700px;
-
-        font-size: 12px;
-        line-height: 160%;
-        color: #000000;
+        font-size: var(--font-sm);
+        line-height: var(--regular-line-height);
       }
 
       .review-date {
         width: 58px;
         height: 18px;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 150%;
+        font-size: var(--font-sm);
+        font-weight: var(--text-semi-bold);
+        line-height: var(--regular-line-height);
         color: var(--gray-color-300, #898989);
       }
 
@@ -302,10 +298,6 @@ class ReviewBoard extends LitElement {
     this.requestUpdate();
   }
 
-  firstUpdated() {
-    this.initAccordion();
-  }
-
   render() {
     return html`
       <section class="container">
@@ -337,9 +329,10 @@ class ReviewBoard extends LitElement {
         <div class="product-list-container">
         <div class="list-header">
           <div class="total-count">총 ${this.totalItems}건</div>
-          <section class="sorting-standard" aria-label="정렬 기준">
+          <section role="group" class="sorting-standard" aria-label="정렬 기준">
             <button
-              class="choose-standard ${
+              aria-pressed="${this.activeStandard === 'recommended'}"
+              class="choose-standard divider ${
                 this.activeStandard === 'recommended' ? 'active' : ''
               }"
               @click=${(e) => this.handleStandardClick('recommended', e)}
@@ -347,7 +340,7 @@ class ReviewBoard extends LitElement {
               추천순
             </button>
             <button
-              class="choose-standard divider ${
+              class="choose-standard  newest-standard ${
                 this.activeStandard === 'newest' ? 'active' : ''
               }"
               @click=${(e) => this.handleStandardClick('newest', e)}
@@ -398,7 +391,7 @@ class ReviewBoard extends LitElement {
               종이 포장과 플라스틱 포장의 이중 포장이어서 별 하나를 뺐지만, 사각 플라스틱 케이스에 담겨 있어 개봉 후 보관하기에 매우 편리했습니다.
             </p>
             
-              <p class="review-date">2022.11.10</p>
+              <time datetime="2022-11-10" class="review-date">2024.11.10</time>
             </div>
           </li>
           <li class="review-item">
@@ -412,7 +405,7 @@ class ReviewBoard extends LitElement {
               <p class="review-text">
                 또 주문할것 같습니다. 너무 맛있어요 내스타일이야~!
               </p>
-              <p class="review-date">2022.11.10</p>
+              <time datetime="2022-11-10" class="review-date">2022.11.10</time>
             </div>
           </li>
           <li class="review-item">
@@ -424,18 +417,19 @@ class ReviewBoard extends LitElement {
             <div class="review-body">
               <p class="product-title">[풀무원] 탱탱쫄면 (4개입)</p>
               <p class="review-text">너무 맛있어여~ 쫄깃쫄깃 탱탱쫄면!!</p>
-              <p class="review-date">2022.11.10</p>
+              <time datetime="2022-11-10" class="review-date">2020.11.10</time>
             </div>
           </li>
         </ul>
 
         <nav class="pagination" aria-label="페이지 이동">
-          <button class="btn-prev" aria-label="이전 페이지">
-            <img src="/icon/review-left-arrow.svg" alt="이전 페이지로 이동" />
-          </button>
-          <button class="btn-next" aria-label="다음 페이지">
-            <img src="/icon/review-right-arrow.svg" alt="다음 페이지로 이동" />
-          </button>
+        <button class="btn-prev" aria-label="이전 페이지">
+          <img src="/icon/review-left-arrow.svg" alt="이전 페이지로 이동" />
+        </button>
+        <button class="btn-next" aria-label="다음 페이지">
+          <img src="/icon/review-right-arrow.svg" alt="다음 페이지로 이동" />
+        </button>
+      
         </nav>
 
         ${
