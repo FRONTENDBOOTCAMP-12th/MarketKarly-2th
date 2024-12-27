@@ -83,12 +83,12 @@ class InquiryBoard extends LitElement {
         width: 1050px;
         padding: 0;
         box-sizing: border-box;
+        border-bottom: 1px solid #e1e1e1;
 
         tr {
           flex-direction: row;
           align-items: center;
           height: 40px;
-          border-bottom: 1px solid #e1e1e1;
         }
 
         td {
@@ -102,16 +102,37 @@ class InquiryBoard extends LitElement {
           font-weight: var(--text-semi-bold);
         }
 
-        .writer-column,
-        .date-column,
-        .status-column {
-          text-align: center;
-          vertical-align: middle;
-        }
-
         .title-column {
           font-weight: var(--text-semi-bold);
         }
+      }
+      .row {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid #e1e1e1;
+      }
+      .row-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0px 10px 20px;
+
+        cursor: pointer;
+      }
+      .row-body {
+        display: none;
+        padding: 20px;
+        background: #f9f9f9;
+      }
+      .row-header[data-title]:not([data-title='비밀글']) + .row-body {
+        display: block;
+      }
+
+      .writer-column,
+      .date-column,
+      .status-column {
+        text-align: center;
+        vertical-align: middle;
       }
 
       .pagination {
@@ -148,10 +169,54 @@ class InquiryBoard extends LitElement {
       }
     `,
   ];
-
+  static properties = {
+    inquiries: { type: Array },
+    expandedRows: { type: Object },
+  };
   constructor() {
     super();
     this.showModal = false;
+    this.inquiries = [
+      {
+        id: 1,
+        title: '판매(일시)중단 제품 안내 (22.11.10 업데이트)',
+        writer: '컬리리',
+        date: '2017.02.23',
+        status: '-',
+        content:
+          '안녕하세요. 칼리입니다. 믿고 찾아주신 상품에 불편을 드려 정말 죄송합니다.',
+      },
+      {
+        id: 2,
+        title: '팩이 터져서 왔어요',
+        writer: '김철수',
+        date: '2024.12.26',
+        status: '미답변',
+        content:
+          '스티로폼 박스도 손상되어 있어 포장이 터져 엉망이네요. 환불 요청합니다.',
+      },
+      {
+        id: 3,
+        title: '비밀글',
+        writer: '김철수',
+        date: '2024.12.26',
+        status: '답변완료',
+        content: '배송 관련 문의입니다. 스티로폼 박스가 손상되었습니다.',
+      },
+    ];
+    this.expandedRows = {};
+  }
+
+  toggleRow(id) {
+    const inquiry = this.inquiries.find((inquiry) => inquiry.id === id);
+    if (inquiry.title === '비밀글') return;
+
+    this.expandedRows = {
+      ...this.expandedRows,
+      [id]: !this.expandedRows[id],
+    };
+
+    this.requestUpdate();
   }
 
   handleSubmit() {
@@ -199,23 +264,34 @@ class InquiryBoard extends LitElement {
               <th class="status-column">답변상태</th>
             </tr>
           </thead>
-          <tbody class="board-body">
-            <tr>
-              <td class="title-column">
-                판매(일시)중단 제품 안내 (22.11.10 업데이트)
-              </td>
-              <td class="writer-column">컬리</td>
-              <td class="date-column">2017.12.24</td>
-              <td class="status-column" data-status="미답변">-</td>
-            </tr>
-            <tr>
-              <td class="title-column">팩이 터져서 왔어요</td>
-              <td class="writer-column">김철수</td>
-              <td class="date-column">2024.12.26</td>
-              <td class="status-column" data-status="답변완료">답변완료</td>
-            </tr>
-          </tbody>
         </table>
+        <div class="board-body">
+          ${this.inquiries.map(
+            (inquiry) => html`
+              <div class="row">
+                <div
+                  class="row-header"
+                  @click=${() => this.toggleRow(inquiry.id)}
+                >
+                  <div class="title-column">${inquiry.title}</div>
+                  <div class="writer-column">${inquiry.writer}</div>
+                  <div class="date-column">${inquiry.date}</div>
+                  <div class="status-column" data-status="${inquiry.status}">
+                    ${inquiry.status}
+                  </div>
+                </div>
+                <div
+                  class="row-body"
+                  style=${this.expandedRows[inquiry.id]
+                    ? 'display: block;'
+                    : 'display: none;'}
+                >
+                  ${inquiry.content}
+                </div>
+              </div>
+            `
+          )}
+        </div>
 
         <div class="product-list-container">
           <div class="pagination" aria-label="페이지 이동">
