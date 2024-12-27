@@ -41,8 +41,8 @@ class ReviewModal extends LitElement {
       }
 
       .review-close-btn:hover {
-        filter: invert(33%) sepia(98%) saturate(1497%) hue-rotate(222deg)
-          brightness(87%) contrast(91%);
+        filter: invert(26%) sepia(82%) saturate(3000%) hue-rotate(190deg)
+          brightness(95%) contrast(30%);
       }
 
       .review-title {
