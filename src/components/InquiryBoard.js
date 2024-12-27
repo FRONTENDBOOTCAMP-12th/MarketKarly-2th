@@ -47,6 +47,73 @@ class InquiryBoard extends LitElement {
         color: var(--gray-color-500, #6b6b6b);
       }
 
+      .caution li {
+        list-style: disc;
+        margin-left: var(--space-2xl);
+      }
+      .board-header {
+        width: 1050px;
+        border-collapse: collapse;
+        border-top: 2px solid var(--gray-color-900);
+      }
+
+      th {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 150%;
+        color: #000000;
+        text-align: center;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--gray-color-300);
+      }
+
+      .title-column {
+        width: 750px;
+      }
+
+      .writer-column,
+      .date-column,
+      .status-column {
+        width: 100px;
+      }
+
+      .board-body {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 1050px;
+        padding: 0;
+        box-sizing: border-box;
+
+        tr {
+          flex-direction: row;
+          align-items: center;
+          height: 40px;
+          border-bottom: 1px solid #e1e1e1;
+        }
+
+        td {
+          align-items: center;
+          padding: 4px 20px;
+          font-weight: 400;
+        }
+
+        .status-column[data-status='답변완료'] {
+          color: var(--primary-color, #283198);
+          font-weight: var(--text-semi-bold);
+        }
+
+        .writer-column,
+        .date-column,
+        .status-column {
+          text-align: center;
+          vertical-align: middle;
+        }
+
+        .title-column {
+          font-weight: var(--text-semi-bold);
+        }
+      }
+
       .pagination {
         display: flex;
         justify-content: center;
@@ -123,6 +190,32 @@ class InquiryBoard extends LitElement {
           ></btn-filled-component>
         </header>
         <div class="review-table"></div>
+        <table class="board-header">
+          <thead>
+            <tr>
+              <th class="title-column">제목</th>
+              <th class="writer-column">작성자</th>
+              <th class="date-column">작성일</th>
+              <th class="status-column">답변상태</th>
+            </tr>
+          </thead>
+          <tbody class="board-body">
+            <tr>
+              <td class="title-column">
+                판매(일시)중단 제품 안내 (22.11.10 업데이트)
+              </td>
+              <td class="writer-column">컬리</td>
+              <td class="date-column">2017.12.24</td>
+              <td class="status-column" data-status="미답변">-</td>
+            </tr>
+            <tr>
+              <td class="title-column">팩이 터져서 왔어요</td>
+              <td class="writer-column">김철수</td>
+              <td class="date-column">2024.12.26</td>
+              <td class="status-column" data-status="답변완료">답변완료</td>
+            </tr>
+          </tbody>
+        </table>
 
         <div class="product-list-container">
           <div class="pagination" aria-label="페이지 이동">
