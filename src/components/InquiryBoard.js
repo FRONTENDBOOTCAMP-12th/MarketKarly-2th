@@ -135,6 +135,22 @@ class InquiryBoard extends LitElement {
         vertical-align: middle;
       }
 
+      .question,
+      .answer {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px;
+        font-weight: 600;
+      }
+
+      .icon-question,
+      .icon-answer {
+        width: 24px;
+        height: 24px;
+      }
+
       .pagination {
         display: flex;
         justify-content: center;
@@ -179,29 +195,35 @@ class InquiryBoard extends LitElement {
     this.inquiries = [
       {
         id: 1,
-        title: '판매(일시)중단 제품 안내 (22.11.10 업데이트)',
-        writer: '컬리리',
-        date: '2017.02.23',
-        status: '-',
-        content:
-          '안녕하세요. 칼리입니다. 믿고 찾아주신 상품에 불편을 드려 정말 죄송합니다.',
-      },
-      {
-        id: 2,
-        title: '팩이 터져서 왔어요',
+        title: '비wwefwe',
         writer: '김철수',
         date: '2024.12.26',
-        status: '미답변',
-        content:
-          '스티로폼 박스도 손상되어 있어 포장이 터져 엉망이네요. 환불 요청합니다.',
+        status: '답변완료',
+        question: '배송 관련 문의입니다. 스티로폼 박스가 손상되었습니다.',
+        answer:
+          '이 문제는 이미 해결되었습니다. 추가적인 문의 사항은 언제든지 연락주세요.',
       },
+
+      {
+        id: 2,
+        title: '비dd',
+        writer: '김철수',
+        date: '2024.12.26',
+        status: '답변완료',
+        question: '배송 관련 문의입니다. 스티로폼 박스가 손상되었습니다.',
+        answer:
+          '이 문제는 이미 해결되었습니다. 추가적인 문의 사항은 언제든지 연락주세요.',
+      },
+
       {
         id: 3,
         title: '비밀글',
         writer: '김철수',
         date: '2024.12.26',
         status: '답변완료',
-        content: '배송 관련 문의입니다. 스티로폼 박스가 손상되었습니다.',
+        question: '배송 관련 문의입니다. 스티로폼 박스가 손상되었습니다.',
+        answer:
+          '이 문제는 이미 해결되었습니다. 추가적인 문의 사항은 언제든지 연락주세요.',
       },
     ];
     this.expandedRows = {};
@@ -286,7 +308,22 @@ class InquiryBoard extends LitElement {
                     ? 'display: block;'
                     : 'display: none;'}
                 >
-                  ${inquiry.content}
+                  <div class="question">
+                    <img
+                      src="/icon/review-question.svg"
+                      alt="question icon"
+                      class="icon-question"
+                    />
+                    <div class="question-text">${inquiry.question}</div>
+                  </div>
+                  <div class="answer">
+                    <img
+                      src="/icon/review-answer.svg"
+                      alt="answer icon"
+                      class="icon-answer"
+                    />
+                    <div class="answer-text">${inquiry.answer}</div>
+                  </div>
                 </div>
               </div>
             `
