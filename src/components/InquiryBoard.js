@@ -216,10 +216,12 @@ class InquiryBoard extends LitElement {
   static properties = {
     inquiries: { type: Array },
     expandedRows: { type: Object },
+    activeRowId: { type: Number },
   };
   constructor() {
     super();
     this.showModal = false;
+    this.activeRowId = null;
     this.inquiries = [
       {
         id: 1,
@@ -300,7 +302,7 @@ class InquiryBoard extends LitElement {
         title: '비밀글입니다.',
         writer: '박*동',
         date: '2024.04.11',
-        status: '미답변',
+        status: '답변완료',
         question: '배송 관련 문의입니다. 스티로폼 박스가 손상되었습니다.',
         answer:
           '이 문제는 이미 해결되었습니다. 추가적인 문의 사항은 언제든지 연락주세요.',
@@ -313,11 +315,7 @@ class InquiryBoard extends LitElement {
     const inquiry = this.inquiries.find((inquiry) => inquiry.id === id);
     if (inquiry.title === '비밀글입니다.') return;
 
-    this.expandedRows = {
-      ...this.expandedRows,
-      [id]: !this.expandedRows[id],
-    };
-
+    this.activeRowId = this.activeRowId === id ? null : id;
     this.requestUpdate();
   }
 
@@ -356,7 +354,6 @@ class InquiryBoard extends LitElement {
             text="문의하기"
           ></btn-filled-component>
         </header>
-        <div class="review-table"></div>
         <table class="board-header">
           <thead>
             <tr>
@@ -389,9 +386,9 @@ class InquiryBoard extends LitElement {
                 </div>
                 <div
                   class="row-body"
-                  style=${this.expandedRows[inquiry.id]
-                    ? 'display: block;'
-                    : 'display: none;'}
+                  style="display: ${this.activeRowId === inquiry.id
+                    ? 'block'
+                    : 'none'}"
                 >
                   <div class="question">
                     <img
