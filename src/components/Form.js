@@ -9,7 +9,7 @@ import '@/components/Button/BtnDisabled';
 import '@/components/Button/BtnFilled';
 import reset from '@/styles/reset';
 import Swal from 'sweetalert2';
-import pb from '../api/pocketbase';
+import pb from '@/api/pocketbase';
 
 class Form extends LitElement {
   static styles = [
@@ -78,6 +78,13 @@ class Form extends LitElement {
           font-size: var(--font-sm);
           font-weight: var(--text-semi-bold);
           margin-top: var(--space-sm);
+        }
+
+        .address-detail {
+          display: flex;
+          flex-direction: column;
+          margin-top: var(--space-sm);
+          gap: var(--space-sm);
         }
       }
 
@@ -159,6 +166,10 @@ class Form extends LitElement {
       .submit {
         grid-column: 2 / span 1;
       }
+
+      .is-hide {
+        display: none;
+      }
     `,
   ];
 
@@ -166,6 +177,10 @@ class Form extends LitElement {
     validation: { type: Object },
     isPass: { type: Object },
     data: { type: Object },
+    isIdChecked: { type: String },
+    isEmailChecked: { type: String },
+    isPhoneChecked: { type: String },
+    address: { type: String },
   };
 
   constructor() {
@@ -184,6 +199,10 @@ class Form extends LitElement {
       phone: /[0-9]/g,
     };
     this.data = {};
+    this.isIdChecked = false;
+    this.isEmailChecked = false;
+    this.isPhoneChecked = false;
+    this.address = '';
   }
 
   _handleChangeInput(e) {
@@ -197,6 +216,8 @@ class Form extends LitElement {
       Swal.fire({
         text: '사용 가능한 아이디입니다.',
         icon: 'success',
+      }).then(() => {
+        this.isIdChecked = true;
       });
     } else {
       this.isPass.id = false;
@@ -228,6 +249,8 @@ class Form extends LitElement {
       Swal.fire({
         text: '사용 가능한 이메일입니다.',
         icon: 'success',
+      }).then(() => {
+        this.isEmailChecked = true;
       });
     } else {
       this.isPass.email = false;
@@ -238,13 +261,14 @@ class Form extends LitElement {
   _handleCheckPhone(phone) {
     if (
       this.validation.phone.test(Number(phone)) &&
-      this.data.phone.length >= 11
+      this.data.phone.length === 11
     ) {
       this.isPass.phone = true;
-      console.log(this.data);
       Swal.fire({
         text: '인증번호가 발송되었습니다.',
         icon: 'success',
+      }).then(() => {
+        this.isPhoneChecked = true;
       });
     } else {
       this.isPass.phone = false;
@@ -283,6 +307,15 @@ class Form extends LitElement {
     }
   }
 
+  _openAddressAPI() {
+    const daum = new window.daum.Postcode({
+      oncomplete: (data) => {
+        this.address = `${data.roadAddress}(${data.buildingName})`;
+      },
+    });
+    daum.open();
+  }
+
   render() {
     return html`
       <form id="form" action="#">
@@ -303,14 +336,24 @@ class Form extends LitElement {
                 </p>`
               : null}
           </div>
-          <btn-emptied-component
-            height="44px"
-            width="100%"
-            text="중복확인"
-            @click=${() => {
-              this._handleCheckId(this.data.id);
-            }}
-          ></btn-emptied-component>
+          ${!this.isIdChecked
+            ? html`
+                <btn-emptied-component
+                  height="44px"
+                  width="100%"
+                  text="중복확인"
+                  @click=${() => {
+                    this._handleCheckId(this.data.id);
+                  }}
+                ></btn-emptied-component>
+              `
+            : html`
+                <btn-disabled-component
+                  text="중복확인"
+                  height="44px"
+                  width="100%"
+                ></btn-disabled-component>
+              `}
         </div>
 
         <div class="pw" @input-change=${this._handleChangeInput}>
@@ -376,14 +419,24 @@ class Form extends LitElement {
                 </p>`
               : null}
           </div>
-          <btn-emptied-component
-            height="44px"
-            width="100%"
-            text="중복확인"
-            @click=${() => {
-              this._handleCheckEmail(this.data.email);
-            }}
-          ></btn-emptied-component>
+          ${!this.isEmailChecked
+            ? html`
+                <btn-emptied-component
+                  height="44px"
+                  width="100%"
+                  text="중복확인"
+                  @click=${() => {
+                    this._handleCheckEmail(this.data.email);
+                  }}
+                ></btn-emptied-component>
+              `
+            : html`
+                <btn-disabled-component
+                  text="중복확인"
+                  height="44px"
+                  width="100%"
+                ></btn-disabled-component>
+              `}
         </div>
 
         <div class="phone" @input-change=${this._handleChangeInput}>
@@ -400,18 +453,28 @@ class Form extends LitElement {
             ></text-component>
             ${!this.isPass.phone
               ? html`<p class="error-message">
-                  올바른 형식의 전화번호를 입력해주세요.
+                  올바른 형식의 11자리 전화번호를 입력해주세요.
                 </p>`
               : null}
           </div>
-          <btn-emptied-component
-            height="44px"
-            width="100%"
-            text="인증번호 받기"
-            @click=${() => {
-              this._handleCheckPhone(this.data.phone);
-            }}
-          ></btn-emptied-component>
+          ${!this.isPhoneChecked
+            ? html`
+                <btn-emptied-component
+                  height="44px"
+                  width="100%"
+                  text="인증번호 받기"
+                  @click=${() => {
+                    this._handleCheckPhone(this.data.phone);
+                  }}
+                ></btn-emptied-component>
+              `
+            : html`
+                <btn-disabled-component
+                  text="인증번호 받기"
+                  height="44px"
+                  width="100%"
+                ></btn-disabled-component>
+              `}
         </div>
 
         <div class="address">
@@ -424,7 +487,21 @@ class Form extends LitElement {
               height="44px"
               width="100%"
               text="주소검색"
+              @click=${this._openAddressAPI}
             ></btn-emptied-component>
+            <div class="${this.address ? 'address-detail' : 'is-hide'}">
+              <text-component
+                width="100%"
+                value=${this.address}
+                .disabled=${true}
+              ></text-component>
+              <text-component
+                class="exact-address"
+                width="100%"
+                placeholder="상세주소를 입력해주세요"
+              ></text-component>
+            </div>
+
             <p class="address-info">
               배송지에 따라 상품 정보가 달라질 수 있습니다.
             </p>
