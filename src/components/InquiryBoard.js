@@ -179,7 +179,7 @@ class InquiryBoard extends LitElement {
         height: 56px;
         border: 1px solid var(--gray-color-100, #e1e1e1);
         background: none;
-        padding: var(--space-sm);
+        padding: var(--space-2xl);
       }
 
       .pagination img {

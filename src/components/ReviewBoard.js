@@ -1,10 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
-import '@/components/Card';
-import { register } from 'swiper/element';
-
-register();
+import '@/components/ReviewModal';
+import '@/components/Button/BtnFilled';
 
 class ReviewBoard extends LitElement {
   static styles = [
@@ -21,9 +19,7 @@ class ReviewBoard extends LitElement {
       .container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-        width: 100%;
         padding: var(--space-7xl) 0;
       }
 
@@ -35,173 +31,127 @@ class ReviewBoard extends LitElement {
         margin: 0 auto var(--space-5xl);
       }
 
-      .review-content {
-        width: 700px;
-      }
-
       .review-title {
         font-weight: var(--text-bold);
         font-size: var(--font-2xl);
         line-height: var(--extra-light-line-height);
-        color: var(--black-color);
-      }
-
-      .caution {
-        margin-top: var(--space-md);
-        font-size: var(--font-sm);
-        font-weight: var(--text-semi-bold);
-        line-height: var(--light-line-height);
-        color: var(--gray-color-500);
-      }
-
-      .review-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 155px;
-        height: 44px;
-        background: var(--primary-color);
-        border-radius: 4px;
-        border: none;
-        font-weight: var(--text-semi-bold);
-        color: var(--white-color);
-        cursor: pointer;
-      }
-
-      .product-list-container {
-        width: 1050px;
-        margin: 0 auto;
-      }
-
-      .list-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: var(--space-lg);
-      }
-      .review-benefit,
-      .review-benefit-details {
-        font-weight: var(--text-semi-bold);
-        line-height: var(--light-line-height);
-        color: var(--gray-color-500);
       }
 
       .review-benefit {
-        margin-top: var(--space-3xl);
+        font-weight: var(--text-bold);
+        line-height: var(--light-line-height);
+        color: var(--gray-color-900, #151515);
+        margin-top: var(--space-lg);
       }
 
-      .review-benefit-details {
-        margin-top: var(--space-md);
+      .caution {
+        margin-top: var(--space-sm);
         font-size: var(--font-sm);
-      }
-      .total-count {
-        font-size: var(--font-sm);
-        color: var(--black-color);
         font-weight: var(--text-semi-bold);
+        line-height: var(--light-line-height);
+        color: var(--gray-color-500, #6b6b6b);
       }
 
-      .sorting-standard {
-        display: flex;
-        align-items: center;
-      }
-
-      .choose-standard {
-        position: relative;
-        padding: 0 var(--space-md);
-        font-size: var(--font-sm);
-        color: var(--gray-color-300);
-        cursor: pointer;
-      }
-
-      .choose-standard.active {
-        color: var(--gray-color-700);
-        font-weight: var(--text-medium);
-      }
-
-      .divider::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 1.4px;
-        height: 12px;
-        background-color: var(--gray-color-300);
-        opacity: 0.4;
-      }
-
-      .pagination {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: var(--space-5xl);
-      }
-
-      .pagination button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 34px;
-        height: 34px;
-        border: 1px solid var(--gray-color-100);
-        background: none;
-        padding: var(--space-sm);
-        cursor: pointer;
-      }
-
-      .pagination button:hover {
-        background-color: var(--gray-color-50);
+      .caution li {
+        list-style: disc;
+        margin-left: var(--space-2xl);
       }
 
       .review-list {
-        list-style: none;
+        border-top: 2px solid var(--gray-color-900, #151515);
         padding: 0;
-        margin: var(--space-5xl) 0;
-        border-top: 1px solid var(--gray-color-200);
+        margin: var(--space-xl) 0;
+        width: 1050px;
+        list-style: none;
       }
 
       .review-item {
-        border-bottom: 1px solid var(--gray-color-200);
-        padding: var(--space-md) 0;
+        display: flex;
+        align-items: center;
+        padding: 0;
+        width: 1050px;
+        height: 58px;
+        border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
       }
 
       .review-item a {
         display: flex;
         align-items: center;
         text-decoration: none;
-        font-size: var(--font-sm);
-        color: var(--black-color);
-      }
-
-      .review-item a:hover {
-        color: var(--primary-color);
+        color: var(--gray-color-900, #333333);
+        width: 100%;
+        height: 100%;
+        padding: 4px 20px;
+        gap: 20px;
       }
 
       .notice-icon {
-        display: inline-block;
-        background-color: var(--gray-color-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--gray-color-100, #e1e1e1);
+        border-radius: 1px;
+        width: 37px;
+        height: 18px;
+        padding: 0 8px;
+        font-family: 'Pretendard';
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 150%;
+        color: var(--gray-color-900, #333333);
+      }
+
+      .review-item span:last-child {
+        font-family: 'Pretendard';
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 150%;
+        color: var(--gray-color-900, #333333);
+        height: 24px;
+        flex-grow: 1;
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: var(--space-5xl);
+        gap: var(--space-2xl);
+      }
+
+      .pagination button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 56px;
+        height: 56px;
+        border: 1px solid var(--gray-color-100, #e1e1e1);
+        background: none;
         padding: var(--space-sm);
-        border-radius: 4px;
-        font-weight: var(--text-semi-bold);
-        font-size: var(--font-sm);
-        margin-right: var(--space-md);
+      }
+
+      .pagination img {
+        width: 50px;
+        height: 50px;
+      }
+
+      .pagination button:hover {
+        background-color: var(--gray-color-50, #f9f9f9);
       }
     `,
   ];
 
-  static properties = {
-    activeStandard: { type: String },
-  };
-
   constructor() {
     super();
-    this.activeStandard = 'recommended';
-    this.totalItems = 5;
+    this.showModal = false;
   }
 
-  handleStandardClick(standard, event) {
-    event.preventDefault();
-    this.activeStandard = standard;
+  handleSubmit() {
+    this.showModal = !this.showModal;
+    this.requestUpdate();
+  }
+
+  handleModalClose() {
+    this.showModal = false;
     this.requestUpdate();
   }
 
@@ -212,68 +162,56 @@ class ReviewBoard extends LitElement {
           <div class="review-content">
             <h2 class="review-title">상품후기</h2>
             <p class="review-benefit">글후기 50원 적립금 혜택이 있어요.</p>
-            <p class="review-benefit-details">
-              퍼플, 더퍼플은 2배 적립 (100원) / 주간 베스트 후기로 선정 시
-              5,000원 추가 적립 후기 작성은 배송완료일로부터 30일 이내
-              가능합니다. 작성하신 후기는 확인 후 적립금이 지급됩니다. (영업일
-              기준 평균 1~2일 소요)
-            </p>
+            <ul class="caution">
+              <li>
+                퍼플, 더퍼플은 2배 적립 (100원) / 주간 베스트 후기로 선정 시
+                5,000원 추가 적립
+              </li>
+              <li>후기 작성은 배송완료일로부터 30일 이내 가능합니다.</li>
+              <li>
+                작성하신 후기는 확인 후 적립금이 지급됩니다. (영업일 기준 평균
+                1~2일 소요)
+              </li>
+            </ul>
           </div>
           <btn-filled-component
-            class="review-button"
+            width="155px"
+            height="44px"
+            class="btn-ask"
             @click=${this.handleSubmit}
-            text="등록"
+            text="후기 작성"
           ></btn-filled-component>
         </header>
+        <ul class="review-list">
+          <li class="review-item">
+            <a>
+              <span class="notice-icon">공지</span>
+              <span>금주의 베스트 후기 안내</span>
+            </a>
+          </li>
+          <li class="review-item">
+            <a>
+              <span class="notice-icon">공지</span>
+              <span>상품 후기 적립금 정책 안내</span>
+            </a>
+          </li>
+        </ul>
 
         <div class="product-list-container">
-          <div class="list-header">
-            <div class="total-count">총 ${this.totalItems}건</div>
-            <section class="sorting-standard" aria-label="정렬 기준">
-              <button
-                class="choose-standard ${this.activeStandard === 'recommended'
-                  ? 'active'
-                  : ''}"
-                @click=${(e) => this.handleStandardClick('recommended', e)}
-              >
-                추천순
-              </button>
-              <button
-                class="choose-standard divider ${this.activeStandard ===
-                'newest'
-                  ? 'active'
-                  : ''}"
-                @click=${(e) => this.handleStandardClick('newest', e)}
-              >
-                신상품순
-              </button>
-            </section>
-          </div>
-
-          <ul class="review-list">
-            <li class="review-item">
-              <a>
-                <span class="notice-icon">공지</span>
-                <span>금주의 베스트 후기 안내</span>
-              </a>
-            </li>
-            <li class="review-item">
-              <a>
-                <span class="notice-icon">공지</span>
-                <span>상품 후기 적립금 정책 안내</span>
-              </a>
-            </li>
-          </ul>
-
           <div class="pagination" aria-label="페이지 이동">
-            <button aria-label="이전 페이지">
-              <img src="/icon/btn-prev.svg" alt="" />
+            <button class="btn-prev" aria-label="이전 페이지">
+              <img src="/icon/review-left-arrow.svg" alt="" />
             </button>
             <button aria-label="다음 페이지">
-              <img src="/icon/btn-next.svg" alt="" />
+              <img src="/icon/review-right-arrow.svg" alt="" />
             </button>
           </div>
         </div>
+        ${this.showModal
+          ? html`<review-modal-component
+              @close=${this.handleModalClose}
+            ></review-modal-component>`
+          : ''}
       </section>
     `;
   }
