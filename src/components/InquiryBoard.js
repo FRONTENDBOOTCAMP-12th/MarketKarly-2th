@@ -19,9 +19,7 @@ class InquiryBoard extends LitElement {
       .container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-        width: 100%;
         padding: var(--space-7xl) 0;
       }
 
@@ -51,20 +49,19 @@ class InquiryBoard extends LitElement {
         list-style: disc;
         margin-left: var(--space-2xl);
       }
+
       .board-header {
         width: 1050px;
         border-collapse: collapse;
-        border-top: 2px solid var(--gray-color-900);
+        border-top: 2px solid var(--gray-color-900, #151515);
       }
 
       th {
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 150%;
-        color: #000000;
+        font-weight: var(--text-semi-bold);
+        line-height: var(--light-line-height);
         text-align: center;
-        padding: 12px 0;
-        border-bottom: 1px solid var(--gray-color-300);
+        padding: var(--space-lg) 0;
+        border-bottom: 1px solid var(--gray-color-300, #a6a6a6);
       }
 
       .title-column {
@@ -81,55 +78,38 @@ class InquiryBoard extends LitElement {
         flex-direction: column;
         align-items: flex-start;
         width: 1050px;
-        padding: 0;
         box-sizing: border-box;
-        border-bottom: 1px solid #e1e1e1;
-
-        tr {
-          flex-direction: row;
-          align-items: center;
-          height: 40px;
-        }
-
-        td {
-          align-items: center;
-          padding: 4px 20px;
-          font-weight: 400;
-        }
-
-        .status-column[data-status='답변완료'] {
-          color: var(--primary-color, #283198);
-          font-weight: var(--text-semi-bold);
-        }
-
-        .title-column {
-          font-weight: var(--text-semi-bold);
-        }
+        border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
+      }
+      .title-column {
+        font-weight: var(--text-semi-bold);
+      }
+      .status-column[data-status='답변완료'] {
+        color: var(--primary-color, #283198);
+        font-weight: var(--text-semi-bold);
       }
       .row {
         display: flex;
         flex-direction: column;
-        border-bottom: 1px solid #e1e1e1;
+        border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
       }
       .row-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 0px 10px 20px;
-
-        cursor: pointer;
+        padding: var(--space-lg) 0px var(--space-lg) var(--space-2xl);
       }
       .row-body {
         display: none;
         padding: 10px;
-        background: #f9f9f9;
+        background: var(--gray-color-50, #f9f9f9);
       }
       .row-header[data-title]:not([data-title='비밀글입니다.']) + .row-body {
         display: block;
       }
 
       .row-header[data-title='비밀글입니다.'] {
-        color: var(--gray-color-300);
+        color: var(--gray-color-300, #a6a6a6);
       }
 
       .row-header[data-title='비밀글입니다.'] .title-column::after {
@@ -137,7 +117,7 @@ class InquiryBoard extends LitElement {
         display: inline-block;
         width: 12px;
         height: 12px;
-        margin-left: 8px;
+        margin-left: var(--space-md);
         background-image: url('/icon/review-lock.svg');
         background-size: contain;
         background-repeat: no-repeat;
@@ -156,9 +136,9 @@ class InquiryBoard extends LitElement {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        gap: 12px;
-        padding: 12px;
-        font-weight: 600;
+        gap: var(--space-lg);
+        padding: var(--space-lg);
+        font-weight: var(--text-semi-bold);
         line-height: 2;
         position: relative;
       }
@@ -167,12 +147,12 @@ class InquiryBoard extends LitElement {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        gap: 12px;
-        font-weight: 600;
+        gap: var(--space-lg);
+        font-weight: var(--text-semi-bold);
         line-height: 2;
         position: relative;
         margin-left: 3.2rem;
-        color: var(--gray-color-300);
+        color: var(--gray-color-300, #a6a6a6);
         font-size: 14px;
       }
 
@@ -180,7 +160,7 @@ class InquiryBoard extends LitElement {
       .icon-answer {
         width: 24px;
         height: 24px;
-        margin-top: 8px;
+        margin-top: var(--space-md);
       }
 
       .pagination {
@@ -200,7 +180,6 @@ class InquiryBoard extends LitElement {
         border: 1px solid var(--gray-color-100, #e1e1e1);
         background: none;
         padding: var(--space-sm);
-        cursor: pointer;
       }
 
       .pagination img {
