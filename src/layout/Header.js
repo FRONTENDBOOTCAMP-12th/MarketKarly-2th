@@ -2,6 +2,7 @@ import reset from '@/styles/reset';
 import { LitElement, html, css } from 'lit';
 import '@/components/HeaderCategory';
 import pb from '@/api/pocketbase';
+import Swal from 'sweetalert2';
 
 class Header extends LitElement {
   static styles = [
@@ -44,6 +45,14 @@ class Header extends LitElement {
         align-items: center;
         gap: var(--space-sm);
         font-size: var(--font-sm);
+      }
+
+      .header-member-item span {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        font-size: var(--font-sm);
+        color: var(--primary-color, #283198);
       }
 
       .header-member-item.divider a.join {
@@ -373,7 +382,6 @@ class Header extends LitElement {
 
   render() {
     const { isAuth, user } = this.loginData;
-    console.log(isAuth);
 
     return html`
       <header class="header-wrapper">
@@ -401,8 +409,8 @@ class Header extends LitElement {
                         </li>
                       `
                     : html`
-                        <li class="header-member-item">
-                          <span class="header-member-link">${user.name}님</span>
+                        <li class="header-member-item divider">
+                          <span class="header-member-name">${user.name}님</span>
                         </li>
                         <li class="header-member-item divider">
                           <a

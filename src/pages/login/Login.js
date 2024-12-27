@@ -93,9 +93,20 @@ class Login extends LitElement {
         .collection('users')
         .authWithPassword(this.email, this.password);
 
-      if (response) {
-        window.location.href = '/';
-      }
+      const { record, token } = JSON.parse(
+        localStorage.getItem('pocketbase_auth') ?? '{}'
+      );
+
+      localStorage.setItem(
+        'auth',
+        JSON.stringify({
+          isAuth: !!record,
+          user: record,
+          token: token,
+        })
+      );
+
+      window.location.href = '/';
     } catch (error) {
       Swal.fire({
         title: '로그인 실패',
