@@ -166,10 +166,6 @@ class Form extends LitElement {
       .submit {
         grid-column: 2 / span 1;
       }
-
-      .is-hide {
-        display: none;
-      }
     `,
   ];
 
@@ -489,18 +485,22 @@ class Form extends LitElement {
               text="주소검색"
               @click=${this._openAddressAPI}
             ></btn-emptied-component>
-            <div class="${this.address ? 'address-detail' : 'is-hide'}">
-              <text-component
-                width="100%"
-                value=${this.address}
-                .disabled=${true}
-              ></text-component>
-              <text-component
-                class="exact-address"
-                width="100%"
-                placeholder="상세주소를 입력해주세요"
-              ></text-component>
-            </div>
+            ${this.address
+              ? html`
+                  <div class="address-detail">
+                    <text-component
+                      width="100%"
+                      value=${this.address}
+                      .disabled=${true}
+                    ></text-component>
+                    <text-component
+                      class="exact-address"
+                      width="100%"
+                      placeholder="상세주소를 입력해주세요"
+                    ></text-component>
+                  </div>
+                `
+              : null}
 
             <p class="address-info">
               배송지에 따라 상품 정보가 달라질 수 있습니다.
