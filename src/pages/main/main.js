@@ -1,8 +1,8 @@
+import a11y from '@/base/a11y';
 import '@/components/Button/BtnEmptied';
 import '@/components/Button/BtnFilled';
-import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
-import a11y from '@/base/a11y';
+import { LitElement, css, html } from 'lit';
 import pb from '../../api/pocketbase';
 
 class Main extends LitElement {
@@ -22,6 +22,8 @@ class Main extends LitElement {
   static properties = {
     data1: { type: Array },
     data2: { type: Array },
+    viewedItem: { type: Object },
+    viewedItemKey: { type: String },
   };
 
   constructor() {
@@ -33,7 +35,6 @@ class Main extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-
     this.renderCardProducts();
   }
 
@@ -44,9 +45,7 @@ class Main extends LitElement {
         .getFullList({ perPage: 50 });
 
       this.data1 = response.slice(0, 15);
-
       this.data2 = response.slice(15, 30);
-      console.log(this.data2);
     } catch (err) {
       console.error('에러발생: ', err);
     }
@@ -59,8 +58,12 @@ class Main extends LitElement {
         title="이 상품 어때요 ?"
         .data=${this.data1}
       ></products-swiper-component>
-      <a class="line-banner" href="#" aria-label="퍼플위크 배너">
-        <img src="/image/line-banner.webp" alt="10월 퍼플위크" />
+      <a
+        class="line-banner"
+        href="#"
+        aria-label="더 풍성해진 10월의 퍼플위크 적립률 UP + 3종 쿠폰팩"
+      >
+        <img src="/image/line-banner.webp" alt="" />
       </a>
       <recent-component></recent-component>
       <products-swiper-component

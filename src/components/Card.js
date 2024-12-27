@@ -1,11 +1,11 @@
-import { LitElement, html, css } from 'lit';
-import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/AddCart';
-import pb from '../api/pocketbase';
+import reset from '@/styles/reset';
+import { LitElement, css, html } from 'lit';
 
 class Card extends LitElement {
   static properties = {
+    collectionId: { type: String },
     id: { type: String },
     photoURL: { type: String },
     deliveryType: { type: String },
@@ -16,11 +16,14 @@ class Card extends LitElement {
     description: { type: String },
     tagOnly: { type: Boolean },
     tagLimited: { type: Boolean },
+    viewedItemKey: { type: String },
+    viewedItem: { type: Object },
   };
 
   constructor() {
     super();
 
+    this.collectionId = '';
     this.id = '';
     this.photoURL = '';
     this.deliveryType = '';
@@ -31,6 +34,8 @@ class Card extends LitElement {
     this.description = '';
     this.tagOnly = false;
     this.tagLimited = false;
+    this.viewedItemKey = 'viewedItem';
+    this.viewedItem = [];
   }
 
   static styles = [
@@ -38,6 +43,7 @@ class Card extends LitElement {
     a11y,
     css`
       .card-component {
+        cursor: pointer;
         display: inline-flex;
         flex-direction: column;
         gap: 1rem;
@@ -159,6 +165,15 @@ class Card extends LitElement {
     `,
   ];
 
+  connectedCallback() {
+    super.connectedCallback();
+    // 로컬스토리지에 저장된 item 가져오기
+    const viewedItem = localStorage.getItem(this.viewedItemKey);
+    if (viewedItem) {
+      this.viewedItem = JSON.parse(viewedItem);
+    }
+  }
+
   handleAddCart = (e) => {
     e.stopPropagation();
 
@@ -174,16 +189,39 @@ class Card extends LitElement {
   };
 
   handleCardClick = () => {
-    window.location.href = '/';
+    this._handleViewedItem();
+    location.href = '/';
   };
 
-  handleCardClick = () => {
-    window.location.href = '/';
-  };
+  _filterItem(data) {
+    return this.viewedItem.filter((item) => item.id !== data.id);
+  }
+
+  _handleViewedItem() {
+    const data = {
+      id: this.id,
+      collectionId: this.collectionId,
+      photo: this.photoURL,
+      productName: this.productName,
+    };
+
+    // 같은 id 값을 갖는 아이템 제거
+    this.viewedItem = this._filterItem(data);
+
+    // 최대 7개까지만 렌더링
+    if (this.viewedItem.length > 7) {
+      this.viewedItem.pop();
+    }
+
+    // 가장 앞에 아이템 추가
+    this.viewedItem.unshift(data);
+
+    localStorage.setItem(this.viewedItemKey, JSON.stringify(this.viewedItem));
+  }
 
   render() {
     return html/* html */ `
-      <div @click="${this.handleCardClick}" class="card-component">
+      <div @click=${this.handleCardClick} class="card-component">
         <figure>
           <a href="/">
             <img src="${this.photoURL}" alt="" />
