@@ -1,11 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
-import '@/components/Card';
 import '@/components/InquiryModal';
-import { register } from 'swiper/element';
-
-register();
+import '@/components/Button/BtnFilled';
 
 class InquiryBoard extends LitElement {
   static styles = [
