@@ -1,6 +1,8 @@
 import reset from '@/styles/reset';
 import { LitElement, html, css } from 'lit';
 import '@/components/HeaderCategory';
+import pb from '@/api/pocketbase';
+import Swal from 'sweetalert2';
 
 class Header extends LitElement {
   static styles = [
@@ -43,6 +45,14 @@ class Header extends LitElement {
         align-items: center;
         gap: var(--space-sm);
         font-size: var(--font-sm);
+      }
+
+      .header-member-item span {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        font-size: var(--font-sm);
+        color: var(--primary-color, #283198);
       }
 
       .header-member-item.divider a.join {
@@ -314,6 +324,7 @@ class Header extends LitElement {
       }
     `,
   ];
+
   static properties = {
     isCategoryOpen: { type: Boolean },
   };
@@ -321,6 +332,37 @@ class Header extends LitElement {
   constructor() {
     super();
     this.isCategoryOpen = false;
+    this.loginData = {};
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.fetchData();
+  }
+
+  fetchData() {
+    const auth = JSON.parse(localStorage.getItem('auth') ?? '{}');
+    this.loginData = auth;
+  }
+
+  handleLogout(e) {
+    e.preventDefault();
+
+    Swal.fire({
+      title: '로그아웃',
+      text: '로그아웃 하시겠습니까?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: '로그아웃',
+    }).then(({ isConfirmed }) => {
+      if (isConfirmed) {
+        localStorage.removeItem('auth');
+        pb.authStore.clear();
+        this.loginData.isAuth = false;
+        this.requestUpdate();
+        location.reload();
+      }
+    });
   }
 
   openCategory() {
@@ -339,24 +381,47 @@ class Header extends LitElement {
   }
 
   render() {
+    const { isAuth, user } = this.loginData;
+
     return html`
       <header class="header-wrapper">
       <div class="max-width-box">
             <nav class="top-bar-nav">
               <ul class="header-member-service">
-                <li class="header-member-item divider">
-                  <a
-                    href="/src/pages/register/"
-                    class="header-member-link join"
-                    aria-label="회원가입"
-                    >회원가입</a
-                  >
-                </li>
-                <li class="header-member-item divider">
-                  <a href="/src/pages/login/" class="header-member-link" aria-label="로그인"
-                    >로그인</a
-                  >
-                </li>
+                ${
+                  !isAuth
+                    ? html`
+                        <li class="header-member-item divider">
+                          <a
+                            href="/src/pages/register/"
+                            class="header-member-link join"
+                            aria-label="회원가입"
+                            >회원가입</a
+                          >
+                        </li>
+                        <li class="header-member-item divider">
+                          <a
+                            href="/src/pages/login/"
+                            class="header-member-link"
+                            aria-label="로그인"
+                            >로그인</a
+                          >
+                        </li>
+                      `
+                    : html`
+                        <li class="header-member-item divider">
+                          <span class="header-member-name">${user.name}님</span>
+                        </li>
+                        <li class="header-member-item divider">
+                          <a
+                            href="#"
+                            @click="${this.handleLogout}"
+                            class="header-member-link"
+                            >로그아웃</a
+                          >
+                        </li>
+                      `
+                }
                 <li class="header-member-item">
                   <a
                     href="#"

@@ -5,6 +5,7 @@ import '@/components/Button/BtnFilled';
 import '@/components/Button/BtnEmptied';
 import '@/components/Input/InputText';
 import Swal from 'sweetalert2';
+import pb from '@/api/pocketbase';
 
 class Login extends LitElement {
   static styles = [
@@ -75,11 +76,8 @@ class Login extends LitElement {
     }
   }
 
-  handleLogin(e) {
+  async handleLogin(e) {
     e.preventDefault();
-
-    const validEmail = 'admin@naver.com';
-    const validPassword = 'qwer1234@';
 
     if (!this.email || !this.password) {
       Swal.fire({
@@ -90,9 +88,26 @@ class Login extends LitElement {
       return;
     }
 
-    if (this.email === validEmail && this.password === validPassword) {
+    try {
+      const response = await pb
+        .collection('users')
+        .authWithPassword(this.email, this.password);
+
+      const { record, token } = JSON.parse(
+        localStorage.getItem('pocketbase_auth') ?? '{}'
+      );
+
+      localStorage.setItem(
+        'auth',
+        JSON.stringify({
+          isAuth: !!record,
+          user: record,
+          token: token,
+        })
+      );
+
       window.location.href = '/';
-    } else {
+    } catch (error) {
       Swal.fire({
         title: '로그인 실패',
         text: '아이디 또는 비밀번호가 올바르지 않습니다.',
