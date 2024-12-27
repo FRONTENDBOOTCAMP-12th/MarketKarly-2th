@@ -121,11 +121,27 @@ class InquiryBoard extends LitElement {
       }
       .row-body {
         display: none;
-        padding: 20px;
+        padding: 10px;
         background: #f9f9f9;
       }
-      .row-header[data-title]:not([data-title='비밀글']) + .row-body {
+      .row-header[data-title]:not([data-title='비밀글입니다.']) + .row-body {
         display: block;
+      }
+
+      .row-header[data-title='비밀글입니다.'] {
+        color: var(--gray-color-300);
+      }
+
+      .row-header[data-title='비밀글입니다.'] .title-column::after {
+        content: '';
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-left: 8px;
+        background-image: url('/icon/review-lock.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        vertical-align: middle;
       }
 
       .writer-column,
@@ -143,12 +159,14 @@ class InquiryBoard extends LitElement {
         gap: 12px;
         padding: 12px;
         font-weight: 600;
+        line-height: 2;
       }
 
       .icon-question,
       .icon-answer {
         width: 24px;
         height: 24px;
+        margin-top: 8px;
       }
 
       .pagination {
@@ -195,29 +213,31 @@ class InquiryBoard extends LitElement {
     this.inquiries = [
       {
         id: 1,
-        title: '비wwefwe',
-        writer: '김철수',
-        date: '2024.12.26',
-        status: '답변완료',
-        question: '배송 관련 문의입니다. 스티로폼 박스가 손상되었습니다.',
+        title: '판매(일시)중단 제품 안내 (22.11.10 업데이트)',
+        writer: '컬리리',
+        date: '2002.02.31',
+        status: '-',
+        question:
+          '판매(일시)중단 제품 안내 문의가 지속적으로 들어오고 있습니다.',
         answer:
-          '이 문제는 이미 해결되었습니다. 추가적인 문의 사항은 언제든지 연락주세요.',
+          '마켓컬릿은 마켓컬리의 카피 사이트이기 때문에 실제로 제품을 판매하지는 않습니다. HAPPY KURLIT DAYDREAM',
       },
 
       {
         id: 2,
-        title: '비dd',
+        title: '팩이 터져서 왔어요',
         writer: '김철수',
         date: '2024.12.26',
         status: '답변완료',
-        question: '배송 관련 문의입니다. 스티로폼 박스가 손상되었습니다.',
+        question:
+          '스티로폼 박스도 손상되어 있어 포장이 터져 엉망이네요. 환불 요청합니다.',
         answer:
-          '이 문제는 이미 해결되었습니다. 추가적인 문의 사항은 언제든지 연락주세요.',
+          '안녕하세요. 칼리입니다. <br> 믿고 찾아주신 상품에 불편을 드려 정말 죄송합니다. 더불어, 해당 게시판은 실시간으로 상담이 어려워 순차적으로 답변드리고 있는 관계로 신속하게 답변 드리지 못하여 대단히 죄송합니다. 다행히도 고객님의 불편하셨던 사항은 고객행복센터를 통해 안내 받으신 점 확인하였습니다. 불편을 드려 정말 죄송할 따름이며, 고객님께 늘 신선하고 최상의 상품을 불편 없이 전달드리기 위해 최선을 다하는 칼리가 되겠습니다. 칼리 드림.',
       },
 
       {
         id: 3,
-        title: '비밀글',
+        title: '비밀글입니다.',
         writer: '김철수',
         date: '2024.12.26',
         status: '답변완료',
@@ -231,7 +251,7 @@ class InquiryBoard extends LitElement {
 
   toggleRow(id) {
     const inquiry = this.inquiries.find((inquiry) => inquiry.id === id);
-    if (inquiry.title === '비밀글') return;
+    if (inquiry.title === '비밀글입니다.') return;
 
     this.expandedRows = {
       ...this.expandedRows,
@@ -293,9 +313,14 @@ class InquiryBoard extends LitElement {
               <div class="row">
                 <div
                   class="row-header"
+                  data-title="${inquiry.title}"
                   @click=${() => this.toggleRow(inquiry.id)}
                 >
-                  <div class="title-column">${inquiry.title}</div>
+                  <div class="title-column">
+                    ${inquiry.title === '비밀글입니다.'
+                      ? html`<span class="secret-title">${inquiry.title}</span>`
+                      : inquiry.title}
+                  </div>
                   <div class="writer-column">${inquiry.writer}</div>
                   <div class="date-column">${inquiry.date}</div>
                   <div class="status-column" data-status="${inquiry.status}">
