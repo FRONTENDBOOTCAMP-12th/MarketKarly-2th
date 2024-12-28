@@ -18,18 +18,19 @@ class ProductDetail extends LitElement {
     a11y,
     css`
       .product-detail-main {
+        width: 1050px;
+
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
         align-items: flex-start;
-        gap: 5.625rem;
+        flex-wrap: wrap;
 
         margin: var(--space-7xl) auto;
         line-height: var(--light-line-height);
 
         .product-image {
           width: 400px;
-          min-width: 400px;
 
           img {
             width: 100%;
@@ -40,6 +41,8 @@ class ProductDetail extends LitElement {
           width: 560px;
 
           .product-intro {
+            width: 100%;
+
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -89,7 +92,7 @@ class ProductDetail extends LitElement {
           }
 
           .product-info {
-            width: 560px;
+            width: 100%;
 
             border-collapse: collapse;
             border-spacing: 0;
@@ -184,6 +187,8 @@ class ProductDetail extends LitElement {
           }
 
           .product-total {
+            width: 100%;
+
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -220,11 +225,12 @@ class ProductDetail extends LitElement {
           }
 
           .product-buttons {
+            width: 100%;
+
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            gap: 0.75rem;
 
             button {
               position: relative;
@@ -245,6 +251,271 @@ class ProductDetail extends LitElement {
               width: 36px;
               height: 36px;
             }
+          }
+        }
+
+        .tab-menu {
+          width: 100%;
+          margin-top: var(--space-9xl);
+          margin-block-start: var(--space-9xl);
+
+          .tablist {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .tab {
+              width: 25%;
+
+              background-color: var(--gray-color-50, #f9f9f9);
+              border: 1px solid var(--gray-color-300, #a6a6a6);
+
+              font-weight: var(--text-semi-bold);
+              text-align: center;
+
+              &[aria-selected='true'] {
+                background-color: var(--white-color, #ffffff);
+                border: 1px solid var(--gray-color-100, #e1e1e1);
+                border-bottom: none;
+                color: var(--primary-color, #283198);
+              }
+
+              .focus {
+                width: 100%;
+                display: block;
+                padding-top: var(--space-xl);
+                padding-bottom: var(--space-xl);
+                padding-block: var(--space-xl);
+              }
+            }
+
+            .tab:nth-child(1) {
+              border-right: none;
+            }
+            .tab:nth-child(2) {
+              border-right: none;
+            }
+            .tab:nth-child(3) {
+              .review-count {
+                display: inline-block;
+                margin-left: var(--space-md);
+                margin-inline-start: var(--space-md);
+
+                font-size: var(--font-sm);
+                font-weight: var(--text-regular);
+                line-height: var(--regular-line-height);
+              }
+            }
+            .tab:nth-child(4) {
+              border-left: none;
+            }
+          }
+        }
+
+        .tabpanel-wrapper {
+          .tabpanel {
+          }
+
+          .tabpanel.product-description {
+            padding: var(--space-7xl) 0 6rem;
+
+            img {
+              width: 100%;
+            }
+
+            .karly-product {
+              margin-top: 4.75rem;
+              margin-block-start: 4.75rem;
+
+              h3 {
+                padding-bottom: var(--space-6xl);
+                padding-block-end: var(--space-6xl);
+                border-bottom: 1px solid var(--gray-color-100, #e1e1e1);
+
+                font-size: 3.125rem;
+                font-weight: var(--text-bold);
+                line-height: var(--extra-light-line-height);
+                text-align: center;
+              }
+              h3 > span {
+                display: block;
+                font-size: var(--font-2xl);
+                font-weight: var(--text-semi-bold);
+                line-height: var(--light-line-height);
+              }
+
+              p {
+                padding-top: var(--space-4xl);
+                padding-block-start: var(--space-4xl);
+                text-align: left;
+              }
+            }
+
+            .karly-point {
+              margin-top: 6rem;
+              margin-block-start: 6rem;
+
+              .tit-karly-point {
+                position: relative;
+
+                margin-bottom: 4.25rem;
+                margin-block-end: 4.25rem;
+
+                font-size: 3.125rem;
+                font-weight: var(--text-bold);
+                line-height: var(--extra-light-line-height);
+                text-align: center;
+              }
+              .tit-karly-point::before {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+
+                content: '';
+                width: 27%;
+                height: 1px;
+                background-color: var(--gray-color-100, #e1e1e1);
+              }
+              .tit-karly-point::after {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+
+                content: '';
+                width: 27%;
+                height: 1px;
+                background-color: var(--gray-color-100, #e1e1e1);
+              }
+
+              img {
+                width: 1010px;
+
+                margin: 0 auto;
+              }
+            }
+          }
+
+          .tabpanel.product-detail {
+            .why-karly {
+              padding: 4.5rem 0 5.25rem;
+              border-top: 1px solid var(--gray-color-100, #e1e1e1);
+              text-align: center;
+
+              .tit-why-karly {
+                margin-bottom: var(--space-6xl);
+                margin-block-end: var(--space-6xl);
+
+                font-size: var(--font-2xl);
+                font-weight: var(--text-bold);
+                line-height: var(--extra-light-line-height);
+              }
+
+              dl {
+                display: inline-flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+                flex-wrap: wrap;
+
+                margin: 0 auto;
+              }
+              dl > div {
+                width: 315px;
+
+                padding-top: 3.5rem;
+                padding-block-start: 3.5rem;
+              }
+
+              dl div dt {
+                position: relative;
+                width: 100%;
+                height: 88px;
+
+                margin-bottom: var(--space-3xl);
+                margin-block-end: var(--space-3xl);
+
+                color: var(--primary-color, #283198);
+                font-size: var(--font-lg);
+                font-weight: var(--text-semi-bold);
+              }
+              .why-strict-committee::before {
+                content: '';
+                display: block;
+                width: 40px;
+                height: 40px;
+
+                margin: 0 auto var(--space-xl);
+                background-image: url(/public/icon/why_strict_committee.svg);
+                background-repeat: no-repeat;
+                background-position: center center;
+              }
+
+              .why-karly-only::before {
+                content: '';
+                display: block;
+                width: 40px;
+                height: 40px;
+
+                margin: 0 auto var(--space-xl);
+                background-image: url(/public/icon/why_karly_only.svg);
+                background-repeat: no-repeat;
+                background-position: center center;
+              }
+
+              .why-cold-delivery::before {
+                content: '';
+                display: block;
+                width: 40px;
+                height: 40px;
+
+                margin: 0 auto var(--space-xl);
+                background-image: url(/public/icon/why_cold_delivery.svg);
+                background-repeat: no-repeat;
+                background-position: center center;
+              }
+
+              .why-best-price::before {
+                content: '';
+                display: block;
+                width: 40px;
+                height: 40px;
+
+                margin: 0 auto var(--space-xl);
+                background-image: url(/public/icon/why_best_price.svg);
+                background-repeat: no-repeat;
+                background-position: center center;
+              }
+
+              .why-green-distribution::before {
+                content: '';
+                display: block;
+                width: 40px;
+                height: 40px;
+
+                margin: 0 auto var(--space-xl);
+                background-image: url(/public/icon/why_green_distribution.svg);
+                background-repeat: no-repeat;
+                background-position: center center;
+              }
+
+              dl div dd {
+                width: 100%;
+
+                font-size: var(--font-md);
+                font-weight: var(--text-regular);
+                line-height: var(--regular-line-height);
+                word-break: keep-all;
+              }
+            }
+          }
+
+          .tabpanel.product-review {
+          }
+
+          .tabpanel.product-inquiry {
           }
         }
       }
@@ -346,7 +617,7 @@ class ProductDetail extends LitElement {
 
           <table class="product-info">
             <caption class="sr-only">
-              상품 정보
+              상품 정보표
             </caption>
 
             <tbody>
@@ -470,6 +741,194 @@ class ProductDetail extends LitElement {
           <!-- product-buttons -->
         </div>
         <!-- product-content -->
+
+        <nav class="tab-menu">
+          <ul class="tablist" role="tablist">
+            <li
+              class="tab"
+              role="tab"
+              id="tab-1"
+              aria-selected="true"
+              aria-controls="tabpanel-1"
+            >
+              <span class="focus">상품설명</span>
+            </li>
+
+            <li
+              class="tab"
+              role="tab"
+              id="tab-2"
+              aria-selected="false"
+              aria-controls="tabpanel-2"
+            >
+              <a href="#tabpanel-2" class="focus">상세정보</a>
+            </li>
+
+            <li
+              class="tab"
+              role="tab"
+              id="tab-3"
+              aria-selected="false"
+              aria-controls="tabpanel-3"
+            >
+              <span class="focus">
+                후기
+                <span class="review-count">(1,207)</span>
+              </span>
+            </li>
+
+            <li
+              class="tab"
+              role="tab"
+              id="tab-4"
+              aria-selected="false"
+              aria-controls="tabpanel-4"
+            >
+              <span class="focus">문의</span>
+            </li>
+          </ul>
+        </nav>
+        <!-- tab-menu -->
+
+        <div class="tabpanel-wrapper">
+          <div
+            class="tabpanel product-description"
+            role="tabpanel"
+            aria-labelledby="tab-1"
+            id="tabpanel-1"
+          >
+            <figure>
+              <img src="/image/product01.webp" alt="" />
+              <figcaption class="sr-only">${this.productName} 사진</figcaption>
+            </figure>
+
+            <div class="karly-product">
+              <h3>
+                <span>튀기지 않아 부담 없는 매콤함</span>
+                [풀무원] 탱탱쫄면
+              </h3>
+
+              <p>
+                쫄면의 진가는 매콤새콤한 양념과 탱탱한 면발에서 찾을 수 있지요.
+                풀무원은 이 맛을 더 부담 없이 즐길 수 있도록 튀기지 않고 만든
+                탱탱쫄면을 선보입니다. 밀가루와 감자 전분을 적절히 배합해 탄력이
+                좋고, 입에 넣었을 때는 찰지게 씹히죠. 고추장을 넣어 숙성한
+                비빔장은 자연스럽고 깊은 맛을 냅니다. 간단하게 조리해 마지막 한
+                가닥까지 탱탱한 식감을 즐겨보세요. 취향에 따라 다양한 고명을
+                올려 드셔도 좋아요.
+              </p>
+            </div>
+
+            <div class="karly-point">
+              <p class="tit-karly-point">Karly's Check Point</p>
+
+              <img
+                src="/public/image/karly_check_point.svg"
+                alt="컬리 체크 포인트 3가지 이미지"
+              />
+            </div>
+          </div>
+          <!-- product-description -->
+
+          <div
+            class="tabpanel product-detail"
+            role="tabpanel"
+            aria-labelledby="tab-2"
+            id="tabpanel-2"
+          >
+            <img
+              src="/public/image/product_detail_jjolmeon.svg"
+              alt="탱탱쫄면 상세정보 이미지"
+            />
+
+            <div class="why-karly">
+              <p class="tit-why-karly">WHY KARLY</p>
+              <dl>
+                <div>
+                  <dt class="why-strict-committee ">깐깐한 상품위원회</dt>
+                  <dd>
+                    나와 내 가족이 먹고 쓸 상품을 고르는<br />
+                    마음으로 매주 상품을 직접 먹어보고,<br />
+                    경험해보고 성분, 맛 안정성 등 다각도의<br />
+                    기준을 통과한 상품만을 판매합니다.
+                  </dd>
+                </div>
+
+                <div>
+                  <dt class="why-karly-only ">차별화된 Karly Only 상품</dt>
+
+                  <dd>
+                    전국 각지와 해외의 훌륭한 생산자가<br />
+                    믿고 선택하는 파트너, 마켓칼리.<br />
+                    3천여 개가 넘는 칼리 단독 브랜드, 스펙의<br />
+                    Karly Only 상품을 믿고 만나보세요.
+                  </dd>
+                </div>
+
+                <div>
+                  <dt class="why-cold-delivery ">신선한 풀콜드체인 배송</dt>
+
+                  <dd>
+                    온라인 업계 최초로 산지에서 문 앞까지<br />
+                    상온, 냉장, 냉동 상품을 분리 포장 후<br />
+                    최적의 온도를 유지하는 냉장 배송 시스템,<br />
+                    풀콜드체인으로 상품을 신선하게 전해드립니다.
+                  </dd>
+                </div>
+
+                <div>
+                  <dt class="why-best-price ">
+                    고객, 생산자를 위한 최선의 가격
+                  </dt>
+
+                  <dd>
+                    매주 대형 마트와 주요 온라인 마트의 가격<br />
+                    변동 상황을 확인해 신선식품은 품질을<br />
+                    타협하지 않는 선에서 최선의 가격으로<br />
+                    가공식품은 언제나 합리적인 가격으로<br />
+                    정기 조정합니다.
+                  </dd>
+                </div>
+
+                <div>
+                  <dt class="why-green-distribution ">
+                    환경을 생각하는 지속 가능한 유통
+                  </dt>
+
+                  <dd>
+                    친환경 포장재부터 생산자가 상품에만<br />
+                    집중할 수 있는 직매입 유통구조까지,<br />
+                    지속 가능한 유통을 고민하며 컬리를 있게<br />
+                    하는 모든 환경(생산자,커뮤니티,직원)이<br />
+                    더 나아질 수 있도록 노력합니다.
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <!-- product-detail -->
+
+          <div
+            class="tabpanel product-review"
+            role="tabpanel"
+            aria-labelledby="tab-3"
+            id="tabpanel-3"
+          >
+            <p>상품후기</p>
+          </div>
+          <!-- product-review -->
+
+          <div
+            class="tabpanel product-inquiry"
+            role="tabpanel"
+            aria-labelledby="tab-4"
+            id="tabpanel-4"
+          >
+            <p>상품문의</p>
+          </div>
+          <!-- product-inquiry -->
+        </div>
+        <!-- tabpanel-wrapper -->
       </div>
       <!-- product-detail -->
     `;

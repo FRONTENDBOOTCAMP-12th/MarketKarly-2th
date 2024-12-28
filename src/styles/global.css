@@ -57,6 +57,8 @@
   --space-5xl: 2rem; /* 32px */
   --space-6xl: 2.25rem; /* 36px */
   --space-7xl: 2.5rem; /* 40px */
+  --space-8xl: 2.75rem; /* 44px */
+  --space-9xl: 3rem; /* 48px */
 
   /* ------------------------------ Effect styles ----------------------------- */
   --text: inset 1px 1px 0px rgba(0, 0, 0, 1);
