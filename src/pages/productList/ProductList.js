@@ -183,6 +183,7 @@ class ProductList extends LitElement {
   static properties = {
     activeStandard: { type: String },
     products: { type: Array },
+    originalProducts: { type: Array },
     currentPage: { type: Number },
     itemsPerPage: { type: Number },
     totalItems: { type: Number },
@@ -193,6 +194,7 @@ class ProductList extends LitElement {
     super();
     this.activeStandard = 'recommended';
     this.products = [];
+    this.originalProducts = [];
     this.currentPage = 1;
     this.itemsPerPage = 15;
     this.totalItems = 0;
@@ -208,6 +210,7 @@ class ProductList extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.renderCardProducts();
+    this.addEventListener('filter-change', this.handleFilterChange.bind(this));
   }
 
   async renderCardProducts() {
@@ -224,7 +227,8 @@ class ProductList extends LitElement {
       const response = await fetch(url);
       const data = await response.json();
 
-      this.products = data.items;
+      this.originalProducts = data.items;
+      this.products = [...this.originalProducts];
       this.totalItems = data.totalItems;
       this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
 
@@ -234,6 +238,73 @@ class ProductList extends LitElement {
     } catch (err) {
       console.error('에러발생: ', err);
     }
+  }
+
+  handleFilterChange(e) {
+    const selectedFilters = e.detail;
+    this.filterProducts(selectedFilters);
+  }
+
+  filterProducts(selectedFilters) {
+    this.products = [...this.originalProducts];
+
+    if (selectedFilters.categories && selectedFilters.categories.length > 0) {
+      this.products = this.products.filter((product) =>
+        selectedFilters.categories.includes(product.category)
+      );
+    }
+
+    if (selectedFilters.brand && selectedFilters.brand.length > 0) {
+      this.products = this.products.filter((product) =>
+        selectedFilters.brand.includes(product.brand)
+      );
+    }
+
+    if (selectedFilters.delivery && selectedFilters.delivery.length > 0) {
+      this.products = this.products.filter((product) =>
+        selectedFilters.delivery.includes(product.deliveryType)
+      );
+    }
+
+    if (selectedFilters.price && selectedFilters.price.length > 0) {
+      this.products = this.products.filter((product) => {
+        const realPrice = this.getRealPrice(product);
+        return selectedFilters.price.some((priceRange) => {
+          if (priceRange === '6,800원 미만') {
+            return realPrice < 6800;
+          } else if (priceRange === '6,800원 ~ 9,900원') {
+            return realPrice >= 6800 && realPrice <= 9900;
+          } else if (priceRange === '9,900원 ~ 14,900원') {
+            return realPrice >= 9900 && realPrice < 14900;
+          } else if (priceRange === '14,900원 이상') {
+            return realPrice > 14900;
+          }
+          return false;
+        });
+      });
+    }
+
+    if (selectedFilters.benefit) {
+      if (selectedFilters.benefit.includes('한정수량')) {
+        this.products = this.products.filter(
+          (product) => product.limited === true
+        );
+      }
+      if (selectedFilters.benefit.includes('할인상품')) {
+        this.products = this.products.filter((product) => product.discount > 0);
+      }
+    }
+
+    if (selectedFilters.type && selectedFilters.type.includes('Karlit Only')) {
+      this.products = this.products.filter(
+        (product) => product.kalitOnly === true
+      );
+    }
+
+    this.totalItems = this.products.length;
+    this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.currentPage = 1;
+    this.requestUpdate();
   }
 
   get paginatedProducts() {

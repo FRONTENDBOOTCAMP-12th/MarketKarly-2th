@@ -96,12 +96,11 @@ class ProductFilter extends LitElement {
       price: '가격',
       benefit: '혜택',
       type: '유형',
-      exclude: '특정상품 제외',
     };
 
     this.filters = {
       categories: [
-        '샐러드 · 간편식',
+        '샐러드·간편식',
         '국·반찬·메인요리',
         '정육·계란',
         '과일·견과·쌀',
@@ -112,7 +111,17 @@ class ProductFilter extends LitElement {
         '건강식품',
         '생활용품·리빙·캠핑',
       ],
-      brand: ['풀무원', '온더바디', '프로쉬'],
+      brand: [
+        '애슐리',
+        '커피빈',
+        '하겐다즈',
+        '프로티원',
+        '풀무원',
+        '슈퍼너츠',
+        '비비고',
+        '덴프스',
+        '농심',
+      ],
       delivery: ['샛별배송', '판매자배송'],
       price: [
         '6,800원 미만',
@@ -121,8 +130,16 @@ class ProductFilter extends LitElement {
         '14,900원 이상',
       ],
       benefit: ['할인상품', '한정수량'],
-      type: ['Kurly Only'],
-      exclude: ['반려동물 상품'],
+      type: ['Karlit Only'],
+    };
+
+    this.selectedFilters = {
+      categories: [],
+      brand: [],
+      delivery: [],
+      price: [],
+      benefit: [],
+      type: [],
     };
   }
 
@@ -132,6 +149,21 @@ class ProductFilter extends LitElement {
       const input = checked.shadowRoot.querySelector('input[type="checkbox"]');
       input.checked = false;
     });
+    this.selectedFilters = {
+      categories: [],
+      brand: [],
+      delivery: [],
+      price: [],
+      benefit: [],
+      type: [],
+    };
+    this.dispatchEvent(
+      new CustomEvent('filter-change', {
+        detail: this.selectedFilters,
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   toggleFilter(e) {
@@ -140,11 +172,39 @@ class ProductFilter extends LitElement {
     this.requestUpdate();
   }
 
+  handleCheckboxChange(e) {
+    const { checked, value } = e.detail;
+    const filterType = e.target.getAttribute('name').split('-')[0];
+
+    if (checked) {
+      if (!this.selectedFilters[filterType]) {
+        this.selectedFilters[filterType] = [];
+      }
+      this.selectedFilters[filterType].push(value);
+    } else {
+      this.selectedFilters[filterType] = this.selectedFilters[
+        filterType
+      ].filter((v) => v !== value);
+    }
+
+    this.dispatchEvent(
+      new CustomEvent('filter-change', {
+        detail: this.selectedFilters,
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
   renderList(filterType) {
     return this.filters[filterType].map(
       (item, index) => html`
         <li class="filter-item">
-          <checkbox-component name="${filterType}-${index}" value="${item}">
+          <checkbox-component
+            name="${filterType}-${index}"
+            value="${item}"
+            @checked="${this.handleCheckboxChange.bind(this)}"
+          >
             ${item}
           </checkbox-component>
         </li>
@@ -160,7 +220,7 @@ class ProductFilter extends LitElement {
           <button
             class="filter-reset"
             type="button"
-            @click="${this.resetFilter}"
+            @click="${this.resetFilter.bind(this)}"
           >
             초기화
           </button>
@@ -171,7 +231,7 @@ class ProductFilter extends LitElement {
               <button
                 class="filter-${filterType}"
                 data-toggle="${filterType}"
-                @click="${this.toggleFilter}"
+                @click="${this.toggleFilter.bind(this)}"
               >
                 ${this.filterTitles[filterType]}
                 <img
