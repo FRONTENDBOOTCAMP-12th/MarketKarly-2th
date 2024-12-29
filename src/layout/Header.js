@@ -227,7 +227,6 @@ class Header extends LitElement {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         width: 100%;
       }
 
@@ -446,24 +445,25 @@ class Header extends LitElement {
   }
 
   handleScroll() {
-    const headerWrapper = this.shadowRoot.querySelector('.header-wrapper');
-    const nav = this.shadowRoot.querySelector('.nav');
-    const searchInput = this.shadowRoot.querySelector('.header-search');
-    const iconList = this.shadowRoot.querySelector('.header-bookmarks');
-    const navHeight = this.shadowRoot.querySelector('.nav').offsetHeight;
+    const header = this.shadowRoot.querySelector('.header-wrapper');
+    const navigation = this.shadowRoot.querySelector('.nav');
+    const searchBox = this.shadowRoot.querySelector('.header-search');
+    const bookmarkContainer =
+      this.shadowRoot.querySelector('.header-bookmarks');
+    const navigationHeight = this.shadowRoot.querySelector('.nav').offsetHeight;
 
-    const scrollY = window.scrollY;
+    const currentScrollPosition = window.scrollY;
 
-    if (scrollY > navHeight) {
-      nav.classList.add('scrolled');
-      headerWrapper.classList.add('scrolled');
-      searchInput.classList.add('scrolled');
-      iconList.classList.add('scrolled');
+    if (currentScrollPosition > navigationHeight) {
+      navigation.classList.add('scrolled');
+      header.classList.add('scrolled');
+      searchBox.classList.add('scrolled');
+      bookmarkContainer.classList.add('scrolled');
     } else {
-      headerWrapper.classList.remove('scrolled');
-      nav.classList.remove('scrolled');
-      searchInput.classList.remove('scrolled');
-      iconList.classList.remove('scrolled');
+      header.classList.remove('scrolled');
+      navigation.classList.remove('scrolled');
+      searchBox.classList.remove('scrolled');
+      bookmarkContainer.classList.remove('scrolled');
     }
   }
 
