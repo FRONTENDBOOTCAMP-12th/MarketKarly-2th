@@ -36,11 +36,13 @@ class HeaderCategory extends LitElement {
         font-size: 14px;
         color: var(--gray-color-700, #404040);
         gap: var(--space-lg);
+        font-weight: var(--text-semi-bold);
       }
 
       .category-list li:hover {
-        background-color: var(--gray-color-50, #f9f9f9);
+        background-color: #f7f7f7;
         color: var(--primary-color, #283198);
+        font-weight: var(--text-bold);
       }
 
       .category-list li img {
