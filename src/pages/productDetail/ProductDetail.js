@@ -5,13 +5,19 @@ import '@/components/Button/BtnFilled';
 
 class ProductDetail extends LitElement {
   static properties = {
-    productName: { type: String },
-    price: { type: String },
     disabled: { type: Boolean },
     count: { type: Number },
     totalPrice: { type: String },
     isToggled: { type: Boolean },
     activeTab: { type: String },
+
+    photoURL: { type: String },
+    deliveryType: { type: String },
+    productName: { type: String },
+    productHeadline: { type: String },
+    price: { type: String },
+    productStory: { type: String },
+    detailPhotoURL: { type: String },
   };
 
   static styles = [
@@ -551,13 +557,20 @@ class ProductDetail extends LitElement {
   constructor() {
     super();
 
-    this.productName = '[풀무원] 탱탱쫄면 (4개입)';
-    this.price = '4,980';
     this.disabled = true;
     this.count = 1;
     this.totalPrice = '';
     this.isToggled = false;
     this.activeTab = '';
+
+    this.photoURL = '/image/product01.webp';
+    this.deliveryType = '샛별배송';
+    this.productName = '[풀무원] 탱탱쫄면 (4개입)';
+    this.productHeadline = '튀기지 않아 부담 없는 매콤함';
+    this.price = '4,980';
+    this.productStory =
+      '쫄면의 진가는 매콤새콤한 양념과 탱탱한 면발에서 찾을 수 있지요. 풀무원은 이 맛을 더 부담 없이 즐길 수 있도록 튀기지 않고 만든 탱탱쫄면을 선보입니다. 밀가루와 감자 전분을 적절히 배합해 탄력이 좋고, 입에 넣었을 때는 찰지게 씹히죠. 고추장을 넣어 숙성한 비빔장은 자연스럽고 깊은 맛을 냅니다. 간단하게 조리해 마지막 한 가닥까지 탱탱한 식감을 즐겨보세요. 취향에 따라 다양한 고명을 올려 드셔도 좋아요.';
+    this.detailPhotoURL = '/public/image/product_detail_jjolmeon.svg';
   }
 
   connectedCallback() {
@@ -692,18 +705,18 @@ class ProductDetail extends LitElement {
     return html`
       <div class="product-detail-main">
         <figure class="product-image">
-          <img src="/image/product01.webp" alt="" />
+          <img src="${this.photoURL}" alt="" />
           <figcaption class="sr-only">${this.productName} 사진</figcaption>
         </figure>
         <!-- figure -->
 
         <div class="product-content">
           <div class="product-intro">
-            <p class="delivery-type">샛별배송</p>
+            <p class="delivery-type">${this.deliveryType}</p>
 
             <div class="product-title">
               <h2>${this.productName}</h2>
-              <p class="product-headline">튀기지 않아 부담 없는 매콤함</p>
+              <p class="product-headline">${this.productHeadline}</p>
             </div>
 
             <p class="product-price">${this.price}<span>원</span></p>
@@ -912,25 +925,17 @@ class ProductDetail extends LitElement {
             id="tabpanel-1"
           >
             <figure>
-              <img src="/image/product01.webp" alt="" />
+              <img src="${this.photoURL}" alt="" />
               <figcaption class="sr-only">${this.productName} 사진</figcaption>
             </figure>
 
             <div class="karly-product">
               <h3>
-                <span>튀기지 않아 부담 없는 매콤함</span>
+                <span>${this.productHeadline}</span>
                 [풀무원] 탱탱쫄면
               </h3>
 
-              <p>
-                쫄면의 진가는 매콤새콤한 양념과 탱탱한 면발에서 찾을 수 있지요.
-                풀무원은 이 맛을 더 부담 없이 즐길 수 있도록 튀기지 않고 만든
-                탱탱쫄면을 선보입니다. 밀가루와 감자 전분을 적절히 배합해 탄력이
-                좋고, 입에 넣었을 때는 찰지게 씹히죠. 고추장을 넣어 숙성한
-                비빔장은 자연스럽고 깊은 맛을 냅니다. 간단하게 조리해 마지막 한
-                가닥까지 탱탱한 식감을 즐겨보세요. 취향에 따라 다양한 고명을
-                올려 드셔도 좋아요.
-              </p>
+              <p>${this.productStory}</p>
             </div>
 
             <div class="karly-point">
@@ -951,8 +956,8 @@ class ProductDetail extends LitElement {
             id="tabpanel-2"
           >
             <img
-              src="/public/image/product_detail_jjolmeon.svg"
-              alt="탱탱쫄면 상세정보 이미지"
+              src="${this.detailPhotoURL}"
+              alt="${this.productName} 상세정보 이미지"
             />
 
             <div class="why-karly">
