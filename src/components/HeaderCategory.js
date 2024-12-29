@@ -39,7 +39,20 @@ class HeaderCategory extends LitElement {
         font-weight: var(--text-semi-bold);
       }
 
-      .category-list li:hover {
+      .category-list li button {
+        all: unset;
+        display: flex;
+        align-items: center;
+        gap: var(--space-lg);
+        width: 100%;
+      }
+
+      .category-list li:focus-within {
+        outline: 2px solid var(--primary-color, #283198);
+      }
+
+      .category-list li:hover,
+      .category-list li:focus-within {
         background-color: #f7f7f7;
         color: var(--primary-color, #283198);
         font-weight: var(--text-bold);
@@ -51,7 +64,8 @@ class HeaderCategory extends LitElement {
         color: var(--gray-color-700, #404040);
       }
 
-      .category-list li:hover img {
+      .category-list li:hover img,
+      .category-list li:focus-within img {
         filter: invert(24%) sepia(68%) saturate(2054%) hue-rotate(226deg)
           brightness(92%) contrast(92%);
       }
@@ -63,130 +77,53 @@ class HeaderCategory extends LitElement {
   }
 
   render() {
+    const categories = [
+      { src: '/icon/header-category-veggies.svg', label: '채소' },
+      { src: '/icon/header-category-fruit.svg', label: '과일 · 견과 · 쌀' },
+      {
+        src: '/icon/header-category-seafood.svg',
+        label: '수산 · 해산 · 건어물',
+      },
+      { src: '/icon/header-category-meat.svg', label: '정육 · 계란' },
+      { src: '/icon/header-category-side.svg', label: '국 · 반찬 · 메인요리' },
+      { src: '/icon/header-category-convenient.svg', label: '샐러드 · 간편식' },
+      { src: '/icon/header-category-sauce.svg', label: '면 · 양념 · 오일' },
+      {
+        src: '/icon/header-category-snacks.svg',
+        label: '생수 · 음료 · 우유 · 커피',
+      },
+      { src: '/icon/header-category-cookie.svg', label: '간식 · 과자 · 떡' },
+      {
+        src: '/icon/header-category-deli.svg',
+        label: '베이커리 · 치즈 · 델리',
+      },
+      { src: '/icon/header-category-health.svg', label: '건강식품' },
+      { src: '/icon/header-category-liquor.svg', label: '전통주' },
+      {
+        src: '/icon/header-category-living.svg',
+        label: '생활용품 · 리빙 · 캠핑',
+      },
+      { src: '/icon/header-category-beauty.svg', label: '스킨케어 · 메이크업' },
+      { src: '/icon/header-category-body.svg', label: '헤어 · 바디 · 구강' },
+      { src: '/icon/header-category-kitchen.svg', label: '주방용품' },
+      { src: '/icon/header-category-electronic.svg', label: '가전제품' },
+      { src: '/icon/header-category-pet.svg', label: '반려동물' },
+      { src: '/icon/header-category-kids.svg', label: '베이비 · 키즈 · 완구' },
+      { src: '/icon/header-category-recommend.svg', label: '여행 · 티켓' },
+    ];
+
     return html`
       <ul class="category-list">
-        <li>
-          <img src="/icon/header-category-veggies.svg" alt="채소 아이콘" />
-          채소
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-fruit.svg"
-            alt="과일·견과·쌀 아이콘"
-          />
-          과일 · 견과 · 쌀
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-seafood.svg"
-            alt="수산·해산·건어물 아이콘"
-          />
-          수산 · 해산 · 건어물
-        </li>
-        <li>
-          <img src="/icon/header-category-meat.svg" alt="정육·계란 아이콘" />
-          정육 · 계란
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-side.svg"
-            alt="국·반찬·메인요리 아이콘"
-          />
-          국 · 반찬 · 메인요리
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-convenient.svg"
-            alt="샐러드·간편식 아이콘"
-          />
-          샐러드 · 간편식
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-sauce.svg"
-            alt="면·양념·오일 아이콘"
-          />
-          면 · 양념 · 오일
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-snacks.svg"
-            alt="생수·음료·우유·커피 아이콘"
-          />
-          생수 · 음료 · 우유 · 커피
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-cookie.svg"
-            alt="간식·과자·떡 아이콘"
-          />
-          간식 · 과자 · 떡
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-deli.svg"
-            alt="베이커리·치즈·델리 아이콘"
-          />
-          베이커리 · 치즈 · 델리
-        </li>
-        <li>
-          <img src="/icon/header-category-health.svg" alt="건강식품 아이콘" />
-          건강식품
-        </li>
-        <li>
-          <img src="/icon/header-category-liquor.svg" alt="전통주 아이콘" />
-          전통주
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-living.svg"
-            alt="생활용품·리빙·캠핑 아이콘"
-          />
-          생활용품 · 리빙 · 캠핑
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-beauty.svg"
-            alt="스킨케어·메이크업 아이콘"
-          />
-          스킨케어 · 메이크업
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-body.svg"
-            alt="헤어·바디·구강 아이콘"
-          />
-          헤어 · 바디 · 구강
-        </li>
-        <li>
-          <img src="/icon/header-category-kitchen.svg" alt="주방용품 아이콘" />
-          주방용품
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-electronic.svg"
-            alt="가전제품 아이콘"
-          />
-          가전제품
-        </li>
-        <li>
-          <img src="/icon/header-category-pet.svg" alt="반려동물 아이콘" />
-          반려동물
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-kids.svg"
-            alt="베이비·키즈·완구 아이콘"
-          />
-          베이비 · 키즈 · 완구
-        </li>
-        <li>
-          <img
-            src="/icon/header-category-recommend.svg"
-            alt="여행·티켓 아이콘"
-          />
-          여행 · 티켓
-        </li>
+        ${categories.map(
+          (category) => html`
+            <li>
+              <button>
+                <img src="${category.src}" alt="" />
+                ${category.label}
+              </button>
+            </li>
+          `
+        )}
       </ul>
     `;
   }
