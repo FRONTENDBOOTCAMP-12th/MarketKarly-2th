@@ -385,6 +385,12 @@ class Header extends LitElement {
       .header-wrapper.scrolled .nav-delivery {
         display: none;
       }
+      button {
+        border: none;
+        margin: 0;
+        padding: 0;
+        background: transparent;
+      }
     `,
   ];
 
@@ -591,7 +597,7 @@ class Header extends LitElement {
 
           <nav class="nav">
             <section
-              class="nav-category header-category"
+              class="nav-category"
               @mouseenter=${this.openCategory}
               @mouseleave=${this.closeCategory}
               @focus=${this.openCategory}
@@ -601,7 +607,7 @@ class Header extends LitElement {
               ${this.isCategoryOpen
                 ? html`<header-category-component></header-category-component>`
                 : ''}
-              <div class="nav-category-button">
+              <button class="nav-category-button">
                 <img
                   src="/icon/hamburger.webp"
                   alt="카테고리"
@@ -612,7 +618,7 @@ class Header extends LitElement {
                 <span class="nav-category-text nav-category-hover"
                   >카테고리</span
                 >
-              </div>
+              </button>
             </section>
 
             <ul class="nav-site-map">
