@@ -11,6 +11,7 @@ class ProductDetail extends LitElement {
     count: { type: Number },
     totalPrice: { type: String },
     isToggled: { type: Boolean },
+    activeTab: { type: String },
   };
 
   static styles = [
@@ -254,7 +255,11 @@ class ProductDetail extends LitElement {
           }
         }
 
-        .tab-menu {
+        .tabmenu {
+          position: sticky;
+          top: -1px;
+          z-index: 12;
+
           width: 100%;
           margin-top: var(--space-9xl);
           margin-block-start: var(--space-9xl);
@@ -281,7 +286,7 @@ class ProductDetail extends LitElement {
                 color: var(--primary-color, #283198);
               }
 
-              .focus {
+              a {
                 width: 100%;
                 display: block;
                 padding-top: var(--space-xl);
@@ -290,12 +295,25 @@ class ProductDetail extends LitElement {
               }
             }
 
-            .tab:nth-child(1) {
+            .tab:nth-child(1).no-border-right {
               border-right: none;
             }
+            .tab:nth-child(3).no-border-left {
+              border-left: none;
+            }
+            .tab:nth-child(3).no-border-right {
+              border-right: none;
+            }
+
             .tab:nth-child(2) {
+              border-left: none;
               border-right: none;
+              &[aria-selected='true'] {
+                border-left: 1px solid var(--gray-color-100, #e1e1e1);
+                border-right: 1px solid var(--gray-color-100, #e1e1e1);
+              }
             }
+
             .tab:nth-child(3) {
               .review-count {
                 display: inline-block;
@@ -307,14 +325,22 @@ class ProductDetail extends LitElement {
                 line-height: var(--regular-line-height);
               }
             }
+
             .tab:nth-child(4) {
               border-left: none;
+              &[aria-selected='true'] {
+                border-left: 1px solid var(--gray-color-100, #e1e1e1);
+              }
             }
           }
         }
 
         .tabpanel-wrapper {
-          .tabpanel {
+          div[id^='tabpanel']::before {
+            content: '';
+            display: block;
+            height: 56px; /*  탭메뉴 헤더 높이 */
+            margin-top: -56px; /* 헤더 높이만큼 보정 */
           }
 
           .tabpanel.product-description {
@@ -531,13 +557,23 @@ class ProductDetail extends LitElement {
     this.count = 1;
     this.totalPrice = '';
     this.isToggled = false;
+    this.activeTab = '';
   }
+
   connectedCallback() {
     super.connectedCallback();
 
     setTimeout(() => {
       this.handleTotalPrice();
     }, 0);
+
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   get productPrice() {
@@ -588,6 +624,69 @@ class ProductDetail extends LitElement {
   toggleBtnFavorits() {
     this.isToggled = !this.isToggled;
   }
+
+  handleTabmenu(e) {
+    e.preventDefault(); // 기본 앵커 동작 방지
+
+    const target = e.target;
+    const tab = target.closest('li');
+    const tabId = target.getAttribute('href').replace('#', '');
+
+    if (tab) {
+      const siblings = tab.parentElement.children;
+
+      // 모든 형제 요소의 aria-selected 속성을 false로 설정
+      for (const sibling of siblings) {
+        sibling.setAttribute('aria-selected', 'false');
+      }
+
+      // 현재 부모 요소의 aria-selected 속성을 true로 설정
+      tab.setAttribute('aria-selected', 'true');
+
+      // border 없애기
+      if (siblings[1].getAttribute('aria-selected') === 'true') {
+        siblings[0].classList.add('no-border-right');
+        siblings[2].classList.add('no-border-left');
+      } else {
+        siblings[0].classList.remove('no-border-right');
+        siblings[2].classList.remove('no-border-left');
+      }
+
+      // border 없애기
+      if (siblings[3].getAttribute('aria-selected') === 'true') {
+        siblings[2].classList.add('no-border-right');
+      } else {
+        siblings[2].classList.remove('no-border-right');
+      }
+    }
+
+    // 해당 id로 스크롤 이동
+    this.shadowRoot
+      .querySelector(`#${tabId}`)
+      .scrollIntoView({ behavior: 'smooth' });
+  }
+
+  handleScroll = () => {
+    // 바깥의 this를 바인딩하기 위해 화살표 함수를 사용
+    // 화살표 함수를 사용하지 않으려면 constructor에 아래 코드를 넣어서 this를 바인딩
+    // this.handleScroll = this.handleScroll.bind(this);
+
+    const tabpanels = this.renderRoot.querySelectorAll('.tabpanel');
+    const offset = 56; // 탭메뉴 높이
+    const scrollPosition = window.scrollY + offset;
+
+    for (const tabpanel of tabpanels) {
+      const rect = tabpanel.getBoundingClientRect();
+      const tabpanelTop = window.scrollY + rect.top;
+      const tabpanelBottom = tabpanelTop + tabpanel.offsetHeight;
+
+      if (scrollPosition >= tabpanelTop && scrollPosition < tabpanelBottom) {
+        this.activeTab = tabpanel.id;
+        break; // tabpanel을 찾았으면 반복문 종료 - 중요!
+        // 루프를 즉시 중단하여 불필요한 계산을 방지하고 성능을 향상
+      }
+    }
+  };
 
   render() {
     return html`
@@ -742,49 +841,64 @@ class ProductDetail extends LitElement {
         </div>
         <!-- product-content -->
 
-        <nav class="tab-menu">
+        <nav class="tabmenu">
           <ul class="tablist" role="tablist">
             <li
               class="tab"
               role="tab"
               id="tab-1"
-              aria-selected="true"
+              aria-selected="${this.activeTab === 'tabpanel-1'
+                ? 'true'
+                : 'false'}"
               aria-controls="tabpanel-1"
             >
-              <span class="focus">상품설명</span>
+              <a href="#tabpanel-1" @click="${this.handleTabmenu}">
+                <span class="focus">상품설명</span>
+              </a>
             </li>
 
             <li
               class="tab"
               role="tab"
               id="tab-2"
-              aria-selected="false"
+              aria-selected="${this.activeTab === 'tabpanel-2'
+                ? 'true'
+                : 'false'}"
               aria-controls="tabpanel-2"
             >
-              <a href="#tabpanel-2" class="focus">상세정보</a>
+              <a href="#tabpanel-2" @click="${this.handleTabmenu}">
+                <span class="focus">상세정보</span>
+              </a>
             </li>
 
             <li
               class="tab"
               role="tab"
               id="tab-3"
-              aria-selected="false"
+              aria-selected="${this.activeTab === 'tabpanel-3'
+                ? 'true'
+                : 'false'}"
               aria-controls="tabpanel-3"
             >
-              <span class="focus">
-                후기
-                <span class="review-count">(1,207)</span>
-              </span>
+              <a href="#tabpanel-3" @click="${this.handleTabmenu}">
+                <span class="focus">
+                  후기<span class="review-count">(1,207)</span>
+                </span>
+              </a>
             </li>
 
             <li
               class="tab"
               role="tab"
               id="tab-4"
-              aria-selected="false"
+              aria-selected="${this.activeTab === 'tabpanel-4'
+                ? 'true'
+                : 'false'}"
               aria-controls="tabpanel-4"
             >
-              <span class="focus">문의</span>
+              <a href="#tabpanel-4" @click="${this.handleTabmenu}">
+                <span class="focus">문의</span>
+              </a>
             </li>
           </ul>
         </nav>
