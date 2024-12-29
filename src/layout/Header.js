@@ -11,6 +11,11 @@ class Header extends LitElement {
       .header-wrapper {
         position: relative;
         box-shadow: 0 0 var(--space-md) var(--gray-color-200, #c4c4c4);
+        background-color: var(--white-color, #ffffff);
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        z-index: 1000;
       }
 
       .top-bar-nav {
@@ -322,6 +327,56 @@ class Header extends LitElement {
       .delivery-bold {
         font-weight: var(--text-bold);
       }
+
+      nav.scrolled {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      nav.scrolled .nav-site-map {
+        margin-left: var(--space-md);
+        gap: 4.6rem;
+        justify-content: flex-start;
+      }
+
+      nav.scrolled .nav-site-map li {
+        margin-right: var(--space-md);
+        margin-top: var(--space-md);
+      }
+
+      .header-wrapper.scrolled {
+        transform: translateY(-66%);
+        z-index: 999;
+      }
+
+      .header-search.scrolled {
+        position: absolute;
+        top: 7.4rem;
+        left: 48rem;
+        width: 242px;
+        height: 36px;
+        border: 1px solid var(--gray-50, #f9f9f9);
+        background-color: var(--gray-50, #f9f9f9);
+        border-radius: 4px;
+        padding: 0 0 0 var(--space-lg);
+        box-sizing: border-box;
+        z-index: 999;
+      }
+
+      .header-search.scrolled input {
+        font-size: var(--font-sm);
+        background-color: transparent;
+      }
+
+      .header-bookmarks.scrolled {
+        position: relative;
+        top: 3.5rem;
+      }
+
+      .header-wrapper.scrolled .nav-delivery {
+        display: none;
+      }
     `,
   ];
 
@@ -338,6 +393,7 @@ class Header extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.fetchData();
+    window.addEventListener('scroll', this.handleScroll.bind(this));
   }
 
   fetchData() {
@@ -380,188 +436,210 @@ class Header extends LitElement {
     }
   }
 
+  handleScroll() {
+    const headerWrapper = this.shadowRoot.querySelector('.header-wrapper');
+    const nav = this.shadowRoot.querySelector('.nav');
+    const searchInput = this.shadowRoot.querySelector('.header-search');
+    const iconList = this.shadowRoot.querySelector('.header-bookmarks');
+    const navHeight = this.shadowRoot.querySelector('.nav').offsetHeight;
+
+    const scrollY = window.scrollY;
+
+    if (scrollY > navHeight) {
+      nav.classList.add('scrolled');
+      headerWrapper.classList.add('scrolled');
+      searchInput.classList.add('scrolled');
+      iconList.classList.add('scrolled');
+    } else {
+      headerWrapper.classList.remove('scrolled');
+      nav.classList.remove('scrolled');
+      searchInput.classList.remove('scrolled');
+      iconList.classList.remove('scrolled');
+    }
+  }
+
   render() {
     const { isAuth, user } = this.loginData;
 
     return html`
       <header class="header-wrapper">
-      <div class="max-width-box">
-            <nav class="top-bar-nav">
-              <ul class="header-member-service">
-                ${
-                  !isAuth
-                    ? html`
-                        <li class="header-member-item divider">
-                          <a
-                            href="/src/pages/register/"
-                            class="header-member-link join"
-                            aria-label="회원가입"
-                            >회원가입</a
-                          >
-                        </li>
-                        <li class="header-member-item divider">
-                          <a
-                            href="/src/pages/login/"
-                            class="header-member-link"
-                            aria-label="로그인"
-                            >로그인</a
-                          >
-                        </li>
-                      `
-                    : html`
-                        <li class="header-member-item divider">
-                          <span class="header-member-name">${user.name}님</span>
-                        </li>
-                        <li class="header-member-item divider">
-                          <a
-                            href="#"
-                            @click="${this.handleLogout}"
-                            class="header-member-link"
-                            >로그아웃</a
-                          >
-                        </li>
-                      `
-                }
-                <li class="header-member-item">
-                  <a
-                    href="#"
-                    class="header-member-link"
-                  >
-                    고객센터
-                    <img class="icon-down" src="/icon/down.webp" alt="펼치기" />
-                  </a>
-                  <ul class="header-help-desk">
-                    <li><a href="#" aria-label="공지사항">공지사항</a></li>
-                    <li>
-                      <a href="#" aria-label="자주하는질문">자주하는질문</a>
+        <div class="max-width-box">
+          <nav class="top-bar-nav">
+            <ul class="header-member-service">
+              ${!isAuth
+                ? html`
+                    <li class="header-member-item divider">
+                      <a
+                        href="/src/pages/register/"
+                        class="header-member-link join"
+                        aria-label="회원가입"
+                        >회원가입</a
+                      >
                     </li>
-                    <li><a href="#" aria-label="1:1 문의">1:1 문의</a></li>
-                    <li>
-                      <a href="#" aria-label="대량주문 문의">대량주문 문의</a>
+                    <li class="header-member-item divider">
+                      <a
+                        href="/src/pages/login/"
+                        class="header-member-link"
+                        aria-label="로그인"
+                        >로그인</a
+                      >
                     </li>
-                  </ul>
-                </li>
-              </ul>
-            </nav>
-
-
-
-
-              <div class="header-name-wrapper">
-                <div class="header-site-select">
-                  <h1 class="header-logo">
-                    <a href="/">
-                      <img src="/logo2.webp" alt="마켓컬릿 로고" />
-                    </a>
-                  </h1>
-                  <nav class="header-site-select">
-                    <ul>
-                      <li>
-                        <a
-                          href="/"
-                          class="site-main"
-                          aria-label="마켓컬릿 홈페이지"
-                        >
-                          마켓컬릿
-                        </a>
-                      </li>
-                      <li class="divider divider-site"></li>
-                      <li>
-                        <a
-                          href="/"
-                          class="site-beauty"
-                          aria-label="뷰티컬릿 홈페이지"
-                        >
-                          뷰티컬릿
-                        </a>
-                      </li>
-                      <span class="new-icon">
-                        <img src="/icon/new.webp" alt="새로운 아이콘" />
-                      </span>
-                    </ul>
-                  </nav>
-                </div>
-                <form class="header-search" role="search" aria-label="검색 창">
-                  <input
-                    type="text"
-                    placeholder="검색어를 입력해주세요."
-                    aria-label="검색어 입력"
-                  />
-                  <button type="submit" aria-label="검색 입력 버튼">
-                    <img
-                      src="/icon/header-search.svg"
-                      class="icon"
-                    />
-                  </button>
-                </form>
-                <ul class="header-bookmarks">
+                  `
+                : html`
+                    <li class="header-member-item divider">
+                      <span class="header-member-name">${user.name}님</span>
+                    </li>
+                    <li class="header-member-item divider">
+                      <a
+                        href="#"
+                        @click="${this.handleLogout}"
+                        class="header-member-link"
+                        >로그아웃</a
+                      >
+                    </li>
+                  `}
+              <li class="header-member-item">
+                <a href="#" class="header-member-link">
+                  고객센터
+                  <img class="icon-down" src="/icon/down.webp" alt="펼치기" />
+                </a>
+                <ul class="header-help-desk">
+                  <li><a href="#" aria-label="공지사항">공지사항</a></li>
                   <li>
-                    <a href="#" aria-label="매장 찾기">
-                      <img
-                        src="/icon/map.svg"
-                        class="icon"
-                      />
-                    </a>
+                    <a href="#" aria-label="자주하는질문">자주하는질문</a>
                   </li>
+                  <li><a href="#" aria-label="1:1 문의">1:1 문의</a></li>
                   <li>
-                    <a href="#" aria-label="찜한 상품 목록">
-                      <img
-                        src="/icon/favorits.svg"
-                        class="icon"
-                      />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" aria-label="장바구니">
-                      <img
-                        src="/icon/header-cart.svg"
-                        class="icon"
-                      />
-                    </a>
+                    <a href="#" aria-label="대량주문 문의">대량주문 문의</a>
                   </li>
                 </ul>
-              </div>
+              </li>
+            </ul>
+          </nav>
 
-            <nav class="nav">
-              <section
-                class="nav-category header-category"
-                @mouseenter=${this.openCategory}
-                @mouseleave=${this.closeCategory}
-                @focus=${this.openCategory}
-                @blur=${this.closeCategory}
-                tabindex="0"
-              >
-              ${
-                this.isCategoryOpen
-                  ? html`<header-category-component></header-category-component>`
-                  : ''
-              }
-                <div class="nav-category-button">
-                <img src="/icon/hamburger.webp" alt="카테고리" class="nav-category-icon nav-category-hover" aria-label="카테고리" />
-
-                  <span class="nav-category-text nav-category-hover"
-                    >카테고리</span
-                  >
-                </div>
-              </section>
-
-              <ul class="nav-site-map">
-                <li><a href="/src/pages/productList/" aria-label="신상품 페이지">신상품</a></li>
-                <li><a href="/src/pages/productList/" aria-label="베스트 상품 페이지">베스트</a></li>
-                <li><a href="/src/pages/productList/" aria-label="알뜰쇼핑 페이지">알뜰쇼핑</a></li>
-                <li><a href="/src/pages/productList/" aria-label="특가/혜택 페이지지">특가/혜택</a></li>
-              </ul>
-
-              <div class="nav-delivery">
-                <a href="#" aria-label="샛별·낮 배송 안내">
-                  <span class="delivery-bold">샛별·하루</span>
-                  배송안내
+          <div class="header-name-wrapper">
+            <div class="header-site-select">
+              <h1 class="header-logo">
+                <a href="/">
+                  <img src="/logo2.webp" alt="마켓컬릿 로고" />
                 </a>
-              </div>
-            </nav>
-
+              </h1>
+              <nav class="header-site-select">
+                <ul>
+                  <li>
+                    <a
+                      href="/"
+                      class="site-main"
+                      aria-label="마켓컬릿 홈페이지"
+                    >
+                      마켓컬릿
+                    </a>
+                  </li>
+                  <li class="divider divider-site"></li>
+                  <li>
+                    <a
+                      href="/"
+                      class="site-beauty"
+                      aria-label="뷰티컬릿 홈페이지"
+                    >
+                      뷰티컬릿
+                    </a>
+                  </li>
+                  <span class="new-icon">
+                    <img src="/icon/new.webp" alt="새로운 아이콘" />
+                  </span>
+                </ul>
+              </nav>
+            </div>
+            <form class="header-search" role="search" aria-label="검색 창">
+              <input
+                type="text"
+                placeholder="검색어를 입력해주세요."
+                aria-label="검색어 입력"
+              />
+              <button type="submit" aria-label="검색 입력 버튼">
+                <img src="/icon/header-search.svg" class="icon" />
+              </button>
+            </form>
+            <ul class="header-bookmarks">
+              <li>
+                <a href="#" aria-label="매장 찾기">
+                  <img src="/icon/map.svg" class="icon" />
+                </a>
+              </li>
+              <li>
+                <a href="#" aria-label="찜한 상품 목록">
+                  <img src="/icon/favorits.svg" class="icon" />
+                </a>
+              </li>
+              <li>
+                <a href="#" aria-label="장바구니">
+                  <img src="/icon/header-cart.svg" class="icon" />
+                </a>
+              </li>
+            </ul>
           </div>
-        </div>
+
+          <nav class="nav">
+            <section
+              class="nav-category header-category"
+              @mouseenter=${this.openCategory}
+              @mouseleave=${this.closeCategory}
+              @focus=${this.openCategory}
+              @blur=${this.closeCategory}
+              tabindex="0"
+            >
+              ${this.isCategoryOpen
+                ? html`<header-category-component></header-category-component>`
+                : ''}
+              <div class="nav-category-button">
+                <img
+                  src="/icon/hamburger.webp"
+                  alt="카테고리"
+                  class="nav-category-icon nav-category-hover"
+                  aria-label="카테고리"
+                />
+
+                <span class="nav-category-text nav-category-hover"
+                  >카테고리</span
+                >
+              </div>
+            </section>
+
+            <ul class="nav-site-map">
+              <li>
+                <a href="/src/pages/productList/" aria-label="신상품 페이지"
+                  >신상품</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/src/pages/productList/"
+                  aria-label="베스트 상품 페이지"
+                  >베스트</a
+                >
+              </li>
+              <li>
+                <a href="/src/pages/productList/" aria-label="알뜰쇼핑 페이지"
+                  >알뜰쇼핑</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/src/pages/productList/"
+                  aria-label="특가/혜택 페이지지"
+                  >특가/혜택</a
+                >
+              </li>
+            </ul>
+
+            <div class="nav-delivery">
+              <a href="#" aria-label="샛별·낮 배송 안내">
+                <span class="delivery-bold">샛별·하루</span>
+                배송안내
+              </a>
+            </div>
+          </nav>
         </div>
       </header>
     `;
