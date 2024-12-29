@@ -336,7 +336,7 @@ class Header extends LitElement {
 
       nav.scrolled .nav-site-map {
         margin-left: var(--space-md);
-        gap: 4.6rem;
+        gap: 4.3rem;
         justify-content: flex-start;
       }
 
@@ -352,12 +352,11 @@ class Header extends LitElement {
 
       .header-search.scrolled {
         position: absolute;
-        top: 7.4rem;
-        left: 48rem;
+        top: 7.55rem;
+        left: 47rem;
         width: 242px;
-        height: 36px;
-        border: 1px solid var(--gray-50, #f9f9f9);
-        background-color: var(--gray-50, #f9f9f9);
+        height: 34px;
+        border: 1px solid var(--primary-color, #283198);
         border-radius: 4px;
         padding: 0 0 0 var(--space-lg);
         box-sizing: border-box;
@@ -372,6 +371,16 @@ class Header extends LitElement {
       .header-bookmarks.scrolled {
         position: relative;
         top: 3.5rem;
+      }
+
+      .header-bookmarks.scrolled li a {
+        position: relative;
+        z-index: 1000;
+      }
+
+      .header-bookmarks.scrolled li a:hover img {
+        filter: invert(33%) sepia(98%) saturate(1497%) hue-rotate(222deg)
+          brightness(87%) contrast(91%);
       }
 
       .header-wrapper.scrolled .nav-delivery {
@@ -569,7 +578,7 @@ class Header extends LitElement {
               </li>
               <li>
                 <a href="#" aria-label="찜한 상품 목록">
-                  <img src="/icon/favorits.svg" class="icon" />
+                  <img src="/icon/header-favorits.svg" class="icon" />
                 </a>
               </li>
               <li>
