@@ -191,9 +191,21 @@ class Card extends LitElement {
     popupAddCart.setAttribute('productName', productName);
   };
 
-  handleCardClick = () => {
+  handleCardClick = (event) => {
     this._handleViewedItem();
-    location.href = '/';
+
+    const { target } = event;
+
+    if (target.closest('button') || target.closest('.add-cart')) {
+      // button 태그 또는 .add-cart'에서 발생하는 버튼 클릭 이벤트는 무시
+      return;
+    }
+
+    const link = target.closest('a'); // 클릭된 요소 또는 그 상위 요소에서 a태그 찾기
+
+    if (link) {
+      link.click(); // a태그를 발견하면, 해당 태그의 클릭 이벤트를 수동으로 트리거
+    }
   };
 
   _filterItem(data) {
