@@ -570,27 +570,12 @@ class ProductDetail extends LitElement {
     this.totalPrice = '';
     this.isToggled = false;
     this.activeTab = '';
-
-    this.productData = {
-      photoURL: '/image/product01.webp',
-      deliveryType: '샛별배송',
-      productName: '[풀무원] 탱탱쫄면 (4개입)',
-      productHeadline: '튀기지 않아 부담 없는 매콤함',
-      price: '',
-      productStory:
-        '쫄면의 진가는 매콤새콤한 양념과 탱탱한 면발에서 찾을 수 있지요. 풀무원은 이 맛을 더 부담 없이 즐길 수 있도록 튀기지 않고 만든 탱탱쫄면을 선보입니다. 밀가루와 감자 전분을 적절히 배합해 탄력이 좋고, 입에 넣었을 때는 찰지게 씹히죠. 고추장을 넣어 숙성한 비빔장은 자연스럽고 깊은 맛을 냅니다. 간단하게 조리해 마지막 한 가닥까지 탱탱한 식감을 즐겨보세요. 취향에 따라 다양한 고명을 올려 드셔도 좋아요.',
-      detailPhotoURL: '/image/product_detail_jjolmeon.svg',
-    };
   }
 
   connectedCallback() {
     super.connectedCallback();
 
     this.fetchProduct();
-
-    setTimeout(() => {
-      this.handleTotalPrice();
-    }, 0);
 
     window.addEventListener('scroll', this.handleScroll);
   }
@@ -606,10 +591,15 @@ class ProductDetail extends LitElement {
 
     const productId = urlParams.get('product');
 
-    const record = await pb.collection('products').getOne(productId);
+    try {
+      const record = await pb.collection('products').getOne(productId);
+      this.productData = record;
+      console.log(this.productData);
 
-    this.productData = record;
-    console.log(this.productData);
+      this.handleTotalPrice();
+    } catch (error) {
+      console.error('Error fetching product data:', error);
+    }
   }
 
   get productPrice() {
@@ -620,11 +610,9 @@ class ProductDetail extends LitElement {
   }
 
   handleTotalPrice() {
-    this.totalPrice = this.productData.price;
-
-    console.log(this.productData);
-
-    console.log(this.productData.price);
+    const totalPriceNum = this.count * this.productData.price;
+    this.totalPrice = totalPriceNum.toLocaleString();
+    this.savingsAmount = Math.round(totalPriceNum / 1000);
   }
 
   changeBackground() {
@@ -642,7 +630,7 @@ class ProductDetail extends LitElement {
     this.count++;
 
     if (this.count > 1) {
-      this.totalPrice = (this.count * this.productData.price).toLocaleString();
+      this.handleTotalPrice();
     }
 
     this.changeBackground();
@@ -655,7 +643,7 @@ class ProductDetail extends LitElement {
     }
 
     if (this.count >= 1) {
-      this.totalPrice = (this.count * this.productData.price).toLocaleString();
+      this.handleTotalPrice();
     }
 
     this.changeBackground();
@@ -701,7 +689,7 @@ class ProductDetail extends LitElement {
     }
 
     const targetScroll = this.shadowRoot.querySelector(`#${tabId}`).offsetTop;
-    window.scrollTo({ top: targetScroll - 56 });
+    window.scrollTo({ top: targetScroll - 112 });
 
     // 해당 id로 스크롤 이동
     // this.shadowRoot
@@ -735,7 +723,7 @@ class ProductDetail extends LitElement {
     return html`
       <div class="product-detail-main">
         <figure class="product-image">
-          <img src="${getPbImage(this.productData)}" alt="" />
+          <img src="${getPbImage(this.productData, 'photo')}" alt="" />
           <figcaption class="sr-only">
             ${this.productData.productName} 사진
           </figcaption>
@@ -747,7 +735,7 @@ class ProductDetail extends LitElement {
             <p class="delivery-type">${this.productData.deliveryType}</p>
 
             <div class="product-title">
-              <h2>${this.productData.productName}.</h2>
+              <h2>${this.productData.productName}</h2>
               <p class="product-headline">${this.productHeadline}</p>
             </div>
 
@@ -955,14 +943,17 @@ class ProductDetail extends LitElement {
             id="tabpanel-1"
           >
             <figure>
-              <img src="${getPbImage(this.productData)}" alt="" />
+              <img
+                src="${getPbImage(this.productData, 'detailImage')[0]}"
+                alt=""
+              />
               <figcaption class="sr-only">${this.productName} 사진</figcaption>
             </figure>
 
             <div class="karly-product">
               <h3>
                 <span>${this.productHeadline}</span>
-                [풀무원] 탱탱쫄면
+                ${this.productData.productName.replace(/\(.*?\)/g, '')}
               </h3>
 
               <p>${this.productData.detailDescription}</p>
@@ -986,7 +977,7 @@ class ProductDetail extends LitElement {
             id="tabpanel-2"
           >
             <img
-              src="${getPbImage(this.productData.detailImage[1])}"
+              src="${getPbImage(this.productData, 'detailImage')[1]}"
               alt="${this.productName} 상세정보 이미지"
             />
 
