@@ -437,6 +437,8 @@ class Header extends LitElement {
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: '로그아웃',
+      confirmButtonColor: '#283198',
+      cancelButtonText: '취소',
     }).then(({ isConfirmed }) => {
       if (isConfirmed) {
         localStorage.removeItem('auth');
