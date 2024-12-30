@@ -266,6 +266,13 @@ class Header extends LitElement {
         font-weight: var(--text-bold);
       }
 
+      .header-category {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+      }
+
       .nav-site-map {
         padding: var(--space-xl) 0;
         display: flex;
@@ -313,7 +320,8 @@ class Header extends LitElement {
         z-index: 10;
       }
 
-      .header-member-item:hover .header-help-desk {
+      .header-member-item:hover .header-help-desk,
+      .header-member-item:focus-within .header-help-desk {
         display: block;
       }
 
@@ -321,6 +329,11 @@ class Header extends LitElement {
         display: block;
         padding: var(--space-md);
         text-decoration: none;
+      }
+
+      .header-help-desk li a:hover,
+      .header-help-desk li a:focus {
+        background-color: #f7f7f7;
       }
 
       .delivery-bold {
@@ -443,13 +456,6 @@ class Header extends LitElement {
     this.isCategoryOpen = false;
   }
 
-  handleKeyDown(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      this.isCategoryOpen = !this.isCategoryOpen;
-      e.preventDefault();
-    }
-  }
-
   handleScroll() {
     const header = this.shadowRoot.querySelector('.header-wrapper');
     const navigation = this.shadowRoot.querySelector('.nav');
@@ -470,6 +476,17 @@ class Header extends LitElement {
       navigation.classList.remove('scrolled');
       searchBox.classList.remove('scrolled');
       bookmarkContainer.classList.remove('scrolled');
+    }
+  }
+
+  toggleCategory() {
+    this.isCategoryOpen = !this.isCategoryOpen;
+  }
+
+  handleKeyDown(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.toggleCategory();
     }
   }
 
@@ -600,25 +617,31 @@ class Header extends LitElement {
               class="nav-category"
               @mouseenter=${this.openCategory}
               @mouseleave=${this.closeCategory}
-              @focus=${this.openCategory}
-              @blur=${this.closeCategory}
-              tabindex="0"
             >
-              ${this.isCategoryOpen
-                ? html`<header-category-component></header-category-component>`
-                : ''}
-              <button class="nav-category-button">
+              <button
+                class="nav-category-button"
+                @keydown=${this.handleKeyDown}
+                @click=${this.toggleCategory}
+                tabindex="0"
+                aria-expanded="${this.isCategoryOpen}"
+                aria-controls="category-dropdown"
+              >
                 <img
                   src="/icon/hamburger.webp"
                   alt="카테고리"
-                  class="nav-category-icon nav-category-hover"
+                  class="nav-category-icon"
                   aria-label="카테고리"
                 />
-
-                <span class="nav-category-text nav-category-hover"
-                  >카테고리</span
-                >
+                <span>카테고리</span>
               </button>
+
+              ${this.isCategoryOpen
+                ? html`<header-category-component
+                    id="category-dropdown"
+                    class="header-category"
+                    @keydown=${this.handleCategoryKeyDown}
+                  ></header-category-component>`
+                : ''}
             </section>
 
             <ul class="nav-site-map">
