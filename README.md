@@ -3,6 +3,7 @@
 </div>
 
 ![PerfectDeplo2](./public/readme/market-kurlit.webp)
+![PerfectDeplo2](./public/readme/market-kurlit.jpg)
 
 <div align="center">
    <br><br>
