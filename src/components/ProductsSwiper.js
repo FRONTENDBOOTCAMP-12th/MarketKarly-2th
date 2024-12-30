@@ -1,9 +1,8 @@
 import '@/components/Card';
-import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
+import { LitElement, css, html } from 'lit';
 import { register } from 'swiper/element';
-import { getPbImage } from '../api/getPbImage';
-import pb from '../api/pocketbase';
+import { getPbImage } from '@/api/getPbImage';
 
 register();
 
@@ -46,53 +45,65 @@ class ProductsSwiper extends LitElement {
 
   constructor() {
     super();
-
     this.title = '';
-    this.data = [];
   }
 
   firstUpdated() {
+    // this.swiperEl이 있을 때 초기화
     this.swiperEl = this.renderRoot.querySelector('.swiper');
-    this.swiperEl.initialize();
+    this.swiperEl?.initialize();
+  }
+
+  updated(changedProperties) {
+    // data를 받아온 이후에 swiper DOM 연결
+    if (changedProperties.has('data') && this.data.length > 0) {
+      this.swiperEl = this.renderRoot.querySelector('.swiper');
+    }
   }
 
   nextSlide() {
     // swiper 초기화 여부 확인
-    if (this.swiperEl?.swiper) {
-      this.swiperEl.swiper.slideNext();
-    }
+    this.swiperEl.swiper?.slideNext();
   }
 
   render() {
     return html`
       <section class="recommend">
         <h2>${this.title}</h2>
-        <swiper-container
-          class="swiper"
-          slides-per-view="4"
-          loop="true"
-          speed="1500"
-        >
-          ${this.data.map(
-            (item) => html`
-              <swiper-slide>
-                <card-component
-                  photoURL="${getPbImage(item)}"
-                  deliveryType="${item.deliveryType}"
-                  productName="${item.productName}"
-                  discount="${item.discount}"
-                  realPrice="${Math.floor(
-                    item.price - item.price * (item.discount / 100)
-                  ).toFixed()}"
-                  price="${item.price}"
-                  description="${item.description}"
-                  .tagOnly="${item.kalitOnly}"
-                  .tagLimited="${item.limited}"
-                ></card-component>
-              </swiper-slide>
+
+        ${this.data.length > 0
+          ? html`
+              <swiper-container
+                class="swiper"
+                slides-per-view="4"
+                slides-per-group="1"
+                loop="true"
+                speed="1500"
+              >
+                ${this.data.map(
+                  (item) => html`
+                    <swiper-slide>
+                      <card-component
+                        id=${item.id}
+                        collectionId=${item.collectionId}
+                        photoURL="${getPbImage(item)}"
+                        deliveryType="${item.deliveryType}"
+                        productName="${item.productName}"
+                        discount="${item.discount}"
+                        realPrice="${Math.floor(
+                          item.price - item.price * (item.discount / 100)
+                        ).toFixed()}"
+                        price="${item.price}"
+                        description="${item.description}"
+                        .tagOnly="${item.kalitOnly}"
+                        .tagLimited="${item.limited}"
+                      ></card-component>
+                    </swiper-slide>
+                  `
+                )}
+              </swiper-container>
             `
-          )}
-        </swiper-container>
+          : null}
         <button @click=${this.nextSlide} aria-label="옆으로 넘기기"></button>
       </section>
     `;
