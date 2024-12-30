@@ -16,13 +16,6 @@ class ReviewBoard extends LitElement {
         background: transparent;
       }
 
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: var(--space-7xl) 0;
-      }
-
       .review-header {
         display: flex;
         justify-content: space-between;
@@ -300,56 +293,56 @@ class ReviewBoard extends LitElement {
 
   render() {
     return html`
-      <section class="container">
-        <header class="review-header">
-          <section class="review-info">
-            <h2 class="review-title">상품후기</h2>
-            <p class="review-benefit">글후기 50원 적립금 혜택이 있어요.</p>
-            <ul class="review-caution">
-              <li>
-                퍼플, 더퍼플은 2배 적립 (100원) / 주간 베스트 후기로 선정 시
-                5,000원 추가 적립
-              </li>
-              <li>후기 작성은 배송완료일로부터 30일 이내 가능합니다.</li>
-              <li>
-                작성하신 후기는 확인 후 적립금이 지급됩니다. (영업일 기준 평균
-                1~2일 소요)
-              </li>
-            </ul>
-          </section>
-          <btn-filled-component
-            class="btn-ask"
-            width="155px"
-            height="44px"
-            text="후기 작성"
-            @click=${this.handleSubmit}
-          ></btn-filled-component>
-        </header>
+      <header class="review-header">
+        <section class="review-info">
+          <h2 class="review-title">상품후기</h2>
+          <p class="review-benefit">글후기 50원 적립금 혜택이 있어요.</p>
+          <ul class="review-caution">
+            <li>
+              퍼플, 더퍼플은 2배 적립 (100원) / 주간 베스트 후기로 선정 시
+              5,000원 추가 적립
+            </li>
+            <li>후기 작성은 배송완료일로부터 30일 이내 가능합니다.</li>
+            <li>
+              작성하신 후기는 확인 후 적립금이 지급됩니다. (영업일 기준 평균
+              1~2일 소요)
+            </li>
+          </ul>
+        </section>
+        <btn-filled-component
+          class="btn-ask"
+          width="155px"
+          height="44px"
+          text="후기 작성"
+          @click=${this.handleSubmit}
+        ></btn-filled-component>
+      </header>
 
-        <div class="product-list-container">
+      <div class="product-list-container">
         <div class="list-header">
           <div class="total-count">총 ${this.totalItems}건</div>
           <section role="group" class="sorting-standard" aria-label="정렬 기준">
             <button
               aria-pressed="${this.activeStandard === 'recommended'}"
-              class="choose-standard divider ${
-                this.activeStandard === 'recommended' ? 'active' : ''
-              }"
+              class="choose-standard divider ${this.activeStandard ===
+              'recommended'
+                ? 'active'
+                : ''}"
               @click=${(e) => this.handleStandardClick('recommended', e)}
             >
               추천순
             </button>
             <button
-              class="choose-standard  newest-standard ${
-                this.activeStandard === 'newest' ? 'active' : ''
-              }"
+              class="choose-standard  newest-standard ${this.activeStandard ===
+              'newest'
+                ? 'active'
+                : ''}"
               @click=${(e) => this.handleStandardClick('newest', e)}
             >
               신상품순
             </button>
           </section>
         </div>
-
 
         <ul class="review-list">
           <li class="notice-item">
@@ -374,23 +367,32 @@ class ReviewBoard extends LitElement {
             <div class="review-body">
               <p class="product-title">[풀무원] 탱탱쫄면 (4개입)</p>
               <p class="review-text">
-              쌀쌀한 날씨에는 뜨끈한 국물 요리가 정말 필요하지요. 그래서 아이들이 좋아하는 [풀무원] 탱탱쫄면 (4개입)을 주문해 보았습니다. 예상보다 많은 양념이 들어 있어 상당히 놀랐습니다. 특히 쫄깃한 면발이 정말 맛있어서 더 만족스러웠습니다. 캠핑 등 외출 시 간편하게 즐기기에도 아주 좋은 메뉴로 보입니다. 또한, 반찬이 없을 때 간단하게 꺼내서 먹을 수 있어 매우 유용합니다. 냉동실에 꼭 쟁여두어야 할 아이템으로 추천할 만합니다.
-              <br><br>
-              파송송 썰어 넣거나, 당면 사리를 추가해도 매우 좋습니다.
-              <br><br>
-              <strong>맛 ★★★★★</strong>
-              <br>
-              [풀무원] 탱탱쫄면은 언제나 맛있죠. 면발이 쫄깃하고 양념도 짱맛이라 정말 맛있습니다.
-              <br><br>
-              <strong>양 ★★★★★</strong>
-              <br>
-              어른 2명, 아이 2명이 함께 먹기에 양이 충분했습니다.
-              <br><br>
-              <strong>포장 ★★★★☆</strong>
-              <br>
-              종이 포장과 플라스틱 포장의 이중 포장이어서 별 하나를 뺐지만, 사각 플라스틱 케이스에 담겨 있어 개봉 후 보관하기에 매우 편리했습니다.
-            </p>
-            
+                쌀쌀한 날씨에는 뜨끈한 국물 요리가 정말 필요하지요. 그래서
+                아이들이 좋아하는 [풀무원] 탱탱쫄면 (4개입)을 주문해 보았습니다.
+                예상보다 많은 양념이 들어 있어 상당히 놀랐습니다. 특히 쫄깃한
+                면발이 정말 맛있어서 더 만족스러웠습니다. 캠핑 등 외출 시
+                간편하게 즐기기에도 아주 좋은 메뉴로 보입니다. 또한, 반찬이 없을
+                때 간단하게 꺼내서 먹을 수 있어 매우 유용합니다. 냉동실에 꼭
+                쟁여두어야 할 아이템으로 추천할 만합니다.
+                <br /><br />
+                파송송 썰어 넣거나, 당면 사리를 추가해도 매우 좋습니다.
+                <br /><br />
+                <strong>맛 ★★★★★</strong>
+                <br />
+                [풀무원] 탱탱쫄면은 언제나 맛있죠. 면발이 쫄깃하고 양념도
+                짱맛이라 정말 맛있습니다.
+                <br /><br />
+                <strong>양 ★★★★★</strong>
+                <br />
+                어른 2명, 아이 2명이 함께 먹기에 양이 충분했습니다.
+                <br /><br />
+                <strong>포장 ★★★★☆</strong>
+                <br />
+                종이 포장과 플라스틱 포장의 이중 포장이어서 별 하나를 뺐지만,
+                사각 플라스틱 케이스에 담겨 있어 개봉 후 보관하기에 매우
+                편리했습니다.
+              </p>
+
               <time datetime="2022-11-10" class="review-date">2024.11.10</time>
             </div>
           </li>
@@ -423,23 +425,20 @@ class ReviewBoard extends LitElement {
         </ul>
 
         <nav class="pagination" aria-label="페이지 이동">
-        <button class="btn-prev" aria-label="이전 페이지">
-          <img src="/icon/review-left-arrow.svg" alt="이전 페이지로 이동" />
-        </button>
-        <button class="btn-next" aria-label="다음 페이지">
-          <img src="/icon/review-right-arrow.svg" alt="다음 페이지로 이동" />
-        </button>
-      
+          <button class="btn-prev" aria-label="이전 페이지">
+            <img src="/icon/review-left-arrow.svg" alt="이전 페이지로 이동" />
+          </button>
+          <button class="btn-next" aria-label="다음 페이지">
+            <img src="/icon/review-right-arrow.svg" alt="다음 페이지로 이동" />
+          </button>
         </nav>
 
-        ${
-          this.showModal
-            ? html`<review-modal-component
-                @close=${this.handleModalClose}
-              ></review-modal-component>`
-            : ''
-        }
-      </section>
+        ${this.showModal
+          ? html`<review-modal-component
+              @close=${this.handleModalClose}
+            ></review-modal-component>`
+          : ''}
+      </div>
     `;
   }
 }

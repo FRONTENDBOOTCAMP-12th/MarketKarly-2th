@@ -210,7 +210,7 @@ class InquiryModal extends LitElement {
   }
 
   handleTitleInput(event) {
-    this.title = event.target.value;
+    this.title = event.target.shadowRoot?.querySelector('input')?.value || '';
     this.checkSubmitValidity();
     this.requestUpdate();
   }
