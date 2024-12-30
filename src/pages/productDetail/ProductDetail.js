@@ -19,6 +19,7 @@ class ProductDetail extends LitElement {
     deliveryType: { type: String },
     productName: { type: String },
     productHeadline: { type: String },
+    realPrice: { type: String },
     price: { type: String },
     productStory: { type: String },
     detailPhotoURL: { type: String },
@@ -88,13 +89,27 @@ class ProductDetail extends LitElement {
             .product-price {
               font-size: var(--font-2xl);
               font-weight: var(--text-semi-bold);
-            }
-            .product-price > span {
-              font-size: var(--font-md);
-              font-weight: var(--text-bold);
-              line-height: var(--extra-light-line-height);
-              margin-left: var(--space-sm);
-              margin-inline-start: var(--space-sm);
+
+              .discount {
+                color: var(--accent-color, #fa622f);
+                margin-right: var(--space-md);
+                margin-inline-end: var(--space-md);
+              }
+              .real-price > span {
+                font-size: var(--font-md);
+                font-weight: var(--text-bold);
+                line-height: var(--extra-light-line-height);
+                margin-left: var(--space-sm);
+                margin-inline-start: var(--space-sm);
+              }
+
+              .origin-price {
+                display: block;
+                color: var(--gray-color-400, #898989);
+                font-size: var(--font-md);
+                font-weight: var(--text-regular);
+                line-height: var(--regular-line-height);
+              }
             }
 
             .savings-description {
@@ -602,15 +617,18 @@ class ProductDetail extends LitElement {
     }
   }
 
-  get productPrice() {
-    const productPrice =
-      this.renderRoot.querySelector('.product-price').textContent;
+  get realPrice() {
+    const realPrice = Math.floor(
+      this.productData.price -
+        this.productData.price * (this.productData.discount / 100)
+    ).toFixed();
 
-    return +productPrice.replace(/[^\d]/g, '');
+    return realPrice;
   }
 
   handleTotalPrice() {
     const totalPriceNum = this.count * this.productData.price;
+
     this.totalPrice = totalPriceNum.toLocaleString();
     this.savingsAmount = Math.round(totalPriceNum / 1000);
   }
@@ -736,12 +754,24 @@ class ProductDetail extends LitElement {
 
             <div class="product-title">
               <h2>${this.productData.productName}</h2>
-              <p class="product-headline">${this.productHeadline}</p>
+              <p class="product-headline">${this.productData.description}</p>
             </div>
 
-            <p class="product-price">
-              ${this.productData.price.toLocaleString()}<span>원</span>
-            </p>
+            <div class="product-price">
+              <p>
+                <span class="discount">
+                  ${this.productData.discount}%<span class="sr-only">할인</span>
+                </span>
+
+                <span class="real-price">
+                  ${this.realPrice.toLocaleString()}<span>원</span>
+                </span>
+              </p>
+
+              <del class="origin-price">
+                ${this.productData.price.toLocaleString()}원
+              </del>
+            </div>
 
             <p class="savings-description">
               로그인 후, 적립 혜택이 제공됩니다.
@@ -952,7 +982,7 @@ class ProductDetail extends LitElement {
 
             <div class="karly-product">
               <h3>
-                <span>${this.productHeadline}</span>
+                <span>${this.productData.description}</span>
                 ${this.productData.productName.replace(/\(.*?\)/g, '')}
               </h3>
 

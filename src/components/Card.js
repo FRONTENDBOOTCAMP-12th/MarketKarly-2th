@@ -203,7 +203,7 @@ class Card extends LitElement {
 
     const link =
       target.closest('.content').previousElementSibling.firstElementChild;
-    // 클릭된 요소 또는 그 상위 요소에서 a태그 찾기
+    // 클릭된 요소 상위 요소에서 a태그 찾기
 
     console.log(link);
     if (link) {
