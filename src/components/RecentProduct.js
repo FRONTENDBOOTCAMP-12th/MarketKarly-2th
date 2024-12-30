@@ -108,15 +108,19 @@ class RecentElement extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this._fetchStorageData();
+    window.addEventListener('pageshow', this.handlePageShow.bind(this));
+    // this._fetchStorageData();
   }
 
   _fetchStorageData() {
     const data = JSON.parse(localStorage.getItem('viewedItem'));
+    this.viewedData = data;
+  }
 
-    if (data?.length > 0) {
-      this.viewedData = data;
-    }
+  handlePageShow() {
+    const storedProducts = JSON.parse(localStorage.getItem('viewedItem'));
+    this.viewedData = storedProducts;
+    this.requestUpdate();
   }
 }
 
