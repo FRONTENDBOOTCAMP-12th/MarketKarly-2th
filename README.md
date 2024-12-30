@@ -2,7 +2,7 @@
    <h1>마켓컬++릿(Lit) </h1>
 </div>
 
-![마켓컬릿](./public/readme/market-kurlit.webp)
+![PerfectDeplo2](./public/readme/perfect-deplo2.webp)
 
 <div align="center">
    <br><br>
