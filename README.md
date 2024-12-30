@@ -1,7 +1,10 @@
 <div align="center">
    <h1>마켓컬++릿(Lit) </h1>
+</div>
 
-   <img src="./public/readme/market-kurlit.webp" alt="마켓컬릿">
+![마켓컬릿](./public/readme/market-kurlit.webp)
+
+<div align="center">
    <br><br>
    <a href="https://marketkalit2th.netlify.app/">🌐 사이트 보기</a> | <a href="https://github.com/FRONTENDBOOTCAMP-12th/MarketKarly-2th/wiki">🔗 wiki</a>
       <br><br>
@@ -16,7 +19,7 @@
 
 ## TEAM 🔥 Perfect Deplo2 🔥 가 만들었습니다
 
-![마켓컬릿](./public/readme/perfect-deplo2.webp)
+![PerfectDeplo2](./public/readme/perfect-deplo2.webp)
 
 ### Perfect Deplo2 : Perfect Deployment by team 2
 
