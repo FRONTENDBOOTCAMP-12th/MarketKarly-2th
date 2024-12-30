@@ -313,7 +313,8 @@ class Header extends LitElement {
         z-index: 10;
       }
 
-      .header-member-item:hover .header-help-desk {
+      .header-member-item:hover .header-help-desk,
+      .header-member-item:focus-within .header-help-desk {
         display: block;
       }
 
@@ -321,6 +322,11 @@ class Header extends LitElement {
         display: block;
         padding: var(--space-md);
         text-decoration: none;
+      }
+
+      .header-help-desk li a:hover,
+      .header-help-desk li a:focus {
+        background-color: #f7f7f7;
       }
 
       .delivery-bold {
@@ -605,7 +611,9 @@ class Header extends LitElement {
               tabindex="0"
             >
               ${this.isCategoryOpen
-                ? html`<header-category-component></header-category-component>`
+                ? html`<header-category-component
+                    class="header-category"
+                  ></header-category-component>`
                 : ''}
               <button class="nav-category-button">
                 <img
