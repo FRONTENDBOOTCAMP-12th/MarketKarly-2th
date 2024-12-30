@@ -5,6 +5,7 @@ import '@/components/Button/BtnDisabled';
 import '@/components/Button/BtnEmptied';
 import '@/components/Button/BtnFilled';
 import '@/components/Input/InputCheckbox';
+import '@/components/Input/InputText';
 
 class ReviewModal extends LitElement {
   static styles = [
@@ -40,8 +41,8 @@ class ReviewModal extends LitElement {
       }
 
       .review-close-btn:hover {
-        filter: invert(33%) sepia(98%) saturate(1497%) hue-rotate(222deg)
-          brightness(87%) contrast(91%);
+        filter: invert(26%) sepia(82%) saturate(3000%) hue-rotate(190deg)
+          brightness(95%) contrast(30%);
       }
 
       .review-title {
@@ -90,15 +91,6 @@ class ReviewModal extends LitElement {
         font-weight: var(--text-bold);
         color: var(--gray-color-700, #404040);
         font-size: 1.125rem;
-      }
-
-      .title-input {
-        width: 629px;
-        height: 44px;
-        line-height: var(--regular-line-height);
-        border: 1px solid var(--gray-color-300, #a6a6a6);
-        border-radius: 4px;
-        padding: 0 var(--space-xl);
       }
 
       .content-input {
@@ -217,6 +209,7 @@ class ReviewModal extends LitElement {
   handleShortClose() {
     const modal = this.shadowRoot.querySelector('.popup-bg');
     modal.classList.add('close');
+    document.body.style.overflow = '';
   }
 
   handleTitleInput(event) {
@@ -275,7 +268,7 @@ class ReviewModal extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = '';
   }
 
   render() {
@@ -308,14 +301,14 @@ class ReviewModal extends LitElement {
             <div class="title-section">
               <label for="review-title-input" class="section-label">제목</label>
               <div class="title-input-container">
-                <input
-                  aria-describedby="reviewTitleText"
-                  type="text"
+                <text-component
+                  width="629px"
+                  height="44px"
                   class="title-input"
                   placeholder="제목을 입력해주세요."
                   @input=${this.handleTitleInput}
                   tabindex="0"
-                />
+                ></text-component>
               </div>
             </div>
 
