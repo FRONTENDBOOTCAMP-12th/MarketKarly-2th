@@ -1,5 +1,4 @@
 import { LitElement, css, html } from 'lit';
-
 class TopBanner extends LitElement {
   static styles = css`
     .modal {
@@ -7,10 +6,9 @@ class TopBanner extends LitElement {
       justify-content: center;
       align-items: center;
       width: 100%;
-      position: fixed;
       top: 0;
       left: 0;
-      height: 50px;
+      height: 52px;
       background: var(--primary-color, #283198);
       z-index: 9999;
     }
@@ -40,6 +38,7 @@ class TopBanner extends LitElement {
       transform: translateY(-50%);
       width: 16px;
       height: 16px;
+      cursor: pointer;
     }
 
     .close {
@@ -48,12 +47,13 @@ class TopBanner extends LitElement {
   `;
 
   static properties = {
-    isLongClosed: {},
+    isLongClosed: { type: Boolean },
   };
 
   constructor() {
     super();
     this.isLongClosed = false;
+    this.handleLongClose = this.handleLongClose.bind(this);
   }
 
   connectedCallback() {
@@ -62,30 +62,20 @@ class TopBanner extends LitElement {
 
     if (expTime) {
       const now = new Date().getTime();
-      this.isLongClosed = expTime >= now ? true : false;
+      this.isLongClosed = expTime >= now;
     }
   }
 
-  get buttons() {
-    return this.renderRoot.querySelectorAll('button');
-  }
-
-  get modal() {
-    return this.renderRoot.querySelector('.modal');
-  }
-
   setExpTime() {
-    const expTime = new Date().getTime() + 1000 * 60 * 5;
+    const expTime = new Date().getTime() + 1000 * 60 * 60 * 24;
     localStorage.setItem('closeTime', expTime);
   }
 
   handleLongClose() {
-    const longClose = this.buttons[0];
-    const modal = longClose.closest('section');
-    modal.classList.add('close');
-
+    this.isLongClosed = true;
     this.setExpTime();
   }
+
   render() {
     return html`
       ${!this.isLongClosed

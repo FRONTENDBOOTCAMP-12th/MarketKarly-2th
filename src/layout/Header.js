@@ -141,14 +141,15 @@ class Header extends LitElement {
         align-items: center;
         width: 400px;
         height: 48px;
-        border: 0.0625rem solid var(--primary-color, #283198);
+        border: 0.08rem solid var(--primary-color, #283198);
         border-radius: 4px;
-        padding: var(--space-lg) var(--space-lg);
+        padding: 0 0;
         box-sizing: border-box;
       }
 
       .header-search input::placeholder {
         color: var(--gray-color-400, #898989);
+        padding-left: var(--space-md);
       }
 
       .header-search input {
@@ -159,11 +160,12 @@ class Header extends LitElement {
       }
 
       .header-search button {
-        background: none;
-        border: none;
-        cursor: pointer;
         width: 36px;
         height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
       }
 
       .header-bookmarks {
