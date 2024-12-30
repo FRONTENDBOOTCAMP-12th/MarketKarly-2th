@@ -251,9 +251,11 @@ class Card extends LitElement {
 
           <div class="price">
             <p>
-              <span class="discount"
-                >${this.discount}%<span class="sr-only">할인</span></span
-              >
+              ${this.discount > 0
+                ? html`<span class="discount"
+                    >${this.discount}%<span class="sr-only">할인</span></span
+                  >`
+                : ''}
               <span class="real-price"
                 >${this.realPrice.toLocaleString()}원</span
               >
