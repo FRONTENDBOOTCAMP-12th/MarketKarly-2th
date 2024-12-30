@@ -9,12 +9,10 @@ class Header extends LitElement {
     reset,
     css`
       .header-wrapper {
-        position: relative;
         box-shadow: 0 0 var(--space-md) var(--gray-color-200, #c4c4c4);
         background-color: var(--white-color, #ffffff);
         position: sticky;
         top: 0;
-        background-color: #fff;
         z-index: 1000;
       }
 
@@ -23,8 +21,7 @@ class Header extends LitElement {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        padding: 0 0 var(--space-2xl);
-        width: 100%;
+        padding: 0 0 var(--space-md);
       }
 
       .header-member-service {
@@ -143,15 +140,16 @@ class Header extends LitElement {
         position: absolute;
         align-items: center;
         width: 400px;
-        height: 50px;
-        border: 0.0625rem solid var(--primary-color, #283198);
+        height: 48px;
+        border: 0.08rem solid var(--primary-color, #283198);
         border-radius: 4px;
-        padding: var(--space-lg) var(--space-lg);
+        padding: 0 0;
         box-sizing: border-box;
       }
 
       .header-search input::placeholder {
         color: var(--gray-color-400, #898989);
+        padding-left: var(--space-md);
       }
 
       .header-search input {
@@ -162,11 +160,12 @@ class Header extends LitElement {
       }
 
       .header-search button {
-        background: none;
-        border: none;
-        cursor: pointer;
         width: 36px;
         height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
       }
 
       .header-bookmarks {
@@ -364,7 +363,7 @@ class Header extends LitElement {
 
       .header-search.scrolled {
         position: absolute;
-        top: 7.55rem;
+        top: 6.9rem;
         left: 47rem;
         width: 242px;
         height: 34px;
