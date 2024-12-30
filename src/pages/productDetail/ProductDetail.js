@@ -2,12 +2,14 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Button/BtnFilled';
+import Swal from 'sweetalert2';
 
 class ProductDetail extends LitElement {
   static properties = {
     disabled: { type: Boolean },
     count: { type: Number },
     totalPrice: { type: String },
+    savingsAmount: { type: Number },
     isToggled: { type: Boolean },
     activeTab: { type: String },
 
@@ -560,6 +562,7 @@ class ProductDetail extends LitElement {
     this.disabled = true;
     this.count = 1;
     this.totalPrice = '';
+    this.savingsAmount = 0;
     this.isToggled = false;
     this.activeTab = '';
 
@@ -589,6 +592,11 @@ class ProductDetail extends LitElement {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  get isAuth() {
+    const auth = JSON.parse(localStorage.getItem('auth') ?? '{}');
+    return auth.isAuth;
+  }
+
   get productPrice() {
     const productPrice =
       this.renderRoot.querySelector('.product-price').textContent;
@@ -597,7 +605,9 @@ class ProductDetail extends LitElement {
   }
 
   handleTotalPrice() {
-    this.totalPrice = this.productPrice.toLocaleString();
+    const totalPriceNum = this.count * this.productPrice;
+    this.totalPrice = totalPriceNum.toLocaleString();
+    this.savingsAmount = Math.round(totalPriceNum / 1000);
   }
 
   changeBackground() {
@@ -615,7 +625,7 @@ class ProductDetail extends LitElement {
     this.count++;
 
     if (this.count > 1) {
-      this.totalPrice = (this.count * this.productPrice).toLocaleString();
+      this.handleTotalPrice();
     }
 
     this.changeBackground();
@@ -628,14 +638,27 @@ class ProductDetail extends LitElement {
     }
 
     if (this.count >= 1) {
-      this.totalPrice = (this.count * this.productPrice).toLocaleString();
+      this.handleTotalPrice();
     }
 
     this.changeBackground();
   }
 
   toggleBtnFavorits() {
-    this.isToggled = !this.isToggled;
+    if (this.isAuth) {
+      this.isToggled = !this.isToggled;
+    } else {
+      Swal.fire({
+        text: '로그인하셔야 본 서비스를 이용하실 수 있습니다.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#283198',
+      }).then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          window.location.href = '/src/pages/login/';
+        }
+      });
+    }
   }
 
   handleTabmenu(e) {
@@ -721,9 +744,11 @@ class ProductDetail extends LitElement {
 
             <p class="product-price">${this.price}<span>원</span></p>
 
-            <p class="savings-description">
-              로그인 후, 적립 혜택이 제공됩니다.
-            </p>
+            ${this.isAuth
+              ? ''
+              : html`<p class="savings-description">
+                  로그인 후, 적립 혜택이 제공됩니다.
+                </p>`}
           </div>
           <!-- product-intro -->
 
@@ -822,7 +847,12 @@ class ProductDetail extends LitElement {
             <p>
               총 상품금액:<span class="total-price">${this.totalPrice}</span> 원
             </p>
-            <p><span class="savings">적립</span>로그인 후, 적립 혜택 제공</p>
+            <p>
+              <span class="savings">적립</span>
+              ${this.isAuth
+                ? `구매 시 ${this.savingsAmount}원 적립`
+                : '로그인 후, 적립 혜택 제공'}
+            </p>
           </div>
           <!-- product-total-price -->
 
