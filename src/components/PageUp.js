@@ -129,7 +129,7 @@ class PageUp extends LitElement {
   render() {
     return html`
       <div class="progress-wrap" @click=${this.handleScrollToTop}>
-        <svg viewBox="0 0 24 24">
+        <svg viewBox="0 0 24 24" role="img">
           <path d="M12 2L5 9h4v9h6V9h4l-7-7z"></path>
         </svg>
       </div>

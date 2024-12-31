@@ -21,7 +21,7 @@ class ProductDetail extends LitElement {
     deliveryType: { type: String },
     productName: { type: String },
     productHeadline: { type: String },
-    realPrice: { type: String },
+    realPrice: { type: Number },
     price: { type: String },
     productStory: { type: String },
     detailPhotoURL: { type: String },
@@ -286,7 +286,7 @@ class ProductDetail extends LitElement {
 
         .tabmenu {
           position: sticky;
-          top: 56.4px;
+          top: 51.4px;
           z-index: 12;
 
           width: 100%;
@@ -588,16 +588,7 @@ class ProductDetail extends LitElement {
     this.savingsAmount = 0;
     this.isToggled = false;
     this.activeTab = '';
-
-    this.productData = {
-      photoURL: '',
-      deliveryType: '',
-      productName: '',
-      productHeadline: '',
-      price: '',
-      productStory: '',
-      detailPhotoURL: '',
-    };
+    this.isLoading = true;
   }
 
   connectedCallback() {
@@ -626,6 +617,8 @@ class ProductDetail extends LitElement {
       this.handleTotalPrice();
     } catch (error) {
       console.error('Error fetching product data:', error);
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -764,377 +757,385 @@ class ProductDetail extends LitElement {
   };
 
   render() {
-    return html`
-      <div class="product-detail-main">
-        <figure class="product-image">
-          <img src="${getPbImage(this.productData, 'photo')}" alt="" />
-          <figcaption class="sr-only">
-            ${this.productData.productName} 사진
-          </figcaption>
-        </figure>
-        <!-- figure -->
+    if (!this.isLoading) {
+      return html`
+        <div class="product-detail-main">
+          <figure class="product-image">
+            <img src="${getPbImage(this.productData, 'photo')}" alt="" />
+            <figcaption class="sr-only">
+              ${this.productData.productName} 사진
+            </figcaption>
+          </figure>
+          <!-- figure -->
 
-        <div class="product-content">
-          <div class="product-intro">
-            <p class="delivery-type">${this.productData.deliveryType}</p>
+          <div class="product-content">
+            <div class="product-intro">
+              <p class="delivery-type">${this.productData.deliveryType}</p>
 
-            <div class="product-title">
-              <h2>${this.productData.productName}</h2>
-              <p class="product-headline">${this.productData.description}</p>
-            </div>
+              <div class="product-title">
+                <h2>${this.productData.productName}</h2>
+                <p class="product-headline">${this.productData.description}</p>
+              </div>
 
-            <div class="product-price">
-              <p>
-                <span class="discount">
-                  ${this.productData.discount}%<span class="sr-only">할인</span>
-                </span>
-
-                <span class="real-price">
-                  ${this.realPrice.toLocaleString()}<span>원</span>
-                </span>
-              </p>
-
-              <del class="origin-price">
-                ${this.productData.price.toLocaleString()}원
-              </del>
-            </div>
-
-            ${this.isAuth
-              ? ''
-              : html`<p class="savings-description">
-                  로그인 후, 적립 혜택이 제공됩니다.
-                </p>`}
-          </div>
-          <!-- product-intro -->
-
-          <table class="product-info">
-            <caption class="sr-only">
-              상품 정보표
-            </caption>
-
-            <tbody>
-              <tr>
-                <th>배송</th>
-                <td>
-                  샛별배송<br />
-                  <span>23시 전 주문시 내일 아침 7시 전 도착</span><br />
-                  <span>(대구 부산 울산 샛별배송 운영시간 별도 확인)</span
-                  ><br />
-                </td>
-              </tr>
-
-              <tr>
-                <th>판매자</th>
-                <td>칼리</td>
-              </tr>
-
-              <tr>
-                <th>포장타입</th>
-                <td>
-                  상온 (종이포장)<br />
-                  <span>택배배송은 에코 포장이 스티로폼으로 대체됩니다.</span>
-                </td>
-              </tr>
-
-              <tr>
-                <th>판매단위</th>
-                <td>1봉</td>
-              </tr>
-
-              <tr>
-                <th>중량/용량</th>
-                <td>123g*4봉</td>
-              </tr>
-
-              <tr>
-                <th>원산지</th>
-                <td>상세페이지 별도표기</td>
-              </tr>
-
-              <tr>
-                <th>알레르기 정보</th>
-                <td>
-                  <span>- 대두,밀, 쇠고기 함유</span><br />
-                  <span>
-                    - 계란, 우유, 메밀, 땅콩, 고등어, 게, 돼지고기, 새우,
-                    복숭아, 토마토, 아황산류, 호두, 잣, 닭고기, 오징어,
-                    조개류(굴, 전복 ,홍합 포함)를 사용한 제품과 같은
-                    제조시설에서 제조
+              <div class="product-price">
+                <p>
+                  <span class="discount">
+                    ${this.productData.discount}%<span class="sr-only"
+                      >할인</span
+                    >
                   </span>
-                </td>
-              </tr>
 
-              <tr>
-                <th>상품 선택</th>
-                <td>
-                  <div class="product-option">
-                    <p class="product-name">${this.productName}</p>
+                  <span class="real-price">
+                    ${this.realPrice.toLocaleString()}<span>원</span>
+                  </span>
+                </p>
 
-                    <div>
-                      <div class="product-counter">
-                        <button
-                          type="button"
-                          class="btn-product-reduce"
-                          aria-label="수량 줄이기"
-                          ?disabled="${this.disabled}"
-                          @click="${this.reduceProduct}"
-                        ></button>
-                        <span class="product-count">${this.count}</span>
-                        <button
-                          type="button"
-                          class="btn-product-add"
-                          aria-label="수량 늘리기"
-                          @click="${this.addProduct}"
-                        ></button>
-                      </div>
-                      <!-- product-counter -->
-                      <p>${this.realPrice.toLocaleString()}원</p>
-                    </div>
-                  </div>
-                  <!-- product-option -->
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <!-- product-info -->
+                <del class="origin-price">
+                  ${this.productData.price.toLocaleString()}원
+                </del>
+              </div>
 
-          <div class="product-total">
-            <p>
-              총 상품금액:<span class="total-price">${this.totalPrice}</span> 원
-            </p>
-            <p>
-              <span class="savings">적립</span>
               ${this.isAuth
-                ? `구매 시 ${this.savingsAmount}원 적립`
-                : '로그인 후, 적립 혜택 제공'}
-            </p>
-          </div>
-          <!-- product-total-price -->
+                ? ''
+                : html`<p class="savings-description">
+                    로그인 후, 적립 혜택이 제공됩니다.
+                  </p>`}
+            </div>
+            <!-- product-intro -->
 
-          <div class="product-buttons">
-            <button
-              class="btn-favorits"
-              type="button"
-              aria-label="찜하기 버튼"
-              aria-pressed="${this.isToggled ? 'true' : 'false'}"
-              @click="${this.toggleBtnFavorits}"
+            <table class="product-info">
+              <caption class="sr-only">
+                상품 정보표
+              </caption>
+
+              <tbody>
+                <tr>
+                  <th>배송</th>
+                  <td>
+                    샛별배송<br />
+                    <span>23시 전 주문시 내일 아침 7시 전 도착</span><br />
+                    <span>(대구 부산 울산 샛별배송 운영시간 별도 확인)</span
+                    ><br />
+                  </td>
+                </tr>
+
+                <tr>
+                  <th>판매자</th>
+                  <td>칼리</td>
+                </tr>
+
+                <tr>
+                  <th>포장타입</th>
+                  <td>
+                    상온 (종이포장)<br />
+                    <span>택배배송은 에코 포장이 스티로폼으로 대체됩니다.</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <th>판매단위</th>
+                  <td>1봉</td>
+                </tr>
+
+                <tr>
+                  <th>중량/용량</th>
+                  <td>123g*4봉</td>
+                </tr>
+
+                <tr>
+                  <th>원산지</th>
+                  <td>상세페이지 별도표기</td>
+                </tr>
+
+                <tr>
+                  <th>알레르기 정보</th>
+                  <td>
+                    <span>- 대두,밀, 쇠고기 함유</span><br />
+                    <span>
+                      - 계란, 우유, 메밀, 땅콩, 고등어, 게, 돼지고기, 새우,
+                      복숭아, 토마토, 아황산류, 호두, 잣, 닭고기, 오징어,
+                      조개류(굴, 전복 ,홍합 포함)를 사용한 제품과 같은
+                      제조시설에서 제조
+                    </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <th>상품 선택</th>
+                  <td>
+                    <div class="product-option">
+                      <p class="product-name">${this.productName}</p>
+
+                      <div>
+                        <div class="product-counter">
+                          <button
+                            type="button"
+                            class="btn-product-reduce"
+                            aria-label="수량 줄이기"
+                            ?disabled="${this.disabled}"
+                            @click="${this.reduceProduct}"
+                          ></button>
+                          <span class="product-count">${this.count}</span>
+                          <button
+                            type="button"
+                            class="btn-product-add"
+                            aria-label="수량 늘리기"
+                            @click="${this.addProduct}"
+                          ></button>
+                        </div>
+                        <!-- product-counter -->
+                        <p>${this.realPrice.toLocaleString()}원</p>
+                      </div>
+                    </div>
+                    <!-- product-option -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- product-info -->
+
+            <div class="product-total">
+              <p>
+                총 상품금액:<span class="total-price">${this.totalPrice}</span>
+                원
+              </p>
+              <p>
+                <span class="savings">적립</span>
+                ${this.isAuth
+                  ? `구매 시 ${this.savingsAmount}원 적립`
+                  : '로그인 후, 적립 혜택 제공'}
+              </p>
+            </div>
+            <!-- product-total-price -->
+
+            <div class="product-buttons">
+              <button
+                class="btn-favorits"
+                type="button"
+                aria-label="찜하기 버튼"
+                aria-pressed="${this.isToggled ? 'true' : 'false'}"
+                @click="${this.toggleBtnFavorits}"
+              >
+                <img
+                  class="icon"
+                  src=${this.isToggled
+                    ? '/icon/favorits_red.svg'
+                    : '/icon/favorits.svg'}
+                  alt=""
+                />
+              </button>
+              <button class="btn-bell" type="button" aria-label="알림 버튼">
+                <img class="icon" src="/icon/bell.svg" alt="" />
+              </button>
+              <btn-filled-component
+                text="장바구니 담기"
+                width="424px"
+              ></btn-filled-component>
+            </div>
+            <!-- product-buttons -->
+          </div>
+          <!-- product-content -->
+
+          <nav class="tabmenu">
+            <ul class="tablist" role="tablist">
+              <li
+                class="tab"
+                role="tab"
+                id="tab-1"
+                aria-selected="${this.activeTab === 'tabpanel-1'
+                  ? 'true'
+                  : 'false'}"
+                aria-controls="tabpanel-1"
+              >
+                <a href="#tabpanel-1" @click="${this.handleTabmenu}">
+                  상품설명
+                </a>
+              </li>
+
+              <li
+                class="tab"
+                role="tab"
+                id="tab-2"
+                aria-selected="${this.activeTab === 'tabpanel-2'
+                  ? 'true'
+                  : 'false'}"
+                aria-controls="tabpanel-2"
+              >
+                <a href="#tabpanel-2" @click="${this.handleTabmenu}">
+                  상세정보
+                </a>
+              </li>
+
+              <li
+                class="tab"
+                role="tab"
+                id="tab-3"
+                aria-selected="${this.activeTab === 'tabpanel-3'
+                  ? 'true'
+                  : 'false'}"
+                aria-controls="tabpanel-3"
+              >
+                <a href="#tabpanel-3" @click="${this.handleTabmenu}">
+                  후기<span class="review-count">(1,207)</span>
+                </a>
+              </li>
+
+              <li
+                class="tab"
+                role="tab"
+                id="tab-4"
+                aria-selected="${this.activeTab === 'tabpanel-4'
+                  ? 'true'
+                  : 'false'}"
+                aria-controls="tabpanel-4"
+              >
+                <a href="#tabpanel-4" @click="${this.handleTabmenu}"> 문의 </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- tab-menu -->
+
+          <div class="tabpanel-wrapper">
+            <div
+              class="tabpanel product-description"
+              role="tabpanel"
+              aria-labelledby="tab-1"
+              id="tabpanel-1"
+            >
+              <figure>
+                <img
+                  src="${getPbImage(this.productData, 'detailImage')[0]}"
+                  alt=""
+                />
+                <figcaption class="sr-only">
+                  ${this.productName} 사진
+                </figcaption>
+              </figure>
+
+              <div class="karly-product">
+                <h3>
+                  <span>${this.productData.description}</span>
+                  ${this.productData.productName.replace(/\(.*?\)/g, '')}
+                </h3>
+
+                <p>${this.productData.detailDescription}</p>
+              </div>
+
+              <div class="karly-point">
+                <p class="tit-karly-point">Karly's Check Point</p>
+
+                <img
+                  src="/public/image/karly_check_point.svg"
+                  alt="컬리 체크 포인트 3가지 이미지"
+                />
+              </div>
+            </div>
+            <!-- product-description -->
+
+            <div
+              class="tabpanel product-detail"
+              role="tabpanel"
+              aria-labelledby="tab-2"
+              id="tabpanel-2"
             >
               <img
-                class="icon"
-                src=${this.isToggled
-                  ? '/icon/favorits_red.svg'
-                  : '/icon/favorits.svg'}
-                alt=""
+                src="${getPbImage(this.productData, 'detailImage')[1]}"
+                alt="${this.productName} 상세정보 이미지"
               />
-            </button>
-            <button class="btn-bell" type="button" aria-label="알림 버튼">
-              <img class="icon" src="/icon/bell.svg" alt="" />
-            </button>
-            <btn-filled-component
-              text="장바구니 담기"
-              width="424px"
-            ></btn-filled-component>
+
+              <div class="why-karly">
+                <p class="tit-why-karly">WHY KARLY</p>
+                <dl>
+                  <div>
+                    <dt class="why-strict-committee ">깐깐한 상품위원회</dt>
+                    <dd>
+                      나와 내 가족이 먹고 쓸 상품을 고르는<br />
+                      마음으로 매주 상품을 직접 먹어보고,<br />
+                      경험해보고 성분, 맛 안정성 등 다각도의<br />
+                      기준을 통과한 상품만을 판매합니다.
+                    </dd>
+                  </div>
+
+                  <div>
+                    <dt class="why-karly-only ">차별화된 Karly Only 상품</dt>
+
+                    <dd>
+                      전국 각지와 해외의 훌륭한 생산자가<br />
+                      믿고 선택하는 파트너, 마켓칼리.<br />
+                      3천여 개가 넘는 칼리 단독 브랜드, 스펙의<br />
+                      Karly Only 상품을 믿고 만나보세요.
+                    </dd>
+                  </div>
+
+                  <div>
+                    <dt class="why-cold-delivery ">신선한 풀콜드체인 배송</dt>
+
+                    <dd>
+                      온라인 업계 최초로 산지에서 문 앞까지<br />
+                      상온, 냉장, 냉동 상품을 분리 포장 후<br />
+                      최적의 온도를 유지하는 냉장 배송 시스템,<br />
+                      풀콜드체인으로 상품을 신선하게 전해드립니다.
+                    </dd>
+                  </div>
+
+                  <div>
+                    <dt class="why-best-price ">
+                      고객, 생산자를 위한 최선의 가격
+                    </dt>
+
+                    <dd>
+                      매주 대형 마트와 주요 온라인 마트의 가격<br />
+                      변동 상황을 확인해 신선식품은 품질을<br />
+                      타협하지 않는 선에서 최선의 가격으로<br />
+                      가공식품은 언제나 합리적인 가격으로<br />
+                      정기 조정합니다.
+                    </dd>
+                  </div>
+
+                  <div>
+                    <dt class="why-green-distribution ">
+                      환경을 생각하는 지속 가능한 유통
+                    </dt>
+
+                    <dd>
+                      친환경 포장재부터 생산자가 상품에만<br />
+                      집중할 수 있는 직매입 유통구조까지,<br />
+                      지속 가능한 유통을 고민하며 컬리를 있게<br />
+                      하는 모든 환경(생산자,커뮤니티,직원)이<br />
+                      더 나아질 수 있도록 노력합니다.
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+            <!-- product-detail -->
+
+            <div
+              class="tabpanel product-review"
+              role="tabpanel"
+              aria-labelledby="tab-3"
+              id="tabpanel-3"
+            >
+              <review-board-component></review-board-component>
+            </div>
+            <!-- product-review -->
+
+            <div
+              class="tabpanel product-inquiry"
+              role="tabpanel"
+              aria-labelledby="tab-4"
+              id="tabpanel-4"
+            >
+              <inquiry-board-component></inquiry-board-component>
+            </div>
+            <!-- product-inquiry -->
           </div>
-          <!-- product-buttons -->
+          <!-- tabpanel-wrapper -->
+          <page-up-component></page-up-component>
         </div>
-        <!-- product-content -->
-
-        <nav class="tabmenu">
-          <ul class="tablist" role="tablist">
-            <li
-              class="tab"
-              role="tab"
-              id="tab-1"
-              aria-selected="${this.activeTab === 'tabpanel-1'
-                ? 'true'
-                : 'false'}"
-              aria-controls="tabpanel-1"
-            >
-              <a href="#tabpanel-1" @click="${this.handleTabmenu}">
-                상품설명
-              </a>
-            </li>
-
-            <li
-              class="tab"
-              role="tab"
-              id="tab-2"
-              aria-selected="${this.activeTab === 'tabpanel-2'
-                ? 'true'
-                : 'false'}"
-              aria-controls="tabpanel-2"
-            >
-              <a href="#tabpanel-2" @click="${this.handleTabmenu}">
-                상세정보
-              </a>
-            </li>
-
-            <li
-              class="tab"
-              role="tab"
-              id="tab-3"
-              aria-selected="${this.activeTab === 'tabpanel-3'
-                ? 'true'
-                : 'false'}"
-              aria-controls="tabpanel-3"
-            >
-              <a href="#tabpanel-3" @click="${this.handleTabmenu}">
-                후기<span class="review-count">(1,207)</span>
-              </a>
-            </li>
-
-            <li
-              class="tab"
-              role="tab"
-              id="tab-4"
-              aria-selected="${this.activeTab === 'tabpanel-4'
-                ? 'true'
-                : 'false'}"
-              aria-controls="tabpanel-4"
-            >
-              <a href="#tabpanel-4" @click="${this.handleTabmenu}"> 문의 </a>
-            </li>
-          </ul>
-        </nav>
-        <!-- tab-menu -->
-
-        <div class="tabpanel-wrapper">
-          <div
-            class="tabpanel product-description"
-            role="tabpanel"
-            aria-labelledby="tab-1"
-            id="tabpanel-1"
-          >
-            <figure>
-              <img
-                src="${getPbImage(this.productData, 'detailImage')[0]}"
-                alt=""
-              />
-              <figcaption class="sr-only">${this.productName} 사진</figcaption>
-            </figure>
-
-            <div class="karly-product">
-              <h3>
-                <span>${this.productData.description}</span>
-                ${this.productData.productName.replace(/\(.*?\)/g, '')}
-              </h3>
-
-              <p>${this.productData.detailDescription}</p>
-            </div>
-
-            <div class="karly-point">
-              <p class="tit-karly-point">Karly's Check Point</p>
-
-              <img
-                src="/public/image/karly_check_point.svg"
-                alt="컬리 체크 포인트 3가지 이미지"
-              />
-            </div>
-          </div>
-          <!-- product-description -->
-
-          <div
-            class="tabpanel product-detail"
-            role="tabpanel"
-            aria-labelledby="tab-2"
-            id="tabpanel-2"
-          >
-            <img
-              src="${getPbImage(this.productData, 'detailImage')[1]}"
-              alt="${this.productName} 상세정보 이미지"
-            />
-
-            <div class="why-karly">
-              <p class="tit-why-karly">WHY KARLY</p>
-              <dl>
-                <div>
-                  <dt class="why-strict-committee ">깐깐한 상품위원회</dt>
-                  <dd>
-                    나와 내 가족이 먹고 쓸 상품을 고르는<br />
-                    마음으로 매주 상품을 직접 먹어보고,<br />
-                    경험해보고 성분, 맛 안정성 등 다각도의<br />
-                    기준을 통과한 상품만을 판매합니다.
-                  </dd>
-                </div>
-
-                <div>
-                  <dt class="why-karly-only ">차별화된 Karly Only 상품</dt>
-
-                  <dd>
-                    전국 각지와 해외의 훌륭한 생산자가<br />
-                    믿고 선택하는 파트너, 마켓칼리.<br />
-                    3천여 개가 넘는 칼리 단독 브랜드, 스펙의<br />
-                    Karly Only 상품을 믿고 만나보세요.
-                  </dd>
-                </div>
-
-                <div>
-                  <dt class="why-cold-delivery ">신선한 풀콜드체인 배송</dt>
-
-                  <dd>
-                    온라인 업계 최초로 산지에서 문 앞까지<br />
-                    상온, 냉장, 냉동 상품을 분리 포장 후<br />
-                    최적의 온도를 유지하는 냉장 배송 시스템,<br />
-                    풀콜드체인으로 상품을 신선하게 전해드립니다.
-                  </dd>
-                </div>
-
-                <div>
-                  <dt class="why-best-price ">
-                    고객, 생산자를 위한 최선의 가격
-                  </dt>
-
-                  <dd>
-                    매주 대형 마트와 주요 온라인 마트의 가격<br />
-                    변동 상황을 확인해 신선식품은 품질을<br />
-                    타협하지 않는 선에서 최선의 가격으로<br />
-                    가공식품은 언제나 합리적인 가격으로<br />
-                    정기 조정합니다.
-                  </dd>
-                </div>
-
-                <div>
-                  <dt class="why-green-distribution ">
-                    환경을 생각하는 지속 가능한 유통
-                  </dt>
-
-                  <dd>
-                    친환경 포장재부터 생산자가 상품에만<br />
-                    집중할 수 있는 직매입 유통구조까지,<br />
-                    지속 가능한 유통을 고민하며 컬리를 있게<br />
-                    하는 모든 환경(생산자,커뮤니티,직원)이<br />
-                    더 나아질 수 있도록 노력합니다.
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-          <!-- product-detail -->
-
-          <div
-            class="tabpanel product-review"
-            role="tabpanel"
-            aria-labelledby="tab-3"
-            id="tabpanel-3"
-          >
-            <review-board-component></review-board-component>
-          </div>
-          <!-- product-review -->
-
-          <div
-            class="tabpanel product-inquiry"
-            role="tabpanel"
-            aria-labelledby="tab-4"
-            id="tabpanel-4"
-          >
-            <inquiry-board-component></inquiry-board-component>
-          </div>
-          <!-- product-inquiry -->
-        </div>
-        <!-- tabpanel-wrapper -->
-      </div>
-      <!-- product-detail -->
-    `;
+        <!-- product-detail -->
+      `;
+    }
   }
 }
 
