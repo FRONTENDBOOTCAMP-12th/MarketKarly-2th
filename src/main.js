@@ -6,4 +6,4 @@ import '@/components/Modal';
 import '@/components/ProductsSwiper';
 import '@/components/TopBanner';
 import '@/components/PageUp';
-import '@/pages/Main';
+import '@/pages/main';
