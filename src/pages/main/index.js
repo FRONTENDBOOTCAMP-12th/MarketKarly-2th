@@ -1,1 +1,1 @@
-import '@/pages/main/main';
+import '@/pages/main/Main';
