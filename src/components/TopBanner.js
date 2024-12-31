@@ -46,34 +46,20 @@ class TopBanner extends LitElement {
     }
   `;
 
-  static properties = {
-    isLongClosed: { type: Boolean },
-  };
+  static properties = {};
 
   constructor() {
     super();
-    this.isLongClosed = false;
-    this.handleLongClose = this.handleLongClose.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    const expTime = JSON.parse(localStorage.getItem('closeTime'));
-
-    if (expTime) {
-      const now = new Date().getTime();
-      this.isLongClosed = expTime >= now;
-    }
   }
 
-  setExpTime() {
-    const expTime = new Date().getTime() + 1000 * 60 * 60 * 24;
-    localStorage.setItem('closeTime', expTime);
-  }
-
-  handleLongClose() {
-    this.isLongClosed = true;
-    this.setExpTime();
+  handleShortClose() {
+    const shortClose = this.buttons[1];
+    const modal = shortClose.closest('section');
+    modal.classList.add('close');
   }
 
   render() {
@@ -92,7 +78,7 @@ class TopBanner extends LitElement {
                   alt="닫기 버튼"
                   class="btn-close"
                   aria-label="닫기"
-                  @click=${this.handleLongClose}
+                  @click=${this.handleShortClose}
                   tabindex="0"
                 />
               </div>
