@@ -2,6 +2,10 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Button/BtnFilled';
+import '@/components/ReviewBoard';
+import '@/components/InquiryBoard';
+import pb from '../../api/pocketbase';
+import { getPbImage } from '../../api/getPbImage';
 import Swal from 'sweetalert2';
 
 class ProductDetail extends LitElement {
@@ -17,9 +21,12 @@ class ProductDetail extends LitElement {
     deliveryType: { type: String },
     productName: { type: String },
     productHeadline: { type: String },
+    realPrice: { type: String },
     price: { type: String },
     productStory: { type: String },
     detailPhotoURL: { type: String },
+
+    productData: { type: Object },
   };
 
   static styles = [
@@ -84,13 +91,27 @@ class ProductDetail extends LitElement {
             .product-price {
               font-size: var(--font-2xl);
               font-weight: var(--text-semi-bold);
-            }
-            .product-price > span {
-              font-size: var(--font-md);
-              font-weight: var(--text-bold);
-              line-height: var(--extra-light-line-height);
-              margin-left: var(--space-sm);
-              margin-inline-start: var(--space-sm);
+
+              .discount {
+                color: var(--accent-color, #fa622f);
+                margin-right: var(--space-md);
+                margin-inline-end: var(--space-md);
+              }
+              .real-price > span {
+                font-size: var(--font-md);
+                font-weight: var(--text-bold);
+                line-height: var(--extra-light-line-height);
+                margin-left: var(--space-sm);
+                margin-inline-start: var(--space-sm);
+              }
+
+              .origin-price {
+                display: block;
+                color: var(--gray-color-400, #898989);
+                font-size: var(--font-md);
+                font-weight: var(--text-regular);
+                line-height: var(--regular-line-height);
+              }
             }
 
             .savings-description {
@@ -265,7 +286,7 @@ class ProductDetail extends LitElement {
 
         .tabmenu {
           position: sticky;
-          top: -1px;
+          top: 56.4px;
           z-index: 12;
 
           width: 100%;
@@ -324,6 +345,7 @@ class ProductDetail extends LitElement {
 
             .tab:nth-child(3) {
               .review-count {
+                pointer-events: none;
                 display: inline-block;
                 margin-left: var(--space-md);
                 margin-inline-start: var(--space-md);
@@ -344,13 +366,6 @@ class ProductDetail extends LitElement {
         }
 
         .tabpanel-wrapper {
-          div[id^='tabpanel']::before {
-            content: '';
-            display: block;
-            height: 56px; /*  탭메뉴 헤더 높이 */
-            margin-top: -56px; /* 헤더 높이만큼 보정 */
-          }
-
           .tabpanel.product-description {
             padding: var(--space-7xl) 0 6rem;
 
@@ -482,7 +497,7 @@ class ProductDetail extends LitElement {
                 height: 40px;
 
                 margin: 0 auto var(--space-xl);
-                background-image: url(/public/icon/why_strict_committee.svg);
+                background-image: url(/icon/why_strict_committee.svg);
                 background-repeat: no-repeat;
                 background-position: center center;
               }
@@ -494,7 +509,7 @@ class ProductDetail extends LitElement {
                 height: 40px;
 
                 margin: 0 auto var(--space-xl);
-                background-image: url(/public/icon/why_karly_only.svg);
+                background-image: url(/icon/why_karly_only.svg);
                 background-repeat: no-repeat;
                 background-position: center center;
               }
@@ -506,7 +521,7 @@ class ProductDetail extends LitElement {
                 height: 40px;
 
                 margin: 0 auto var(--space-xl);
-                background-image: url(/public/icon/why_cold_delivery.svg);
+                background-image: url(/icon/why_cold_delivery.svg);
                 background-repeat: no-repeat;
                 background-position: center center;
               }
@@ -518,7 +533,7 @@ class ProductDetail extends LitElement {
                 height: 40px;
 
                 margin: 0 auto var(--space-xl);
-                background-image: url(/public/icon/why_best_price.svg);
+                background-image: url(/icon/why_best_price.svg);
                 background-repeat: no-repeat;
                 background-position: center center;
               }
@@ -530,7 +545,7 @@ class ProductDetail extends LitElement {
                 height: 40px;
 
                 margin: 0 auto var(--space-xl);
-                background-image: url(/public/icon/why_green_distribution.svg);
+                background-image: url(/icon/why_green_distribution.svg);
                 background-repeat: no-repeat;
                 background-position: center center;
               }
@@ -547,9 +562,17 @@ class ProductDetail extends LitElement {
           }
 
           .tabpanel.product-review {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--space-7xl) 0;
           }
 
           .tabpanel.product-inquiry {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--space-7xl) 0;
           }
         }
       }
@@ -566,22 +589,21 @@ class ProductDetail extends LitElement {
     this.isToggled = false;
     this.activeTab = '';
 
-    this.photoURL = '/image/product01.webp';
-    this.deliveryType = '샛별배송';
-    this.productName = '[풀무원] 탱탱쫄면 (4개입)';
-    this.productHeadline = '튀기지 않아 부담 없는 매콤함';
-    this.price = '4,980';
-    this.productStory =
-      '쫄면의 진가는 매콤새콤한 양념과 탱탱한 면발에서 찾을 수 있지요. 풀무원은 이 맛을 더 부담 없이 즐길 수 있도록 튀기지 않고 만든 탱탱쫄면을 선보입니다. 밀가루와 감자 전분을 적절히 배합해 탄력이 좋고, 입에 넣었을 때는 찰지게 씹히죠. 고추장을 넣어 숙성한 비빔장은 자연스럽고 깊은 맛을 냅니다. 간단하게 조리해 마지막 한 가닥까지 탱탱한 식감을 즐겨보세요. 취향에 따라 다양한 고명을 올려 드셔도 좋아요.';
-    this.detailPhotoURL = '/public/image/product_detail_jjolmeon.svg';
+    this.productData = {
+      photoURL: '',
+      deliveryType: '',
+      productName: '',
+      productHeadline: '',
+      price: '',
+      productStory: '',
+      detailPhotoURL: '',
+    };
   }
 
   connectedCallback() {
     super.connectedCallback();
 
-    setTimeout(() => {
-      this.handleTotalPrice();
-    }, 0);
+    this.fetchProduct();
 
     window.addEventListener('scroll', this.handleScroll);
   }
@@ -592,20 +614,39 @@ class ProductDetail extends LitElement {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  async fetchProduct() {
+    const urlParams = new URLSearchParams(location.search);
+
+    const productId = urlParams.get('product');
+
+    try {
+      const record = await pb.collection('products').getOne(productId);
+      this.productData = record;
+
+      this.handleTotalPrice();
+    } catch (error) {
+      console.error('Error fetching product data:', error);
+    }
+  }
+
+  get realPrice() {
+    const realPrice = Math.floor(
+      this.productData.price -
+        this.productData.price * (this.productData.discount / 100)
+    ).toFixed();
+    
   get isAuth() {
     const auth = JSON.parse(localStorage.getItem('auth') ?? '{}');
     return auth.isAuth;
   }
 
-  get productPrice() {
-    const productPrice =
-      this.renderRoot.querySelector('.product-price').textContent;
-
-    return +productPrice.replace(/[^\d]/g, '');
+    return +realPrice;
   }
 
   handleTotalPrice() {
-    const totalPriceNum = this.count * this.productPrice;
+
+    const totalPriceNum = this.count * this.realPrice;
+
     this.totalPrice = totalPriceNum.toLocaleString();
     this.savingsAmount = Math.round(totalPriceNum / 1000);
   }
@@ -666,7 +707,6 @@ class ProductDetail extends LitElement {
 
     const target = e.target;
     const tab = target.closest('li');
-    const tabId = target.getAttribute('href').replace('#', '');
 
     if (tab) {
       const siblings = tab.parentElement.children;
@@ -696,10 +736,10 @@ class ProductDetail extends LitElement {
       }
     }
 
-    // 해당 id로 스크롤 이동
-    this.shadowRoot
-      .querySelector(`#${tabId}`)
-      .scrollIntoView({ behavior: 'smooth' });
+    const tabId = target.getAttribute('href').replace('#', '');
+    const targetScroll = this.shadowRoot.querySelector(`#${tabId}`).offsetTop;
+
+    window.scrollTo({ top: targetScroll - 112 });
   }
 
   handleScroll = () => {
@@ -708,7 +748,7 @@ class ProductDetail extends LitElement {
     // this.handleScroll = this.handleScroll.bind(this);
 
     const tabpanels = this.renderRoot.querySelectorAll('.tabpanel');
-    const offset = 56; // 탭메뉴 높이
+    const offset = 114.4; // 헤더 높이 + 탭메뉴 높이
     const scrollPosition = window.scrollY + offset;
 
     for (const tabpanel of tabpanels) {
@@ -728,21 +768,37 @@ class ProductDetail extends LitElement {
     return html`
       <div class="product-detail-main">
         <figure class="product-image">
-          <img src="${this.photoURL}" alt="" />
-          <figcaption class="sr-only">${this.productName} 사진</figcaption>
+          <img src="${getPbImage(this.productData, 'photo')}" alt="" />
+          <figcaption class="sr-only">
+            ${this.productData.productName} 사진
+          </figcaption>
         </figure>
         <!-- figure -->
 
         <div class="product-content">
           <div class="product-intro">
-            <p class="delivery-type">${this.deliveryType}</p>
+            <p class="delivery-type">${this.productData.deliveryType}</p>
 
             <div class="product-title">
-              <h2>${this.productName}</h2>
-              <p class="product-headline">${this.productHeadline}</p>
+              <h2>${this.productData.productName}</h2>
+              <p class="product-headline">${this.productData.description}</p>
             </div>
 
-            <p class="product-price">${this.price}<span>원</span></p>
+            <div class="product-price">
+              <p>
+                <span class="discount">
+                  ${this.productData.discount}%<span class="sr-only">할인</span>
+                </span>
+
+                <span class="real-price">
+                  ${this.realPrice.toLocaleString()}<span>원</span>
+                </span>
+              </p>
+
+              <del class="origin-price">
+                ${this.productData.price.toLocaleString()}원
+              </del>
+            </div>
 
             ${this.isAuth
               ? ''
@@ -833,7 +889,7 @@ class ProductDetail extends LitElement {
                         ></button>
                       </div>
                       <!-- product-counter -->
-                      <p>${this.price}원</p>
+                      <p>${this.realPrice.toLocaleString()}원</p>
                     </div>
                   </div>
                   <!-- product-option -->
@@ -896,7 +952,7 @@ class ProductDetail extends LitElement {
               aria-controls="tabpanel-1"
             >
               <a href="#tabpanel-1" @click="${this.handleTabmenu}">
-                <span class="focus">상품설명</span>
+                상품설명
               </a>
             </li>
 
@@ -910,7 +966,7 @@ class ProductDetail extends LitElement {
               aria-controls="tabpanel-2"
             >
               <a href="#tabpanel-2" @click="${this.handleTabmenu}">
-                <span class="focus">상세정보</span>
+                상세정보
               </a>
             </li>
 
@@ -924,9 +980,7 @@ class ProductDetail extends LitElement {
               aria-controls="tabpanel-3"
             >
               <a href="#tabpanel-3" @click="${this.handleTabmenu}">
-                <span class="focus">
-                  후기<span class="review-count">(1,207)</span>
-                </span>
+                후기<span class="review-count">(1,207)</span>
               </a>
             </li>
 
@@ -939,9 +993,7 @@ class ProductDetail extends LitElement {
                 : 'false'}"
               aria-controls="tabpanel-4"
             >
-              <a href="#tabpanel-4" @click="${this.handleTabmenu}">
-                <span class="focus">문의</span>
-              </a>
+              <a href="#tabpanel-4" @click="${this.handleTabmenu}"> 문의 </a>
             </li>
           </ul>
         </nav>
@@ -955,17 +1007,20 @@ class ProductDetail extends LitElement {
             id="tabpanel-1"
           >
             <figure>
-              <img src="${this.photoURL}" alt="" />
+              <img
+                src="${getPbImage(this.productData, 'detailImage')[0]}"
+                alt=""
+              />
               <figcaption class="sr-only">${this.productName} 사진</figcaption>
             </figure>
 
             <div class="karly-product">
               <h3>
-                <span>${this.productHeadline}</span>
-                [풀무원] 탱탱쫄면
+                <span>${this.productData.description}</span>
+                ${this.productData.productName.replace(/\(.*?\)/g, '')}
               </h3>
 
-              <p>${this.productStory}</p>
+              <p>${this.productData.detailDescription}</p>
             </div>
 
             <div class="karly-point">
@@ -986,7 +1041,7 @@ class ProductDetail extends LitElement {
             id="tabpanel-2"
           >
             <img
-              src="${this.detailPhotoURL}"
+              src="${getPbImage(this.productData, 'detailImage')[1]}"
               alt="${this.productName} 상세정보 이미지"
             />
 
@@ -1063,7 +1118,7 @@ class ProductDetail extends LitElement {
             aria-labelledby="tab-3"
             id="tabpanel-3"
           >
-            <p>상품후기</p>
+            <review-board-component></review-board-component>
           </div>
           <!-- product-review -->
 
@@ -1073,7 +1128,7 @@ class ProductDetail extends LitElement {
             aria-labelledby="tab-4"
             id="tabpanel-4"
           >
-            <p>상품문의</p>
+            <inquiry-board-component></inquiry-board-component>
           </div>
           <!-- product-inquiry -->
         </div>

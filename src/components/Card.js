@@ -201,8 +201,11 @@ class Card extends LitElement {
       return;
     }
 
-    const link = target.closest('a'); // 클릭된 요소 또는 그 상위 요소에서 a태그 찾기
+    const link =
+      target.closest('.content').previousElementSibling.firstElementChild;
+    // 클릭된 요소 상위 요소에서 a태그 찾기
 
+    console.log(link);
     if (link) {
       link.click(); // a태그를 발견하면, 해당 태그의 클릭 이벤트를 수동으로 트리거
     }
@@ -239,7 +242,7 @@ class Card extends LitElement {
     return html/* html */ `
       <div @click=${this.handleCardClick} class="card-component">
         <figure>
-          <a href="/src/pages/productDetail/index.html">
+          <a href="/src/pages/productDetail/index.html?product=${this.id}">
             <img src="${this.photoURL}" alt="" />
           </a>
           <figcaption class="sr-only">${this.productName} 사진</figcaption>

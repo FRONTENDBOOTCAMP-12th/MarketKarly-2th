@@ -480,7 +480,7 @@ class ProductList extends LitElement {
                   <card-component
                     id=${item.id}
                     collectionId=${item.collectionId}
-                    photoURL="${getPbImage(item)}"
+                    photoURL="${getPbImage(item, 'photo')}"
                     deliveryType="${item.deliveryType}"
                     productName="${item.productName}"
                     discount="${item.discount}"

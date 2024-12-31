@@ -16,13 +16,6 @@ class InquiryBoard extends LitElement {
         background: transparent;
       }
 
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: var(--space-7xl) 0;
-      }
-
       .review-header {
         display: flex;
         justify-content: space-between;
@@ -168,7 +161,7 @@ class InquiryBoard extends LitElement {
         justify-content: center;
         align-items: center;
         margin-top: var(--space-5xl);
-        gap: var(--space-md);
+        gap: var(--space-2xl);
       }
 
       .pagination button {
@@ -179,7 +172,7 @@ class InquiryBoard extends LitElement {
         height: 56px;
         border: 1px solid var(--gray-color-100, #e1e1e1);
         background: none;
-        padding: var(--space-2xl);
+        padding: var(--space-sm);
       }
 
       .pagination img {
@@ -310,104 +303,102 @@ class InquiryBoard extends LitElement {
 
   render() {
     return html`
-      <section class="container">
-        <header class="review-header">
-          <div class="review-content">
-            <h2 class="review-title">상품문의</h2>
-            <ul class="caution">
-              <li>
-                상품에 대한 문의를 남기는 공간입니다. 해당 게시판의 성격과 다른
-                글은 사전동의 없이 담당 게시판으로 이동될 수 있습니다.
-              </li>
-              <li>
-                배송관련, 주문(취소/교환/환불)관련 문의 및 요청사항은 마이컬리
-                내1:1 문의에 남겨주세요.
-              </li>
-            </ul>
-          </div>
-          <btn-filled-component
-            width="155px"
-            height="44px"
-            class="btn-ask"
-            @click=${this.handleSubmit}
-            text="문의하기"
-          ></btn-filled-component>
-        </header>
-        <table class="board-header">
-          <thead>
-            <tr>
-              <th class="title-column">제목</th>
-              <th class="writer-column">작성자</th>
-              <th class="date-column">작성일</th>
-              <th class="status-column">답변상태</th>
-            </tr>
-          </thead>
-        </table>
-        <div class="board-body">
-          ${this.inquiries.map(
-            (inquiry) => html`
-              <div class="row">
-                <div
-                  class="row-header"
-                  data-title="${inquiry.title}"
-                  @click=${() => this.toggleRow(inquiry.id)}
-                >
-                  <div class="title-column">
-                    ${inquiry.title === '비밀글입니다.'
-                      ? html`<span class="secret-title">${inquiry.title}</span>`
-                      : inquiry.title}
-                  </div>
-                  <div class="writer-column">${inquiry.writer}</div>
-                  <div class="date-column">${inquiry.date}</div>
-                  <div class="status-column" data-status="${inquiry.status}">
-                    ${inquiry.status}
-                  </div>
+      <header class="review-header">
+        <div class="review-content">
+          <h2 class="review-title">상품문의</h2>
+          <ul class="caution">
+            <li>
+              상품에 대한 문의를 남기는 공간입니다. 해당 게시판의 성격과 다른
+              글은 사전동의 없이 담당 게시판으로 이동될 수 있습니다.
+            </li>
+            <li>
+              배송관련, 주문(취소/교환/환불)관련 문의 및 요청사항은 마이컬리
+              내1:1 문의에 남겨주세요.
+            </li>
+          </ul>
+        </div>
+        <btn-filled-component
+          width="155px"
+          height="44px"
+          class="btn-ask"
+          @click=${this.handleSubmit}
+          text="문의하기"
+        ></btn-filled-component>
+      </header>
+      <table class="board-header">
+        <thead>
+          <tr>
+            <th class="title-column">제목</th>
+            <th class="writer-column">작성자</th>
+            <th class="date-column">작성일</th>
+            <th class="status-column">답변상태</th>
+          </tr>
+        </thead>
+      </table>
+      <div class="board-body">
+        ${this.inquiries.map(
+          (inquiry) => html`
+            <div class="row">
+              <div
+                class="row-header"
+                data-title="${inquiry.title}"
+                @click=${() => this.toggleRow(inquiry.id)}
+              >
+                <div class="title-column">
+                  ${inquiry.title === '비밀글입니다.'
+                    ? html`<span class="secret-title">${inquiry.title}</span>`
+                    : inquiry.title}
                 </div>
-                <div
-                  class="row-body"
-                  style="display: ${this.activeRowId === inquiry.id
-                    ? 'block'
-                    : 'none'}"
-                >
-                  <div class="question">
-                    <img
-                      src="/icon/review-question.svg"
-                      alt="question icon"
-                      class="icon-question"
-                    />
-                    <div class="question-text">${inquiry.question}</div>
-                  </div>
-                  <div class="answer">
-                    <img
-                      src="/icon/review-answer.svg"
-                      alt="answer icon"
-                      class="icon-answer"
-                    />
-                    <div class="answer-text">${inquiry.answer}</div>
-                  </div>
-                  <div class="date-text">${inquiry.date}</div>
+                <div class="writer-column">${inquiry.writer}</div>
+                <div class="date-column">${inquiry.date}</div>
+                <div class="status-column" data-status="${inquiry.status}">
+                  ${inquiry.status}
                 </div>
               </div>
-            `
-          )}
-        </div>
+              <div
+                class="row-body"
+                style="display: ${this.activeRowId === inquiry.id
+                  ? 'block'
+                  : 'none'}"
+              >
+                <div class="question">
+                  <img
+                    src="/icon/review-question.svg"
+                    alt="question icon"
+                    class="icon-question"
+                  />
+                  <div class="question-text">${inquiry.question}</div>
+                </div>
+                <div class="answer">
+                  <img
+                    src="/icon/review-answer.svg"
+                    alt="answer icon"
+                    class="icon-answer"
+                  />
+                  <div class="answer-text">${inquiry.answer}</div>
+                </div>
+                <div class="date-text">${inquiry.date}</div>
+              </div>
+            </div>
+          `
+        )}
+      </div>
 
-        <div class="product-list-container">
-          <div class="pagination" aria-label="페이지 이동">
-            <button class="btn-prev" aria-label="이전 페이지">
-              <img src="/icon/review-left-arrow.svg" alt="" />
-            </button>
-            <button aria-label="다음 페이지">
-              <img src="/icon/review-right-arrow.svg" alt="" />
-            </button>
-          </div>
+      <div class="product-list-container">
+        <div class="pagination" aria-label="페이지 이동">
+          <button class="btn-prev" aria-label="이전 페이지">
+            <img src="/icon/review-left-arrow.svg" alt="" />
+          </button>
+          <button aria-label="다음 페이지">
+            <img src="/icon/review-right-arrow.svg" alt="" />
+          </button>
         </div>
-        ${this.showModal
-          ? html`<inquiry-modal-component
-              @close=${this.handleModalClose}
-            ></inquiry-modal-component>`
-          : ''}
-      </section>
+      </div>
+      ${this.showModal
+        ? html`<inquiry-modal-component
+            @close=${this.handleModalClose}
+          ></inquiry-modal-component>`
+        : ''}
     `;
   }
 }
