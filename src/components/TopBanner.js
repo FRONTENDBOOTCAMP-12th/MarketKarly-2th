@@ -1,4 +1,5 @@
 import { LitElement, css, html } from 'lit';
+
 class TopBanner extends LitElement {
   static styles = css`
     .modal {
@@ -12,7 +13,6 @@ class TopBanner extends LitElement {
       background: var(--primary-color, #283198);
       z-index: 9999;
     }
-
     .inner {
       display: flex;
       flex-direction: row;
@@ -21,16 +21,13 @@ class TopBanner extends LitElement {
       width: 1050px;
       position: relative;
     }
-
     .advertise {
       color: var(--white-color, #ffffff);
     }
-
     .advertise-bold {
       font-weight: var(--text-semi-bold);
       color: var(--white-color, #ffffff);
     }
-
     .btn-close {
       position: absolute;
       right: 0;
@@ -40,31 +37,43 @@ class TopBanner extends LitElement {
       height: 16px;
       cursor: pointer;
     }
-
     .close {
       display: none;
     }
   `;
 
-  static properties = {};
+  static properties = {
+    isClosed: { type: Boolean },
+  };
 
   constructor() {
     super();
+    this.isClosed = false;
+    this.handleClose = this.handleClose.bind(this);
   }
 
   connectedCallback() {
     super.connectedCallback();
+    const bannerExpTime = JSON.parse(localStorage.getItem('topBannerExpTime'));
+    if (bannerExpTime) {
+      const now = new Date().getTime();
+      this.isClosed = bannerExpTime >= now;
+    }
   }
 
-  handleShortClose() {
-    const shortClose = this.buttons[1];
-    const modal = shortClose.closest('section');
-    modal.classList.add('close');
+  setExpTime() {
+    const expTime = new Date().getTime() + 1000 * 60 * 10;
+    localStorage.setItem('topBannerExpTime', expTime);
+  }
+
+  handleClose() {
+    this.isClosed = true;
+    this.setExpTime();
   }
 
   render() {
     return html`
-      ${!this.isLongClosed
+      ${!this.isClosed
         ? html`
             <section class="modal">
               <div class="inner">
@@ -78,7 +87,7 @@ class TopBanner extends LitElement {
                   alt="닫기 버튼"
                   class="btn-close"
                   aria-label="닫기"
-                  @click=${this.handleShortClose}
+                  @click=${this.handleClose}
                   tabindex="0"
                 />
               </div>
