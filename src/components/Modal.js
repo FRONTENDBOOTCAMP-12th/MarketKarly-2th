@@ -120,7 +120,6 @@ class Modal extends LitElement {
       ${!this.isLongClosed
         ? html`
             <section class="modal">
-              <div></div>
               <div class="img-wrapper">
                 <p class="modal-text">
                   해당 사이트는 <br />
