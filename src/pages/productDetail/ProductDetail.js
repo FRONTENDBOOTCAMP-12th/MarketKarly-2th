@@ -634,17 +634,16 @@ class ProductDetail extends LitElement {
       this.productData.price -
         this.productData.price * (this.productData.discount / 100)
     ).toFixed();
-    
+
+    return +realPrice;
+  }
+
   get isAuth() {
     const auth = JSON.parse(localStorage.getItem('auth') ?? '{}');
     return auth.isAuth;
   }
 
-    return +realPrice;
-  }
-
   handleTotalPrice() {
-
     const totalPriceNum = this.count * this.realPrice;
 
     this.totalPrice = totalPriceNum.toLocaleString();
