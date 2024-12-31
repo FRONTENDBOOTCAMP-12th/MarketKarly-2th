@@ -11,6 +11,7 @@ class AddCart extends LitElement {
     disabled: { type: Boolean },
     count: { type: Number },
     totalPrice: { type: String },
+    savingsAmount: { type: Number },
   };
 
   constructor() {
@@ -21,6 +22,7 @@ class AddCart extends LitElement {
     this.disabled = true;
     this.count = 1;
     this.totalPrice = '';
+    this.savingsAmount = 0;
   }
 
   static styles = [
@@ -177,6 +179,11 @@ class AddCart extends LitElement {
     }, 0);
   }
 
+  get isAuth() {
+    const auth = JSON.parse(localStorage.getItem('auth') ?? '{}');
+    return auth.isAuth;
+  }
+
   get productPrice() {
     const productPrice =
       this.renderRoot.querySelector('.product-price').textContent;
@@ -185,7 +192,9 @@ class AddCart extends LitElement {
   }
 
   handleTotalPrice() {
-    this.totalPrice = this.productPrice.toLocaleString();
+    const totalPriceNum = this.count * this.productPrice;
+    this.totalPrice = totalPriceNum.toLocaleString();
+    this.savingsAmount = Math.round(totalPriceNum / 1000);
   }
 
   changeBackground() {
@@ -203,7 +212,7 @@ class AddCart extends LitElement {
     this.count++;
 
     if (this.count > 1) {
-      this.totalPrice = (this.count * this.productPrice).toLocaleString();
+      this.handleTotalPrice();
     }
 
     this.changeBackground();
@@ -216,7 +225,7 @@ class AddCart extends LitElement {
     }
 
     if (this.count >= 1) {
-      this.totalPrice = (this.count * this.productPrice).toLocaleString();
+      this.handleTotalPrice();
     }
 
     this.changeBackground();
@@ -259,7 +268,11 @@ class AddCart extends LitElement {
           <div class="total">
             <p>합계<span class="total-price">${this.totalPrice}원</span></p>
 
-            <p class="savings">구매 시 5원 적립</p>
+            <p class="savings">
+              ${this.isAuth
+                ? `구매 시 ${this.savingsAmount}원 적립`
+                : '로그인 후, 적립 혜택 제공'}
+            </p>
           </div>
           <!-- total -->
 

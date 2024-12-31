@@ -212,6 +212,8 @@ class Form extends LitElement {
       Swal.fire({
         text: '사용 가능한 아이디입니다.',
         icon: 'success',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#283198',
       }).then(() => {
         this.isIdChecked = true;
       });
@@ -245,6 +247,8 @@ class Form extends LitElement {
       Swal.fire({
         text: '사용 가능한 이메일입니다.',
         icon: 'success',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#283198',
       }).then(() => {
         this.isEmailChecked = true;
       });
@@ -263,6 +267,8 @@ class Form extends LitElement {
       Swal.fire({
         text: '인증번호가 발송되었습니다.',
         icon: 'success',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#283198',
       }).then(() => {
         this.isPhoneChecked = true;
       });
@@ -285,6 +291,8 @@ class Form extends LitElement {
           title: '회원가입 완료',
           text: '로그인 화면으로 이동합니다.',
           icon: 'success',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#283198',
         }).then(() => {
           location.href = '/src/pages/login/';
         });
@@ -293,6 +301,8 @@ class Form extends LitElement {
           title: 'Error',
           text: '올바른 회원가입 정보를 입력해주세요',
           icon: 'error',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#283198',
         }).then(() => {
           location.reload();
           throw new Error('데이터가 올바르게 입력되지 않았습니다.');

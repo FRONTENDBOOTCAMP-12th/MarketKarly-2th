@@ -6,12 +6,14 @@ import '@/components/ReviewBoard';
 import '@/components/InquiryBoard';
 import pb from '../../api/pocketbase';
 import { getPbImage } from '../../api/getPbImage';
+import Swal from 'sweetalert2';
 
 class ProductDetail extends LitElement {
   static properties = {
     disabled: { type: Boolean },
     count: { type: Number },
     totalPrice: { type: String },
+    savingsAmount: { type: Number },
     isToggled: { type: Boolean },
     activeTab: { type: String },
 
@@ -583,6 +585,7 @@ class ProductDetail extends LitElement {
     this.disabled = true;
     this.count = 1;
     this.totalPrice = '';
+    this.savingsAmount = 0;
     this.isToggled = false;
     this.activeTab = '';
 
@@ -631,11 +634,17 @@ class ProductDetail extends LitElement {
       this.productData.price -
         this.productData.price * (this.productData.discount / 100)
     ).toFixed();
+    
+  get isAuth() {
+    const auth = JSON.parse(localStorage.getItem('auth') ?? '{}');
+    return auth.isAuth;
+  }
 
     return +realPrice;
   }
 
   handleTotalPrice() {
+
     const totalPriceNum = this.count * this.realPrice;
 
     this.totalPrice = totalPriceNum.toLocaleString();
@@ -677,7 +686,20 @@ class ProductDetail extends LitElement {
   }
 
   toggleBtnFavorits() {
-    this.isToggled = !this.isToggled;
+    if (this.isAuth) {
+      this.isToggled = !this.isToggled;
+    } else {
+      Swal.fire({
+        text: '로그인하셔야 본 서비스를 이용하실 수 있습니다.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#283198',
+      }).then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          window.location.href = '/src/pages/login/';
+        }
+      });
+    }
   }
 
   handleTabmenu(e) {
@@ -778,9 +800,11 @@ class ProductDetail extends LitElement {
               </del>
             </div>
 
-            <p class="savings-description">
-              로그인 후, 적립 혜택이 제공됩니다.
-            </p>
+            ${this.isAuth
+              ? ''
+              : html`<p class="savings-description">
+                  로그인 후, 적립 혜택이 제공됩니다.
+                </p>`}
           </div>
           <!-- product-intro -->
 
@@ -879,7 +903,12 @@ class ProductDetail extends LitElement {
             <p>
               총 상품금액:<span class="total-price">${this.totalPrice}</span> 원
             </p>
-            <p><span class="savings">적립</span>로그인 후, 적립 혜택 제공</p>
+            <p>
+              <span class="savings">적립</span>
+              ${this.isAuth
+                ? `구매 시 ${this.savingsAmount}원 적립`
+                : '로그인 후, 적립 혜택 제공'}
+            </p>
           </div>
           <!-- product-total-price -->
 

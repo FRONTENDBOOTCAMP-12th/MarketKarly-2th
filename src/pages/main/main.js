@@ -22,8 +22,6 @@ class Main extends LitElement {
   static properties = {
     data1: { type: Array },
     data2: { type: Array },
-    viewedItem: { type: Object },
-    viewedItemKey: { type: String },
   };
 
   constructor() {

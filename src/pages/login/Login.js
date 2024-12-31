@@ -84,6 +84,8 @@ class Login extends LitElement {
         title: '로그인 실패',
         text: '아이디와 비밀번호를 모두 입력해주세요.',
         icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#283198',
       });
       return;
     }
@@ -112,6 +114,8 @@ class Login extends LitElement {
         title: '로그인 실패',
         text: '아이디 또는 비밀번호가 올바르지 않습니다.',
         icon: 'error',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#283198',
       });
     }
   }

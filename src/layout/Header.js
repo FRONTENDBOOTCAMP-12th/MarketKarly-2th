@@ -9,12 +9,10 @@ class Header extends LitElement {
     reset,
     css`
       .header-wrapper {
-        position: relative;
         box-shadow: 0 0 var(--space-md) var(--gray-color-200, #c4c4c4);
         background-color: var(--white-color, #ffffff);
         position: sticky;
         top: 0;
-        background-color: #fff;
         z-index: 1000;
       }
 
@@ -23,8 +21,7 @@ class Header extends LitElement {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        padding: 0 0 var(--space-2xl);
-        width: 100%;
+        padding: 0 0 var(--space-md);
       }
 
       .header-member-service {
@@ -143,15 +140,16 @@ class Header extends LitElement {
         position: absolute;
         align-items: center;
         width: 400px;
-        height: 50px;
-        border: 0.0625rem solid var(--primary-color, #283198);
+        height: 48px;
+        border: 0.08rem solid var(--primary-color, #283198);
         border-radius: 4px;
-        padding: var(--space-lg) var(--space-lg);
+        padding: 0 0;
         box-sizing: border-box;
       }
 
       .header-search input::placeholder {
         color: var(--gray-color-400, #898989);
+        padding-left: var(--space-md);
       }
 
       .header-search input {
@@ -162,11 +160,12 @@ class Header extends LitElement {
       }
 
       .header-search button {
-        background: none;
-        border: none;
-        cursor: pointer;
         width: 36px;
         height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
       }
 
       .header-bookmarks {
@@ -266,6 +265,13 @@ class Header extends LitElement {
         font-weight: var(--text-bold);
       }
 
+      .header-category {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+      }
+
       .nav-site-map {
         padding: var(--space-xl) 0;
         display: flex;
@@ -313,7 +319,8 @@ class Header extends LitElement {
         z-index: 10;
       }
 
-      .header-member-item:hover .header-help-desk {
+      .header-member-item:hover .header-help-desk,
+      .header-member-item:focus-within .header-help-desk {
         display: block;
       }
 
@@ -321,6 +328,11 @@ class Header extends LitElement {
         display: block;
         padding: var(--space-md);
         text-decoration: none;
+      }
+
+      .header-help-desk li a:hover,
+      .header-help-desk li a:focus {
+        background-color: #f7f7f7;
       }
 
       .delivery-bold {
@@ -351,7 +363,7 @@ class Header extends LitElement {
 
       .header-search.scrolled {
         position: absolute;
-        top: 7.55rem;
+        top: 6.9rem;
         left: 47rem;
         width: 242px;
         height: 34px;
@@ -424,6 +436,8 @@ class Header extends LitElement {
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: '로그아웃',
+      confirmButtonColor: '#283198',
+      cancelButtonText: '취소',
     }).then(({ isConfirmed }) => {
       if (isConfirmed) {
         localStorage.removeItem('auth');
@@ -441,13 +455,6 @@ class Header extends LitElement {
 
   closeCategory() {
     this.isCategoryOpen = false;
-  }
-
-  handleKeyDown(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      this.isCategoryOpen = !this.isCategoryOpen;
-      e.preventDefault();
-    }
   }
 
   handleScroll() {
@@ -470,6 +477,17 @@ class Header extends LitElement {
       navigation.classList.remove('scrolled');
       searchBox.classList.remove('scrolled');
       bookmarkContainer.classList.remove('scrolled');
+    }
+  }
+
+  toggleCategory() {
+    this.isCategoryOpen = !this.isCategoryOpen;
+  }
+
+  handleKeyDown(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.toggleCategory();
     }
   }
 
@@ -588,7 +606,7 @@ class Header extends LitElement {
                 </a>
               </li>
               <li>
-                <a href="#" aria-label="장바구니">
+                <a href="/src/pages/cart/index.html" aria-label="장바구니">
                   <img src="/icon/header-cart.svg" class="icon" />
                 </a>
               </li>
@@ -600,25 +618,31 @@ class Header extends LitElement {
               class="nav-category"
               @mouseenter=${this.openCategory}
               @mouseleave=${this.closeCategory}
-              @focus=${this.openCategory}
-              @blur=${this.closeCategory}
-              tabindex="0"
             >
-              ${this.isCategoryOpen
-                ? html`<header-category-component></header-category-component>`
-                : ''}
-              <button class="nav-category-button">
+              <button
+                class="nav-category-button"
+                @keydown=${this.handleKeyDown}
+                @click=${this.toggleCategory}
+                tabindex="0"
+                aria-expanded="${this.isCategoryOpen}"
+                aria-controls="category-dropdown"
+              >
                 <img
                   src="/icon/hamburger.webp"
                   alt="카테고리"
-                  class="nav-category-icon nav-category-hover"
+                  class="nav-category-icon"
                   aria-label="카테고리"
                 />
-
-                <span class="nav-category-text nav-category-hover"
-                  >카테고리</span
-                >
+                <span>카테고리</span>
               </button>
+
+              ${this.isCategoryOpen
+                ? html`<header-category-component
+                    id="category-dropdown"
+                    class="header-category"
+                    @keydown=${this.handleCategoryKeyDown}
+                  ></header-category-component>`
+                : ''}
             </section>
 
             <ul class="nav-site-map">
