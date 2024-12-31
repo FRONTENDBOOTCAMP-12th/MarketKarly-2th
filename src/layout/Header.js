@@ -606,7 +606,7 @@ class Header extends LitElement {
                 </a>
               </li>
               <li>
-                <a href="#" aria-label="장바구니">
+                <a href="/src/pages/cart/index.html" aria-label="장바구니">
                   <img src="/icon/header-cart.svg" class="icon" />
                 </a>
               </li>
