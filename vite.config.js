@@ -9,7 +9,7 @@ export default defineConfig({
     outDir: 'docs',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
+        main: resolve(__dirname, '/index.html'),
         login: resolve(__dirname, 'src/pages/login/index.html'),
         register: resolve(__dirname, 'src/pages/register/index.html'),
         productList: resolve(__dirname, 'src/pages/productList/index.html'),
