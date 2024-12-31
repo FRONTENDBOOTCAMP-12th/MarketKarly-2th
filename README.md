@@ -46,7 +46,7 @@
 
 <br>
 
-<table align="center" width="100%">
+<table width="100%">
     <tr>
         <td align="center">
             <img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/61653740?v=4"/>
@@ -120,9 +120,11 @@
 
 ## 🖥️ 결과물 🖥️ 살펴보기
 
+![Simple-Site-Map](./public/readme/simple-site-map.webp)
+
 ### 🗺️ 사이트맵
 
-![PerfectDeplo2](./public/readme/site-map.webp)
+![Site-Map](./public/readme/site-map.webp)
 
 ### 🕹️ 시연
 
