@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import '@/assets/font/Pretendard.css';
 import { register } from 'swiper/element';
+import { getPbImage } from '@/api/getPbImage';
 register();
 
 class RecentElement extends LitElement {
@@ -18,12 +19,12 @@ class RecentElement extends LitElement {
         position: fixed;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         gap: 0.375rem;
         top: 50%;
         right: 0;
-        transform: translate(-50%, -50%);
+        transform: translate(-25%, -50%);
         z-index: 999;
         background-color: var(--white-color, #fff);
       }
@@ -34,6 +35,7 @@ class RecentElement extends LitElement {
       }
 
       swiper-container {
+        flex: 1;
         overflow: hidden;
       }
 
@@ -49,11 +51,9 @@ class RecentElement extends LitElement {
       }
     `,
   ];
+
   render() {
     return html`
-      <style>
-        ${reset}
-      </style>
       <section class="container" id="side-swiper">
         <button
           class="btn-up"
@@ -69,29 +69,14 @@ class RecentElement extends LitElement {
           id="swiper"
           slides-per-view="2.5"
           direction="vertical"
-          loop
+          loop="false"
           space-between="4"
         >
-          <swiper-slide>
-            <a href="/" aria-label="product01 상품상세 페이지">
-              <img src="/image/product01.webp" alt="최근 본 상품 이미지1" />
-            </a>
-          </swiper-slide>
-          <swiper-slide>
-            <a href="/" aria-label="product02 상품상세 페이지">
-              <img src="/image/product02.webp" alt="최근 본 상품 이미지2" />
-            </a>
-          </swiper-slide>
-          <swiper-slide>
-            <a href="/" aria-label="product03 상품상세 페이지">
-              <img src="/image/product03.webp" alt="최근 본 상품 이미지3" />
-            </a>
-          </swiper-slide>
-          <swiper-slide>
-            <a href="/" aria-label="product04 상품상세 페이지">
-              <img src="/image/product04.webp" alt="최근 본 상품 이미지4" />
-            </a>
-          </swiper-slide>
+          ${this.viewedData?.map((item) => {
+            return html`<swiper-slide>
+              <img src="${item.photo}" alt="${item.productName}" />
+            </swiper-slide>`;
+          })}
         </swiper-container>
 
         <button
@@ -119,6 +104,23 @@ class RecentElement extends LitElement {
 
   nextSlide() {
     this.swiperEl.swiper.slideNext();
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('pageshow', this.handlePageShow.bind(this));
+    // this._fetchStorageData();
+  }
+
+  _fetchStorageData() {
+    const data = JSON.parse(localStorage.getItem('viewedItem'));
+    this.viewedData = data;
+  }
+
+  handlePageShow() {
+    const storedProducts = JSON.parse(localStorage.getItem('viewedItem'));
+    this.viewedData = storedProducts;
+    this.requestUpdate();
   }
 }
 

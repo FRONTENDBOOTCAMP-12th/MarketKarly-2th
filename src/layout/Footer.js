@@ -6,6 +6,7 @@ class Footer extends LitElement {
     reset,
     css`
       #footer {
+        border-top: 1px solid var(--gray-color-100, #e1e1e1);
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         grid-template-rows: repeat(3, auto);
@@ -245,7 +246,6 @@ class Footer extends LitElement {
               <li>
                 <a
                   href="https://section.blog.naver.com/"
-                  aria-label="네이버블로그"
                   target="_blank"
                   rel="noopener noreferrer"
                   ><img src="/image/blog.webp" alt="naver blog"
@@ -254,7 +254,6 @@ class Footer extends LitElement {
               <li>
                 <a
                   href="https://www.facebook.com/"
-                  aria-label="페이스북"
                   target="_blank"
                   rel="noopener noreferrer"
                   ><img src="/image/facebook.webp" alt="facebook"
@@ -263,7 +262,6 @@ class Footer extends LitElement {
               <li>
                 <a
                   href="https://www.instagram.com/"
-                  aria-label="인스타그램"
                   target="_blank"
                   rel="noopener noreferrer"
                   ><img src="/image/instagram.webp" alt="instagram"
@@ -272,7 +270,6 @@ class Footer extends LitElement {
               <li>
                 <a
                   href="https://post.naver.com/"
-                  aria-label="네이버포스트"
                   target="_blank"
                   rel="noopener noreferrer"
                   ><img src="/image/naverpost.webp" alt="naver post"
@@ -281,7 +278,6 @@ class Footer extends LitElement {
               <li>
                 <a
                   href="https://www.youtube.com/"
-                  aria-label="유튜브"
                   target="_blank"
                   rel="noopener noreferrer"
                   ><img src="/image/youtube.webp" alt="youtube"

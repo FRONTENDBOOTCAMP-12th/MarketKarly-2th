@@ -3,8 +3,17 @@ import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 
 class BtnDisabled extends LitElement {
+  static properties = {
+    width: { type: String },
+    height: { type: String },
+    text: { type: String },
+  };
+
   constructor() {
     super();
+    this.width = '174px';
+    this.height = '54px';
+    this.text = 'text';
   }
 
   static styles = [
@@ -16,9 +25,7 @@ class BtnDisabled extends LitElement {
         margin: 0;
         border: none;
         background: none;
-
-        width: 174px;
-        height: 54px;
+        pointer-events: none;
 
         background-color: var(--gray-color-100, #e1e1e1);
         color: var(--white-color, #ffffff);
@@ -33,7 +40,13 @@ class BtnDisabled extends LitElement {
 
   render() {
     return html/* html */ `
-      <button class="btn-disabled" type="button">text</button>
+      <style>
+        .btn-disabled {
+          width: ${this.width};
+          height: ${this.height};
+        }
+      </style>
+      <button class="btn-disabled" type="button">${this.text}</button>
     `;
   }
 }

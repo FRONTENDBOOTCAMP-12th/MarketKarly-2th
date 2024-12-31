@@ -1,26 +1,9 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="80.000000pt" height="80.000000pt" viewBox="0 0 80.000000 80.000000"
- preserveAspectRatio="xMidYMid meet">
-
-<g transform="translate(0.000000,80.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
-<path d="M214 726 c-3 -8 2 -28 10 -45 30 -57 24 -107 -25 -211 -42 -90 -44
--99 -44 -185 0 -74 4 -97 23 -132 12 -23 22 -45 22 -48 0 -3 -16 -5 -35 -5
--19 0 -35 -4 -35 -10 0 -6 97 -10 270 -10 173 0 270 4 270 10 0 6 -16 10 -35
-10 -31 0 -35 3 -35 26 0 14 9 33 20 42 21 17 82 167 72 177 -3 3 -79 5 -169 5
--128 0 -164 -3 -159 -12 2 -7 14 -43 25 -79 12 -36 30 -74 41 -84 11 -10 20
--31 20 -47 l0 -29 -112 3 -112 3 -25 50 c-22 42 -26 63 -26 135 1 78 4 93 42
-175 22 50 44 100 48 113 5 19 13 22 56 22 38 0 49 -3 49 -16 0 -14 75 -192 86
--203 2 -2 7 -2 10 2 3 3 -13 46 -35 96 -45 99 -50 142 -25 195 28 58 18 66
--91 66 -73 0 -97 -3 -101 -14z m182 -18 c-2 -7 -10 -30 -17 -51 -12 -38 -13
--38 -62 -35 -49 3 -49 3 -67 51 l-18 47 85 0 c64 0 83 -3 79 -12z m274 -384
-c0 -3 -5 -14 -10 -25 -10 -17 -22 -19 -130 -19 -108 0 -120 2 -130 19 -5 11
--10 22 -10 25 0 3 63 6 140 6 77 0 140 -3 140 -6z m-31 -93 c-18 -52 -39 -62
--115 -59 -65 3 -69 5 -91 37 -13 19 -23 38 -23 42 0 5 54 9 119 9 l120 0 -10
--29z m-59 -107 c0 -24 -2 -25 -52 -22 -46 3 -53 6 -56 26 -3 21 0 22 52 22 53
-0 56 -1 56 -26z"/>
-</g>
+<svg width="81" height="81" viewBox="0 0 81 81" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="81" height="81" fill="url(#pattern0_42_969)"/>
+<defs>
+<pattern id="pattern0_42_969" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_42_969" transform="scale(0.0123457)"/>
+</pattern>
+<image id="image0_42_969" width="81" height="81" xlink:href="data:image/png;base64,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"/>
+</defs>
 </svg>

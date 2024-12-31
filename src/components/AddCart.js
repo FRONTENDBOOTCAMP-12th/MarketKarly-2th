@@ -6,17 +6,23 @@ import '@/components/Button/BtnFilled';
 
 class AddCart extends LitElement {
   static properties = {
+    productName: { type: String },
+    price: { type: String },
     disabled: { type: Boolean },
     count: { type: Number },
     totalPrice: { type: String },
+    savingsAmount: { type: Number },
   };
 
   constructor() {
     super();
 
+    this.productName = '';
+    this.price = '';
     this.disabled = true;
     this.count = 1;
     this.totalPrice = '';
+    this.savingsAmount = 0;
   }
 
   static styles = [
@@ -28,8 +34,8 @@ class AddCart extends LitElement {
         top: 0;
         left: 0;
 
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         transition: all 0.5s;
 
         z-index: 10000;
@@ -44,13 +50,14 @@ class AddCart extends LitElement {
       }
 
       .add-cart {
+        margin: 0;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
 
         width: 396px;
-        height: 292px;
+        height: 316px;
         background-color: var(--white-color, #ffffff);
 
         display: inline-flex;
@@ -58,6 +65,7 @@ class AddCart extends LitElement {
         justify-content: space-between;
         gap: 1.75rem;
 
+        border: none;
         box-shadow: var(--below-medium);
 
         padding: var(--space-3xl) var(--space-2xl);
@@ -70,6 +78,10 @@ class AddCart extends LitElement {
           gap: 0.75rem;
 
           font-weight: var(--text-semi-bold);
+
+          .product-name {
+            height: 48px;
+          }
 
           > div {
             display: flex;
@@ -167,14 +179,22 @@ class AddCart extends LitElement {
     }, 0);
   }
 
-  get productPrice() {
-    const price = this.renderRoot.querySelector('.product-price').textContent;
+  get isAuth() {
+    const auth = JSON.parse(localStorage.getItem('auth') ?? '{}');
+    return auth.isAuth;
+  }
 
-    return +price.replace(/[^\d]/g, '');
+  get productPrice() {
+    const productPrice =
+      this.renderRoot.querySelector('.product-price').textContent;
+
+    return +productPrice.replace(/[^\d]/g, '');
   }
 
   handleTotalPrice() {
-    this.totalPrice = this.productPrice.toLocaleString();
+    const totalPriceNum = this.count * this.productPrice;
+    this.totalPrice = totalPriceNum.toLocaleString();
+    this.savingsAmount = Math.round(totalPriceNum / 1000);
   }
 
   changeBackground() {
@@ -192,7 +212,7 @@ class AddCart extends LitElement {
     this.count++;
 
     if (this.count > 1) {
-      this.totalPrice = (this.count * this.productPrice).toLocaleString();
+      this.handleTotalPrice();
     }
 
     this.changeBackground();
@@ -205,7 +225,7 @@ class AddCart extends LitElement {
     }
 
     if (this.count >= 1) {
-      this.totalPrice = (this.count * this.productPrice).toLocaleString();
+      this.handleTotalPrice();
     }
 
     this.changeBackground();
@@ -213,19 +233,17 @@ class AddCart extends LitElement {
 
   handleBtnCancel() {
     this.remove();
-
-    document.body.style.overflow = 'auto';
   }
 
   render() {
     return html/* html */ `
       <div class="popup-bg">
-        <div class="add-cart">
+        <dialog class="add-cart">
           <div class="product">
-            <p class="product-name">[풀무원] 탱탱쫄면 (4개입)</p>
+            <p class="product-name">${this.productName}</p>
 
             <div>
-              <p class="product-price">4,980원</p>
+              <p class="product-price">${this.price}원</p>
 
               <div class="product-counter">
                 <button
@@ -250,7 +268,11 @@ class AddCart extends LitElement {
           <div class="total">
             <p>합계<span class="total-price">${this.totalPrice}원</span></p>
 
-            <p class="savings">구매 시 5원 적립</p>
+            <p class="savings">
+              ${this.isAuth
+                ? `구매 시 ${this.savingsAmount}원 적립`
+                : '로그인 후, 적립 혜택 제공'}
+            </p>
           </div>
           <!-- total -->
 
@@ -262,7 +284,7 @@ class AddCart extends LitElement {
             <btn-filled-component text="장바구니 담기"></btn-filled-component>
           </div>
           <!-- button-wrapper -->
-        </div>
+        </dialog>
         <!-- add-cart -->
       </div>
       <!-- popup-bg -->

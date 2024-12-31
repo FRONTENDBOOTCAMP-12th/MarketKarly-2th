@@ -1,11 +1,41 @@
-import { LitElement, html, css } from 'lit';
-import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/AddCart';
+import reset from '@/styles/reset';
+import { LitElement, css, html } from 'lit';
 
 class Card extends LitElement {
+  static properties = {
+    collectionId: { type: String },
+    id: { type: String },
+    photoURL: { type: String },
+    deliveryType: { type: String },
+    productName: { type: String },
+    discount: { type: Number },
+    realPrice: { type: Number },
+    price: { type: Number },
+    description: { type: String },
+    tagOnly: { type: Boolean },
+    tagLimited: { type: Boolean },
+    viewedItemKey: { type: String },
+    viewedItem: { type: Object },
+  };
+
   constructor() {
     super();
+
+    this.collectionId = '';
+    this.id = '';
+    this.photoURL = '';
+    this.deliveryType = '';
+    this.productName = '';
+    this.discount = 0;
+    this.realPrice = 0;
+    this.price = 0;
+    this.description = '';
+    this.tagOnly = false;
+    this.tagLimited = false;
+    this.viewedItemKey = 'viewedItem';
+    this.viewedItem = [];
   }
 
   static styles = [
@@ -13,6 +43,7 @@ class Card extends LitElement {
     a11y,
     css`
       .card-component {
+        cursor: pointer;
         display: inline-flex;
         flex-direction: column;
         gap: 1rem;
@@ -41,13 +72,15 @@ class Card extends LitElement {
           }
         }
 
-        & .content {
+        .content {
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
 
+          cursor: pointer;
+
           .title {
-            .sub-title {
+            .delivery-type {
               margin-bottom: 0.5rem;
               margin-block-end: 0.5rem;
 
@@ -74,7 +107,7 @@ class Card extends LitElement {
                 color: var(--accent-color, #fa622f);
               }
 
-              .current-price {
+              .real-price {
                 color: var(--content-text-color, #333333);
               }
             }
@@ -91,7 +124,7 @@ class Card extends LitElement {
             }
           }
 
-          .discription {
+          .description {
             line-height: 1.6;
             color: var(--gray-color-400, #898989);
             font-weight: var(--text-regular);
@@ -104,7 +137,7 @@ class Card extends LitElement {
             align-items: start;
             gap: 0.5rem;
 
-            .only {
+            .tag-only {
               display: inline-block;
               background-color: var(--gray-color-100);
               padding: 4px;
@@ -115,7 +148,7 @@ class Card extends LitElement {
               font-weight: var(--text-semi-bold);
               font-size: 0.75rem;
             }
-            .limited {
+            .tag-limited {
               display: inline-block;
               background-color: var(--gray-color-100);
               padding: 4px;
@@ -132,21 +165,87 @@ class Card extends LitElement {
     `,
   ];
 
-  handleAddCart = (e) => {
-    const popup = document.createElement('add-cart-component');
+  connectedCallback() {
+    super.connectedCallback();
+    // 로컬스토리지에 저장된 item 가져오기
+    const now = new Date().getTime();
+    const viewedItem = localStorage.getItem(this.viewedItemKey);
+    if (viewedItem) {
+      this.viewedItem = JSON.parse(viewedItem);
+      // 24시간 이후에 로컬 스토리지에서 제거
+      this.viewedItem = this.viewedItem.filter((item) => item.expTime > now);
+    }
+  }
 
-    document.body.appendChild(popup);
-    document.body.style.overflow = 'hidden';
+  handleAddCart = (e) => {
+    e.stopPropagation();
+
+    const popupAddCart = document.createElement('add-cart-component');
+
+    document.body.appendChild(popupAddCart);
+
+    const realPrice = this.realPrice.toLocaleString();
+    const productName = this.productName;
+
+    popupAddCart.setAttribute('price', realPrice);
+    popupAddCart.setAttribute('productName', productName);
   };
+
+  handleCardClick = (event) => {
+    this._handleViewedItem();
+
+    const { target } = event;
+
+    if (target.closest('button') || target.closest('.add-cart')) {
+      // button 태그 또는 .add-cart'에서 발생하는 버튼 클릭 이벤트는 무시
+      return;
+    }
+
+    const link =
+      target.closest('.content').previousElementSibling.firstElementChild;
+    // 클릭된 요소 상위 요소에서 a태그 찾기
+
+    console.log(link);
+    if (link) {
+      link.click(); // a태그를 발견하면, 해당 태그의 클릭 이벤트를 수동으로 트리거
+    }
+  };
+
+  _filterItem(data) {
+    return this.viewedItem.filter((item) => item.id !== data.id);
+  }
+
+  _handleViewedItem() {
+    const data = {
+      id: this.id,
+      collectionId: this.collectionId,
+      photo: this.photoURL,
+      productName: this.productName,
+      expTime: new Date().getTime() + 1000 * 60 * 60 * 24,
+    };
+
+    // 같은 id 값을 갖는 아이템 제거
+    this.viewedItem = this._filterItem(data);
+
+    // 최대 7개까지만 렌더링
+    if (this.viewedItem.length > 7) {
+      this.viewedItem.pop();
+    }
+
+    // 가장 앞에 아이템 추가
+    this.viewedItem.unshift(data);
+
+    localStorage.setItem(this.viewedItemKey, JSON.stringify(this.viewedItem));
+  }
 
   render() {
     return html/* html */ `
-      <div class="card-component">
+      <div @click=${this.handleCardClick} class="card-component">
         <figure>
-          <a href="/">
-            <img src="/image/product02.webp" alt="" />
+          <a href="/src/pages/productDetail/index.html?product=${this.id}">
+            <img src="${this.photoURL}" alt="" />
           </a>
-          <figcaption class="sr-only">죠르디 시카 자석 선쿠션</figcaption>
+          <figcaption class="sr-only">${this.productName} 사진</figcaption>
 
           <button
             @click="${this.handleAddCart}"
@@ -160,28 +259,37 @@ class Card extends LitElement {
 
         <div class="content">
           <div class="title">
-            <p class="sub-title">[온더바디] 죠르디 시카 자석 선쿠션</p>
-
-            <p class="main-title">[온더바디] 죠르디 시카 자석 선쿠션</p>
+            <p class="delivery-type">${this.deliveryType}</p>
+            <p class="main-title">${this.productName}</p>
           </div>
           <!-- title -->
 
           <div class="price">
             <p>
-              <span class="discount">50%<span class="sr-only">할인</span></span>
-              <span class="current-price">32,500원</span>
+              ${this.discount > 0
+                ? html`<span class="discount"
+                    >${this.discount}%<span class="sr-only">할인</span></span
+                  >`
+                : ''}
+              <span class="real-price"
+                >${this.realPrice.toLocaleString()}원</span
+              >
             </p>
 
-            <p class="origin-price">24,900원</p>
+            <p class="origin-price">${this.price.toLocaleString()}원</p>
           </div>
           <!-- price -->
 
-          <p class="discription">CJ즉석밥 고소한 맛의 발아 현미밥</p>
-          <!-- discription  -->
+          <p class="description">${this.description}</p>
+          <!-- description  -->
 
           <div class="tags">
-            <span class="only">Kurlit Only</span>
-            <span class="limited">한정수량</span>
+            ${this.tagOnly === true
+              ? html`<span class="tag-only">Kurlit Only</span>`
+              : null}
+            ${this.tagLimited
+              ? html`<span class="tag-limited">한정수량</span>`
+              : null}
           </div>
           <!-- tags -->
         </div>

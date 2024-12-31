@@ -1,31 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko-KR">
   <head>
     <title>Market Karlit</title>
+    <meta property="og:title" content="마케컬릿" />
+    <meta
+      property="og:description"
+      content="멋쟁이 사자처럼 프론트엔드 스쿨 12기 바닐라프로젝트 2조의 마켓컬릿 쇼핑몰 사이트 입니다."
+    />
+    <meta property="og:image" content="/logo2.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="604" />
+    <meta property="og:image:alt" content="market-karlit" />
+    <meta property="og:url" content="https://marketkalit2th.netlify.app" />
+    <meta property="og:type" content="product" />
+    <meta property="og:site_name" content="마켓컬릿" />
+    <meta property="og:locale" content="ko_KR" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link rel="shortcut icon" href="/favicon/favicon.png" type="image/x-icon" />
-
     <link rel="stylesheet" href="./src/styles/global.css" />
     <link rel="stylesheet" href="./src/styles/reset.css" />
     <link rel="stylesheet" href="./src/index.css" />
     <script type="module" src="/src/main.js"></script>
   </head>
   <body>
+    <top-banner-component></top-banner-component>
     <header-layout></header-layout>
     <modal-component></modal-component>
-    <banner-component></banner-component>
-    <products-swiper-component
-      title="이 상품 어때요 ?"
-    ></products-swiper-component>
-    <a class="line-banner" href="#" aria-label="퍼플위크 배너">
-      <img src="/image/line-banner.webp" alt="10월 퍼플위크" />
-    </a>
-    <recent-component></recent-component>
-    <products-swiper-component
-      title="놓치면 후회할 가격"
-    ></products-swiper-component>
+    <main-page></main-page>
+    <page-up-component></page-up-component>
     <footer-layout></footer-layout>
   </body>
 </html>
