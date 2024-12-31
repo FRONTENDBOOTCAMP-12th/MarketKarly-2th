@@ -495,7 +495,7 @@ class ProductDetail extends LitElement {
                 height: 40px;
 
                 margin: 0 auto var(--space-xl);
-                background-image: url(/public/icon/why_strict_committee.svg);
+                background-image: url(/icon/why_strict_committee.svg);
                 background-repeat: no-repeat;
                 background-position: center center;
               }
@@ -507,7 +507,7 @@ class ProductDetail extends LitElement {
                 height: 40px;
 
                 margin: 0 auto var(--space-xl);
-                background-image: url(/public/icon/why_karly_only.svg);
+                background-image: url(/icon/why_karly_only.svg);
                 background-repeat: no-repeat;
                 background-position: center center;
               }
@@ -519,7 +519,7 @@ class ProductDetail extends LitElement {
                 height: 40px;
 
                 margin: 0 auto var(--space-xl);
-                background-image: url(/public/icon/why_cold_delivery.svg);
+                background-image: url(/icon/why_cold_delivery.svg);
                 background-repeat: no-repeat;
                 background-position: center center;
               }
@@ -531,7 +531,7 @@ class ProductDetail extends LitElement {
                 height: 40px;
 
                 margin: 0 auto var(--space-xl);
-                background-image: url(/public/icon/why_best_price.svg);
+                background-image: url(/icon/why_best_price.svg);
                 background-repeat: no-repeat;
                 background-position: center center;
               }
@@ -543,7 +543,7 @@ class ProductDetail extends LitElement {
                 height: 40px;
 
                 margin: 0 auto var(--space-xl);
-                background-image: url(/public/icon/why_green_distribution.svg);
+                background-image: url(/icon/why_green_distribution.svg);
                 background-repeat: no-repeat;
                 background-position: center center;
               }
@@ -585,6 +585,16 @@ class ProductDetail extends LitElement {
     this.totalPrice = '';
     this.isToggled = false;
     this.activeTab = '';
+
+    this.productData = {
+      photoURL: '',
+      deliveryType: '',
+      productName: '',
+      productHeadline: '',
+      price: '',
+      productStory: '',
+      detailPhotoURL: '',
+    };
   }
 
   connectedCallback() {
@@ -609,7 +619,6 @@ class ProductDetail extends LitElement {
     try {
       const record = await pb.collection('products').getOne(productId);
       this.productData = record;
-      console.log(this.productData);
 
       this.handleTotalPrice();
     } catch (error) {
@@ -623,11 +632,11 @@ class ProductDetail extends LitElement {
         this.productData.price * (this.productData.discount / 100)
     ).toFixed();
 
-    return realPrice;
+    return +realPrice;
   }
 
   handleTotalPrice() {
-    const totalPriceNum = this.count * this.productData.price;
+    const totalPriceNum = this.count * this.realPrice;
 
     this.totalPrice = totalPriceNum.toLocaleString();
     this.savingsAmount = Math.round(totalPriceNum / 1000);
@@ -676,7 +685,6 @@ class ProductDetail extends LitElement {
 
     const target = e.target;
     const tab = target.closest('li');
-    const tabId = target.getAttribute('href').replace('#', '');
 
     if (tab) {
       const siblings = tab.parentElement.children;
@@ -706,13 +714,10 @@ class ProductDetail extends LitElement {
       }
     }
 
+    const tabId = target.getAttribute('href').replace('#', '');
     const targetScroll = this.shadowRoot.querySelector(`#${tabId}`).offsetTop;
-    window.scrollTo({ top: targetScroll - 112 });
 
-    // 해당 id로 스크롤 이동
-    // this.shadowRoot
-    //   .querySelector(`#${tabId}`)
-    //   .scrollIntoView({ behavior: 'smooth' });
+    window.scrollTo({ top: targetScroll - 112 });
   }
 
   handleScroll = () => {
@@ -860,7 +865,7 @@ class ProductDetail extends LitElement {
                         ></button>
                       </div>
                       <!-- product-counter -->
-                      <p>${this.productData.price.toLocaleString()}원</p>
+                      <p>${this.realPrice.toLocaleString()}원</p>
                     </div>
                   </div>
                   <!-- product-option -->
