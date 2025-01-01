@@ -17,7 +17,6 @@ class Header extends LitElement {
       }
 
       .top-bar-nav {
-        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
@@ -78,7 +77,6 @@ class Header extends LitElement {
       .header-name-wrapper {
         display: flex;
         align-items: center;
-        width: 100%;
         gap: 3.5rem;
         box-sizing: border-box;
         justify-content: space-between;
@@ -169,43 +167,11 @@ class Header extends LitElement {
           brightness(87%) contrast(91%);
       }
 
-      .header-bookmarks li a:hover .map-popup {
-        display: block;
-      }
-
-      .map-popup {
-        display: none;
-        position: absolute;
-        top: 5.8rem;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: var(--white-color, #ffffff);
-        border: 0.0625rem solid #ccc;
-        padding: var(--space-2xl);
-        z-index: 10;
-        width: 145px;
-        opacity: 2;
-      }
-
-      .map-popup p {
-        font-size: var(--font-sm);
-        margin-bottom: var(--space-md);
-      }
-
-      .map-popup button {
-        background-color: var(--primary-color, #283198);
-        border: none;
-        padding: var(--space-md) var(--space-xl);
-        font-size: var(--font-sm);
-        cursor: pointer;
-      }
-
       .nav {
         position: relative;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
       }
 
       .nav-category {
@@ -241,7 +207,6 @@ class Header extends LitElement {
 
       .header-category {
         position: absolute;
-        top: 100%;
         left: 0;
         z-index: 1000;
       }
