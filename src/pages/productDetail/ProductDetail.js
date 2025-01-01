@@ -779,20 +779,24 @@ class ProductDetail extends LitElement {
 
               <div class="product-price">
                 <p>
-                  <span class="discount">
-                    ${this.productData.discount}%<span class="sr-only"
-                      >할인</span
-                    >
-                  </span>
+                  ${this.productData.discount > 0
+                    ? html`<span class="discount"
+                        >${this.productData.discount}%<span class="sr-only"
+                          >할인</span
+                        ></span
+                      >`
+                    : ''}
 
                   <span class="real-price">
                     ${this.realPrice.toLocaleString()}<span>원</span>
                   </span>
                 </p>
 
-                <del class="origin-price">
-                  ${this.productData.price.toLocaleString()}원
-                </del>
+                ${this.productData.discount > 0
+                  ? html`<del class="origin-price">
+                      ${this.productData.price.toLocaleString()}원
+                    </del>`
+                  : ''}
               </div>
 
               ${this.isAuth
