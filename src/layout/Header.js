@@ -68,10 +68,6 @@ class Header extends LitElement {
         background: var(--gray-color-100, #e1e1e1);
         margin-left: 0 var(--space-lg);
       }
-      .header-member-item .icon-down {
-        width: 6px;
-        height: 6px;
-      }
 
       .max-width-box {
         margin: 0 auto;
@@ -93,11 +89,6 @@ class Header extends LitElement {
         display: flex;
         align-items: center;
         gap: var(--space-lg);
-      }
-
-      .header-logo a img {
-        width: 82px;
-        height: 50px;
       }
 
       .header-site-select ul {
@@ -128,11 +119,6 @@ class Header extends LitElement {
         font-weight: var(--text-semi-bold);
       }
 
-      .new-icon img {
-        min-width: 8px;
-        min-height: 8px;
-      }
-
       .header-search {
         display: flex;
         left: 51%;
@@ -140,10 +126,11 @@ class Header extends LitElement {
         position: absolute;
         align-items: center;
         width: 400px;
-        height: 48px;
+        height: 46px;
         border: 0.08rem solid var(--primary-color, #283198);
         border-radius: 4px;
-        padding: 0 0;
+        padding-right: var(--space-lg);
+        padding-left: var(--space-sm);
         box-sizing: border-box;
       }
 
@@ -156,16 +143,13 @@ class Header extends LitElement {
         flex-grow: 1;
         border: none;
         color: var(--gray-color-400, #898989);
-        font-size: var(--font-lg);
+        font-size: var(--font-md);
       }
 
-      .header-search button {
-        width: 36px;
-        height: 36px;
+      .search-icon {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 0;
       }
 
       .header-bookmarks {
@@ -183,11 +167,6 @@ class Header extends LitElement {
       .header-bookmarks li a:hover img {
         filter: invert(33%) sepia(98%) saturate(1497%) hue-rotate(222deg)
           brightness(87%) contrast(91%);
-      }
-
-      .header-bookmarks .icon {
-        width: 36px;
-        height: 36px;
       }
 
       .header-bookmarks li a:hover .map-popup {
@@ -244,11 +223,6 @@ class Header extends LitElement {
         padding-left: var(--space-md);
         display: flex;
         gap: var(--space-xl);
-      }
-
-      .nav-category-icon {
-        width: 16px;
-        height: 14px;
       }
 
       .nav-category:hover {
@@ -363,13 +337,13 @@ class Header extends LitElement {
 
       .header-search.scrolled {
         position: absolute;
-        top: 6.9rem;
+        top: 6.7rem;
         left: 47rem;
         width: 242px;
         height: 34px;
         border: 1px solid var(--primary-color, #283198);
         border-radius: 4px;
-        padding: 0 0 0 var(--space-lg);
+        padding: 0 var(--space-md) 0 var(--space-sm);
         box-sizing: border-box;
         z-index: 999;
       }
@@ -534,7 +508,13 @@ class Header extends LitElement {
               <li class="header-member-item">
                 <a href="#" class="header-member-link">
                   고객센터
-                  <img class="icon-down" src="/icon/down.webp" alt="펼치기" />
+                  <img
+                    class="icon-down"
+                    src="/icon/down.webp"
+                    alt="펼치기"
+                    width="7"
+                    height="6"
+                  />
                 </a>
                 <ul class="header-help-desk">
                   <li><a href="#" aria-label="공지사항">공지사항</a></li>
@@ -554,7 +534,12 @@ class Header extends LitElement {
             <div class="header-site-select">
               <h1 class="header-logo">
                 <a href="/">
-                  <img src="/logo2.webp" alt="마켓컬릿 로고" />
+                  <img
+                    src="/logo.webp"
+                    alt="마켓컬릿 로고"
+                    width="82"
+                    height="46"
+                  />
                 </a>
               </h1>
               <nav class="header-site-select">
@@ -579,7 +564,12 @@ class Header extends LitElement {
                     </a>
                   </li>
                   <span class="new-icon">
-                    <img src="/icon/new.webp" alt="새로운 아이콘" />
+                    <img
+                      src="/icon/new.webp"
+                      alt="새롭게 생긴 서비스"
+                      width="7"
+                      height="7"
+                    />
                   </span>
                 </ul>
               </nav>
@@ -590,24 +580,29 @@ class Header extends LitElement {
                 placeholder="검색어를 입력해주세요."
                 aria-label="검색어 입력"
               />
-              <button type="submit" aria-label="검색 입력 버튼">
-                <img src="/icon/header-search.svg" class="icon" />
+              <button type="submit">
+                <img
+                  src="/icon/header-search.svg"
+                  alt="검색 버튼"
+                  width="19"
+                  height="19"
+                />
               </button>
             </form>
             <ul class="header-bookmarks">
               <li>
                 <a href="#" aria-label="매장 찾기">
-                  <img src="/icon/map.svg" class="icon" />
+                  <img src="/icon/map.svg" width="36" height="36" />
                 </a>
               </li>
               <li>
                 <a href="#" aria-label="찜한 상품 목록">
-                  <img src="/icon/header-favorits.svg" class="icon" />
+                  <img src="/icon/header-favorits.svg" width="36" height="36" />
                 </a>
               </li>
               <li>
                 <a href="/src/pages/cart/index.html" aria-label="장바구니">
-                  <img src="/icon/header-cart.svg" class="icon" />
+                  <img src="/icon/header-cart.svg" width="36" height="36" />
                 </a>
               </li>
             </ul>
@@ -629,9 +624,10 @@ class Header extends LitElement {
               >
                 <img
                   src="/icon/hamburger.webp"
-                  alt="카테고리"
+                  alt="카테고리 펼치기"
                   class="nav-category-icon"
-                  aria-label="카테고리"
+                  width="16"
+                  height="14"
                 />
                 <span>카테고리</span>
               </button>
