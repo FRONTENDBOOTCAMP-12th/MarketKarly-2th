@@ -242,12 +242,6 @@ class CartAccordian extends LitElement {
             </div>
           </article>
         </checkbox-group-component>
-        <checkbox-group-component class="select-all">
-          <checkbox-component
-            >전체선택 (3/3)
-            <span class="separate">|</span> 선택삭제</checkbox-component
-          >
-        </checkbox-group-component>
       </section>
     `;
   }
