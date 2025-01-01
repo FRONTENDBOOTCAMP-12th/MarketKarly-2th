@@ -127,9 +127,8 @@ class Header extends LitElement {
         height: 46px;
         border: 0.08rem solid var(--primary-color, #283198);
         border-radius: 4px;
-        padding-right: var(--space-lg);
-        padding-left: var(--space-sm);
         box-sizing: border-box;
+        padding-left: var(--space-sm);
       }
 
       .header-search input::placeholder {
@@ -138,10 +137,25 @@ class Header extends LitElement {
       }
 
       .header-search input {
+        padding-left: var(--space-sm);
         flex-grow: 1;
         border: none;
         color: var(--gray-color-400, #898989);
         font-size: var(--font-md);
+        height: 40px;
+      }
+      .search-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding-right: var(--space-md);
+        box-sizing: border-box;
       }
 
       .search-icon {
@@ -308,7 +322,7 @@ class Header extends LitElement {
         height: 34px;
         border: 1px solid var(--primary-color, #283198);
         border-radius: 4px;
-        padding: 0 var(--space-md) 0 var(--space-sm);
+        padding: 0 0 0 var(--space-sm);
         box-sizing: border-box;
         z-index: 999;
       }
@@ -316,6 +330,11 @@ class Header extends LitElement {
       .header-search.scrolled input {
         font-size: var(--font-sm);
         background-color: transparent;
+        height: 28px;
+      }
+
+      .header-search.scrolled .search-button {
+        padding-right: var(--space-sm);
       }
 
       .header-bookmarks.scrolled {
@@ -545,7 +564,7 @@ class Header extends LitElement {
                 placeholder="검색어를 입력해주세요."
                 aria-label="검색어 입력"
               />
-              <button type="submit" aria-label="검색">
+              <button type="submit" aria-label="검색" class="search-button">
                 <img
                   src="/icon/header-search.svg"
                   alt=""
