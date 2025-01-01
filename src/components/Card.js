@@ -47,118 +47,118 @@ class Card extends LitElement {
         display: inline-flex;
         flex-direction: column;
         gap: 1rem;
+      }
 
-        figure {
-          position: relative;
-          width: 249px;
+      .card-component figure {
+        position: relative;
+        width: 249px;
 
-          a {
-            display: inline-block;
+        a {
+          display: inline-block;
 
-            img {
-              width: 100%;
-            }
-          }
-
-          .add-cart {
-            padding: 0;
-            margin: 0;
-            border: none;
-            background: none;
-
-            position: absolute;
-            right: 15px;
-            bottom: 17px;
+          img {
+            width: 100%;
           }
         }
 
-        .content {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
+        .add-cart {
+          padding: 0;
+          margin: 0;
+          border: none;
+          background: none;
 
-          cursor: pointer;
+          position: absolute;
+          right: 15px;
+          bottom: 17px;
+        }
+      }
 
-          .title {
-            .delivery-type {
-              margin-bottom: 0.5rem;
-              margin-block-end: 0.5rem;
+      .card-component .content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
 
-              line-height: 1.5;
-              color: var(--gray-color-400, #898989);
-              font-weight: var(--text-semi-bold);
-              font-size: 0.75rem;
+        cursor: pointer;
+
+        .title {
+          .delivery-type {
+            margin-bottom: 0.5rem;
+            margin-block-end: 0.5rem;
+
+            line-height: 1.5;
+            color: var(--gray-color-400, #898989);
+            font-weight: var(--text-semi-bold);
+            font-size: 0.75rem;
+          }
+          .main-title {
+            line-height: 1.6;
+            color: var(--content-text-color, #333333);
+            font-weight: var(--text-regular);
+            font-size: 1rem;
+          }
+        }
+
+        .price {
+          & p:first-child {
+            line-height: 1.5;
+            font-weight: var(--text-semi-bold);
+            font-size: 1.4rem;
+
+            .discount {
+              color: var(--accent-color, #fa622f);
             }
-            .main-title {
-              line-height: 1.6;
+
+            .real-price {
               color: var(--content-text-color, #333333);
-              font-weight: var(--text-regular);
-              font-size: 1rem;
             }
           }
 
-          .price {
-            & p:first-child {
-              line-height: 1.5;
-              font-weight: var(--text-semi-bold);
-              font-size: 1.4rem;
+          .origin-price {
+            margin-top: 0.5rem;
+            margin-block-start: 0.5rem;
 
-              .discount {
-                color: var(--accent-color, #fa622f);
-              }
-
-              .real-price {
-                color: var(--content-text-color, #333333);
-              }
-            }
-
-            .origin-price {
-              margin-top: 0.5rem;
-              margin-block-start: 0.5rem;
-
-              line-height: 1.6;
-              color: var(--gray-color-400, #898989);
-              font-weight: var(--text-regular);
-              font-size: 0.75rem;
-              text-decoration: line-through;
-            }
-          }
-
-          .description {
             line-height: 1.6;
             color: var(--gray-color-400, #898989);
             font-weight: var(--text-regular);
             font-size: 0.75rem;
+            text-decoration: line-through;
           }
+        }
 
-          .tags {
-            display: flex;
-            flex-direction: row;
-            align-items: start;
-            gap: 0.5rem;
+        .description {
+          line-height: 1.6;
+          color: var(--gray-color-400, #898989);
+          font-weight: var(--text-regular);
+          font-size: 0.75rem;
+        }
 
-            .tag-only {
-              display: inline-block;
-              background-color: var(--gray-color-100);
-              padding: 4px;
-              border-radius: 4px;
+        .tags {
+          display: flex;
+          flex-direction: row;
+          align-items: start;
+          gap: 0.5rem;
 
-              line-height: 1.5;
-              color: var(--primary-color);
-              font-weight: var(--text-semi-bold);
-              font-size: 0.75rem;
-            }
-            .tag-limited {
-              display: inline-block;
-              background-color: var(--gray-color-100);
-              padding: 4px;
-              border-radius: 4px;
+          .tag-only {
+            display: inline-block;
+            background-color: var(--gray-color-100);
+            padding: 4px;
+            border-radius: 4px;
 
-              line-height: 1.5;
-              color: var(--content-text-color);
-              font-weight: var(--text-semi-bold);
-              font-size: 0.75rem;
-            }
+            line-height: 1.5;
+            color: var(--primary-color);
+            font-weight: var(--text-semi-bold);
+            font-size: 0.75rem;
+          }
+          .tag-limited {
+            display: inline-block;
+            background-color: var(--gray-color-100);
+            padding: 4px;
+            border-radius: 4px;
+
+            line-height: 1.5;
+            color: var(--content-text-color);
+            font-weight: var(--text-semi-bold);
+            font-size: 0.75rem;
           }
         }
       }

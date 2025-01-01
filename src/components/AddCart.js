@@ -49,7 +49,7 @@ class AddCart extends LitElement {
         opacity: 1;
       }
 
-      .add-cart {
+      .popup-bg .add-cart {
         margin: 0;
         position: absolute;
         top: 50%;
