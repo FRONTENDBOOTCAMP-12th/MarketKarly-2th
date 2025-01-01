@@ -545,10 +545,10 @@ class Header extends LitElement {
                 placeholder="검색어를 입력해주세요."
                 aria-label="검색어 입력"
               />
-              <button type="submit">
+              <button type="submit" aria-label="검색">
                 <img
                   src="/icon/header-search.svg"
-                  alt="검색 버튼"
+                  alt=""
                   width="19"
                   height="19"
                 />
@@ -557,17 +557,27 @@ class Header extends LitElement {
             <ul class="header-bookmarks">
               <li>
                 <a href="#" aria-label="매장 찾기">
-                  <img src="/icon/map.svg" width="36" height="36" />
+                  <img src="/icon/map.svg" width="36" height="36" alt="" />
                 </a>
               </li>
               <li>
                 <a href="#" aria-label="찜한 상품 목록">
-                  <img src="/icon/header-favorits.svg" width="36" height="36" />
+                  <img
+                    src="/icon/header-favorits.svg"
+                    width="36"
+                    height="36"
+                    alt=""
+                  />
                 </a>
               </li>
               <li>
                 <a href="/src/pages/cart/index.html" aria-label="장바구니">
-                  <img src="/icon/header-cart.svg" width="36" height="36" />
+                  <img
+                    src="/icon/header-cart.svg"
+                    width="36"
+                    height="36"
+                    alt=""
+                  />
                 </a>
               </li>
             </ul>
