@@ -46,7 +46,6 @@ class Card extends LitElement {
         cursor: pointer;
         display: inline-flex;
         flex-direction: column;
-        gap: 1rem;
       }
 
       .card-component figure {
@@ -78,6 +77,7 @@ class Card extends LitElement {
         flex-direction: column;
         gap: 0.5rem;
 
+        padding-top: 1rem;
         cursor: pointer;
 
         .title {
@@ -170,6 +170,7 @@ class Card extends LitElement {
     // 로컬스토리지에 저장된 item 가져오기
     const now = new Date().getTime();
     const viewedItem = localStorage.getItem(this.viewedItemKey);
+
     if (viewedItem) {
       this.viewedItem = JSON.parse(viewedItem);
       // 24시간 이후에 로컬 스토리지에서 제거
@@ -192,22 +193,36 @@ class Card extends LitElement {
   };
 
   handleCardClick = (event) => {
+    // event.preventDefault();
     this._handleViewedItem();
 
     const { target } = event;
+    let link;
 
+    // button 태그 또는 .add-cart에서 발생하는 버튼 클릭 이벤트는 무시
     if (target.closest('button') || target.closest('.add-cart')) {
-      // button 태그 또는 .add-cart'에서 발생하는 버튼 클릭 이벤트는 무시
       return;
     }
 
-    const link =
-      target.closest('.content').previousElementSibling.firstElementChild;
-    // 클릭된 요소 상위 요소에서 a태그 찾기
+    if (target.tagName === 'IMG') {
+      link = target.closest('a');
+    } else {
+      const contentElement = target.closest('.content');
 
-    console.log(link);
+      if (contentElement) {
+        const previousElement = contentElement.previousElementSibling;
+
+        if (previousElement) {
+          link = previousElement.firstElementChild;
+        }
+      }
+    }
+
     if (link) {
-      link.click(); // a태그를 발견하면, 해당 태그의 클릭 이벤트를 수동으로 트리거
+      window.location.href = link.href;
+      console.log(link);
+    } else {
+      console.error('error');
     }
   };
 
