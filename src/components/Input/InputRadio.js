@@ -66,7 +66,7 @@ class InputRadio extends LitElement {
         ?checked=${this.checked}
         @change=${this._handleCheckChange}
       />
-      <label for=${this.name}>
+      <label for=${this.value}>
         <slot></slot>
       </label>
     `;
