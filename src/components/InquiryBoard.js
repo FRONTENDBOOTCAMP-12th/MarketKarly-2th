@@ -109,8 +109,8 @@ class InquiryBoard extends LitElement {
         content: '';
         display: inline-block;
         width: 12px;
-        height: 12px;
-        margin-left: var(--space-md);
+        height: 14px;
+        margin-left: var(--space-sm);
         background-image: url('/icon/review-lock.svg');
         background-size: contain;
         background-repeat: no-repeat;
@@ -173,11 +173,6 @@ class InquiryBoard extends LitElement {
         border: 1px solid var(--gray-color-100, #e1e1e1);
         background: none;
         padding: var(--space-sm);
-      }
-
-      .pagination img {
-        width: 50px;
-        height: 50px;
       }
 
       .pagination button:hover {
@@ -384,16 +379,24 @@ class InquiryBoard extends LitElement {
         )}
       </div>
 
-      <div class="product-list-container">
-        <div class="pagination" aria-label="페이지 이동">
-          <button class="btn-prev" aria-label="이전 페이지">
-            <img src="/icon/review-left-arrow.svg" alt="" />
-          </button>
-          <button aria-label="다음 페이지">
-            <img src="/icon/review-right-arrow.svg" alt="" />
-          </button>
-        </div>
-      </div>
+      <nav class="pagination" aria-label="페이지 이동">
+        <button class="btn-prev" aria-label="이전 페이지">
+          <img
+            src="/icon/review-left-arrow.svg"
+            alt="이전 페이지로 이동"
+            width="36"
+            height="36"
+          />
+        </button>
+        <button class="btn-next" aria-label="다음 페이지">
+          <img
+            src="/icon/review-right-arrow.svg"
+            alt="다음 페이지로 이동"
+            width="36"
+            height="36"
+          />
+        </button>
+      </nav>
       ${this.showModal
         ? html`<inquiry-modal-component
             @close=${this.handleModalClose}

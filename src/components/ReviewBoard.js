@@ -254,11 +254,6 @@ class ReviewBoard extends LitElement {
         padding: var(--space-sm);
       }
 
-      .pagination img {
-        width: 50px;
-        height: 50px;
-      }
-
       .pagination button:hover {
         background-color: var(--gray-color-50, #f9f9f9);
       }
@@ -426,10 +421,20 @@ class ReviewBoard extends LitElement {
 
         <nav class="pagination" aria-label="페이지 이동">
           <button class="btn-prev" aria-label="이전 페이지">
-            <img src="/icon/review-left-arrow.svg" alt="이전 페이지로 이동" />
+            <img
+              src="/icon/review-left-arrow.svg"
+              alt="이전 페이지로 이동"
+              width="36"
+              height="36"
+            />
           </button>
           <button class="btn-next" aria-label="다음 페이지">
-            <img src="/icon/review-right-arrow.svg" alt="다음 페이지로 이동" />
+            <img
+              src="/icon/review-right-arrow.svg"
+              alt="다음 페이지로 이동"
+              width="36"
+              height="36"
+            />
           </button>
         </nav>
 
