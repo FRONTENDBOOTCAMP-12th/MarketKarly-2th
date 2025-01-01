@@ -98,7 +98,6 @@ class Header extends LitElement {
         position: relative;
         display: flex;
         align-items: center;
-        gap: var(--space-sm);
       }
 
       .header-site-select ul li a {
@@ -109,12 +108,16 @@ class Header extends LitElement {
       }
 
       .header-site-select ul li a.site-beauty {
-        color: var(--gray-color-200, #c4c4c4);
+        color: var(--gray-color-500, #6b6b6b);
       }
 
       .header-site-select ul li a.site-beauty:hover {
         color: var(--primary-color, #283198);
         font-weight: var(--text-semi-bold);
+      }
+
+      .new-icon {
+        margin-bottom: 12px;
       }
 
       .header-search {
@@ -132,7 +135,7 @@ class Header extends LitElement {
       }
 
       .header-search input::placeholder {
-        color: var(--gray-color-400, #898989);
+        color: var(--gray-color-500, #6b6b6b);
         padding-left: var(--space-md);
       }
 
@@ -140,7 +143,7 @@ class Header extends LitElement {
         padding-left: var(--space-sm);
         flex-grow: 1;
         border: none;
-        color: var(--gray-color-400, #898989);
+        color: var(--gray-color-500, #6b6b6b);
         font-size: var(--font-md);
         height: 40px;
       }
@@ -229,15 +232,16 @@ class Header extends LitElement {
         padding: var(--space-xl) 0;
         display: flex;
         list-style: none;
-        gap: 5.9rem;
+        gap: 3.8rem;
         justify-content: center;
         align-items: center;
-        margin-right: 5%;
-        margin-left: 3%;
         justify-content: center;
       }
 
       .nav-site-map li a {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
         text-decoration: none;
         font-weight: var(--text-semi-bold);
       }
@@ -251,7 +255,7 @@ class Header extends LitElement {
         display: flex;
         align-items: center;
         padding: var(--space-sm) var(--space-md);
-        border: 0.0625rem solid var(--gray-color-400, #898989);
+        border: 0.0625rem solid var(--gray-color-500, #6b6b6b);
         border-radius: 16px;
       }
 
@@ -299,8 +303,7 @@ class Header extends LitElement {
       }
 
       nav.scrolled .nav-site-map {
-        margin-left: var(--space-md);
-        gap: 4.3rem;
+        gap: 0;
         justify-content: flex-start;
       }
 
@@ -547,14 +550,11 @@ class Header extends LitElement {
                       뷰티컬릿
                     </a>
                   </li>
-                  <span class="new-icon">
-                    <img
-                      src="/icon/new.webp"
-                      alt="새롭게 생긴 서비스"
-                      width="7"
-                      height="7"
-                    />
-                  </span>
+                  <li>
+                    <span class="new-icon" aria-label="새롭게 생긴 서비스">
+                      <img src="/icon/new.webp" alt="" width="7" height="7" />
+                    </span>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -618,7 +618,7 @@ class Header extends LitElement {
               >
                 <img
                   src="/icon/hamburger.webp"
-                  alt="카테고리 펼치기"
+                  alt="카테고리 메뉴 펼치기"
                   class="nav-category-icon"
                   width="16"
                   height="14"
@@ -636,30 +636,10 @@ class Header extends LitElement {
             </section>
 
             <ul class="nav-site-map">
-              <li>
-                <a href="/src/pages/productList/" aria-label="신상품 페이지"
-                  >신상품</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/src/pages/productList/"
-                  aria-label="베스트 상품 페이지"
-                  >베스트</a
-                >
-              </li>
-              <li>
-                <a href="/src/pages/productList/" aria-label="알뜰쇼핑 페이지"
-                  >알뜰쇼핑</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/src/pages/productList/"
-                  aria-label="특가/혜택 페이지지"
-                  >특가/혜택</a
-                >
-              </li>
+              <li><a href="/src/pages/productList/">신상품</a></li>
+              <li><a href="/src/pages/productList/">베스트</a></li>
+              <li><a href="/src/pages/productList/">알뜰쇼핑</a></li>
+              <li><a href="/src/pages/productList/">특가/혜택</a></li>
             </ul>
 
             <div class="nav-delivery">
