@@ -328,10 +328,10 @@ class InquiryBoard extends LitElement {
       <table class="board-header">
         <thead>
           <tr>
-            <th class="title-column">제목</th>
-            <th class="writer-column">작성자</th>
-            <th class="date-column">작성일</th>
-            <th class="status-column">답변상태</th>
+            <th class="title-column" scope="col">제목</th>
+            <th class="writer-column" scope="col">작성자</th>
+            <th class="date-column" scope="col">작성일</th>
+            <th class="status-column" scope="col">답변상태</th>
           </tr>
         </thead>
       </table>
