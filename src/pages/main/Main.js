@@ -34,6 +34,9 @@ class Main extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.renderCardProducts();
+    window.addEventListener('popstate', () => console.log('khlee'));
+    history.pushState({ url: 'main' }, '', '/main'); // URL 변경
+    history.back();
   }
 
   async renderCardProducts() {
@@ -61,7 +64,7 @@ class Main extends LitElement {
         href="#"
         aria-label="더 풍성해진 10월의 퍼플위크 적립률 UP + 3종 쿠폰팩"
       >
-        <img src="/image/line-banner.webp" alt="" />
+        <img loading="lazy" src="/image/line-banner.webp" alt="" />
       </a>
       <recent-component></recent-component>
       <products-swiper-component

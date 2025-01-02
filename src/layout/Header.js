@@ -17,7 +17,6 @@ class Header extends LitElement {
       }
 
       .top-bar-nav {
-        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
@@ -68,10 +67,6 @@ class Header extends LitElement {
         background: var(--gray-color-100, #e1e1e1);
         margin-left: 0 var(--space-lg);
       }
-      .header-member-item .icon-down {
-        width: 6px;
-        height: 6px;
-      }
 
       .max-width-box {
         margin: 0 auto;
@@ -82,7 +77,6 @@ class Header extends LitElement {
       .header-name-wrapper {
         display: flex;
         align-items: center;
-        width: 100%;
         gap: 3.5rem;
         box-sizing: border-box;
         justify-content: space-between;
@@ -95,11 +89,6 @@ class Header extends LitElement {
         gap: var(--space-lg);
       }
 
-      .header-logo a img {
-        width: 82px;
-        height: 50px;
-      }
-
       .header-site-select ul {
         display: flex;
         gap: var(--space-md);
@@ -109,7 +98,6 @@ class Header extends LitElement {
         position: relative;
         display: flex;
         align-items: center;
-        gap: var(--space-sm);
       }
 
       .header-site-select ul li a {
@@ -120,7 +108,7 @@ class Header extends LitElement {
       }
 
       .header-site-select ul li a.site-beauty {
-        color: var(--gray-color-200, #c4c4c4);
+        color: var(--gray-color-500, #6b6b6b);
       }
 
       .header-site-select ul li a.site-beauty:hover {
@@ -128,9 +116,8 @@ class Header extends LitElement {
         font-weight: var(--text-semi-bold);
       }
 
-      .new-icon img {
-        min-width: 8px;
-        min-height: 8px;
+      .new-icon {
+        margin-bottom: 12px;
       }
 
       .header-search {
@@ -140,32 +127,44 @@ class Header extends LitElement {
         position: absolute;
         align-items: center;
         width: 400px;
-        height: 48px;
+        height: 46px;
         border: 0.08rem solid var(--primary-color, #283198);
         border-radius: 4px;
-        padding: 0 0;
         box-sizing: border-box;
+        padding-left: var(--space-sm);
       }
 
       .header-search input::placeholder {
-        color: var(--gray-color-400, #898989);
+        color: var(--gray-color-500, #6b6b6b);
         padding-left: var(--space-md);
       }
 
       .header-search input {
+        padding-left: var(--space-sm);
         flex-grow: 1;
         border: none;
-        color: var(--gray-color-400, #898989);
-        font-size: var(--font-lg);
+        color: var(--gray-color-500, #6b6b6b);
+        font-size: var(--font-md);
+        height: 40px;
       }
-
-      .header-search button {
-        width: 36px;
-        height: 36px;
+      .search-button {
         display: flex;
         justify-content: center;
         align-items: center;
+        min-width: 44px;
+        min-height: 44px;
         padding: 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding-right: var(--space-md);
+        box-sizing: border-box;
+      }
+
+      .search-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       .header-bookmarks {
@@ -185,48 +184,11 @@ class Header extends LitElement {
           brightness(87%) contrast(91%);
       }
 
-      .header-bookmarks .icon {
-        width: 36px;
-        height: 36px;
-      }
-
-      .header-bookmarks li a:hover .map-popup {
-        display: block;
-      }
-
-      .map-popup {
-        display: none;
-        position: absolute;
-        top: 5.8rem;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: var(--white-color, #ffffff);
-        border: 0.0625rem solid #ccc;
-        padding: var(--space-2xl);
-        z-index: 10;
-        width: 145px;
-        opacity: 2;
-      }
-
-      .map-popup p {
-        font-size: var(--font-sm);
-        margin-bottom: var(--space-md);
-      }
-
-      .map-popup button {
-        background-color: var(--primary-color, #283198);
-        border: none;
-        padding: var(--space-md) var(--space-xl);
-        font-size: var(--font-sm);
-        cursor: pointer;
-      }
-
       .nav {
         position: relative;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
       }
 
       .nav-category {
@@ -246,11 +208,6 @@ class Header extends LitElement {
         gap: var(--space-xl);
       }
 
-      .nav-category-icon {
-        width: 16px;
-        height: 14px;
-      }
-
       .nav-category:hover {
         cursor: pointer;
       }
@@ -267,7 +224,6 @@ class Header extends LitElement {
 
       .header-category {
         position: absolute;
-        top: 100%;
         left: 0;
         z-index: 1000;
       }
@@ -276,15 +232,16 @@ class Header extends LitElement {
         padding: var(--space-xl) 0;
         display: flex;
         list-style: none;
-        gap: 5.9rem;
+        gap: 3.8rem;
         justify-content: center;
         align-items: center;
-        margin-right: 5%;
-        margin-left: 3%;
         justify-content: center;
       }
 
       .nav-site-map li a {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
         text-decoration: none;
         font-weight: var(--text-semi-bold);
       }
@@ -298,7 +255,7 @@ class Header extends LitElement {
         display: flex;
         align-items: center;
         padding: var(--space-sm) var(--space-md);
-        border: 0.0625rem solid var(--gray-color-400, #898989);
+        border: 0.0625rem solid var(--gray-color-500, #6b6b6b);
         border-radius: 16px;
       }
 
@@ -346,8 +303,7 @@ class Header extends LitElement {
       }
 
       nav.scrolled .nav-site-map {
-        margin-left: var(--space-md);
-        gap: 4.3rem;
+        gap: 0;
         justify-content: flex-start;
       }
 
@@ -363,13 +319,13 @@ class Header extends LitElement {
 
       .header-search.scrolled {
         position: absolute;
-        top: 6.9rem;
+        top: 6.7rem;
         left: 47rem;
         width: 242px;
         height: 34px;
         border: 1px solid var(--primary-color, #283198);
         border-radius: 4px;
-        padding: 0 0 0 var(--space-lg);
+        padding: 0 0 0 var(--space-sm);
         box-sizing: border-box;
         z-index: 999;
       }
@@ -377,6 +333,11 @@ class Header extends LitElement {
       .header-search.scrolled input {
         font-size: var(--font-sm);
         background-color: transparent;
+        height: 28px;
+      }
+
+      .header-search.scrolled .search-button {
+        padding-right: var(--space-sm);
       }
 
       .header-bookmarks.scrolled {
@@ -491,6 +452,23 @@ class Header extends LitElement {
     }
   }
 
+  toggleBtnFavorits() {
+    if (this.loginData.isAuth) {
+      window.location.href = '/';
+    } else {
+      Swal.fire({
+        text: '로그인하셔야 본 서비스를 이용하실 수 있습니다.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#283198',
+      }).then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          window.location.href = '/src/pages/login/';
+        }
+      });
+    }
+  }
+
   render() {
     const { isAuth, user } = this.loginData;
 
@@ -534,7 +512,13 @@ class Header extends LitElement {
               <li class="header-member-item">
                 <a href="#" class="header-member-link">
                   고객센터
-                  <img class="icon-down" src="/icon/down.webp" alt="펼치기" />
+                  <img
+                    class="icon-down"
+                    src="/icon/down.webp"
+                    alt="펼치기"
+                    width="7"
+                    height="6"
+                  />
                 </a>
                 <ul class="header-help-desk">
                   <li><a href="#" aria-label="공지사항">공지사항</a></li>
@@ -554,7 +538,12 @@ class Header extends LitElement {
             <div class="header-site-select">
               <h1 class="header-logo">
                 <a href="/">
-                  <img src="/logo2.webp" alt="마켓컬릿 로고" />
+                  <img
+                    src="/logo.webp"
+                    alt="마켓컬릿 로고"
+                    width="82"
+                    height="46"
+                  />
                 </a>
               </h1>
               <nav class="header-site-select">
@@ -578,9 +567,11 @@ class Header extends LitElement {
                       뷰티컬릿
                     </a>
                   </li>
-                  <span class="new-icon">
-                    <img src="/icon/new.webp" alt="새로운 아이콘" />
-                  </span>
+                  <li>
+                    <span class="new-icon" aria-label="새롭게 생긴 서비스">
+                      <img src="/icon/new.webp" alt="" width="7" height="7" />
+                    </span>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -590,24 +581,41 @@ class Header extends LitElement {
                 placeholder="검색어를 입력해주세요."
                 aria-label="검색어 입력"
               />
-              <button type="submit" aria-label="검색 입력 버튼">
-                <img src="/icon/header-search.svg" class="icon" />
+              <button type="submit" aria-label="검색" class="search-button">
+                <img
+                  src="/icon/header-search.svg"
+                  alt=""
+                  width="19"
+                  height="19"
+                />
               </button>
             </form>
             <ul class="header-bookmarks">
               <li>
                 <a href="#" aria-label="매장 찾기">
-                  <img src="/icon/map.svg" class="icon" />
+                  <img src="/icon/map.svg" width="36" height="36" alt="" />
                 </a>
               </li>
               <li>
                 <a href="#" aria-label="찜한 상품 목록">
-                  <img src="/icon/header-favorits.svg" class="icon" />
+                  <img
+                    src="/icon/header-favorits.svg"
+                    class="icon"
+                    @click="${this.toggleBtnFavorits}"
+                    width="36"
+                    height="36"
+                    alt=""
+                  />
                 </a>
               </li>
               <li>
                 <a href="/src/pages/cart/index.html" aria-label="장바구니">
-                  <img src="/icon/header-cart.svg" class="icon" />
+                  <img
+                    src="/icon/header-cart.svg"
+                    width="36"
+                    height="36"
+                    alt=""
+                  />
                 </a>
               </li>
             </ul>
@@ -629,9 +637,10 @@ class Header extends LitElement {
               >
                 <img
                   src="/icon/hamburger.webp"
-                  alt="카테고리"
+                  alt="카테고리 메뉴 펼치기"
                   class="nav-category-icon"
-                  aria-label="카테고리"
+                  width="16"
+                  height="14"
                 />
                 <span>카테고리</span>
               </button>
@@ -646,30 +655,10 @@ class Header extends LitElement {
             </section>
 
             <ul class="nav-site-map">
-              <li>
-                <a href="/src/pages/productList/" aria-label="신상품 페이지"
-                  >신상품</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/src/pages/productList/"
-                  aria-label="베스트 상품 페이지"
-                  >베스트</a
-                >
-              </li>
-              <li>
-                <a href="/src/pages/productList/" aria-label="알뜰쇼핑 페이지"
-                  >알뜰쇼핑</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/src/pages/productList/"
-                  aria-label="특가/혜택 페이지지"
-                  >특가/혜택</a
-                >
-              </li>
+              <li><a href="/src/pages/productList/">신상품</a></li>
+              <li><a href="/src/pages/productList/">베스트</a></li>
+              <li><a href="/src/pages/productList/">알뜰쇼핑</a></li>
+              <li><a href="/src/pages/productList/">특가/혜택</a></li>
             </ul>
 
             <div class="nav-delivery">

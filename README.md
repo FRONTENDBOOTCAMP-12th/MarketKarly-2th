@@ -13,7 +13,7 @@
 
 > **마켓컬리, Lit으로 재해석하다 : Lit(e)한 기술로 만든 Heavy한 퀄리티**
 
-- **Lit 로고의 블루 컬러 컨셉**으로 트렌디한 스타일의 인기 쇼핑 사이트(Market-Kurly)를 클론 코딩하였습니다.
+- **Lit과 함께 Lit 로고의 블루 컬러(primary, #283198) 컨셉**으로 트렌디한 스타일의 인기 쇼핑 사이트(🔗[마켓컬리](https://www.kurly.com/main))를 클론 코딩하였습니다.
 - **멋쟁이 사자처럼 프론트엔드 부트캠프 12기 바닐라 프로젝트(2024.12.12~2025.01.03)** 참여 작품입니다.
 
 <br>
@@ -28,13 +28,16 @@
    - [ERD](#🏷️-erd)
 4. [결과물](#🖥️-결과물-🖥️-살펴보기)
 
-   - [사이트맵](#🗺️-사이트맵)
+   - [사이트구성/사이트맵](#🗺️-사이트맵)
    - [시연](#🕹️-시연)
    - [주요 기능](#🎯-주요-기능)
    - [성능 최적화 및 부하 테스트 완료](#🕵️‍♂️-성능-최적화-및-부하-테스트-완료)
 
-   <br>
-   <br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ## TEAM 🔥 Perfect Deplo2 🔥 가 만들었습니다
 
@@ -52,7 +55,8 @@
             <img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/61653740?v=4"/>
         </td>
         <td>
-            <a href="https://github.com/cow-coding">이강현</a> | 스크럼 마스터 <br> <br></code>  <code>PocketBase</code> <code>Sign-up</code> <code>Footer </code>
+            <a href="https://github.com/llhyeon">이강현</a> | 스크럼 마스터 <br> <br></code>  <code>Project Env</code> <code>Footer</code> <code>MainModal</code> <code>MainProductSwiper</code> <code>InputComponent</code> <code>RegisterPage</code>
+            <code>CartPage</code> <br> <code>PocketBase DB</code>
         </td>
     </tr>
     <tr>
@@ -60,7 +64,7 @@
             <img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/61653740?v=4"/>
         </td>
         <td >
-            <a href="https://github.com/sunbi-s">민준기</a> | 스크럼 마스터 <br> <br></code>  <code>데이터ETL</code> <code>배치학습</code> <code>Footer </code>
+            <a href="https://github.com/wnsrl7250">민준기</a> | FE 팀원 <br> <br></code>  <code>MainBanner</code> <code>RecentProduct</code> <code>LoginPage</code> <code>ProductFilter</code> <code>LoginPage</code> <code>Authentication 구현</code>
         </td>
     </tr>
     <tr>
@@ -68,7 +72,7 @@
             <img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/61653740?v=4"/>
         </td>
         <td >
-            <a href="https://github.com/hawe66">장한나</a> | 스크럼 마스터 <br> <br></code>  <code>데이터ETL</code> <code>배치학습</code> <code>Footer </code>
+            <a href="https://github.com/Hanna-Jeanne">장한나</a> | FE 팀원 <br> <br></code>  <code>ButtonComponent</code> <code>ProductCard</code> <code>AddCart</code> <code>CartPage</code> <code>ProductDetailPage</code>
         </td>
     </tr>
     <tr>
@@ -76,17 +80,19 @@
             <img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/61653740?v=4"/>
         </td>
         <td >
-            <a href="https://sweetdev.tistory.com">김주희</a> | 스크럼 마스터 <br> <br></code>  <code>Header</code> <code>Review&Inquiry</code> <code>ProductListPage </code>
+            <a href="https://github.com/31blue">김주희</a> | FE 팀원 <br> <br></code>  <code>Header & HeaderCategory</code> <code>Review&Inquiry</code> <code>ProductListPage</code> <code>PageUpButton</code> <code>TopBanner</code>
         </td>
     </tr>
 </table>
 
 ### 🤝 협업 방식
 
-- 프로젝트에 들어가기에 앞서 🔗[코드 컨벤션 규칙](https://github.com/nurimeansworld/strawberry_market/projects/1) 및 🔗[네이밍 전략](https://github.com/nurimeansworld/strawberry_market/issues) 등을 세워두어 통일성을 높였습니다.
-- 🔗[GitHub Projects](https://github.com/nurimeansworld/strawberry_market/projects/1)와 🔗[Issues](https://github.com/nurimeansworld/strawberry_market/issues)를 사용하여 진행도와 상황을 꾸준히 공유하였습니다.
-- 주간회의를 진행하여 작업 방향이나 코드 고민에 대해 나누었고, 주간회의 결과를 수행한 일일 스크럼을 🔗[Wiki](https://github.com/nurimeansworld/strawberry_market/issues)를 사용하여 기록하였습니다.
+- 프로젝트에 들어가기에 앞서 🔗[코드 컨벤션 규칙](https://github.com/FRONTENDBOOTCAMP-12th/MarketKarly-2th/wiki/Convention) 및 🔗[네이밍 전략](https://github.com/FRONTENDBOOTCAMP-12th/MarketKarly-2th/wiki/%EB%84%A4%EC%9D%B4%EB%B0%8D-%EC%A0%84%EB%9E%B5), 스타일링 방식(컴포넌트 css) 등을 세워두어 통일성을 높였습니다.
+- 🔗[GitHub Projects](https://github.com/orgs/FRONTENDBOOTCAMP-12th/projects/5)와 🔗[Issues](https://github.com/FRONTENDBOOTCAMP-12th/MarketKarly-2th/issues)를 사용하여 진행도와 상황을 꾸준히 공유하였습니다.
+- 주간회의를 진행하여 작업 방향이나 코드 고민에 대해 나누었고, 주간회의 결과를 수행한 일일 스크럼을 🔗[Wiki](https://github.com/FRONTENDBOOTCAMP-12th/MarketKarly-2th/wiki)를 사용하여 기록하였습니다.
 
+<br>
+<br>
 <br>
 <br>
 <br>
@@ -117,12 +123,16 @@
 <br>
 <br>
 <br>
+<br>
+<br>
 
 ## 🖥️ 결과물 🖥️ 살펴보기
 
+### 📚 사이트 구성
+
 ![Simple-Site-Map](./public/readme/simple-site-map.webp)
 
-### 🗺️ 사이트맵
+### 🗺️ 전체 사이트맵
 
 ![Site-Map](./public/readme/site-map.webp)
 

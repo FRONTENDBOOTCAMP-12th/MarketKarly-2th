@@ -539,17 +539,13 @@ class Form extends LitElement {
 
         <div class="add">
           <div class="title">추가입력 사항</div>
-          <div class="wrapper">
-            <radio-group-component class="wrapper" name="add-invite">
+          <div>
+            <radio-group-component class="wrapper" name="add-option">
               <radio-component value="invite"
                 >친구초대 추천인 아이디</radio-component
               >
+              <radio-component value="event">참여 이벤트명</radio-component>
             </radio-group-component>
-            <radio-group-component name="add-event"
-              ><radio-component value="event"
-                >참여 이벤트명</radio-component
-              ></radio-group-component
-            >
           </div>
         </div>
 

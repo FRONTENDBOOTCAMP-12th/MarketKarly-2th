@@ -70,17 +70,18 @@ class ProductList extends LitElement {
       .sorting-standard {
         display: flex;
         align-items: center;
-        margin-right: var(--space-md);
-      }
-
-      .sorting-standard a {
-        font-size: 14px;
+        gap: var(--space-sm);
+        margin-right: var(--space-sm);
+        max-width: 600px;
       }
 
       .choose-standard {
-        color: var(--gray-color-300, #a6a6a6);
+        color: var(--gray-color-500, #6b6b6b);
         position: relative;
-        padding: 0 var(--space-md);
+        padding: var(--space-sm) var(--space-sm);
+        min-width: 60px;
+        text-align: center;
+        font-size: 14px;
       }
 
       .choose-standard.active {
@@ -94,7 +95,6 @@ class ProductList extends LitElement {
         gap: var(--space-sm);
         padding-right: var(--space-md);
         padding-left: 0;
-        font-size: 14px;
       }
 
       .standard-recommended img {
@@ -107,7 +107,9 @@ class ProductList extends LitElement {
         font-size: 14px;
         display: flex;
         align-items: center;
-        padding: 0 var(--space-md);
+        padding-right: var(--space-md);
+        padding-left: var(--space-lg);
+        min-width: 60px;
       }
 
       .divider::before {
@@ -149,10 +151,6 @@ class ProductList extends LitElement {
         background-color: var(--gray-color-50, #f9f9f9);
       }
 
-      .pagination img {
-        height: 8px;
-      }
-
       .recommend-meaning-wrapper {
         position: relative;
         padding: 0;
@@ -188,6 +186,7 @@ class ProductList extends LitElement {
     itemsPerPage: { type: Number },
     totalItems: { type: Number },
     totalPages: { type: Number },
+    data: { type: Object },
   };
 
   constructor() {
@@ -211,6 +210,9 @@ class ProductList extends LitElement {
     super.connectedCallback();
     this.renderCardProducts();
     this.addEventListener('filter-change', this.handleFilterChange.bind(this));
+    // window.addEventListener('popstate', this._fetchStorageDate);
+    // history.pushState({ url: 'product-list' }, '', '/product-list'); // URL 변경
+    // history.back();
   }
 
   async renderCardProducts() {
@@ -392,6 +394,7 @@ class ProductList extends LitElement {
   render() {
     const { prevNumber, currentNumber, nextNumber } =
       this.getPaginationNumbers();
+
     return html`
       <section class="product-list">
         <h2 class="product-list-header">베스트</h2>
@@ -417,6 +420,8 @@ class ProductList extends LitElement {
                       src="/icon/product-list-question.svg"
                       alt="설명 아이콘"
                       class="icon"
+                      width="14"
+                      height="20"
                     />
                   </button>
                   <div class="recommend-meaning">
@@ -496,13 +501,13 @@ class ProductList extends LitElement {
 
             <div class="pagination" aria-label="페이지 이동">
               <button @click="${this.goToFirst}" aria-label="첫 페이지로 이동">
-                <img src="/icon/btn-first.svg" alt="" />
+                <img src="/icon/btn-first.svg" alt="" width="9" height="8" />
               </button>
               <button
                 @click="${() => this.goToPage(this.currentPage - 1)}"
                 aria-label="이전 페이지로 이동"
               >
-                <img src="/icon/btn-prev.svg" alt="" />
+                <img src="/icon/btn-prev.svg" alt="" width="5" height="8" />
               </button>
               <button
                 @click="${() => this.goToPage(prevNumber)}"
@@ -531,18 +536,18 @@ class ProductList extends LitElement {
                 @click="${() => this.goToPage(this.currentPage + 1)}"
                 aria-label="다음 페이지로 이동"
               >
-                <img src="/icon/btn-next.svg" alt="" />
+                <img src="/icon/btn-next.svg" alt="" width="5" height="8" />
               </button>
               <button
                 @click="${this.goToLast}"
                 aria-label="마지막 페이지로 이동"
               >
-                <img src="/icon/btn-last.svg" alt="" />
+                <img src="/icon/btn-last.svg" alt="" width="9" height="8" />
               </button>
             </div>
           </div>
         </div>
-        <recent-component></recent-component>
+        <recent-component .data=${this.data}></recent-component>
       </section>
     `;
   }
