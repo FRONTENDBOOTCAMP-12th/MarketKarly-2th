@@ -248,7 +248,11 @@ class Footer extends LitElement {
                   href="https://section.blog.naver.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  ><img src="/image/blog.webp" alt="naver blog"
+                  ><img
+                    width="30"
+                    height="30"
+                    src="/image/blog.webp"
+                    alt="naver blog"
                 /></a>
               </li>
               <li>
@@ -256,7 +260,11 @@ class Footer extends LitElement {
                   href="https://www.facebook.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  ><img src="/image/facebook.webp" alt="facebook"
+                  ><img
+                    width="30"
+                    height="30"
+                    src="/image/facebook.webp"
+                    alt="facebook"
                 /></a>
               </li>
               <li>
@@ -264,7 +272,11 @@ class Footer extends LitElement {
                   href="https://www.instagram.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  ><img src="/image/instagram.webp" alt="instagram"
+                  ><img
+                    width="30"
+                    height="30"
+                    src="/image/instagram.webp"
+                    alt="instagram"
                 /></a>
               </li>
               <li>
@@ -272,7 +284,11 @@ class Footer extends LitElement {
                   href="https://post.naver.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  ><img src="/image/naverpost.webp" alt="naver post"
+                  ><img
+                    width="30"
+                    height="30"
+                    src="/image/naverpost.webp"
+                    alt="naver post"
                 /></a>
               </li>
               <li>

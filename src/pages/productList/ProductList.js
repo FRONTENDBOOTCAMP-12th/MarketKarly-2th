@@ -186,6 +186,7 @@ class ProductList extends LitElement {
     itemsPerPage: { type: Number },
     totalItems: { type: Number },
     totalPages: { type: Number },
+    data: { type: Object },
   };
 
   constructor() {
@@ -209,6 +210,9 @@ class ProductList extends LitElement {
     super.connectedCallback();
     this.renderCardProducts();
     this.addEventListener('filter-change', this.handleFilterChange.bind(this));
+    // window.addEventListener('popstate', this._fetchStorageDate);
+    // history.pushState({ url: 'product-list' }, '', '/product-list'); // URL 변경
+    // history.back();
   }
 
   async renderCardProducts() {
@@ -390,6 +394,7 @@ class ProductList extends LitElement {
   render() {
     const { prevNumber, currentNumber, nextNumber } =
       this.getPaginationNumbers();
+
     return html`
       <section class="product-list">
         <h2 class="product-list-header">베스트</h2>
@@ -542,7 +547,7 @@ class ProductList extends LitElement {
             </div>
           </div>
         </div>
-        <recent-component></recent-component>
+        <recent-component .data=${this.data}></recent-component>
       </section>
     `;
   }
