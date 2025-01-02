@@ -310,11 +310,7 @@ class AddCart extends LitElement {
   render() {
     return html/* html */ `
       <div class="popup-bg">
-        <dialog
-          @keydown="${this.handleFocusTrap}"
-          class="add-cart"
-          aria-modal="true"
-        >
+        <dialog class="add-cart" aria-modal="true">
           <div class="product">
             <p class="product-name">${this.productName}</p>
 
