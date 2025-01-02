@@ -39,8 +39,6 @@ class PageUp extends LitElement {
 
     .progress-wrap svg {
       fill: var(--white-color, #ffffff);
-      width: 24px;
-      height: 24px;
     }
   `;
 
@@ -129,7 +127,7 @@ class PageUp extends LitElement {
   render() {
     return html`
       <div class="progress-wrap" @click=${this.handleScrollToTop}>
-        <svg viewBox="0 0 24 24" role="img">
+        <svg viewBox="0 0 24 24" role="img" width="24" height="24">
           <path d="M12 2L5 9h4v9h6V9h4l-7-7z"></path>
         </svg>
       </div>

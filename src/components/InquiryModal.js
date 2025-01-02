@@ -59,12 +59,6 @@ class InquiryModal extends LitElement {
         gap: var(--space-3xl);
       }
 
-      .product-image {
-        width: 72px;
-        height: 72px;
-        background-size: cover;
-      }
-
       .product-name {
         font-weight: var(--text-bold);
         font-size: 1.125rem;
@@ -281,11 +275,19 @@ class InquiryModal extends LitElement {
               aria-label="닫기"
               @click=${this.handleShortClose}
               tabindex="0"
+              width="12"
+              height="12"
             />
           </div>
 
           <div class="product-section">
-            <img class="product-image" src="/image/product02.webp" alt="" />
+            <img
+              class="product-image"
+              src="/image/review-product.webp"
+              alt=""
+              width="72"
+              height="72"
+            />
             <figcaption class="sr-only">
               풀무원 회사의 탱탱쫄면 4개입 제품
             </figcaption>

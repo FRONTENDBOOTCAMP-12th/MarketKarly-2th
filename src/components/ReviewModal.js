@@ -59,12 +59,6 @@ class ReviewModal extends LitElement {
         gap: var(--space-3xl);
       }
 
-      .product-image {
-        width: 72px;
-        height: 72px;
-        background-size: cover;
-      }
-
       .product-name {
         font-weight: var(--text-bold);
         font-size: 1.125rem;
@@ -288,7 +282,13 @@ class ReviewModal extends LitElement {
           </div>
 
           <div class="product-section">
-            <img class="product-image" src="/image/product02.webp" alt="" />
+            <img
+              class="product-image"
+              src="/image/review-product.webp"
+              alt=""
+              width="72"
+              height="72"
+            />
             <figcaption class="sr-only">
               풀무원 회사의 탱탱쫄면 4개입 제품
             </figcaption>
