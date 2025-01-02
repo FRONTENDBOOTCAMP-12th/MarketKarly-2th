@@ -1,8 +1,7 @@
-import { LitElement, html, css } from 'lit';
-import reset from '@/styles/reset';
 import '@/assets/font/Pretendard.css';
+import reset from '@/styles/reset';
+import { LitElement, css, html } from 'lit';
 import { register } from 'swiper/element';
-import { getPbImage } from '@/api/getPbImage';
 register();
 
 class RecentElement extends LitElement {
@@ -52,6 +51,28 @@ class RecentElement extends LitElement {
     `,
   ];
 
+  static properties = {
+    data: { type: Object },
+  };
+
+  constructor() {
+    super();
+    this.data = [];
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this._fetchStorageData();
+    // window.addEventListener('popstate', this._onPopState.bind(this));
+    // history.pushState({ url: 'product-list' }, '', '/product-list'); // URL 변경
+    // history.back();
+  }
+
+  _fetchStorageData() {
+    const data = localStorage.getItem('viewedItem');
+    this.data = JSON.parse(data);
+  }
+
   render() {
     return html`
       <section class="container" id="side-swiper">
@@ -72,9 +93,11 @@ class RecentElement extends LitElement {
           loop="false"
           space-between="4"
         >
-          ${this.viewedData?.map((item) => {
+          ${this.data?.map((item) => {
             return html`<swiper-slide>
-              <img src="${item.photo}" alt="${item.productName}" />
+              <a href="/src/pages/productDetail/index.html?product=${item.id}">
+                <img src="${item.photo}" alt="${item.productName}" />
+              </a>
             </swiper-slide>`;
           })}
         </swiper-container>
@@ -106,22 +129,21 @@ class RecentElement extends LitElement {
     this.swiperEl.swiper.slideNext();
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    window.addEventListener('pageshow', this.handlePageShow.bind(this));
-    // this._fetchStorageData();
-  }
+  // connectedCallback() {
+  //   super.connectedCallback();
+  //   // this._fetchStorageData();
+  // }
 
-  _fetchStorageData() {
-    const data = JSON.parse(localStorage.getItem('viewedItem'));
-    this.viewedData = data;
-  }
+  // _fetchStorageData() {
+  //   const data = JSON.parse(localStorage.getItem('viewedItem'));
+  //   this.viewedData = data;
+  // }
 
-  handlePageShow() {
-    const storedProducts = JSON.parse(localStorage.getItem('viewedItem'));
-    this.viewedData = storedProducts;
-    this.requestUpdate();
-  }
+  // handlePageShow() {
+  //   const storedProducts = JSON.parse(localStorage.getItem('viewedItem'));
+  //   this.viewedData = storedProducts;
+  //   this.requestUpdate();
+  // }
 }
 
 customElements.define('recent-component', RecentElement);
