@@ -3,15 +3,20 @@ import reset from '@/styles/reset';
 import a11y from '@/base/a11y';
 import '@/components/Button/BtnEmptied';
 import '@/components/Button/BtnFilled';
+import Swal from 'sweetalert2';
 
 class AddCart extends LitElement {
   static properties = {
     productName: { type: String },
-    price: { type: String },
+    realPrice: { type: Number },
+    price: { type: Number },
     disabled: { type: Boolean },
     count: { type: Number },
-    totalPrice: { type: String },
+    totalPrice: { type: Number },
     savingsAmount: { type: Number },
+    productId: { type: String },
+    cartData: { type: Object },
+    photo: { type: String },
   };
 
   constructor() {
@@ -235,6 +240,36 @@ class AddCart extends LitElement {
     this.remove();
   }
 
+  handlePutCart() {
+    if (!this.isAuth) {
+      this.remove();
+      Swal.fire({
+        text: '로그인하셔야 본 서비스를 이용하실 수 있습니다.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+      }).then(() => {
+        location.href = '/src/pages/login/';
+      });
+    } else {
+      const user = JSON.parse(localStorage.getItem('auth'));
+      const { id: userId } = user.user;
+
+      this.cartData = {
+        productId: this.productId,
+        productName: this.productName,
+        price: this.price,
+        realPrice: this.realPrice,
+        count: this.count,
+        photo: this.photo,
+      };
+
+      const cart = JSON.parse(localStorage.getItem(`${userId}`)) || [];
+      cart.push(this.cartData);
+      localStorage.setItem(userId, JSON.stringify(cart));
+      this.remove();
+    }
+  }
+
   render() {
     return html/* html */ `
       <div class="popup-bg">
@@ -243,7 +278,7 @@ class AddCart extends LitElement {
             <p class="product-name">${this.productName}</p>
 
             <div>
-              <p class="product-price">${this.price}원</p>
+              <p class="product-price">${this.realPrice.toLocaleString()}원</p>
 
               <div class="product-counter">
                 <button
@@ -281,7 +316,10 @@ class AddCart extends LitElement {
               @click="${this.handleBtnCancel}"
               text="취소"
             ></btn-emptied-component>
-            <btn-filled-component text="장바구니 담기"></btn-filled-component>
+            <btn-filled-component
+              text="장바구니 담기"
+              @click=${this.handlePutCart}
+            ></btn-filled-component>
           </div>
           <!-- button-wrapper -->
         </dialog>

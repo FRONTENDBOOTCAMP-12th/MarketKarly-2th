@@ -147,20 +147,31 @@ class CartAccordian extends LitElement {
 
   static properties = {
     count: { type: Number },
+    cartData: { type: Object },
+    userId: { type: String },
   };
 
   constructor() {
     super();
-    this.count = 1;
+    this.userId = JSON.parse(localStorage.getItem('auth'))?.user.id;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    this.cartData = JSON.parse(localStorage.getItem(this.userId));
+  }
+
+  _handleCountDown(e) {
+    if (this.count === 1) return;
+    // this.count--;
+
+    let count = +e.target.nextElementSibling.textContent;
+    count--;
   }
 
   _handleCountUp() {
     this.count++;
-  }
-
-  _handleCountDown() {
-    if (this.count === 1) return;
-    this.count--;
   }
 
   _handleHide(e) {
@@ -198,30 +209,48 @@ class CartAccordian extends LitElement {
                 <img src="/icon/arrow-right.svg" alt="펼쳐보기" />
               </button>
             </div>
-            <div class="detail-product" >
-              <div class="item">
-                <checkbox-component> </checkbox-component>
-                <figure class="img-figure">
-                  <img src="/image/product01.webp" width="60" alt="test" />
-                  <figcaption>[풀무원] 탱탱쫄면 (4개입)</figcaption>
-                </figure>
-                <div class="count-button">
-                  <button
-                  @click=${this._handleCountDown} type="button" 
-                  class=${this.count > 1 ? 'count-down' : 'disabled'}></button>
-                  <span class="count-number">${this.count}</span>
-                  <button @click=${
-                    this._handleCountUp
-                  } type="button" class="count-up"></button>
+            ${
+              this.cartData &&
+              html`
+                <div class="detail-product">
+                  ${this.cartData?.map((product) => {
+                    return html`
+                      <div class="item">
+                        <checkbox-component> </checkbox-component>
+                        <figure class="img-figure">
+                          <img src=${product.photo} width="60" alt="test" />
+                          <figcaption>${product.productName}</figcaption>
+                        </figure>
+                        <div class="count-button">
+                          <button
+                            @click=${this._handleCountDown}
+                            type="button"
+                            class=${this.count > 1 ? 'count-down' : 'disabled'}
+                          ></button>
+                          <span class="count-number">${product.count}</span>
+                          <button
+                            @click=${this._handleCountUp}
+                            type="button"
+                            class="count-up"
+                          ></button>
+                        </div>
+                        <span class="price"
+                          >${(
+                            product.realPrice * product.count
+                          ).toLocaleString()}원</span
+                        >
+                        <button
+                          class="delete"
+                          type="button"
+                          @click=${this._handleDelete}
+                        ></button>
+                      </div>
+                    `;
+                  })}
                 </div>
-                <span class="price">${(
-                  4980 * this.count
-                ).toLocaleString()}원</span>
-                <button class="delete" type="button" @click=${
-                  this._handleDelete
-                }></button>
-              </div>
-            </div>
+              `
+            }
+            
           </article>
           <article class="freeze">
             <div class="category" ">
