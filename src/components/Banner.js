@@ -100,7 +100,7 @@ class BannerSwiper extends LitElement {
       (slide) => html`
         <swiper-slide>
           <a href="/">
-            <img src="${slide.src}" alt="${slide.alt}" />
+            <img src="${slide.src}" width="7600" alt="${slide.alt}" />
           </a>
         </swiper-slide>
       `
