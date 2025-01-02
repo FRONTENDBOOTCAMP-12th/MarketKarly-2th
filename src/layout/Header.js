@@ -452,6 +452,23 @@ class Header extends LitElement {
     }
   }
 
+  toggleBtnFavorits() {
+    if (this.loginData.isAuth) {
+      window.location.href = '/';
+    } else {
+      Swal.fire({
+        text: '로그인하셔야 본 서비스를 이용하실 수 있습니다.',
+        icon: 'warning',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#283198',
+      }).then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          window.location.href = '/src/pages/login/';
+        }
+      });
+    }
+  }
+
   render() {
     const { isAuth, user } = this.loginData;
 
@@ -583,6 +600,8 @@ class Header extends LitElement {
                 <a href="#" aria-label="찜한 상품 목록">
                   <img
                     src="/icon/header-favorits.svg"
+                    class="icon"
+                    @click="${this.toggleBtnFavorits}"
                     width="36"
                     height="36"
                     alt=""
