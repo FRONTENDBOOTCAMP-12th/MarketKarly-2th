@@ -55,7 +55,8 @@
             <img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/61653740?v=4"/>
         </td>
         <td>
-            <a href="https://github.com/llhyeon">이강현</a> | 스크럼 마스터 <br> <br></code>  <code>PocketBase</code> <code>Sign-up</code> <code>Footer </code>
+            <a href="https://github.com/llhyeon">이강현</a> | 스크럼 마스터 <br> <br></code>  <code>Project Env</code> <code>Footer</code> <code>MainModal</code> <code>MainProductSwiper</code> <code>InputComponent</code> <code>RegisterPage</code>
+            <code>CartPage</code> <br> <code>PocketBase DB</code>
         </td>
     </tr>
     <tr>
@@ -63,7 +64,7 @@
             <img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/61653740?v=4"/>
         </td>
         <td >
-            <a href="https://github.com/wnsrl7250">민준기</a> | FE 팀원 <br> <br></code>  <code>데이터ETL</code> <code>배치학습</code> <code>Footer </code>
+            <a href="https://github.com/wnsrl7250">민준기</a> | FE 팀원 <br> <br></code>  <code>MainBanner</code> <code>RecentProduct</code> <code>LoginPage</code> <code>ProductFilter</code> <code>LoginPage</code> <code>Authentication 구현</code>
         </td>
     </tr>
     <tr>
@@ -71,7 +72,7 @@
             <img height="120px" width="120px" src="https://avatars.githubusercontent.com/u/61653740?v=4"/>
         </td>
         <td >
-            <a href="https://github.com/Hanna-Jeanne">장한나</a> | FE 팀원 <br> <br></code>  <code>데이터ETL</code> <code>배치학습</code> <code>Footer </code>
+            <a href="https://github.com/Hanna-Jeanne">장한나</a> | FE 팀원 <br> <br></code>  <code>ButtonComponent</code> <code>ProductCard</code> <code>AddCart</code> <code>CartPage</code> <code>ProductDetailPage</code>
         </td>
     </tr>
     <tr>
