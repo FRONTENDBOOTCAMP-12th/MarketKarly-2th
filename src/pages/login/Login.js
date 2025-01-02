@@ -27,36 +27,36 @@ class Login extends LitElement {
 
         & form {
           width: 340px;
-
-          & .input-container {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-lg);
-            margin-bottom: var(--space-lg);
-          }
-
-          & .find-container {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            gap: 4px;
-            margin-bottom: var(--space-4xl);
-
-            & a,
-            span {
-              font-size: var(--font-sm);
-              font-weight: var(--text-regular);
-            }
-          }
-
-          & .button-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-          }
         }
+      }
+
+      .input-container {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg);
+        margin-bottom: var(--space-lg);
+      }
+
+      .find-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 4px;
+        margin-bottom: var(--space-4xl);
+
+        & a,
+        span {
+          font-size: var(--font-sm);
+          font-weight: var(--text-regular);
+        }
+      }
+
+      .button-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
       }
     `,
   ];
@@ -120,10 +120,6 @@ class Login extends LitElement {
     }
   }
 
-  handleSignup() {
-    window.location.href = '/src/pages/register/';
-  }
-
   render() {
     return html`
       <div class="container">
@@ -161,11 +157,12 @@ class Login extends LitElement {
               text="로그인"
               @click="${this.handleLogin}"
             ></btn-filled-component>
-            <btn-emptied-component
-              width="100%"
-              text="회원가입"
-              @click="${this.handleSignup}"
-            ></btn-emptied-component>
+            <a href="/src/pages/register/"
+              ><btn-emptied-component
+                width="100%"
+                text="회원가입"
+              ></btn-emptied-component
+            ></a>
           </div>
         </form>
       </div>
