@@ -2,7 +2,6 @@ import { LitElement, html, css } from 'lit';
 import reset from '@/styles/reset';
 import '@/assets/font/Pretendard.css';
 import { register } from 'swiper/element';
-import { getPbImage } from '@/api/getPbImage';
 register();
 
 class RecentElement extends LitElement {
