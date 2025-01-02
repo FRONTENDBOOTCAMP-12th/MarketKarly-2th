@@ -58,7 +58,6 @@ class HeaderCategory extends LitElement {
       .category-item img {
         width: 24px;
         height: 24px;
-        color: var(--gray-color-700, #404040);
       }
 
       .category-item:hover img {

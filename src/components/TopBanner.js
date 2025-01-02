@@ -2,98 +2,111 @@ import { LitElement, css, html } from 'lit';
 
 class TopBanner extends LitElement {
   static styles = css`
+    :host {
+      display: block;
+      contain: content;
+    }
     .modal {
+      position: relative;
       display: flex;
       justify-content: center;
-      align-items: center;
       width: 100%;
-      top: 0;
-      left: 0;
       height: 52px;
       background: var(--primary-color, #283198);
       z-index: 9999;
+      contain: layout paint;
     }
     .inner {
       display: flex;
-      flex-direction: row;
       justify-content: center;
       align-items: center;
-      width: 1050px;
+      max-width: 1050px;
+      width: 100%;
       position: relative;
+      padding: 0 var(--space-md);
     }
     .advertise {
       color: var(--white-color, #ffffff);
+      margin: 0;
+      padding: 0;
     }
     .advertise-bold {
-      font-weight: var(--text-semi-bold);
+      font-weight: 600;
       color: var(--white-color, #ffffff);
     }
     .btn-close {
       position: absolute;
-      right: 0;
+      right: var(--space-md);
       top: 50%;
       transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
       cursor: pointer;
-    }
-    .close {
-      display: none;
+      padding: var(--space-sm);
+      background: none;
+      border: none;
     }
   `;
 
   static properties = {
-    isClosed: { type: Boolean },
+    isClosed: { type: Boolean, reflect: true },
   };
 
   constructor() {
     super();
     this.isClosed = false;
-    this.handleClose = this.handleClose.bind(this);
+    this.#checkStoredState();
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    const bannerExpTime = JSON.parse(localStorage.getItem('topBannerExpTime'));
-    if (bannerExpTime) {
-      const now = new Date().getTime();
-      this.isClosed = bannerExpTime >= now;
+  #checkStoredState() {
+    try {
+      const bannerExpTime = Number(localStorage.getItem('topBannerExpTime'));
+      if (bannerExpTime) {
+        this.isClosed = bannerExpTime >= Date.now();
+      }
+    } catch (e) {
+      console.warn('Could not access localStorage:', e);
     }
   }
 
-  setExpTime() {
-    const expTime = new Date().getTime() + 1000 * 60 * 10;
-    localStorage.setItem('topBannerExpTime', expTime);
+  #setExpTime() {
+    try {
+      const expTime = Date.now() + 600000;
+      localStorage.setItem('topBannerExpTime', expTime.toString());
+    } catch (e) {
+      console.warn('Could not save to localStorage:', e);
+    }
   }
 
   handleClose() {
     this.isClosed = true;
-    this.setExpTime();
+    this.#setExpTime();
+    this.dispatchEvent(new CustomEvent('banner-closed'));
   }
 
   render() {
+    if (this.isClosed) return null;
+
     return html`
-      ${!this.isClosed
-        ? html`
-            <section class="modal">
-              <div class="inner">
-                <p>
-                  <span class="advertise">지금 가입하고 인기상품</span>
-                  <span class="advertise-bold">100원</span>
-                  <span class="advertise">에 받아가세요!</span>
-                </p>
-                <img
-                  src="/icon/review-close.svg"
-                  alt="닫기 버튼"
-                  class="btn-close"
-                  aria-label="닫기"
-                  @click=${this.handleClose}
-                  tabindex="0"
-                />
-              </div>
-            </section>
-          `
-        : null}
+      <section class="modal" role="banner">
+        <div class="inner">
+          <p class="advertise">
+            지금 가입하고 인기상품
+            <strong class="advertise-bold">100원</strong>
+            에 받아가세요!
+          </p>
+          <button
+            class="btn-close"
+            @click=${this.handleClose}
+            aria-label="닫기 버튼"
+          >
+            <img
+              src="/icon/review-close.svg"
+              alt="닫기 아이콘"
+              width="12"
+              height="12"
+            />
+          </button>
+        </div>
+      </section>
     `;
   }
 }
