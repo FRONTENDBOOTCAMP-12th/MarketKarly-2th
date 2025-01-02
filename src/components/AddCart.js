@@ -23,8 +23,6 @@ class AddCart extends LitElement {
     this.count = 1;
     this.totalPrice = '';
     this.savingsAmount = 0;
-
-    this.attachShadow({ mode: 'open', delegatesFocus: true }); // delegatesFocus 추가
   }
 
   static styles = [
@@ -185,16 +183,13 @@ class AddCart extends LitElement {
     }, 0);
 
     document.addEventListener('keydown', this.handleFocusTrap);
+    document.addEventListener('focusin', this.handleFocusRedirect);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     document.removeEventListener('keydown', this.handleFocusTrap);
-  }
-
-  focusFirstElement() {
-    const firstFocusable = this.getFocusableElements()[0];
-    firstFocusable?.focus();
+    document.removeEventListener('focusin', this.handleFocusRedirect);
   }
 
   getFocusableElements() {
@@ -212,7 +207,15 @@ class AddCart extends LitElement {
     );
   }
 
-  handleFocusTrap(event) {
+  focusFirstElement() {
+    const focusableElements = this.getFocusableElements();
+
+    if (focusableElements.length > 0) {
+      focusableElements[0].focus();
+    }
+  }
+
+  handleFocusTrap = (event) => {
     if (event.key !== 'Tab') return;
 
     const focusableElements = this.getFocusableElements();
@@ -221,16 +224,31 @@ class AddCart extends LitElement {
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
-    if (event.shiftKey && document.activeElement === firstElement) {
-      // Shift+Tab에서 첫 번째 요소로 이동 시 마지막으로 순환
-      event.preventDefault();
-      lastElement.focus();
-    } else if (!event.shiftKey && document.activeElement === lastElement) {
-      // Tab에서 마지막 요소로 이동 시 첫 번째로 순환
-      event.preventDefault();
-      firstElement.focus();
+    if (event.key === 'Tab') {
+      if (event.shiftKey) {
+        // Shift + Tab: 역방향 이동
+        if (document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      } else {
+        // Tab: 순방향 이동
+        if (document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
     }
-  }
+  };
+
+  handleFocusRedirect = (event) => {
+    const focusableElements = Array.from(this.getFocusableElements());
+    if (!focusableElements.includes(event.target)) {
+      // 외부로 나간 경우 포커스를 강제로 내부 첫 요소로 이동
+      event.preventDefault();
+      this.focusFirstElement();
+    }
+  };
 
   get isAuth() {
     const auth = JSON.parse(localStorage.getItem('auth') ?? '{}');
@@ -246,6 +264,7 @@ class AddCart extends LitElement {
 
   handleTotalPrice() {
     const totalPriceNum = this.count * this.productPrice;
+
     this.totalPrice = totalPriceNum.toLocaleString();
     this.savingsAmount = Math.round(totalPriceNum / 1000);
   }
