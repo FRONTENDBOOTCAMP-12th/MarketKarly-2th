@@ -568,8 +568,14 @@ class Header extends LitElement {
                     </a>
                   </li>
                   <li>
-                    <span class="new-icon" aria-label="새롭게 생긴 서비스">
-                      <img src="/icon/new.webp" alt="" width="7" height="7" />
+                    <span class="new-icon">
+                      <img
+                        src="/icon/new.webp"
+                        alt=""
+                        width="7"
+                        height="7"
+                        aria-label="새롭게 생긴 서비스"
+                      />
                     </span>
                   </li>
                 </ul>
