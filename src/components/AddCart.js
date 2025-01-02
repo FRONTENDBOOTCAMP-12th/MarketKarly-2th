@@ -34,8 +34,8 @@ class AddCart extends LitElement {
         top: 0;
         left: 0;
 
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
         transition: all 0.5s;
 
         z-index: 10000;
@@ -46,10 +46,10 @@ class AddCart extends LitElement {
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
-        opacity: 1;
+        z-index: 10001;
       }
 
-      .add-cart {
+      .popup-bg .add-cart {
         margin: 0;
         position: absolute;
         top: 50%;
@@ -71,6 +71,8 @@ class AddCart extends LitElement {
         padding: var(--space-3xl) var(--space-2xl);
         border-radius: 16px;
         line-height: var(--light-line-height);
+
+        z-index: 10002;
 
         .product {
           display: flex;
@@ -174,10 +176,79 @@ class AddCart extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
+    // DOM이 완전히 렌더링 된 후, 실행
     setTimeout(() => {
-      this.handleTotalPrice();
+      this.handleTotalPrice(); // 초기 가격 계산
+      this.focusFirstElement(); // 첫 포커스 요소에 포커스
     }, 0);
+
+    document.addEventListener('keydown', this.handleFocusTrap);
+    document.addEventListener('focusin', this.handleFocusRedirect);
   }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    document.removeEventListener('keydown', this.handleFocusTrap);
+    document.removeEventListener('focusin', this.handleFocusRedirect);
+  }
+
+  getFocusableElements() {
+    const focusableSelectors = [
+      'a[href]',
+      'button:not([disabled])',
+      'textarea:not([disabled])',
+      'input:not([type="hidden"]):not([disabled])',
+      'select:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])',
+    ];
+
+    return Array.from(
+      this.renderRoot.querySelectorAll(focusableSelectors.join(','))
+    );
+  }
+
+  focusFirstElement() {
+    const focusableElements = this.getFocusableElements();
+
+    if (focusableElements.length > 0) {
+      focusableElements[0].focus();
+    }
+  }
+
+  handleFocusTrap = (event) => {
+    if (event.key !== 'Tab') return;
+
+    const focusableElements = this.getFocusableElements();
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (event.key === 'Tab') {
+      if (event.shiftKey) {
+        // Shift + Tab: 역방향 이동
+        if (document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      } else {
+        // Tab: 순방향 이동
+        if (document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
+    }
+  };
+
+  handleFocusRedirect = (event) => {
+    const focusableElements = Array.from(this.getFocusableElements());
+    if (!focusableElements.includes(event.target)) {
+      // 외부로 나간 경우 포커스를 강제로 내부 첫 요소로 이동
+      event.preventDefault();
+      this.focusFirstElement();
+    }
+  };
 
   get isAuth() {
     const auth = JSON.parse(localStorage.getItem('auth') ?? '{}');
@@ -193,6 +264,7 @@ class AddCart extends LitElement {
 
   handleTotalPrice() {
     const totalPriceNum = this.count * this.productPrice;
+
     this.totalPrice = totalPriceNum.toLocaleString();
     this.savingsAmount = Math.round(totalPriceNum / 1000);
   }
@@ -238,7 +310,7 @@ class AddCart extends LitElement {
   render() {
     return html/* html */ `
       <div class="popup-bg">
-        <dialog class="add-cart">
+        <dialog class="add-cart" aria-modal="true">
           <div class="product">
             <p class="product-name">${this.productName}</p>
 

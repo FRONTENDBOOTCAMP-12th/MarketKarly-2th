@@ -46,119 +46,119 @@ class Card extends LitElement {
         cursor: pointer;
         display: inline-flex;
         flex-direction: column;
-        gap: 1rem;
+      }
 
-        figure {
-          position: relative;
-          width: 249px;
+      .card-component figure {
+        position: relative;
+        width: 249px;
 
-          a {
-            display: inline-block;
+        a {
+          display: inline-block;
 
-            img {
-              width: 100%;
-            }
-          }
-
-          .add-cart {
-            padding: 0;
-            margin: 0;
-            border: none;
-            background: none;
-
-            position: absolute;
-            right: 15px;
-            bottom: 17px;
+          img {
+            width: 100%;
           }
         }
 
-        .content {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
+        .add-cart {
+          padding: 0;
+          margin: 0;
+          border: none;
+          background: none;
 
-          cursor: pointer;
+          position: absolute;
+          right: 15px;
+          bottom: 17px;
+        }
+      }
 
-          .title {
-            .delivery-type {
-              margin-bottom: 0.5rem;
-              margin-block-end: 0.5rem;
+      .card-component .content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
 
-              line-height: 1.5;
-              color: var(--gray-color-400, #898989);
-              font-weight: var(--text-semi-bold);
-              font-size: 0.75rem;
+        padding-top: 1rem;
+        cursor: pointer;
+
+        .title {
+          .delivery-type {
+            margin-bottom: 0.5rem;
+            margin-block-end: 0.5rem;
+
+            line-height: 1.5;
+            color: var(--gray-color-400, #898989);
+            font-weight: var(--text-semi-bold);
+            font-size: 0.75rem;
+          }
+          .main-title {
+            line-height: 1.6;
+            color: var(--content-text-color, #333333);
+            font-weight: var(--text-regular);
+            font-size: 1rem;
+          }
+        }
+
+        .price {
+          & p:first-child {
+            line-height: 1.5;
+            font-weight: var(--text-semi-bold);
+            font-size: 1.4rem;
+
+            .discount {
+              color: var(--accent-color, #fa622f);
             }
-            .main-title {
-              line-height: 1.6;
+
+            .real-price {
               color: var(--content-text-color, #333333);
-              font-weight: var(--text-regular);
-              font-size: 1rem;
             }
           }
 
-          .price {
-            & p:first-child {
-              line-height: 1.5;
-              font-weight: var(--text-semi-bold);
-              font-size: 1.4rem;
+          .origin-price {
+            margin-top: 0.5rem;
+            margin-block-start: 0.5rem;
 
-              .discount {
-                color: var(--accent-color, #fa622f);
-              }
-
-              .real-price {
-                color: var(--content-text-color, #333333);
-              }
-            }
-
-            .origin-price {
-              margin-top: 0.5rem;
-              margin-block-start: 0.5rem;
-
-              line-height: 1.6;
-              color: var(--gray-color-400, #898989);
-              font-weight: var(--text-regular);
-              font-size: 0.75rem;
-              text-decoration: line-through;
-            }
-          }
-
-          .description {
             line-height: 1.6;
             color: var(--gray-color-400, #898989);
             font-weight: var(--text-regular);
             font-size: 0.75rem;
+            text-decoration: line-through;
           }
+        }
 
-          .tags {
-            display: flex;
-            flex-direction: row;
-            align-items: start;
-            gap: 0.5rem;
+        .description {
+          line-height: 1.6;
+          color: var(--gray-color-400, #898989);
+          font-weight: var(--text-regular);
+          font-size: 0.75rem;
+        }
 
-            .tag-only {
-              display: inline-block;
-              background-color: var(--gray-color-100);
-              padding: 4px;
-              border-radius: 4px;
+        .tags {
+          display: flex;
+          flex-direction: row;
+          align-items: start;
+          gap: 0.5rem;
 
-              line-height: 1.5;
-              color: var(--primary-color);
-              font-weight: var(--text-semi-bold);
-              font-size: 0.75rem;
-            }
-            .tag-limited {
-              display: inline-block;
-              background-color: var(--gray-color-100);
-              padding: 4px;
-              border-radius: 4px;
+          .tag-only {
+            display: inline-block;
+            background-color: var(--gray-color-100);
+            padding: 4px;
+            border-radius: 4px;
 
-              line-height: 1.5;
-              color: var(--content-text-color);
-              font-weight: var(--text-semi-bold);
-              font-size: 0.75rem;
-            }
+            line-height: 1.5;
+            color: var(--primary-color);
+            font-weight: var(--text-semi-bold);
+            font-size: 0.75rem;
+          }
+          .tag-limited {
+            display: inline-block;
+            background-color: var(--gray-color-100);
+            padding: 4px;
+            border-radius: 4px;
+
+            line-height: 1.5;
+            color: var(--content-text-color);
+            font-weight: var(--text-semi-bold);
+            font-size: 0.75rem;
           }
         }
       }
@@ -170,6 +170,7 @@ class Card extends LitElement {
     // 로컬스토리지에 저장된 item 가져오기
     const now = new Date().getTime();
     const viewedItem = localStorage.getItem(this.viewedItemKey);
+
     if (viewedItem) {
       this.viewedItem = JSON.parse(viewedItem);
       // 24시간 이후에 로컬 스토리지에서 제거
@@ -192,22 +193,36 @@ class Card extends LitElement {
   };
 
   handleCardClick = (event) => {
+    // event.preventDefault();
     this._handleViewedItem();
 
     const { target } = event;
+    let link;
 
+    // button 태그 또는 .add-cart에서 발생하는 버튼 클릭 이벤트는 무시
     if (target.closest('button') || target.closest('.add-cart')) {
-      // button 태그 또는 .add-cart'에서 발생하는 버튼 클릭 이벤트는 무시
       return;
     }
 
-    const link =
-      target.closest('.content').previousElementSibling.firstElementChild;
-    // 클릭된 요소 상위 요소에서 a태그 찾기
+    if (target.tagName === 'IMG') {
+      link = target.closest('a');
+    } else {
+      const contentElement = target.closest('.content');
 
-    console.log(link);
+      if (contentElement) {
+        const previousElement = contentElement.previousElementSibling;
+
+        if (previousElement) {
+          link = previousElement.firstElementChild;
+        }
+      }
+    }
+
     if (link) {
-      link.click(); // a태그를 발견하면, 해당 태그의 클릭 이벤트를 수동으로 트리거
+      window.location.href = link.href;
+      console.log(link);
+    } else {
+      console.error('error');
     }
   };
 
