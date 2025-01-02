@@ -221,7 +221,12 @@ class AddCart extends LitElement {
   }
 
   handleFocusTrap = (event) => {
-    if (event.key !== 'Tab') return;
+    if (event.key !== 'Tab' && event.key !== 'Escape') {
+      return;
+    } else if (event.key === 'Escape') {
+      // Escape 키로 팝업 닫기
+      this.remove();
+    }
 
     const focusableElements = this.getFocusableElements();
     if (focusableElements.length === 0) return;

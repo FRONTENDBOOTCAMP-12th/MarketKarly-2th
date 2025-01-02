@@ -43,6 +43,7 @@ class Card extends LitElement {
     a11y,
     css`
       .card-component {
+        width: 249px;
         cursor: pointer;
         display: inline-flex;
         flex-direction: column;
@@ -286,15 +287,18 @@ class Card extends LitElement {
             <p>
               ${this.discount > 0
                 ? html`<span class="discount"
-                    >${this.discount}%<span class="sr-only">할인</span></span
-                  >`
-                : ''}
-              <span class="real-price"
-                >${this.realPrice.toLocaleString()}원</span
-              >
+                      >${this.discount}%<span class="sr-only">할인</span></span
+                    >
+                    <span class="real-price">
+                      ${this.realPrice.toLocaleString()}원</span
+                    >
+                    <p class="origin-price">
+                      ${this.price.toLocaleString()}원
+                    </p> `
+                : html`<span class="real-price">
+                    ${this.realPrice.toLocaleString()}원</span
+                  >`}
             </p>
-
-            <p class="origin-price">${this.price.toLocaleString()}원</p>
           </div>
           <!-- price -->
 
