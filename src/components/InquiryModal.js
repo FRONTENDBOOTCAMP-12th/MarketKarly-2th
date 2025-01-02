@@ -260,12 +260,82 @@ class InquiryModal extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     document.body.style.overflow = '';
+    setTimeout(() => {
+      this.focusFirstElement();
+    }, 0);
+
+    document.addEventListener('keydown', this.handleFocusTrap);
+    document.addEventListener('focusin', this.handleFocusRedirect);
   }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    document.removeEventListener('keydown', this.handleFocusTrap);
+    document.removeEventListener('focusin', this.handleFocusRedirect);
+  }
+
+  getFocusableElements() {
+    const focusableSelectors = [
+      'a[href]',
+      'button:not([disabled])',
+      'textarea:not([disabled])',
+      'input:not([type="hidden"]):not([disabled])',
+      'select:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])',
+    ];
+
+    return Array.from(
+      this.renderRoot.querySelectorAll(focusableSelectors.join(','))
+    );
+  }
+
+  focusFirstElement() {
+    const focusableElements = this.getFocusableElements();
+
+    if (focusableElements.length > 0) {
+      focusableElements[0].focus();
+    }
+  }
+
+  handleFocusTrap = (event) => {
+    if (event.key !== 'Tab') return;
+
+    const focusableElements = this.getFocusableElements();
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (event.key === 'Tab') {
+      if (event.shiftKey) {
+        // Shift + Tab: 역방향 이동
+        if (document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      } else {
+        // Tab: 순방향 이동
+        if (document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
+    }
+  };
+
+  handleFocusRedirect = (event) => {
+    const focusableElements = Array.from(this.getFocusableElements());
+    if (!focusableElements.includes(event.target)) {
+      // 외부로 나간 경우 포커스를 강제로 내부 첫 요소로 이동
+      event.preventDefault();
+      this.focusFirstElement();
+    }
+  };
 
   render() {
     return html`
       <div class="popup-bg">
-        <dialog class="review-container">
+        <dialog class="review-container" aria-modal="true">
           <div class="review-header">
             <h2 class="review-title" tabindex="0">상품 문의하기</h2>
             <img
