@@ -9,6 +9,7 @@ import '@/components/Button/BtnDisabled';
 import '@/components/Button/BtnFilled';
 import reset from '@/styles/reset';
 import Swal from 'sweetalert2';
+import pb from '@/api/pocketbase';
 
 class Form extends LitElement {
   static styles = [
@@ -296,6 +297,7 @@ class Form extends LitElement {
         phone &&
         this.address
       ) {
+        pb.collection('users').create(sendingData);
         Swal.fire({
           title: '회원가입 완료',
           text: '로그인 화면으로 이동합니다.',
