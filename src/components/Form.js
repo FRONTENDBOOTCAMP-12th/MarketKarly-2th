@@ -9,7 +9,6 @@ import '@/components/Button/BtnDisabled';
 import '@/components/Button/BtnFilled';
 import reset from '@/styles/reset';
 import Swal from 'sweetalert2';
-import pb from '@/api/pocketbase';
 
 class Form extends LitElement {
   static styles = [
@@ -297,30 +296,15 @@ class Form extends LitElement {
         phone &&
         this.address
       ) {
-        if (this.inputs.every((input) => input.checked)) {
-          pb.collection('users').create(sendingData);
-
-          Swal.fire({
-            title: '회원가입 완료',
-            text: '로그인 화면으로 이동합니다.',
-            icon: 'success',
-            confirmButtonText: '확인',
-            confirmButtonColor: '#283198',
-          }).then(() => {
-            location.href = '/src/pages/login/';
-          });
-        } else {
-          Swal.fire({
-            title: '회원가입 실패',
-            text: '필수항목에 동의해주세요.',
-            icon: 'error',
-            confirmButtonText: '확인',
-            confirmButtonColor: '#283198',
-          }).then(() => {
-            location.reload();
-            throw new Error('필수항목 동의가 되지 않았습니다.');
-          });
-        }
+        Swal.fire({
+          title: '회원가입 완료',
+          text: '로그인 화면으로 이동합니다.',
+          icon: 'success',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#283198',
+        }).then(() => {
+          location.href = '/src/pages/login/';
+        });
       } else {
         Swal.fire({
           title: 'Error',
@@ -345,19 +329,6 @@ class Form extends LitElement {
       },
     });
     daum.open();
-  }
-
-  get inputs() {
-    const inputGroup = this.renderRoot.querySelector('.check-wrapper');
-    const inputComponent = [
-      ...inputGroup.querySelectorAll('checkbox-component'),
-    ];
-
-    const inputArr = inputComponent.filter(
-      (item) => item.renderRoot.querySelector('input').value !== 'event-agree'
-    );
-
-    return inputArr;
   }
 
   render() {
