@@ -63,9 +63,12 @@ class RecentElement extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this._fetchStorageData();
-    // window.addEventListener('popstate', this._onPopState.bind(this));
-    // history.pushState({ url: 'product-list' }, '', '/product-list'); // URL 변경
-    // history.back();
+    window.addEventListener('pageshow', this._handlePageShow.bind(this));
+  }
+
+  _handlePageShow() {
+    this._fetchStorageData();
+    this.requestUpdate();
   }
 
   _fetchStorageData() {
@@ -95,7 +98,9 @@ class RecentElement extends LitElement {
         >
           ${this.data?.map((item) => {
             return html`<swiper-slide>
-              <a href="/src/pages/productDetail/index.html?product=${item.id}">
+              <a
+                href="../src/pages/productDetail/index.html?product=${item.id}"
+              >
                 <img src="${item.photo}" alt="${item.productName}" />
               </a>
             </swiper-slide>`;
