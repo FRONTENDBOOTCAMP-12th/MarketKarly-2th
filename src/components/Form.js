@@ -281,25 +281,50 @@ class Form extends LitElement {
   _fetchUserData(e) {
     e.preventDefault();
     try {
-      const { email, password, confirm: passwordConfirm, id: name } = this.data;
-      const data = { email, password, passwordConfirm, name };
+      const {
+        email,
+        password,
+        confirm: passwordConfirm,
+        id: name,
+        phone,
+      } = this.data;
+      const sendingData = { email, password, passwordConfirm, name };
 
-      if (email && name && password === passwordConfirm) {
-        pb.collection('users').create(data);
+      if (
+        email &&
+        name &&
+        password === passwordConfirm &&
+        phone &&
+        this.address
+      ) {
+        if (this.inputs.every((input) => input.checked)) {
+          pb.collection('users').create(sendingData);
 
-        Swal.fire({
-          title: '회원가입 완료',
-          text: '로그인 화면으로 이동합니다.',
-          icon: 'success',
-          confirmButtonText: '확인',
-          confirmButtonColor: '#283198',
-        }).then(() => {
-          location.href = '/src/pages/login/';
-        });
+          Swal.fire({
+            title: '회원가입 완료',
+            text: '로그인 화면으로 이동합니다.',
+            icon: 'success',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#283198',
+          }).then(() => {
+            location.href = '/src/pages/login/';
+          });
+        } else {
+          Swal.fire({
+            title: '회원가입 실패',
+            text: '필수항목에 동의해주세요.',
+            icon: 'error',
+            confirmButtonText: '확인',
+            confirmButtonColor: '#283198',
+          }).then(() => {
+            location.reload();
+            throw new Error('필수항목 동의가 되지 않았습니다.');
+          });
+        }
       } else {
         Swal.fire({
           title: 'Error',
-          text: '올바른 회원가입 정보를 입력해주세요',
+          text: '필수 항목을 모두 입력해주세요.',
           icon: 'error',
           confirmButtonText: '확인',
           confirmButtonColor: '#283198',
@@ -322,11 +347,24 @@ class Form extends LitElement {
     daum.open();
   }
 
+  get inputs() {
+    const inputGroup = this.renderRoot.querySelector('.check-wrapper');
+    const inputComponent = [
+      ...inputGroup.querySelectorAll('checkbox-component'),
+    ];
+
+    const inputArr = inputComponent.filter(
+      (item) => item.renderRoot.querySelector('input').value !== 'event-agree'
+    );
+
+    return inputArr;
+  }
+
   render() {
     return html`
       <form id="form" action="#">
         <div class="id" @input-change=${this._handleChangeInput}>
-          <div class="title">
+          <div class="title" @click=${this.test}>
             아이디
             <img src="/icon/asterisk.svg" alt="*" />
           </div>
@@ -501,7 +539,7 @@ class Form extends LitElement {
                     <text-component
                       width="100%"
                       value=${this.address}
-                      .disabled=${true}
+                      disabled=${true}
                     ></text-component>
                     <text-component
                       class="exact-address"
