@@ -34,9 +34,6 @@ class Main extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.renderCardProducts();
-    window.addEventListener('popstate', () => console.log('khlee'));
-    history.pushState({ url: 'main' }, '', '/main'); // URL 변경
-    history.back();
   }
 
   async renderCardProducts() {
