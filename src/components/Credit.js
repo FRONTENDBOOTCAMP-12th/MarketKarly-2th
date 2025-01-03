@@ -82,6 +82,10 @@ class Credit extends LitElement {
             padding-bottom: var(--space-3xl);
             padding-block-end: var(--space-3xl);
 
+            .discount {
+              color: var(--accent-color, #fa622f);
+            }
+
             li {
               display: flex;
               flex-direction: row;
@@ -167,6 +171,43 @@ class Credit extends LitElement {
     `,
   ];
 
+  static properties = {
+    count: { type: Number },
+    cartData: { type: Object },
+    userId: { type: String },
+  };
+
+  constructor() {
+    super();
+    this.userId = JSON.parse(localStorage.getItem('auth'))?.user.id;
+    this.totalPrice = 0;
+    this.totalDiscount = 0;
+    this.estimatedTotal = 0;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.cartData = JSON.parse(localStorage.getItem(this.userId));
+
+    if (Array.isArray(this.cartData)) {
+      this.totalPrice = this.cartData.reduce((total, item) => {
+        return total + item.price * (item.count || 1);
+      }, 0);
+
+      this.totalRealPrice = this.cartData.reduce((total, item) => {
+        return total + item.realPrice * (item.count || 1);
+      }, 0);
+
+      this.totalDiscount = this.totalPrice - this.totalRealPrice;
+      const deliveryPrice = 3000;
+      this.paymentPrice = this.totalRealPrice + deliveryPrice;
+    } else {
+      this.totalPrice = 0;
+      this.totalDiscount = 0;
+      this.estimatedTotal = 0;
+    }
+  }
+
   render() {
     return html/* html */ `
       <div class="credit-component">
@@ -193,11 +234,13 @@ class Credit extends LitElement {
             <ul class="detail-price">
               <li>
                 <p>상품금액</p>
-                <p>40,680<span>원</span></p>
+                <p>${this.totalPrice.toLocaleString()}<span>원</span></p>
               </li>
               <li>
                 <p>상품할인금액</p>
-                <p>-4,651<span>원</span></p>
+                <p class="discount">
+                  -${this.totalDiscount.toLocaleString()}<span>원</span>
+                </p>
               </li>
               <li>
                 <p>배송비</p>
@@ -208,7 +251,9 @@ class Credit extends LitElement {
             <div class="payment">
               <div>
                 <span>결제예졍금액</span>
-                <span class="payment-amount">40,680<span>원</span></span>
+                <span class="payment-amount"
+                  >${this.paymentPrice.toLocaleString()}<span>원</span></span
+                >
               </div>
 
               <p class="savings">최대 36원 적립 일반 0.1%</p>

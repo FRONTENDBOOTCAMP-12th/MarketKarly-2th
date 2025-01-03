@@ -10,8 +10,24 @@ class CartAccordian extends LitElement {
       .wrapper {
         width: 742px;
         .select-all {
+          .control {
+            display: flex;
+            flex-direction: row;
+          }
+
           .separate {
             font-weight: var(--text-extra-light);
+          }
+
+          .selectedDelete {
+            border: none;
+            background: inherit;
+            cursor: pointer;
+            margin-left: 4px;
+
+            font-size: var(--font-md);
+            font-weight: var(--text-semi-bold);
+            padding: 0;
           }
 
           & > article {
@@ -149,11 +165,14 @@ class CartAccordian extends LitElement {
     count: { type: Number },
     cartData: { type: Object },
     userId: { type: String },
+    selectedItems: { type: Array },
   };
 
   constructor() {
     super();
     this.userId = JSON.parse(localStorage.getItem('auth'))?.user.id;
+    this.cartData = JSON.parse(localStorage.getItem(this.userId)) || [];
+    this.selectedItems = [];
   }
 
   connectedCallback() {
@@ -192,68 +211,99 @@ class CartAccordian extends LitElement {
     }
   }
 
+  _handleCheckboxChange(e, product) {
+    const isChecked = e.detail.checked;
+    console.log(isChecked, product);
+
+    if (isChecked) {
+      this.selectedItems.push(product);
+    } else {
+      this.selectedItems = this.selectedItems.filter(
+        (item) => item !== product
+      );
+    }
+
+    console.log(this.selectedItems);
+  }
+
+  _handleDeleteSelected() {
+    this.cartData = this.cartData.filter(
+      (product) => !this.selectedItems.includes(product)
+    );
+    this.selectedItems = [];
+
+    this.requestUpdate();
+    localStorage.setItem(this.userId, JSON.stringify(this.cartData)); // 로컬 스토리지 업데이트
+  }
+
   render() {
     return html`
       <section class="wrapper">
         <checkbox-group-component class="select-all">
-          <checkbox-component check value="all"
-            >전체선택 (1/3)
-            <span class="separate">|</span> 선택삭제</checkbox-component
-          >
+          <div class="control">
+            <checkbox-component check value="all"
+              >전체선택 (1/3)
+              <span class="separate">|</span></checkbox-component
+            >
+            <button class="selectedDelete" @click=${this._handleDeleteSelected}>
+              선택삭제
+            </button>
+          </div>
 
           <article class="cold">
-            <div class="category" >
+            <div class="category">
               <img class="cold-food" src="/icon/cold-food.svg" alt="냉장식품" />
               <span>냉장 식품</span>
               <button type="button" @click=${this._handleHide}>
                 <img src="/icon/arrow-right.svg" alt="펼쳐보기" />
               </button>
             </div>
-            ${
-              this.cartData &&
-              html`
-                <div class="detail-product">
-                  ${this.cartData?.map((product) => {
-                    return html`
-                      <div class="item">
-                        <checkbox-component> </checkbox-component>
-                        <figure class="img-figure">
-                          <img src=${product.photo} width="60" alt="test" />
-                          <figcaption>${product.productName}</figcaption>
-                        </figure>
-                        <div class="count-button">
-                          <button
-                            @click=${this._handleCountDown}
-                            type="button"
-                            class=${this.count > 1 ? 'count-down' : 'disabled'}
-                          ></button>
-                          <span class="count-number">${product.count}</span>
-                          <button
-                            @click=${this._handleCountUp}
-                            type="button"
-                            class="count-up"
-                          ></button>
-                        </div>
-                        <span class="price"
-                          >${(
-                            product.realPrice * product.count
-                          ).toLocaleString()}원</span
-                        >
+            ${this.cartData &&
+            html`
+              <div class="detail-product">
+                ${this.cartData.map((product) => {
+                  return html`
+                    <div class="item">
+                      <checkbox-component
+                        @checked=${(e) =>
+                          this._handleCheckboxChange(e, product)}
+                        ?checked=${this.selectedItems.includes(product)}
+                      ></checkbox-component>
+                      <figure class="img-figure">
+                        <img src=${product.photo} width="60" alt="test" />
+                        <figcaption>${product.productName}</figcaption>
+                      </figure>
+                      <div class="count-button">
                         <button
-                          class="delete"
+                          @click=${this._handleCountDown}
                           type="button"
-                          @click=${this._handleDelete}
+                          class=${this.count > 1 ? 'count-down' : 'disabled'}
+                        ></button>
+                        <span class="count-number">${product.count}</span>
+                        <button
+                          @click=${this._handleCountUp}
+                          type="button"
+                          class="count-up"
                         ></button>
                       </div>
-                    `;
-                  })}
-                </div>
-              `
-            }
-            
+                      <span class="price"
+                        >${(
+                          product.realPrice * product.count
+                        ).toLocaleString()}원</span
+                      >
+                      <button
+                        class="delete"
+                        type="button"
+                        @click=${this._handleDelete}
+                      ></button>
+                    </div>
+                  `;
+                })}
+              </div>
+            `}
           </article>
           <article class="freeze">
-            <div class="category" ">
+            <div class="category">
               <img src="/icon/freeze-food.svg" alt="냉장식품" />
               <span>냉동 식품</span>
               <button type="button" @click=${this._handleHide}>
@@ -261,7 +311,7 @@ class CartAccordian extends LitElement {
               </button>
             </div>
           </article>
-          <article class="warm" >
+          <article class="warm">
             <div class="category">
               <img src="/icon/warm-food.svg" alt="냉장식품" />
               <span>상온 식품</span>
