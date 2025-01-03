@@ -179,6 +179,29 @@ class Card extends LitElement {
     }
   }
 
+  _initViewedItem() {
+    try {
+      const viewedItem = localStorage.getItem(this.viewedItemKey);
+
+      if (viewedItem) {
+        const parsedItem = JSON.parse(viewedItem);
+
+        if (Array.isArray(parsedItem)) {
+          const now = new Date().getTime();
+          this.viewedItem = parsedItem.filter((item) => item.expTime > now);
+
+          localStorage.setItem(this.viewedItemKey, JSON.parse(this.viewedItem));
+        } else {
+          // 배열이 아닐 경우 빈 배열로 초기화
+          this.viewedItem = [];
+        }
+      }
+    } catch (err) {
+      console.error('Initialize Failed :', err);
+      this.viewedItem = [];
+    }
+  }
+
   handleAddCart = (e) => {
     e.stopPropagation();
 
@@ -230,31 +253,49 @@ class Card extends LitElement {
     }
   };
 
-  _filterItem(data) {
-    return this.viewedItem.filter((item) => item.id !== data.id);
+  _filterItem(targetArr, data) {
+    return targetArr.filter((item) => item.id !== data.id);
   }
 
   _handleViewedItem() {
-    const data = {
+    const expTime = new Date().getTime() + 1000 * 60 * 60 * 24;
+
+    const item = {
       id: this.id,
       collectionId: this.collectionId,
       photo: this.photoURL,
       productName: this.productName,
-      expTime: new Date().getTime() + 1000 * 60 * 60 * 24,
+      expTime,
     };
 
-    // 같은 id 값을 갖는 아이템 제거
-    this.viewedItem = this._filterItem(data);
+    try {
+      const storedItem = localStorage.getItem(this.viewedItemKey);
+      let curItems = [];
 
-    // 최대 7개까지만 렌더링
-    if (this.viewedItem.length > 7) {
-      this.viewedItem.pop();
+      if (storedItem) {
+        curItems = JSON.parse(storedItem);
+
+        if (!Array.isArray(curItems)) {
+          curItems = [];
+        }
+      }
+
+      // 같은 id 값을 갖는 아이템 제거
+      curItems = this._filterItem(curItems, item);
+
+      // 가장 앞에 아이템 추가
+      curItems.unshift(item);
+
+      // 최대 7개까지만 렌더링
+      if (curItems.length > 7) {
+        curItems.slice(7);
+      }
+
+      localStorage.setItem(this.viewedItemKey, JSON.stringify(curItems));
+      this.viewedItem = curItems;
+    } catch (err) {
+      console.error('handleViewedItem Error :', err);
     }
-
-    // 가장 앞에 아이템 추가
-    this.viewedItem.unshift(data);
-
-    localStorage.setItem(this.viewedItemKey, JSON.stringify(this.viewedItem));
   }
 
   render() {
