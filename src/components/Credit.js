@@ -252,7 +252,7 @@ class Credit extends LitElement {
               <div>
                 <span>결제예졍금액</span>
                 <span class="payment-amount"
-                  >${this.paymentPrice.toLocaleString()}<span>원</span></span
+                  >${this.paymentPrice?.toLocaleString()}<span>원</span></span
                 >
               </div>
 

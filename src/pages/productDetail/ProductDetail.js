@@ -1031,7 +1031,7 @@ class ProductDetail extends LitElement {
                 <p class="tit-karly-point">Karly's Check Point</p>
 
                 <img
-                  src="/public/image/karly_check_point.svg"
+                  src="/image/karly_check_point.svg"
                   alt="컬리 체크 포인트 3가지 이미지"
                 />
               </div>
